@@ -68,7 +68,9 @@ type PartialType = PartialGraph & PartialCells;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 export const SelectionMixin: PartialType = {
-  selectionModel: null,
+  // Always non-null at runtime: initialized in {@link AbstractGraph.initializeCollaborators}
+  // via {@link setSelectionModel}, which shadows the `null` set on the prototype by the mixin.
+  selectionModel: null!,
 
   getSelectionModel() {
     return this.selectionModel;

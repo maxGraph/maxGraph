@@ -135,7 +135,7 @@ class GraphSelectionModel extends EventSource {
    *
    * @param cell {@link Cell} to be selected.
    */
-  setCell(cell: Cell): void {
+  setCell(cell: Cell | null): void {
     this.setCells(cell ? [cell] : []);
   }
 
