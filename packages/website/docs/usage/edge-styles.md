@@ -103,6 +103,21 @@ For more details, see the [Orthogonal Projection on the Perimeter](perimeters.md
 If you register `EdgeStyle.EntityRelation` yourself (e.g. when using `BaseGraph`), you must include `allowIntermediateHandles: false` in the metadata to preserve the expected behavior.
 :::
 
+:::tip
+Since 0.24.0, maxGraph exposes dedicated helpers to register each built-in `EdgeStyle` with the correct metadata, so you do not need to know the metadata yourself when using `BaseGraph` or registering only a subset:
+
+- `registerElbowEdgeStyle`
+- `registerEntityRelationEdgeStyle`
+- `registerLoopEdgeStyle`
+- `registerManhattanEdgeStyle`
+- `registerOrthogonalEdgeStyle`
+- `registerSegmentEdgeStyle`
+- `registerSideToSideEdgeStyle`
+- `registerTopToBottomEdgeStyle`
+
+`registerDefaultEdgeStyles` registers all of them at once.
+:::
+
 ### Using a Custom EdgeStyle
 
 The custom edge style above can now be used in a specific edge as follows:

@@ -168,14 +168,13 @@ import {
   CellEditorHandler,
   EdgeMarker,
   EdgeMarkerRegistry,
-  EdgeStyle,
-  EdgeStyleRegistry,
   EllipseShape,
   FitPlugin,
   InternalEvent,
   PanningHandler,
   Perimeter,
   PerimeterRegistry,
+  registerOrthogonalEdgeStyle,
   RubberBandHandler,
   SelectionCellsHandler,
   SelectionHandler,
@@ -193,10 +192,8 @@ class CustomGraph extends BaseGraph {
     PerimeterRegistry.add('rectanglePerimeter', Perimeter.RectanglePerimeter);
 
     // Register only the edge styles you use
-    EdgeStyleRegistry.add('orthogonalEdgeStyle', EdgeStyle.OrthConnector, {
-      handlerKind: 'segment',
-      isOrthogonal: true,
-    });
+    // Since 0.24.0, each built-in edge style has a dedicated helper that sets the correct metadata
+    registerOrthogonalEdgeStyle();
 
     // Register only the edge markers you use
     const arrowFunction = EdgeMarker.createArrow(2);
@@ -233,14 +230,13 @@ import {
   CellEditorHandler,
   EdgeMarker,
   EdgeMarkerRegistry,
-  EdgeStyle,
-  EdgeStyleRegistry,
   EllipseShape,
   FitPlugin,
   InternalEvent,
   PanningHandler,
   Perimeter,
   PerimeterRegistry,
+  registerOrthogonalEdgeStyle,
   RubberBandHandler,
   SelectionCellsHandler,
   SelectionHandler,
@@ -252,10 +248,8 @@ function registerStyleElements() {
   ShapeRegistry.add('ellipse', EllipseShape);
   PerimeterRegistry.add('ellipsePerimeter', Perimeter.EllipsePerimeter);
   PerimeterRegistry.add('rectanglePerimeter', Perimeter.RectanglePerimeter);
-  EdgeStyleRegistry.add('orthogonalEdgeStyle', EdgeStyle.OrthConnector, {
-    handlerKind: 'segment',
-    isOrthogonal: true,
-  });
+  // Each built-in edge style has a dedicated helper that sets the correct metadata
+  registerOrthogonalEdgeStyle();
   const arrowFunction = EdgeMarker.createArrow(2);
   EdgeMarkerRegistry.add('classic', arrowFunction);
   EdgeMarkerRegistry.add('block', arrowFunction);

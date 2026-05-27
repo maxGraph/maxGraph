@@ -1664,6 +1664,30 @@ export type EdgeStyleMetaData = {
  * @category Configuration
  */
 export interface EdgeStyleRegistryInterface extends Registry<EdgeStyleFunction> {
+  /**
+   * Register an {@link EdgeStyleFunction} under the given `name` along with its {@link EdgeStyleMetaData}.
+   *
+   * The metadata is used by maxGraph to drive edge handling behaviors (handler kind, orthogonal projection on
+   * perimeter, intermediate bend handles). Make sure to pass the correct values, as omitting or mis-setting them
+   * may lead to unexpected behaviors when editing or rendering the edge.
+   *
+   * To register edge styles provided by maxGraph, prefer the dedicated helpers which already provide the correct
+   * metadata:
+   * - {@link registerElbowEdgeStyle}
+   * - {@link registerEntityRelationEdgeStyle}
+   * - {@link registerLoopEdgeStyle}
+   * - {@link registerManhattanEdgeStyle}
+   * - {@link registerOrthogonalEdgeStyle}
+   * - {@link registerSegmentEdgeStyle}
+   * - {@link registerSideToSideEdgeStyle}
+   * - {@link registerTopToBottomEdgeStyle}
+   *
+   * Or {@link registerDefaultEdgeStyles} to register all of them at once.
+   *
+   * @param name the key under which the `edgeStyle` is registered.
+   * @param edgeStyle the {@link EdgeStyleFunction} to register.
+   * @param metaData the optional {@link EdgeStyleMetaData} associated with `edgeStyle`.
+   */
   add(name: string, edgeStyle: EdgeStyleFunction, metaData?: EdgeStyleMetaData): void;
 
   /**

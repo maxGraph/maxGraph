@@ -27,7 +27,9 @@ import type { EdgeStyleFunction } from '../../../types.js';
  *
  * This EdgeStyle is registered under `topToBottomEdgeStyle` in {@link EdgeStyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
  *
- * **IMPORTANT**: When registering it manually  in {@link EdgeStyleRegistry}, the following metadata must be used:
+ * To register it on its own (e.g. with {@link BaseGraph}), prefer the dedicated {@link registerTopToBottomEdgeStyle} helper, which sets the correct metadata for you.
+ *
+ * **IMPORTANT**: When registering it manually in {@link EdgeStyleRegistry}, the following metadata must be used:
  * - handlerKind: 'elbow'
  * - isOrthogonal: true
  */

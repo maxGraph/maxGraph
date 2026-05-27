@@ -148,7 +148,9 @@ function getJettySize(state: CellState, isSource: boolean): number {
  *
  * This EdgeStyle is registered under `orthogonalEdgeStyle` in {@link EdgeStyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
  *
- * **IMPORTANT**: When registering it manually  in {@link EdgeStyleRegistry}, the following metadata must be used:
+ * To register it on its own (e.g. with {@link BaseGraph}), prefer the dedicated {@link registerOrthogonalEdgeStyle} helper, which sets the correct metadata for you.
+ *
+ * **IMPORTANT**: When registering it manually in {@link EdgeStyleRegistry}, the following metadata must be used:
  * - handlerKind: 'segment'
  * - isOrthogonal: true
  *
