@@ -366,4 +366,20 @@ describe('Expect no global state for properties coming from mixins', () => {
     graph1.options.foldingEnabled = false;
     expect(graph1.options).not.toBe(graph2.options);
   });
+
+  // Even though SelectionMixin declares `selectionModel: null` on the prototype,
+  // the null value is harmless because BaseGraph.initializeCollaborators calls
+  // this.setSelectionModel(new GraphSelectionModel(this)). The assignment creates
+  // a per-instance property that shadows the prototype null, and GraphSelectionModel's
+  // constructor allocates its own `cells = []` array.
+  test('selectionModel', () => {
+    const graph1 = new BaseGraph();
+    const graph2 = new BaseGraph();
+
+    expect(graph1.getSelectionModel()).not.toBe(graph2.getSelectionModel());
+
+    graph1.getSelectionModel().cells.push(new Cell());
+    expect(graph2.getSelectionModel().cells).toStrictEqual([]);
+    expect(graph1.getSelectionModel().cells).not.toBe(graph2.getSelectionModel().cells);
+  });
 });
