@@ -24,27 +24,9 @@ const createContainer = (dimensions: {
   clientHeight?: number;
 }) => {
   const container = document.createElement('div');
-  dimensions.clientWidth &&
-    Object.defineProperty(container, 'clientWidth', {
-      value: dimensions.clientWidth,
-      configurable: true,
-    });
-  dimensions.clientHeight &&
-    Object.defineProperty(container, 'clientHeight', {
-      value: dimensions.clientHeight,
-      configurable: true,
-    });
-  dimensions.offsetWidth &&
-    Object.defineProperty(container, 'offsetWidth', {
-      value: dimensions.offsetWidth,
-      configurable: true,
-    });
-  dimensions.offsetHeight &&
-    Object.defineProperty(container, 'offsetHeight', {
-      value: dimensions.offsetHeight,
-      configurable: true,
-    });
-
+  for (const [name, value] of Object.entries(dimensions)) {
+    Object.defineProperty(container, name, { value, configurable: true });
+  }
   return container;
 };
 
