@@ -1,7 +1,3 @@
----
-paths:
-  - "**"
----
 # Commit Message Conventions
 
 Format: `type(scope): subject` — imperative mood, <72 chars, lowercase, no period.
