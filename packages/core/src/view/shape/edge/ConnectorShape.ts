@@ -151,11 +151,11 @@ class ConnectorShape extends PolylineShape {
     // Adds marker sizes
     let size = 0;
 
-    if (this.style.startArrow !== NONE) {
+    if ((this.style.startArrow ?? NONE) !== NONE) {
       size = (this.style.startSize ?? StyleDefaultsConfig.markerSize) + 1;
     }
 
-    if (this.style.endArrow !== NONE) {
+    if ((this.style.endArrow ?? NONE) !== NONE) {
       size = Math.max(size, this.style.endSize ?? StyleDefaultsConfig.markerSize) + 1;
     }
 
