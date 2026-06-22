@@ -57,9 +57,9 @@ Applies to new plugins in `packages/core/src/view/plugin/` and the `BuiltinPlugi
 - Const enums are forbidden — use regular enums
 - File extensions required in imports (`n/file-extension-in-import`)
 
-## Prettier Config
+## Formatting
 
-Tab width 2, single quotes, print width 90, trailing comma ES5, end of line auto. See `.prettierrc`.
+Handled automatically by Prettier. See `.prettierrc` for the configured options.
 
 ## TypeScript
 
