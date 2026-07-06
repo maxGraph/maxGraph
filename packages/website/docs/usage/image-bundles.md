@@ -123,7 +123,7 @@ Register the most specific bundle first if you want it to override values from a
 
 ## Managing Bundles at Runtime
 
-The plugin exposes the full bundle collection. Use it to inspect, reorder, or remove bundles:
+The plugin lets you remove registered bundles and resolve keys at runtime:
 
 ```typescript
 const plugin = graph.getPlugin<ImageBundlePlugin>('image-bundle')!;
@@ -133,9 +133,6 @@ plugin.removeImageBundle(bundle);
 
 // Resolve a key manually (returns null if no bundle matches)
 const url = plugin.getImageFromBundles('server');
-
-// Inspect the registered bundles
-console.log(plugin.imageBundles.length);
 ```
 
 For read-only access in code that may run without the plugin (for example a shared helper used by both `Graph` and `BaseGraph`), use optional chaining:
