@@ -9,6 +9,15 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+## 0.24.0
+
+Release date: `2026-07-08`
+
+For more details, see the [0.24.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.24.0) on the GitHub release page.
+
+This new version continues improving modularity and tree-shaking: the image bundle feature moves to a dedicated plugin and
+per-edge-style registration helpers are introduced.
+
 **Breaking Changes**:
 - `EdgeHandler.isHandleVisible()` now uses `EdgeStyleRegistry.allowsIntermediateHandles()` instead of checking against the `EdgeStyle.EntityRelation` function reference.
   If you register custom edge styles that should hide intermediate bend handles, you must now set `allowIntermediateHandles: false` in the `EdgeStyleMetaData` when calling `EdgeStyleRegistry.add()`.
