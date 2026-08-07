@@ -321,7 +321,7 @@ const model = graph.getDataModel();
 
 The `insertVertex()` and `insertEdge()` methods in `maxGraph` now also accept one object as parameter instead of multiple parameters. Instead of passing individual parameters, you can pass an object containing all the required properties.
 
-The former methods having several parameters still exist but the new signature should be used instead.
+The former methods having several parameters still exist but the new signature should be used instead because it is more readable and maintainable, and the former is going to be deprecated (see [Issue #856](https://github.com/maxGraph/maxGraph/issues/856)).
 
 Here's an example:
 
