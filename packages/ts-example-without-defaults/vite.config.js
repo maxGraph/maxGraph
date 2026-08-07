@@ -17,13 +17,17 @@ limitations under the License.
 import { realpathSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname } from 'node:path';
-import { defineConfig } from 'vite';
+import { defineConfig, normalizePath } from 'vite';
 
 // Vite resolves symlinks to their real path, so the module ids of @maxgraph/core point to the workspace directory
 // instead of node_modules. Matching the resolved package directory keeps the chunk correct in both setups.
-const maxGraphCoreDirectory = realpathSync(
-  dirname(createRequire(import.meta.url).resolve('@maxgraph/core/package.json'))
-);
+// Both sides are normalized because realpathSync returns native separators on Windows, and the trailing separator
+// prevents matching a sibling directory whose name merely starts with 'core'.
+const maxGraphCoreDirectory = `${normalizePath(
+  realpathSync(
+    dirname(createRequire(import.meta.url).resolve('@maxgraph/core/package.json'))
+  )
+)}/`;
 
 export default defineConfig(({ mode }) => {
   return {
@@ -35,7 +39,8 @@ export default defineConfig(({ mode }) => {
               {
                 // put the maxgraph code in a dedicated file. It lets know the size the produced bundle in an external application and if tree shaking works
                 name: 'maxgraph',
-                test: maxGraphCoreDirectory,
+                test: (moduleId) =>
+                  normalizePath(moduleId).startsWith(maxGraphCoreDirectory),
               },
             ],
           },
