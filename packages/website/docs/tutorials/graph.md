@@ -104,15 +104,19 @@ and override the stroke and fill colors, the style would be defined as:
 
 To use the above in Hello, World!, the style name would be passed to the insertVertex method as follows:
 
-[//]: # (TODO migrate to the new insertVertex method using a single object parameter)
 ```javascript
-const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
-  {
+const v1 = graph.insertVertex({
+  value: 'Hello',
+  x: 20,
+  y: 20,
+  width: 80,
+  height: 30,
+  style: {
     baseStyleNames: ['rounded'],
     strokeColor: 'red',
     fillColor: 'green'
-  }
-);
+  },
+});
 ```
 
 
