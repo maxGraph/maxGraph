@@ -189,8 +189,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
-  // enforce the use of the CustomEdgeHandler for all edges
-  graph.createEdgeHandler = (state) => new CustomEdgeHandler(state);
+  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
+    'SelectionCellsHandler'
+  )!; // we know that this plugin is always available
+  selectionCellsHandler.setEdgeHandlerFactory('default', (state) => {
+    return new CustomEdgeHandler(state);
+  });
 
   // Disables existing port functionality
   graph.view.getTerminalPort = function (_state, terminal) {

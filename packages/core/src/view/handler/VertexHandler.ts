@@ -27,14 +27,14 @@ import { getRotatedPoint, intersects, mod, toRadians } from '../../util/mathUtil
 import Client from '../../Client.js';
 import { isMouseEvent, isShiftDown } from '../../util/EventUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
-import CellState from '../cell/CellState.js';
-import Image from '../image/ImageBox.js';
+import type CellState from '../cell/CellState.js';
+import type Image from '../image/ImageBox.js';
 import type Cell from '../cell/Cell.js';
 import type { CellHandle, Listenable, MouseListenerSet } from '../../types.js';
 import Shape from '../shape/Shape.js';
 import InternalMouseEvent from '../event/InternalMouseEvent.js';
-import EdgeHandler from './EdgeHandler.js';
-import EventSource from '../event/EventSource.js';
+import type EdgeHandler from './EdgeHandler.js';
+import type EventSource from '../event/EventSource.js';
 import type SelectionHandler from '../plugin/SelectionHandler.js';
 import type SelectionCellsHandler from '../plugin/SelectionCellsHandler.js';
 import { HandleConfig, VertexHandlerConfig } from './config.js';
@@ -42,10 +42,22 @@ import { isNullish } from '../../internal/utils.js';
 
 /**
  * Event handler for resizing cells.
+ * It displays a selection border around the vertex, a resize handle on each corner and side, an optional rotation
+ * handle, and the label handle when the label is movable.
  *
- * This handler is automatically created in {@link AbstractGraph.createHandler}.
+ * **Instantiation**
  *
- * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
+ * {@link SelectionCellsHandler} creates it for each selected vertex.
+ *
+ * To have maxGraph create a custom implementation instead, register a factory on the plugin:
+ * ```typescript
+ * selectionCellsHandler.setVertexHandlerFactory((state) => new MyVertexHandler(state));
+ * ```
+ *
+ * **Configuration**
+ *
+ * Some elements of this handler and its subclasses can be configured globally using {@link VertexHandlerConfig} and
+ * {@link HandleConfig}.
  */
 class VertexHandler implements MouseListenerSet {
   escapeHandler: (sender: Listenable, evt: Event) => void;
