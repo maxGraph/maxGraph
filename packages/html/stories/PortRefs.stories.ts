@@ -18,22 +18,22 @@ limitations under the License.
 import {
   type AbstractGraph,
   type Cell,
-  type CellStyle,
   CellEditorHandler,
   CellRenderer,
   type CellState,
+  type CellStyle,
+  ConnectionConstraint,
   ConnectionHandler,
+  ConstraintHandler,
+  EdgeHandler,
   Graph,
   type GraphPluginConstructor,
-  RubberBandHandler,
-  Point,
-  EdgeHandler,
-  ConstraintHandler,
   ImageBox,
-  SelectionHandler,
+  Point,
+  RubberBandHandler,
   SelectionCellsHandler,
+  SelectionHandler,
   type Shape,
-  ConnectionConstraint,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -189,12 +189,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
-  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
-    'SelectionCellsHandler'
-  )!; // we know that this plugin is always available
-  selectionCellsHandler.setEdgeHandlerFactory('default', (state) => {
-    return new CustomEdgeHandler(state);
-  });
+  graph
+    .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+    .setEdgeHandlerFactory('default', (state) => {
+      return new CustomEdgeHandler(state);
+    });
 
   // Disables existing port functionality
   graph.view.getTerminalPort = function (_state, terminal) {

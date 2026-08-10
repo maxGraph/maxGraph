@@ -16,19 +16,19 @@ limitations under the License.
 */
 
 import {
+  type CellState,
   Client,
+  type ConnectionHandler,
+  domUtils,
+  eventUtils,
+  getDefaultPlugins,
   Graph,
   InternalEvent,
   RubberBandHandler,
-  eventUtils,
-  styleUtils,
-  domUtils,
-  VertexHandler,
-  type CellState,
-  type ConnectionHandler,
-  type SelectionHandler,
-  getDefaultPlugins,
   type SelectionCellsHandler,
+  type SelectionHandler,
+  styleUtils,
+  VertexHandler,
 } from '@maxgraph/core';
 
 import {
@@ -188,12 +188,9 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   const graph = new Graph(container, undefined, plugins);
   graph.setConnectable(true);
 
-  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
-    'SelectionCellsHandler'
-  )!; // we know that this plugin is always available
-  selectionCellsHandler.setVertexHandlerFactory(
-    (state) => new CustomVertexToolHandler(state)
-  );
+  graph
+    .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+    .setVertexHandlerFactory((state) => new CustomVertexToolHandler(state));
 
   const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   connectionHandler.createTarget = true;

@@ -113,7 +113,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
       'SelectionCellsHandler'
-    )!; // we know that this plugin is always available
+    )!;
     // Overrides the createEdgeHandler method to enable snapping waypoints to terminals
     // Alternatively, you can also subclass SelectionCellsHandler and override the createEdgeHandler method there.
     // Then register your subclass as a plugin instead of registering the default SelectionCellsHandler plugin.

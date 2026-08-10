@@ -16,29 +16,29 @@ limitations under the License.
 */
 
 import {
-  Graph,
-  RubberBandHandler,
-  InternalEvent,
-  CellRenderer,
-  EdgeHandler,
-  HierarchicalLayout,
+  type Cell,
   CellOverlay,
-  getDefaultPlugins,
-  ImageBox,
+  CellRenderer,
+  type CellState,
   Client,
-  Morphing,
+  type ConnectionHandler,
+  EdgeHandler,
   EventObject,
   eventUtils,
-  styleUtils,
-  type Cell,
-  type CellState,
-  type ConnectionHandler,
+  getDefaultPlugins,
+  Graph,
+  type GraphPluginConstructor,
+  HierarchicalLayout,
+  ImageBox,
+  InternalEvent,
   type InternalMouseEvent,
+  Morphing,
   type PopupMenuHandler,
   type Rectangle,
-  type Shape,
-  type GraphPluginConstructor,
+  RubberBandHandler,
   type SelectionCellsHandler,
+  type Shape,
+  styleUtils,
 } from '@maxgraph/core';
 
 import {
@@ -140,13 +140,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   graph.setAllowDanglingEdges(false);
 
-  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
-    'SelectionCellsHandler'
-  )!; // we know that this plugin is always available
   // use the same handler for all edge styles
-  selectionCellsHandler.setEdgeHandlerFactoryForAllKinds(
-    (state) => new MyCustomEdgeHandler(state)
-  );
+  graph
+    .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+    .setEdgeHandlerFactoryForAllKinds((state) => new MyCustomEdgeHandler(state));
 
   const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   connectionHandler.select = false;

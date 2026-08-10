@@ -25,9 +25,9 @@ import {
   Graph,
   HandleConfig,
   InternalEvent,
-  requestUtils,
   Point,
   type Rectangle,
+  requestUtils,
   RubberBandHandler,
   type SelectionCellsHandler,
   Shape,
@@ -189,12 +189,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setTooltips(true);
   graph.setPanning(true);
 
-  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
-    'SelectionCellsHandler'
-  )!; // we know that this plugin is always available
-  selectionCellsHandler.setVertexHandlerFactory((state) => {
-    return new CustomVertexHandler(state);
-  });
+  graph
+    .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+    .setVertexHandlerFactory((state) => {
+      return new CustomVertexHandler(state);
+    });
 
   const tooltipHandler = graph.getPlugin<TooltipHandler>('TooltipHandler')!;
   tooltipHandler.getTooltipForCell = function (cell) {

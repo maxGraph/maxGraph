@@ -184,13 +184,12 @@ const Template = ({ ...args }: Record<string, any>) => {
   const graph = new MyCustomGraph(container, undefined, plugins);
   graph.setConnectable(true);
 
-  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
-    'SelectionCellsHandler'
-  )!; // we know that this plugin is always available
   // all edges use the elbow edge style
-  selectionCellsHandler.setEdgeHandlerFactory('elbow', (state) => {
-    return new CustomElbowEdgeHandler(state);
-  });
+  graph
+    .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+    .setEdgeHandlerFactory('elbow', (state) => {
+      return new CustomElbowEdgeHandler(state);
+    });
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
