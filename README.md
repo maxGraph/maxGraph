@@ -217,6 +217,12 @@ We welcome contributions! Please see the [contributing guide](./CONTRIBUTING.md)
 - Code quality standards
 - Pull request process
 
+### Architecture Decision Records
+
+Structural decisions that cannot be inferred from the code alone are recorded in [`docs/adr`](./docs/adr/README.md): why a member lives where it lives, why an obvious refactoring was set aside, and which constraint blocks a given change.
+
+Start there before proposing a change to the `Graph` class hierarchy, the mixins or the plugins.
+
 ### Quick Command Reference
 
 ```bash
