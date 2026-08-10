@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import Client from '../Client.js';
-import { isNullish } from '../internal/utils.js';
 import { FONT_STYLE_MASK, LINE_HEIGHT } from './Constants.js';
 import Point from '../view/geometry/Point.js';
 import CellPath from '../view/cell/CellPath.js';
@@ -31,7 +30,7 @@ import type {
   NumericCellStateStyleKeys,
   VAlignValue,
 } from '../types.js';
-import { matchBinaryMask } from '../internal/utils.js';
+import { isNullish, matchBinaryMask } from '../internal/utils.js';
 import { StyleDefaultsConfig } from './config.js';
 
 /**
