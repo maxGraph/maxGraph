@@ -20,6 +20,63 @@ import type CellState from '../cell/CellState.js';
 declare module '../AbstractGraph' {
   interface AbstractGraph {
     /**
+     * Specifies if multiple edges in the same direction between the same pair of
+     * vertices are allowed.
+     * @default true
+     */
+    multigraph: boolean;
+
+    /**
+     * Specifies if loops (aka self-references) are allowed.
+     * @default false
+     */
+    allowLoops: boolean;
+
+    /**
+     * Specifies the resource key for the error message to be displayed in
+     * non-multigraphs when two vertices are already connected. If the resource
+     * for this key does not exist then the value is used as the error message.
+     * @default 'alreadyConnected'
+     */
+    alreadyConnectedResource: string;
+
+    /**
+     * Specifies the resource key for the warning message to be displayed when
+     * a collapsed cell contains validation errors. If the resource for this
+     * key does not exist then the value is used as the warning message.
+     * @default 'containsValidationErrors'
+     */
+    containsValidationErrorsResource: string;
+
+    /** Returns {@link multigraph} as a boolean. */
+    isMultigraph: () => boolean;
+
+    /**
+     * Specifies if the graph should allow multiple connections between the
+     * same pair of vertices.
+     *
+     * @param value Boolean indicating if the graph allows multiple connections
+     * between the same pair of vertices.
+     */
+    setMultigraph: (value: boolean) => void;
+
+    /** Returns {@link allowLoops} as a boolean. */
+    isAllowLoops: () => boolean;
+
+    /**
+     * Specifies if loops are allowed.
+     *
+     * @param value Boolean indicating if loops are allowed.
+     */
+    setAllowLoops: (value: boolean) => void;
+
+    /** Returns {@link alreadyConnectedResource}. */
+    getAlreadyConnectedResource: () => string;
+
+    /** Returns {@link containsValidationErrorsResource}. */
+    getContainsValidationErrorsResource: () => string;
+
+    /**
      * Displays the given validation error in a dialog.
      *
      * This implementation uses `window.alert`.
