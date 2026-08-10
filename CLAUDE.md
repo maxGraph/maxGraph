@@ -52,6 +52,7 @@ Key patterns:
 ## Key Conventions
 
 - See `.claude/rules/architecture/coding-practices.md` for core package rules (imports, nullish checks, logging, i18n)
+- See `.claude/rules/architecture/graph-api-usage.md` for calling the maxGraph API (applies to sources, tests, stories and examples)
 - See `.claude/rules/testing/conventions.md` for test patterns
 - See `.claude/rules/git/commit-conventions.md` for commit message style
 

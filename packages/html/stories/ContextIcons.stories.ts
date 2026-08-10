@@ -16,19 +16,19 @@ limitations under the License.
 */
 
 import {
+  type CellState,
   Client,
+  type ConnectionHandler,
+  domUtils,
+  eventUtils,
+  getDefaultPlugins,
   Graph,
   InternalEvent,
   RubberBandHandler,
-  eventUtils,
-  styleUtils,
-  domUtils,
-  VertexHandler,
-  type CellState,
-  type ConnectionHandler,
+  type SelectionCellsHandler,
   type SelectionHandler,
-  getDefaultPlugins,
-  type GraphPluginConstructor,
+  styleUtils,
+  VertexHandler,
 } from '@maxgraph/core';
 
 import {
@@ -118,9 +118,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       img.style.width = '16px';
       img.style.height = '16px';
 
-      const selectionHandler = graph.getPlugin<SelectionHandler>('SelectionHandler')!;
-      const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
-
+      const selectionHandler = graph.getPlugin<SelectionHandler>('SelectionHandler')!; // we know that this plugin is always available
       InternalEvent.addGestureListeners(img, (evt) => {
         selectionHandler.start(
           this.state.cell,
@@ -141,6 +139,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       img.style.width = '16px';
       img.style.height = '16px';
 
+      const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!; // we know that this plugin is always available
       InternalEvent.addGestureListeners(img, (evt) => {
         const pt = styleUtils.convertPoint(
           this.graph.container,
@@ -181,26 +180,17 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     }
   }
 
-  class MyCustomGraph extends Graph {
-    constructor(container: HTMLElement, plugins: GraphPluginConstructor[]) {
-      super(container, undefined, plugins);
-    }
-
-    override createHandler(state: CellState) {
-      if (state != null && state.cell.isVertex()) {
-        return new CustomVertexToolHandler(state);
-      }
-      return super.createHandler(state);
-    }
-  }
-
   // Enables rubberband selection
   const plugins = getDefaultPlugins();
   if (args.rubberBand) plugins.push(RubberBandHandler);
 
   // Creates the graph inside the given container
-  const graph = new MyCustomGraph(container, plugins);
+  const graph = new Graph(container, undefined, plugins);
   graph.setConnectable(true);
+
+  graph
+    .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+    .setVertexHandlerFactory((state) => new CustomVertexToolHandler(state));
 
   const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   connectionHandler.createTarget = true;

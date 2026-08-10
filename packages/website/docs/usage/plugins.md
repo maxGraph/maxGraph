@@ -44,7 +44,7 @@ Plugins marked as **default** are automatically loaded when using [`Graph`](./gr
 | `PanningHandler` | Mouse and touch panning | ✔️  |
 | `PopupMenuHandler` | Right-click context menus | ✔️  |
 | `RubberBandHandler` | Rubber band (lasso) selection. Requires [loading CSS](./css-and-images.md) | ❌ |
-| `SelectionCellsHandler` | Manages per-cell selection handlers (move, resize, rotate) | ✔️  |
+| `SelectionCellsHandler` | Manages per-cell selection handlers (move, resize, rotate). See [Cell Handlers](./cell-handlers.md) | ✔️  |
 | `SelectionHandler` | Click and marquee selection | ✔️  |
 | `TooltipHandler` | Hover tooltips | ✔️  |
 

@@ -16,22 +16,22 @@ limitations under the License.
 */
 
 import {
-  Graph,
+  type AbstractCanvas2D,
+  type CellStateStyle,
   CylinderShape,
   DomHelpers,
+  getDefaultPlugins,
+  Graph,
+  type GraphPluginConstructor,
+  InternalEvent,
   Point,
   Rectangle,
-  VertexHandler,
-  InternalEvent,
   RubberBandHandler,
-  VertexHandle,
-  type AbstractCanvas2D,
-  type CellState,
-  type CellStateStyle,
-  VertexHandlerConfig,
-  getDefaultPlugins,
-  type GraphPluginConstructor,
+  type SelectionCellsHandler,
   ShapeRegistry,
+  VertexHandle,
+  VertexHandler,
+  VertexHandlerConfig,
 } from '@maxgraph/core';
 
 import {
@@ -192,10 +192,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     constructor(container: HTMLElement, plugins: GraphPluginConstructor[]) {
       super(container, undefined, plugins);
     }
-
-    override createVertexHandler(state: CellState) {
-      return new MyCustomVertexHandler(state);
-    }
   }
 
   // Disables the built-in context menu
@@ -211,6 +207,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setHtmlLabels(true);
   graph.setPanning(true);
   graph.centerZoom = false;
+
+  graph
+    .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+    .setVertexHandlerFactory((state) => {
+      return new MyCustomVertexHandler(state);
+    });
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
