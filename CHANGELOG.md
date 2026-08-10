@@ -34,6 +34,11 @@ _**Note:** Yet to be released breaking changes appear here._
 - The dispatch methods `createHandler` and `createEdgeHandler` are now defined on `SelectionCellsHandler`. If you were overriding them to change the dispatch logic itself (and not only the instantiated class), extend `SelectionCellsHandler` and pass your subclass in the `plugins` option.
 - `SelectionCellsHandler.createHandler` returns a non-nullable `CellHandler` (the new `EdgeHandler | VertexHandler` union type exported from the package), whereas `AbstractGraph.createHandler` was typed as nullable. TypeScript users can drop the now-useless null checks on the returned value.
 
+- `AbstractGraph.isIgnoreScrollbars` and `AbstractGraph.isTranslateToScrollPosition` are now regular methods instead of arrow function properties, following the move of the scrolling members to `PanningMixin`.
+  Calling them on the graph is unaffected: `graph.isIgnoreScrollbars()` keeps working. Only detached references break, because the functions are no longer bound to their instance.
+  If you pass one of them as a callback, for instance `someArray.some(graph.isIgnoreScrollbars)` or `const isIgnored = graph.isIgnoreScrollbars`, bind it explicitly with `graph.isIgnoreScrollbars.bind(graph)` or wrap it in an arrow function.
+  Note that TypeScript does not report this, both forms have the same type, so the failure only appears at runtime.
+
 **Other Changes**:
 - The order of the child elements produced by the XML serialization of `<Graph>` and `<BaseGraph>` has changed: `pageFormat` and `warningImage` are now emitted right after `options`, instead of last.
   This is not a breaking change, decoding matches elements by their `as` attribute and is order-independent, so existing documents keep decoding identically and previously exported documents are still valid.
