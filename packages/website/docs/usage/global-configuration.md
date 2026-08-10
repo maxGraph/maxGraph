@@ -82,6 +82,16 @@ registerDefaultPerimeters();
 registerDefaultShapes();
 ```
 
+`registerDefaultStyleElements` (since 0.25.0) calls the four of them at once, which is exactly what `Graph` registers when it is instantiated:
+
+```javascript
+registerDefaultStyleElements();
+```
+
+:::warning
+Registering all default style elements defeats tree-shaking: every built-in shape, edge style, perimeter and edge marker ends up in your bundle, whether the application uses it or not. Register only the elements you need.
+:::
+
 It is possible to unregister all elements from a style registry using the related `unregister` function. For example:
 
 ```javascript

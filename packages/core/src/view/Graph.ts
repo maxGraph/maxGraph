@@ -23,12 +23,7 @@ import CellRenderer from './cell/CellRenderer.js';
 import GraphDataModel from './GraphDataModel.js';
 import { Stylesheet } from './style/Stylesheet.js';
 import GraphSelectionModel from './GraphSelectionModel.js';
-import { registerDefaultShapes } from './shape/register-shapes.js';
-import {
-  registerDefaultEdgeMarkers,
-  registerDefaultEdgeStyles,
-  registerDefaultPerimeters,
-} from './style/register.js';
+import { registerDefaultStyleElements } from './register-style-elements.js';
 import { getDefaultPlugins } from './plugin/index.js';
 
 /**
@@ -76,10 +71,7 @@ export class Graph extends AbstractGraph {
 
   // Register all builtins provided by maxGraph
   protected override registerDefaults(): void {
-    registerDefaultEdgeMarkers();
-    registerDefaultEdgeStyles();
-    registerDefaultPerimeters();
-    registerDefaultShapes();
+    registerDefaultStyleElements();
   }
 
   // Build cellRenderer/selectionModel/view via the factory methods so subclasses can customize them
