@@ -1,7 +1,8 @@
 # ADR 0001: Use mixins to split the Graph class
 
-- **Status**: Accepted, superseded in direction by
-  [ADR 0002](0002-use-plugins-for-optional-and-new-features.md) (plugins)
+- **Status**: Accepted. Not superseded: [ADR 0002](0002-use-plugins-for-optional-and-new-features.md) changes the
+  approach used for new code, but this decision still explains most of the current codebase. See
+  [Later evolution](#later-evolution)
 - **Date**: documented retrospectively on 2026-08-10. The decision itself dates from commit `bc400a3ae` (2021-08-01),
   "Converted Graph\* classes into mixins"
 - **Analysis basis**: commit `5c8cf90d8`, during the development of version 0.25.0. Any file or line reference below
