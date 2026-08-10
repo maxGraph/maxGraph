@@ -38,6 +38,12 @@ default is shared by every graph instance. This is documented at `AbstractGraph.
 is `null`, a number, a boolean or a string moves freely. The blocker is specific to mixins: plugins are instantiated per
 graph (`AbstractGraph.ts:500`), so converting a mixin to a plugin dissolves the problem rather than solving it.
 
+**Declaration order in `AbstractGraph` is observable output.** The Codec walks the object's own fields in declaration
+order, so moving a property, or merely reordering two, changes the order of the child elements in the XML produced by
+`exportObject`. Decoding is unaffected since elements are matched by their `as` attribute, and previously exported
+documents stay valid, but any consumer comparing exported XML as text sees a diff. This was found during
+implementation, not during the analysis, see [Implementation feedback](#implementation-feedback).
+
 ## Decision
 
 ### D1. No new mixin is created, plugins are the target
@@ -112,7 +118,7 @@ move proposed in this ADR may touch them. See [Appendix B.3](#b3-handler-factori
 
 **Positive**
 
-- `AbstractGraph.ts` drops from 1337 to roughly 800 lines, with no breaking change.
+- `AbstractGraph.ts` drops from 1337 to roughly 800 lines. Implementation landed at 811.
 - Each moved member lands next to the code that already uses it, which makes its `Pick<AbstractGraph, ...>` dependency
   list an accurate description of what it needs.
 - The shared-state failure mode, silent today, becomes a failing test.
@@ -125,6 +131,10 @@ move proposed in this ADR may touch them. See [Appendix B.3](#b3-handler-factori
   nature of the change.
 - The interim mixin destinations of D2 mean some members will move twice, once now and once when their host mixin
   becomes a plugin.
+- Moving an accessor written as an arrow function property turns it into a prototype method, which changes its binding.
+  Calling it on the graph is unaffected, but a detached reference stops working, and TypeScript gives both forms the
+  same type so nothing warns before runtime. This makes the claim above, that a mixin move is not a breaking change,
+  true of the interface but not quite of the behaviour. See [Implementation feedback](#implementation-feedback).
 
 **Neutral but worth recording**
 
@@ -203,10 +213,69 @@ Each stays under roughly 400 changed lines, which is where review quality tends 
 ### Review aids
 
 - **One member family per commit** inside each pull request, so the diff can be reviewed commit by commit.
-- **The test suite must pass untouched** in PRs 3 to 6. These are mechanical relocations, so any test change is a signal
+- **The test suite must pass untouched** in the relocation pull requests. These are mechanical moves, so any test change is a signal
   that the move was not a move. State this explicitly in each pull request description.
 - **State the source and destination line ranges** in the description, so a reviewer can diff the two sides directly
   instead of hunting for them.
+- **A disappearing import is evidence of a clean cut.** When the last consumer of a symbol leaves `AbstractGraph`, its
+  import becomes unused and must be removed. That removal is a good proxy for "the concern left wholly", and the
+  compiler will not point it out.
+
+## Implementation feedback
+
+The plan was carried out in five pull requests, #1131 to #1136. This section records what the analysis got right, what
+it missed, and what the numbers turned out to be. It is written after the fact and does not change any decision above.
+
+### Estimates against actuals
+
+| | Estimated | Actual |
+|---|---|---|
+| `AbstractGraph.ts` final size | roughly 800 lines | **811 lines**, from 1337 |
+| Files touched | about 25 | **24** |
+| Total churn | 1100 to 1500 changed lines | **1561** (937 insertions, 624 deletions) |
+| Lines leaving in step 3 | ~150 | 154 |
+| Lines leaving in step 4 | ~275 | 286 |
+| Lines leaving in step 5 | ~85 | 90 |
+
+The per-step line estimates, obtained by summing the line ranges of the appendices, proved accurate within a few
+percent. The total churn came out 4% above the upper bound, because each moved member costs slightly more than
+predicted once the TSDoc is re-homed in the `.type.ts` file.
+
+Step 4 was split into two pull requests, #1134 and #1135, since a single one would have been far above the review
+ceiling. Of the five, only #1135 exceeded it, at 484 changed lines, because it also carried the `PageMixin` rename.
+
+### What the analysis missed
+
+Two consequences of a mixin move were not anticipated, and both are now recorded in the Context and Consequences
+sections above.
+
+**Declaration order is observable through the Codec.** Regrouping `pageFormat` and `warningImage` in step 1 changed the
+order of the child elements in the exported XML and broke `all-graph-classes.test.ts`. Not a breaking change, decoding
+matches on the `as` attribute, but it is a real output difference that the analysis treated as impossible: step 1 was
+described as an in-file move with no effect at all.
+
+**Arrow function properties change binding when they become mixin members.** Six accessors were affected across steps 3
+and 4: `isIgnoreScrollbars`, `isTranslateToScrollPosition`, `isExportEnabled`, `isImportEnabled`,
+`getAlreadyConnectedResource` and `getContainsValidationErrorsResource`. They were bound to their instance and could be
+detached; as prototype methods they cannot. This is the only user-visible break of the whole plan, and it needed a
+changelog entry. The ADR asserted flatly that mixin moves are not breaking changes, which is true of the type surface
+but not of every runtime behaviour.
+
+### What worked
+
+**The safety-net-first ordering paid off immediately.** The shared-state tests of step 1 were in place before any
+property moved, and the group they cover grew with the plan.
+
+**The "no test changes" rule did its job.** Four of the five pull requests changed no test at all. The single exception
+was step 1, and the test it broke pointed straight at the serialization finding above. A rule whose violation produces
+a genuine discovery is worth keeping.
+
+**Import removal turned out to be the best signal of a clean cut**, which is why it now appears in the review aids.
+`hasScrollbars`, `isI18nEnabled`, `isNode` and `Point` all became unused in `AbstractGraph` as their concerns left.
+
+**Splitting a property from its getter is workable.** `warningImage` and `pageFormat` stayed while `getWarningImage`
+and `getPageFormat` moved, with a comment at the getter recording why. It reads better than expected, and it keeps the
+blocked property visible in the group where the constraint is documented.
 
 ## Appendix A: members moving to an existing mixin
 
