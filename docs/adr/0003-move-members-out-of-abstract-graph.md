@@ -145,10 +145,19 @@ Safety net first, then the interim moves, which are non-breaking and shrink the 
 3. **The viewport-translation batch to `PanningMixin`**: `scrollPointToVisible`, the scrollbar flags, and `center`.
 4. **The high-confidence rows of Appendix A** (`CellsMixin`, `ValidationMixin`, `LabelMixin`, `OverlaysMixin`,
    `OrderMixin`, `PageMixin`). Mechanical, removes roughly 275 lines.
-5. **Drill-down into `GroupingMixin`** (Appendix B.2).
-6. **The remaining shared-state-blocked moves** (`pageFormat` and `warningImage` into their target mixin,
-   `multiplicities`, `alternateEdgeStyle`). Best handled as part of the mixin-to-plugin conversion of their host, which
-   removes the blocker outright.
+5. **Drill-down into `GroupingMixin`** (Appendix B.2). This is the last move of the plan.
+
+**The shared-state-blocked properties stay in `AbstractGraph`, and this plan does not move them.** `pageFormat`,
+`warningImage`, `multiplicities` and `alternateEdgeStyle` remain in the group described by D3. There is no step 6.
+
+Step 1 already does everything that can be done for them: they sit together where the constraint is visible at the
+declaration, and a test pins the per-instance guarantee so a future move cannot break it silently. Moving them would
+require per-instance initialization inside a mixin, which `mixInto` does not provide and which the project has
+deliberately chosen not to fix.
+
+Appendix A still records their target mixin, because the cohesion argument is real and will apply the day the
+constraint disappears. Those rows are an inventory, not a backlog: acting on them is a separate decision, out of scope
+here.
 
 ### Volume
 
