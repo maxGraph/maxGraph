@@ -102,6 +102,33 @@ describe('setPrefixedStyle', () => {
     });
   });
 
+  // Custom properties have no attribute on CSSStyleDeclaration, unlike the standard properties above, so they can
+  // only be set with setProperty. They are never vendor prefixed.
+  describe('with a CSS custom property', () => {
+    test.each([
+      ['without vendor prefix', {}],
+      ['with vendor prefix', { IS_GC: true }],
+    ])('sets the custom property %s', (_name, flags) => {
+      simulateBrowser(flags);
+      const style = newStyle();
+
+      setPrefixedStyle(style, '--overlay-offset', '10px');
+
+      expect(style.getPropertyValue('--overlay-offset')).toBe('10px');
+    });
+
+    test('does not add a vendor prefixed variant', () => {
+      simulateBrowser({ IS_GC: true });
+      const style = newStyle();
+
+      setPrefixedStyle(style, '--overlay-offset', '10px');
+
+      expect(style.cssText).toBe('--overlay-offset: 10px;');
+      expect(rawProperty(style, 'Webkit--overlay-offset')).toBeUndefined();
+      expect(rawProperty(style, '--overlay-offset')).toBeUndefined();
+    });
+  });
+
   describe('with vendor prefix', () => {
     test.each([
       ['Safari', { IS_SF: true }, 'WebkitTransformOrigin'],

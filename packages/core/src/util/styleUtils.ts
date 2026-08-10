@@ -110,12 +110,21 @@ export const parseCssNumber = (value: string) => {
  * vendor prefixed one: the prefix is built by capitalizing the first character of `name`, which only yields a
  * valid property name from a camelCase input (`transformOrigin` gives `WebkitTransformOrigin`, whereas
  * `transform-origin` gives the meaningless `WebkitTransform-origin`).
+ *
+ * A CSS custom property such as `--overlay-offset` is set as is, and is never vendor prefixed.
  */
 export const setPrefixedStyle = (
   style: CSSStyleDeclaration,
   name: string,
   value: string
 ): void => {
+  // Custom properties have no attribute on CSSStyleDeclaration, unlike the standard properties handled below, so
+  // assigning one would only create a JavaScript property and no CSS declaration. They are never vendor prefixed.
+  if (name.startsWith('--')) {
+    style.setProperty(name, value);
+    return;
+  }
+
   let prefix: string | null = null;
 
   if (Client.IS_SF || Client.IS_GC) {
