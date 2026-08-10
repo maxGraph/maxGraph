@@ -27,6 +27,7 @@ _**Note:** Yet to be released breaking changes appear here._
   ```
   to:
   ```typescript
+  // Assume that the SelectionCellsHandler plugin has been registered on the graph. Then get it and set the factory:
   const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!;
   selectionCellsHandler.setVertexHandlerFactory((state) => new MyVertexHandler(state));
   ```

@@ -171,6 +171,7 @@ class MyVertexHandler extends VertexHandler {
   // for instance, override createCustomHandles() to add shape specific controls
 }
 
+// Assume that the SelectionCellsHandler plugin has been registered on the graph. Then get it and set the factory:
 const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!;
 selectionCellsHandler.setVertexHandlerFactory((state) => new MyVertexHandler(state));
 ```
