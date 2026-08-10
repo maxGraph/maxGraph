@@ -88,6 +88,10 @@ export abstract class AbstractGraph extends EventSource {
   // The mixin application currently causes shared state for complex types (object/array),
   // so these are defined here to ensure a fresh instance per Graph.
   // See https://github.com/maxGraph/maxGraph/pull/751 and https://github.com/maxGraph/maxGraph/pull/879
+  //
+  // Every property of this group is covered by a per-instance test in __tests__/view/Graph.test.ts,
+  // under "Expect no global state for properties coming from mixins". Add a case there when adding a property here,
+  // otherwise moving it to a mixin later silently shares it across all Graph instances, with no error to signal it.
   // ===================================================================================================================
 
   /**
@@ -115,6 +119,26 @@ export abstract class AbstractGraph extends EventSource {
     expandedImage: new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9),
     collapseToPreferredSize: true,
   };
+
+  /**
+   * Specifies the page format for the background page.
+   * This is used as the default in {@link PrintPreview} and for painting the background page
+   * if {@link pageVisible} is `true` and the page breaks if {@link pageBreaksVisible} is `true`.
+   * @default {@link PAGE_FORMAT_A4_PORTRAIT}
+   */
+  pageFormat = new Rectangle(...PAGE_FORMAT_A4_PORTRAIT);
+
+  /**
+   * Specifies the {@link Image} for the image to be used to display a warning
+   * overlay. See {@link setCellWarning}. Default value is Client.imageBasePath +
+   * '/warning'.  The extension for the image depends on the platform. It is
+   * '.png' on the Mac and '.gif' on all other platforms.
+   */
+  warningImage: Image = new Image(
+    `${Client.imageBasePath}/warning${Client.IS_MAC ? '.png' : '.gif'}`,
+    16,
+    16
+  );
 
   // ===================================================================================================================
   // Group: Variables managed here (not in mixins)
@@ -229,14 +253,6 @@ export abstract class AbstractGraph extends EventSource {
    * @default false
    */
   preferPageSize = false;
-
-  /**
-   * Specifies the page format for the background page.
-   * This is used as the default in {@link PrintPreview} and for painting the background page
-   * if {@link pageVisible} is `true` and the page breaks if {@link pageBreaksVisible} is `true`.
-   * @default {@link PAGE_FORMAT_A4_PORTRAIT}
-   */
-  pageFormat = new Rectangle(...PAGE_FORMAT_A4_PORTRAIT);
 
   /**
    * Specifies the scale of the background page.
@@ -368,18 +384,6 @@ export abstract class AbstractGraph extends EventSource {
    * @default true
    */
   multigraph = true;
-
-  /**
-   * Specifies the {@link Image} for the image to be used to display a warning
-   * overlay. See {@link setCellWarning}. Default value is Client.imageBasePath +
-   * '/warning'.  The extension for the image depends on the platform. It is
-   * '.png' on the Mac and '.gif' on all other platforms.
-   */
-  warningImage: Image = new Image(
-    `${Client.imageBasePath}/warning${Client.IS_MAC ? '.png' : '.gif'}`,
-    16,
-    16
-  );
 
   /**
    * Specifies the resource key for the error message to be displayed in

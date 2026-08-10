@@ -34,6 +34,11 @@ _**Note:** Yet to be released breaking changes appear here._
 - The dispatch methods `createHandler` and `createEdgeHandler` are now defined on `SelectionCellsHandler`. If you were overriding them to change the dispatch logic itself (and not only the instantiated class), extend `SelectionCellsHandler` and pass your subclass in the `plugins` option.
 - `SelectionCellsHandler.createHandler` returns a non-nullable `CellHandler` (the new `EdgeHandler | VertexHandler` union type exported from the package), whereas `AbstractGraph.createHandler` was typed as nullable. TypeScript users can drop the now-useless null checks on the returned value.
 
+**Other Changes**:
+- The order of the child elements produced by the XML serialization of `<Graph>` and `<BaseGraph>` has changed: `pageFormat` and `warningImage` are now emitted right after `options`, instead of last.
+  This is not a breaking change, decoding matches elements by their `as` attribute and is order-independent, so existing documents keep decoding identically and previously exported documents are still valid.
+  It is mentioned here only for consumers comparing exported XML as text, for instance in golden-file tests.
+
 ## 0.24.0
 
 Release date: `2026-07-08`
