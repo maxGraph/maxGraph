@@ -25,7 +25,6 @@ import Client from '../Client.js';
 import type PanningHandler from './plugin/PanningHandler.js';
 import GraphView from './GraphView.js';
 import CellRenderer from './cell/CellRenderer.js';
-import Point from './geometry/Point.js';
 import { getCurrentStyle, parseCssNumber } from '../util/styleUtils.js';
 import Cell from './cell/Cell.js';
 import GraphDataModel from './GraphDataModel.js';
@@ -250,13 +249,6 @@ export abstract class AbstractGraph extends EventSource {
    * @default 0
    */
   border = 0;
-
-  /**
-   * Specifies if the scale and translate should be reset if the root changes in
-   * the model.
-   * @default true
-   */
-  resetViewOnRootChange = true;
 
   /**
    * {@link EdgeStyle} to be used for loops.
@@ -522,88 +514,6 @@ export abstract class AbstractGraph extends EventSource {
   /*****************************************************************************
    * Group: Drill down
    *****************************************************************************/
-
-  /**
-   * Returns the current root of the displayed cell hierarchy. This is a
-   * shortcut to {@link GraphView.currentRoot} in {@link GraphView}.
-   */
-  getCurrentRoot() {
-    return this.view.currentRoot;
-  }
-
-  /**
-   * Returns the translation to be used if the given cell is the root cell as
-   * an {@link Point}. This implementation returns null.
-   *
-   * To keep the children at their absolute position while stepping into groups,
-   * this function can be overridden as follows.
-   *
-   * @example
-   * ```javascript
-   * var offset = new mxPoint(0, 0);
-   *
-   * while (cell != null)
-   * {
-   *   var geo = this.model.getGeometry(cell);
-   *
-   *   if (geo != null)
-   *   {
-   *     offset.x -= geo.x;
-   *     offset.y -= geo.y;
-   *   }
-   *
-   *   cell = this.model.getParent(cell);
-   * }
-   *
-   * return offset;
-   * ```
-   *
-   * @param cell {@link Cell} that represents the root.
-   */
-  getTranslateForRoot(cell: Cell | null): Point | null {
-    return null;
-  }
-
-  /**
-   * Returns the offset to be used for the cells inside the given cell. The
-   * root and layer cells may be identified using {@link GraphDataModel.isRoot} and
-   * {@link GraphDataModel.isLayer}. For all other current roots, the
-   * {@link GraphView.currentRoot} field points to the respective cell, so that
-   * the following holds: cell == this.view.currentRoot. This implementation
-   * returns null.
-   *
-   * @param cell {@link Cell} whose offset should be returned.
-   */
-  getChildOffsetForCell(cell: Cell): Point | null {
-    return null;
-  }
-
-  /**
-   * Uses the root of the model as the root of the displayed cell hierarchy
-   * and selects the previous root.
-   */
-  home() {
-    const current = this.getCurrentRoot();
-
-    if (current != null) {
-      this.view.setCurrentRoot(null);
-      const state = this.view.getState(current);
-
-      if (state != null) {
-        this.setSelectionCell(current);
-      }
-    }
-  }
-
-  /**
-   * Returns true if the given cell is a valid root for the cell display
-   * hierarchy. This implementation returns true for all non-null values.
-   *
-   * @param cell {@link Cell} which should be checked as a possible root.
-   */
-  isValidRoot(cell: Cell) {
-    return !!cell;
-  }
 
   /*****************************************************************************
    * Group: Graph display
