@@ -335,6 +335,15 @@ declare module '../AbstractGraph' {
     /**
      * Adds the specified cells to the given parent. This method fires
      * {@link Event#CELLS_ADDED} while the transaction is in progress.
+     *
+     * @param cells Array of {@link Cell}s to be added.
+     * @param parent {@link Cell} that represents the new parent.
+     * @param index Index to insert the cells at.
+     * @param source Source {@link Cell} for all added cells, or `null` to not connect them.
+     * @param target Target {@link Cell} for all added cells, or `null` to not connect them.
+     * @param absolute Boolean indicating if the cells should be kept at their absolute position.
+     * @param constrain Optional boolean indicating if {@link constrainChild} should be called for each added cell. Default is `true`.
+     * @param extend Optional boolean indicating if {@link extendParent} should be called for each added cell. Only applies when {@link isExtendParentsOnAdd} and {@link isExtendParent} are enabled. Default is `true`.
      */
     cellsAdded: (
       cells: Cell[],

@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { expect } from '@jest/globals';
 import { Cell, type CellStateStyle, Graph } from '../src';
 
 /**
@@ -35,4 +36,23 @@ export const createCellWithStyle = (style: CellStateStyle): Cell => {
   const cell = new Cell();
   cell.style = style;
   return cell;
+};
+
+/**
+ * Checks the bounds of the {@link Geometry} of the given {@link Cell}.
+ *
+ * Compare all bounds at once, so that a failure reports the whole geometry instead of the first
+ * property that differs.
+ */
+export const expectGeometryBounds = (
+  cell: Cell,
+  expected: { x: number; y: number; width: number; height: number }
+): void => {
+  const geometry = cell.getGeometry();
+  expect({
+    x: geometry?.x,
+    y: geometry?.y,
+    width: geometry?.width,
+    height: geometry?.height,
+  }).toStrictEqual(expected);
 };
