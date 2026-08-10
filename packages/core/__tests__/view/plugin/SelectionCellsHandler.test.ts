@@ -33,7 +33,7 @@ import {
   EdgeSegmentHandler,
   EdgeStyle,
   type EdgeStyleFunction,
-  EdgeStyleHandlerKind,
+  type EdgeStyleHandlerKind,
   EdgeStyleRegistry,
   ElbowEdgeHandler,
   Geometry,

@@ -232,7 +232,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   /**
    * Hooks to create a new handler for the given cell state.
    *
-   * This implementation returns a new {@link EdgeHandler} of the corresponding cell is an edge,
+   * This implementation returns a new {@link EdgeHandler} if the corresponding cell is an edge,
    * otherwise it returns an {@link VertexHandler}.
    *
    * @param state {@link CellState} whose handler should be created.
