@@ -21,7 +21,8 @@ What remains in `AbstractGraph` is a mix of three things: members that genuinely
 belong to an existing mixin and were never moved, and members that form coherent groups with no home yet. This ADR
 decides how to tell them apart and where each goes.
 
-Three technical facts constrain every option, and they are not obvious from reading the code:
+Four technical facts constrain every option, and none of them is obvious from reading the code. The first three come
+from the analysis, the fourth was found while implementing it:
 
 **Moving a member to a mixin is not a breaking change.** `applyGraphMixins(AbstractGraph)` runs unconditionally at
 `AbstractGraph.ts:1337`, and each mixin ships a `.type.ts` that augments the `AbstractGraph` interface through
