@@ -184,10 +184,13 @@ const Template = ({ ...args }: Record<string, any>) => {
   const graph = new MyCustomGraph(container, undefined, plugins);
   graph.setConnectable(true);
 
-  // all edges use the elbow edge style
+  // Enforce the use of the CustomElbowEdgeHandler for all edges, whatever their edge style.
+  // The edges inserted below use 'elbowEdgeStyle', but the ones drawn interactively use the 'orthogonalEdgeStyle' set
+  // by MyCustomConnectionHandler.createEdgeState, so registering the factory for the 'elbow' kind only would leave
+  // them with the built-in handler, without the fixed connection points demonstrated by this story.
   graph
     .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
-    .setEdgeHandlerFactory('elbow', (state) => {
+    .setEdgeHandlerFactoryForAllKinds((state) => {
       return new CustomElbowEdgeHandler(state);
     });
 
