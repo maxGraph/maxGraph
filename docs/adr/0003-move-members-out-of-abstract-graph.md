@@ -212,6 +212,11 @@ Each stays under roughly 400 changed lines, which is where review quality tends 
 
 Per D2 these are staging moves: non-breaking, and each member follows its host mixin when that mixin becomes a plugin.
 
+**Read the target column literally.** A row whose blocking state is `yes` does not move, wholly or in part: the target
+named there is where the member would belong if the constraint of D3 did not exist, not a planned destination. Those
+entries are an inventory kept for the day the constraint disappears. Where a row mixes both, the target column says
+which part moves and which part stays.
+
 Note there is no `ScrollMixin`: the scrolling and panning members live in `PanningMixin`.
 
 | Members (line in `AbstractGraph.ts`) | Target mixin | Rationale | Blocking state | Confidence |
@@ -225,11 +230,11 @@ Note there is no `ScrollMixin`: the scrolling and panning members live in `Panni
 | `multigraph` (375), `isMultigraph` (1201), `setMultigraph` (1212), `allowLoops` (360), `isAllowLoops` (1219), `setAllowLoops` (1228), `alreadyConnectedResource` (395), `getAlreadyConnectedResource` (534), `containsValidationErrorsResource` (403), `getContainsValidationErrorsResource` (536) | `ValidationMixin` | `ValidationMixin.ts:26-27` already `Pick`s `isAllowLoops` and `isMultigraph`; the two resource keys are only read by validation messages | none | **High** |
 | `convertValueToString` (1120) | `LabelMixin` | `LabelMixin.ts:51` is the primary caller (`getLabel`), also used by `EditingMixin.ts:88` and `TooltipHandler.ts:418` | none | **High** |
 | `getLinkForCell` (1141) | `LabelMixin` | Cell-text concern, single internal caller `PrintPreview.ts:948`. Weaker cohesion than `convertValueToString`, could equally justify staying | none | Medium |
-| `warningImage` (383), `getWarningImage` (530) | `OverlaysMixin` | `OverlaysMixin.ts:133` is the only consumer (`setCellWarning`), and `OverlaysMixin.type.ts:74,85` already documents `warningImage` as if it were local | **yes**: `Image` instance | Medium |
+| `warningImage` (383), `getWarningImage` (530) | `OverlaysMixin` for `getWarningImage`. `warningImage` **stays in `AbstractGraph`** | `OverlaysMixin.ts:133` is the only consumer (`setCellWarning`), and `OverlaysMixin.type.ts:74,85` already documents `warningImage` as if it were local | **yes**: `Image` instance | Medium |
 | `keepEdgesInForeground` (333), `keepEdgesInBackground` (341) | `OrderMixin` | Z-order concern, single consumer `GraphView.ts:1095-1096`. `OrderMixin` is currently tiny and is the natural home | none | Medium |
-| `pageVisible` (203), `isPageVisible` (510), `pageBreaksVisible` (211), `isPageBreaksVisible` (511), `pageBreakColor` (217), `getPageBreakColor` (512), `pageBreakDashed` (223), `isPageBreakDashed` (513), `minPageBreakDist` (229), `getMinPageBreakDist` (514), `preferPageSize` (236), `isPreferPageSize` (515), `pageFormat` (244), `getPageFormat` (516), `pageScale` (251), `getPageScale` (517), `getPreferredPageSize` (797) | `PageMixin` (D5) | `PageBreaksMixin.ts:25-32` already `Pick`s six of these getters | **yes**: `pageFormat` is a mutable `Rectangle` | Medium |
-| `multiplicities` (114) | `ValidationMixin` | Only used by `validateCell`. Correct home on cohesion grounds | **yes**: array | **Low**, blocked by D3 |
-| `alternateEdgeStyle` (102) | `EdgeMixin` | Consumed by `flipEdge` | **yes**: `CellStyle` object | **Low**, blocked by D3 |
+| `pageVisible` (203), `isPageVisible` (510), `pageBreaksVisible` (211), `isPageBreaksVisible` (511), `pageBreakColor` (217), `getPageBreakColor` (512), `pageBreakDashed` (223), `isPageBreakDashed` (513), `minPageBreakDist` (229), `getMinPageBreakDist` (514), `preferPageSize` (236), `isPreferPageSize` (515), `pageFormat` (244), `getPageFormat` (516), `pageScale` (251), `getPageScale` (517), `getPreferredPageSize` (797) | `PageMixin` (D5), except `pageFormat` which **stays in `AbstractGraph`** | `PageBreaksMixin.ts:25-32` already `Pick`s six of these getters | **yes**: `pageFormat` is a mutable `Rectangle` | Medium |
+| `multiplicities` (114) | **Stays in `AbstractGraph`.** Natural home would be `ValidationMixin` | Only used by `validateCell`. Correct home on cohesion grounds | **yes**: array | **Low**, blocked by D3 |
+| `alternateEdgeStyle` (102) | **Stays in `AbstractGraph`.** Natural home would be `EdgeMixin` | Consumed by `flipEdge` | **yes**: `CellStyle` object | **Low**, blocked by D3 |
 
 `EdgeMixin` receives nothing actionable: `alternateEdgeStyle` is its only candidate and it is blocked.
 
