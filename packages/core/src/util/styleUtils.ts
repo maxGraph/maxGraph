@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import Client from '../Client.js';
+import { isNullish } from '../internal/utils.js';
 import { FONT_STYLE_MASK, LINE_HEIGHT } from './Constants.js';
 import Point from '../view/geometry/Point.js';
 import CellPath from '../view/cell/CellPath.js';
@@ -103,13 +104,20 @@ export const parseCssNumber = (value: string) => {
  * ```javascript
  * styleUtils.setPrefixedStyle(node.style, 'transformOrigin', '0% 0%');
  * ```
+ *
+ * **WARNING**: `name` must be written in camelCase, as in the example above.
+ *
+ * A kebab-case name such as `transform-origin` still sets the standard property, but silently skips the
+ * vendor prefixed one: the prefix is built by capitalizing the first character of `name`, which only yields a
+ * valid property name from a camelCase input (`transformOrigin` gives `WebkitTransformOrigin`, whereas
+ * `transform-origin` gives the meaningless `WebkitTransform-origin`).
  */
 export const setPrefixedStyle = (
   style: CSSStyleDeclaration,
   name: string,
   value: string
-) => {
-  let prefix = null;
+): void => {
+  let prefix: string | null = null;
 
   if (Client.IS_SF || Client.IS_GC) {
     prefix = 'Webkit';
@@ -117,11 +125,15 @@ export const setPrefixedStyle = (
     prefix = 'Moz';
   }
 
-  style.setProperty(name, value);
+  // Assign the property instead of calling CSSStyleDeclaration.setProperty, which only accepts kebab-case names
+  // and therefore silently discards both the camelCase names documented above and the vendor prefixed names
+  // computed below. See https://github.com/maxGraph/maxGraph/issues/1046
+  const properties = style as unknown as Record<string, string>;
+  properties[name] = value;
 
-  if (prefix !== null && name.length > 0) {
+  if (!isNullish(prefix) && name.length > 0) {
     name = prefix + name.substring(0, 1).toUpperCase() + name.substring(1);
-    style.setProperty(name, value);
+    properties[name] = value;
   }
 };
 
