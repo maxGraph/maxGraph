@@ -89,9 +89,10 @@ export abstract class AbstractGraph extends EventSource {
   // so these are defined here to ensure a fresh instance per Graph.
   // See https://github.com/maxGraph/maxGraph/pull/751 and https://github.com/maxGraph/maxGraph/pull/879
   //
-  // Every property of this group is covered by a per-instance test in __tests__/view/Graph.test.ts,
-  // under "Expect no global state for properties coming from mixins". Add a case there when adding a property here,
-  // otherwise moving it to a mixin later silently shares it across all Graph instances, with no error to signal it.
+  // Every property of this group is covered by a per-instance test in
+  // __tests__/view/no-global-state-for-mixin-properties.ts, run against each concrete graph implementation. Add a case
+  // there when adding a property here, otherwise moving it to a mixin later silently shares it across all Graph
+  // instances, with no error to signal it.
   // ===================================================================================================================
 
   /**
