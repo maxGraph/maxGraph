@@ -72,3 +72,7 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "chore(deps-gha)"
+    labels:
+      - dependencies
+      - github_actions
+      - skip-changelog
