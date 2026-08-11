@@ -249,6 +249,8 @@ jobs:
       #       maxgraph-pr-${{ steps.pr.outputs.number }}.vercel.app \
       #       --token=${{ secrets.VERCEL_TOKEN }}
 
+# TODO single comment across multiple workflow runs (requires PR comment ID caching) - action exist for this
+# TODO enrich content: like vercel or surge action does
       - name: Comment on PR
         uses: actions/github-script@v7
         with:
