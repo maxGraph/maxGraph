@@ -15,7 +15,11 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { createCellWithStyle, createGraphWithoutPlugins } from '../../utils';
+import {
+  createCellWithStyle,
+  createGraphWithoutPlugins,
+  expectGeometryBounds,
+} from '../../utils';
 import {
   BaseGraph,
   Cell,
@@ -465,6 +469,87 @@ describe('postProcessCellStyle', () => {
       const result = graph.postProcessCellStyle(style);
 
       expect(result.image).toBe('http://first.example/img.png');
+    });
+  });
+});
+
+// https://github.com/maxGraph/maxGraph/issues/1045
+describe('cellsAdded', () => {
+  const parentBounds = { x: 0, y: 0, width: 100, height: 100 };
+
+  /**
+   * Creates a graph with a `100x100` parent vertex and a child vertex that is not in the parent yet.
+   * The caller adds the child to the parent with the `constrain` and `extend` values under test.
+   */
+  const createGraphWithVertices = (childBounds: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }) => {
+    const graph = createGraphWithoutPlugins();
+    const parent = graph.insertVertex({
+      value: 'parent',
+      position: [parentBounds.x, parentBounds.y],
+      size: [parentBounds.width, parentBounds.height],
+    });
+    const child = graph.insertVertex({
+      value: 'child',
+      position: [childBounds.x, childBounds.y],
+      size: [childBounds.width, childBounds.height],
+    });
+    const addChildToParent = (constrain?: boolean, extend?: boolean): void => {
+      graph.cellsAdded(
+        [child],
+        parent,
+        parent.getChildCount(),
+        null,
+        null,
+        false,
+        constrain,
+        extend
+      );
+    };
+    return { graph, parent, child, addChildToParent };
+  };
+
+  describe('constrain', () => {
+    // A child at negative coordinates fits in the parent bounds, so `extendParent` never triggers and
+    // only `constrainChild` can change the child geometry.
+    const childBounds = { x: -50, y: -50, width: 80, height: 40 };
+    const constrainedBounds = { ...childBounds, x: 0, y: 0 };
+
+    test.each([
+      ['not set, defaults to true', undefined, constrainedBounds],
+      ['true', true, constrainedBounds],
+      ['false', false, childBounds],
+    ])('%s', (_title, constrain, expectedChildBounds) => {
+      const { parent, child, addChildToParent } = createGraphWithVertices(childBounds);
+
+      addChildToParent(constrain);
+
+      expectGeometryBounds(child, expectedChildBounds);
+      expectGeometryBounds(parent, parentBounds);
+    });
+  });
+
+  describe('extend', () => {
+    // A child larger than the parent triggers `extendParent`. `constrain` is always disabled here, as
+    // `constrainChild` runs after `extendParent` and would otherwise hide its effect.
+    const childBounds = { x: 50, y: 50, width: 200, height: 200 };
+    const extendedParentBounds = { ...parentBounds, width: 250, height: 250 };
+
+    test.each([
+      ['not set, defaults to true', undefined, extendedParentBounds],
+      ['true', true, extendedParentBounds],
+      ['false', false, parentBounds],
+    ])('%s', (_title, extend, expectedParentBounds) => {
+      const { parent, child, addChildToParent } = createGraphWithVertices(childBounds);
+
+      addChildToParent(false, extend);
+
+      expectGeometryBounds(parent, expectedParentBounds);
+      expectGeometryBounds(child, childBounds);
     });
   });
 });
