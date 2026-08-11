@@ -200,16 +200,21 @@ across every graph instance, with no compile error and, until step 1 lands, no f
 A third reason applies to any future plugin extraction, though not to the pull requests below since all of them are
 source-compatible: mixing breaking and non-breaking changes forces the whole batch to wait for a major release.
 
-| PR | Content | Size | Breaking |
-|---|---|---|---|
-| 1 | This ADR, plus ADR 0001 and ADR 0002 | ~450 lines | no |
-| 2 | Shared-state regression tests, regrouping `pageFormat` / `warningImage`, and the `sizeDidChange` comment | ~130 changed | no |
-| 3 | Viewport translation to `PanningMixin` | ~300 changed | no |
-| 4 | `CellsMixin` + `ValidationMixin` + `OverlaysMixin` batch | ~350 changed | no |
-| 5 | `LabelMixin` + `OrderMixin` batch, plus the page cluster and the `PageMixin` rename | ~360 changed | no |
-| 6 | Drill-down to `GroupingMixin` | ~180 changed | no |
+| PR | Content | Size | Breaking (source) | Breaking (runtime) |
+|---|---|---|---|---|
+| 1 | This ADR, plus ADR 0001 and ADR 0002 | ~450 lines | no | no |
+| 2 | Shared-state regression tests, regrouping `pageFormat` / `warningImage`, and the `sizeDidChange` comment | ~130 changed | no | no |
+| 3 | Viewport translation to `PanningMixin` | ~300 changed | no | **yes**, see the note below |
+| 4 | `CellsMixin` + `ValidationMixin` + `OverlaysMixin` batch | ~350 changed | no | **yes**, see the note below |
+| 5 | `LabelMixin` + `OrderMixin` batch, plus the page cluster and the `PageMixin` rename | ~360 changed | no | no |
+| 6 | Drill-down to `GroupingMixin` | ~180 changed | no | no |
 
 Each stays under roughly 400 changed lines, which is where review quality tends to drop.
+
+The runtime column was added after the fact: the plan assumed source compatibility implied behavioural compatibility.
+Pull requests 3 and 4 turn arrow function properties into prototype methods, which breaks detached references at
+runtime while still compiling, so both carry a changelog entry under Breaking Changes. Everything else in the table is
+compatible on both counts. See [What the analysis missed](#what-the-analysis-missed).
 
 ### Review aids
 
@@ -259,8 +264,9 @@ described as an in-file move with no effect at all.
 and 4: `isIgnoreScrollbars`, `isTranslateToScrollPosition`, `isExportEnabled`, `isImportEnabled`,
 `getAlreadyConnectedResource` and `getContainsValidationErrorsResource`. They were bound to their instance and could be
 detached; as prototype methods they cannot. This is the only user-visible break of the whole plan, and it needed a
-changelog entry. The ADR asserted flatly that mixin moves are not breaking changes, which is true of the type surface
-but not of every runtime behaviour.
+changelog entry, introduced by #1132 and extended by #1134. The ADR asserted flatly that mixin moves are not breaking
+changes, which is true of the type surface but not of every runtime behaviour. The pull request table now separates the
+two, since "not breaking" without that qualifier is what made the omission easy.
 
 ### What worked
 
