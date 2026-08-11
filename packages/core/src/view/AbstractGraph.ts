@@ -485,15 +485,18 @@ export abstract class AbstractGraph extends EventSource {
   // TODO names of methods to review
   // decide if we allow to load several plugins by passing an array or an single object
   // same for unloadPlugin
+  // loadPlugins(...plugins: GraphPluginConstructor[])
+  // loadPlugins(Plugin1, Plugin2, ...)
   // TODO add various tests on the 2 methods
   loadPlugin(plugin: GraphPluginConstructor): void {
     this.plugins.set(plugin.pluginId, new plugin(this));
   }
 
-  unloadPlugin(pluginId: string) {
+  // TODO method signature
+  unloadPlugin(pluginId: string): boolean {
     // destroy the plugin, remove it
     this.plugins.get(pluginId)?.onDestroy();
-    this.plugins.delete(pluginId);
+    return this.plugins.delete(pluginId);
 
     // from the destroy method
     // Object.values(this.plugins).forEach((p) => p.onDestroy());
