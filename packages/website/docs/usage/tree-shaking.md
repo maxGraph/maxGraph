@@ -17,7 +17,8 @@ Since its inception, one of `maxGraph`'s goals has been to provide better tree-s
 
 This page explains what tree-shaking is, what `maxGraph` does to support it, and above all what **your application** must
 do to benefit from it. The short version: use [`BaseGraph`](./graph.md#basegraph) and register only the features you
-actually use.
+actually use, through the registries and configuration objects listed in the
+[Global Configuration](./global-configuration.md) page.
 
 Tree-shaking is an ongoing effort tracked in
 [issue #665](https://github.com/maxGraph/maxGraph/issues/665). See [Going further](#going-further) for the current
@@ -187,9 +188,13 @@ Both are detailed, with complete imports, in
 
 This is the core principle: **only load what you need, and register only the features you use.**
 
-Style elements, plugins, codecs, i18n and the logger are all optional and registered on demand. Each family below
-follows the same pattern: a global registry or configuration object, a granular registration API, and a
-`registerDefault*` escape hatch that registers everything at once and therefore cancels the benefit.
+Style elements, plugins, codecs, i18n and the logger are all optional, but each family opts in through its own
+mechanism: style elements through their registries and the granular `register*` helpers, plugins through the `plugins`
+constructor option, codecs through the codec registration functions, i18n and the logger through `GlobalConfig`.
+
+What they share is that each offers a broad shortcut next to the narrow one: `registerDefaultStyleElements()` and the
+`registerDefault*` functions, `getDefaultPlugins()`, `registerAllCodecs()`. These load everything at once and therefore
+cancel the benefit. Always prefer the narrowest option that covers what the application actually uses.
 
 :::warning
 All the registries are **global**. Registering an element makes it visible to every `Graph` and `BaseGraph` instance of
@@ -389,8 +394,10 @@ Despite its name, the work is not only about swapping one graph class for anothe
 
 Steps 1, 6 and 7 bracket the work: measure before, check the rendering, measure after.
 
-Both graph classes share the same API through `AbstractGraph`, so this is primarily a configuration change, not an API
-change. Proceed incrementally and keep the application running at every step.
+Both graph classes inherit the same graph API from `AbstractGraph`, so the calls the application makes on the graph do
+not change. What differs is the construction: `Graph` takes positional arguments and loads its defaults on its own,
+`BaseGraph` takes an options object and requires the plugins and style elements to be declared explicitly. Proceed
+incrementally and keep the application running at every step.
 
 The recommended strategy is **not** to start from an empty graph and guess what to add back. Start by loading
 **everything**, exactly as `Graph` does, so that the application behaves as before, then **remove progressively** what
@@ -540,8 +547,9 @@ gives the total gain of the migration, whereas the intermediate measurements onl
 
 ## Going Further
 
-Further tree-shaking improvements that allow selective loading of built-in elements like shapes, plugins and editing
-functionalities would enable applications to load only the necessary components, reducing the final bundle size.
+Selective loading of the built-in elements, shapes, plugins, style elements and editing features, is what the rest of
+this page describes: it is available today. What remains is finer-grained modularity, so that applications stop
+carrying code they never reach whichever features they opt into.
 
 This work is tracked in [issue #665](https://github.com/maxGraph/maxGraph/issues/665), which serves as the parent issue
 for the topic and links all the sub-issues. The main ones still open are:

@@ -118,7 +118,7 @@ When instantiated, `Graph` automatically:
 3. **Exposes factory methods** (`createCellRenderer()`, `createGraphDataModel()`, etc.) that subclasses can override to customize collaborators.
 
 :::warning
-Steps 1 and 2 happen whether the application uses these elements or not, so they set a floor on the size of your bundle. This is the reason `Graph` is not recommended for production. See the [Tree-Shaking](./tree-shaking.md) page.
+Step 1 always happens. Step 2 only instantiates the default plugins when the `plugins` argument is omitted, but `Graph` imports them either way, so their code is bundled even when you pass your own list. The built-in style elements and the default plugins therefore set a floor on the size of your bundle, whether the application uses them or not. This is the reason `Graph` is not recommended for production. See the [Tree-Shaking](./tree-shaking.md) page.
 :::
 
 ### Adding plugins on top of the defaults

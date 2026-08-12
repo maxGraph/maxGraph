@@ -33,7 +33,11 @@ const unregisterAll = (): void => {
 };
 
 beforeEach(unregisterAll);
-afterEach(unregisterAll);
+afterEach(() => {
+  unregisterAll();
+  // Restore here rather than at the end of each test, so that a spy is removed even when the test throws before it.
+  jest.restoreAllMocks();
+});
 
 describe('registerDefaultStyleElements', () => {
   test.each([
@@ -62,7 +66,6 @@ describe('registerDefaultStyleElements', () => {
     registerDefaultStyleElements();
 
     expect(addSpy).toHaveBeenCalledTimes(expectedCount);
-    addSpy.mockRestore();
   });
 
   test('is idempotent', () => {

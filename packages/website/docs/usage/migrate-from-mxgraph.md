@@ -115,7 +115,7 @@ Here are some general guidelines to keep in mind when migrating from `mxGraph` t
 
 - The names of `mxGraph` objects were all prefixed with `mx`. This prefix has been dropped in `maxGraph`.
 - Most names remain the same, but some utility functions whose implementation is natively available in modern versions of ECMAScript have been removed.
-- `Graph` is the direct equivalent of the former `mxGraph` class and loads all built-ins, which makes it the natural landing point for a migration. Once the application runs, consider moving to `BaseGraph` and registering only the features you use: unlike `mxGraph`, `maxGraph` lets the bundler drop everything else. The [Graph](./graph.md#graph-vs-basegraph) page compares the two classes, and the [Tree-Shaking](./tree-shaking.md) page describes the migration step by step.
+- `Graph` is the direct equivalent of the former `mxGraph` class: it registers all built-in style elements and loads the default plugins, which makes it the natural landing point for a migration. Once the application runs, consider moving to `BaseGraph` and registering only the features you use: unlike `mxGraph`, `maxGraph` lets the bundler drop everything else. The [Graph](./graph.md#graph-vs-basegraph) page compares the two classes, and the [Tree-Shaking](./tree-shaking.md) page describes the migration step by step.
 
 ## Specific code changes
 
