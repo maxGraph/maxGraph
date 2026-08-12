@@ -4,7 +4,7 @@ description: Internal tools to help during maxGraph development.
 
 # Development tools
 
-This page documents internal scripts and helpers used during maxGraph development. They are not part of the public API of the library — they are intended for maintainers and contributors who need to measure, inspect, or compare the impact of their changes on the project.
+This page documents internal scripts and helpers used during maxGraph development. They are not part of the public API of the library: they are intended for maintainers and contributors who need to measure, inspect, or compare the impact of their changes on the project.
 
 ## Build all examples
 
@@ -35,7 +35,7 @@ The script prints, for each example:
 
 - the size of every `*.js` file produced under `dist/`;
 - a Markdown summary table with the bundle sizes of every example (with an empty "before" column intended to be filled in manually when comparing snapshots);
-- a CSV summary (one header line listing example names, one value line listing sizes in kB) — convenient to copy into a spreadsheet.
+- a CSV summary (one header line listing example names, one value line listing sizes in kB), convenient to copy into a spreadsheet.
 
 To skip the build step and only display the sizes from an existing `dist/` output:
 
@@ -71,7 +71,7 @@ For example, to compare the current `main` branch against the `v0.23.0` release 
 .claude/skills/compare-examples-size/scripts/compare-examples-size.bash main v0.23.0
 ```
 
-For each of the two references, the script checks out the revision, runs `npm ci`, builds `@maxgraph/core`, and runs `scripts/build-all-examples.bash` to capture the bundle sizes. It then prints a Markdown table to stdout — build logs go to stderr — with one row per example and the following columns: example name, bundle size at the older revision, bundle size at the newer revision, delta in kB, and delta in %.
+For each of the two references, the script checks out the revision, runs `npm ci`, builds `@maxgraph/core`, and runs `scripts/build-all-examples.bash` to capture the bundle sizes. It then prints a Markdown table to stdout (build logs go to stderr) with one row per example and the following columns: example name, bundle size at the older revision, bundle size at the newer revision, delta in kB, and delta in %.
 
 The column order is normalized by the commit date so that the older revision is always in column 1 and the newer one in column 2, regardless of the argument order. The delta is therefore always `newer − older`: a positive delta means the bundle grew between the two revisions.
 

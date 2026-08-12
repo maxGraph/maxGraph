@@ -19,7 +19,7 @@ Trigger this skill on requests like:
 
 ## Inputs
 
-Two git references — `<from>` and `<to>`. Each can be:
+Two git references, `<from>` and `<to>`. Each can be:
 - a commit SHA (full or short)
 - a branch name (HEAD of the branch is used)
 - a tag name
@@ -37,11 +37,11 @@ Run the bundled script with the two refs:
 The script:
 1. Verifies the working tree is strictly clean (`git status --porcelain` empty). Aborts with an error if not.
 2. Resolves both refs via `git rev-parse --verify`. Aborts on unknown refs.
-3. Normalizes the column order: the **older** commit (by committer timestamp) becomes column 1, the **newer** becomes column 2 — regardless of the order the user passed them on the CLI. A note is printed to stderr if a swap happened. Δ is therefore always `newer − older` (positive Δ = size grew over time).
-4. Saves the current branch (or SHA if detached) and installs a `trap` so the original ref is restored on any exit — including build failures or Ctrl-C.
+3. Normalizes the column order: the **older** commit (by committer timestamp) becomes column 1, the **newer** becomes column 2, regardless of the order the user passed them on the CLI. A note is printed to stderr if a swap happened. Δ is therefore always `newer − older` (positive Δ = size grew over time).
+4. Saves the current branch (or SHA if detached) and installs a `trap` so the original ref is restored on any exit, including build failures or Ctrl-C. An interrupted run exits with a non-zero status (130 on Ctrl-C, 143 on `SIGTERM`), so a caller can tell it apart from a successful comparison.
 5. For each ref, in order older then newer:
    - `git checkout <ref>`
-   - `npm ci` if `package-lock.json` differs from the previous ref (always runs on first ref to guarantee fresh deps). `npm ci` is used instead of `npm install` so the lock file is never rewritten — keeping the working tree clean across the checkout.
+   - `npm ci` if `package-lock.json` differs from the previous ref (always runs on first ref to guarantee fresh deps). `npm ci` is used instead of `npm install` so the lock file is never rewritten, keeping the working tree clean across the checkout.
    - `npm run build -w packages/core`
    - `./scripts/build-all-examples.bash`, capturing its trailing CSV (header line + values line) into a temp file.
 6. Parses both CSVs, joins by example name, and prints a markdown table to stdout.
@@ -57,14 +57,14 @@ GitHub-flavored markdown table on stdout:
 | Example | <older-label> <older-short-sha> (kB) | <newer-label> <newer-short-sha> (kB) | Δ kB | Δ % |
 ```
 
-- Column 1 is always the **older** commit, column 2 the **newer** — even if the user passed them in the reverse order on the CLI.
+- Column 1 is always the **older** commit, column 2 the **newer**, even if the user passed them in the reverse order on the CLI.
 - `<label>` is the branch or tag name the user supplied. If the user supplied a raw SHA, the label is omitted and only the short SHA appears.
 - `Δ kB` is signed (`+` or `-`) and equals `newer − older`.
 - `Δ %` is signed and uses the older size as the denominator.
 - Rows are sorted alphabetically by example name.
 - `N/A` is used when an example exists at one ref but not the other.
 
-No commentary on causes of variation — just the numbers.
+No commentary on causes of variation, just the numbers.
 
 ## Prerequisites and constraints
 
@@ -79,4 +79,4 @@ No commentary on causes of variation — just the numbers.
 - **Unknown ref**: report which ref failed to resolve and stop.
 - **Build failure on a ref**: the `trap` restores the original ref before exiting. Report which ref failed and at which step (`npm ci`, core build, or examples build). Do not retry automatically.
 - **Original ref restoration fails on exit**: surface the warning printed by the script and tell the user to `git checkout <original-ref>` manually.
-- **Forced kill (SIGKILL) mid-run**: bash traps cannot run on SIGKILL, so the user can be left in detached HEAD. To detect this, the script writes a lock file at `.git/compare-examples-size.lock` containing the original ref before any checkout; the `trap` removes it on graceful exit. If the script aborts via SIGKILL, the lock survives. The next invocation will refuse to start and print the original ref to restore. After running `git checkout <that-ref>`, the user must remove the lock file as instructed.
+- **Forced kill (SIGKILL) mid-run**: bash traps cannot run on SIGKILL, so the user can be left in detached HEAD. To detect this, the script writes a lock file named `compare-examples-size.lock` in the common git dir (`git rev-parse --git-common-dir`, usually `.git/`) containing the original ref before any checkout; the `trap` removes it on graceful exit. If the script aborts via SIGKILL, the lock survives. The next invocation will refuse to start and print the original ref to restore. After running `git checkout <that-ref>`, the user must remove the lock file as instructed.

@@ -29,7 +29,7 @@ if [[ -z "$REPO_ROOT" ]]; then
 fi
 cd "$REPO_ROOT"
 
-# 1. Recovery lock check — must run FIRST. If a previous invocation was killed forcibly
+# 1. Recovery lock check: must run FIRST. If a previous invocation was killed forcibly
 # (SIGKILL bypasses the trap), the lock survives and points to the ref the user was on.
 # Surface that before any other check so the recovery instructions are the first thing
 # the user sees.
@@ -98,9 +98,31 @@ ref_label() {
 FROM_LABEL=$(ref_label "$FROM_RAW" "$FROM_SHA")
 TO_LABEL=$(ref_label "$TO_RAW" "$TO_SHA")
 
-# 4. Save current ref so we can restore it on exit (branch name preferred, fallback to SHA),
-# then write the lock so a forced kill leaves a recovery breadcrumb (see step 1).
+# 4. Save current ref so we can restore it on exit (branch name preferred, fallback to SHA).
 ORIGINAL_REF=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git rev-parse HEAD)
+TMP_DIR=""
+
+cleanup() {
+  local status=$?
+  # Disarm the traps so a nested exit cannot re-enter cleanup.
+  trap - EXIT INT TERM
+  echo >&2
+  echo "Restoring original ref: $ORIGINAL_REF" >&2
+  git checkout --quiet "$ORIGINAL_REF" 2>/dev/null || \
+    echo "Warning: failed to restore $ORIGINAL_REF. Run 'git checkout $ORIGINAL_REF' manually." >&2
+  [[ -n "$TMP_DIR" ]] && rm -rf "$TMP_DIR"
+  rm -f "$LOCK_FILE"
+  exit $status
+}
+# cleanup is bound to EXIT only, and the signal handlers just `exit`. Binding it to
+# EXIT INT TERM instead would run it twice on a signal (the handler's own `exit` fires
+# the EXIT trap) and would report status 0 for an interrupted run, because `$?` inside a
+# signal handler is the status of the last completed command, not the signal.
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+# The traps are armed, so from here on any exit path removes the lock and the temp dir.
 echo "$ORIGINAL_REF" > "$LOCK_FILE"
 
 # Temp files for CSV captures
@@ -108,21 +130,9 @@ TMP_DIR=$(mktemp -d -t maxgraph-sizes-XXXXXX)
 FROM_CSV="$TMP_DIR/from.csv"
 TO_CSV="$TMP_DIR/to.csv"
 
-cleanup() {
-  local status=$?
-  echo >&2
-  echo "Restoring original ref: $ORIGINAL_REF" >&2
-  git checkout --quiet "$ORIGINAL_REF" 2>/dev/null || \
-    echo "Warning: failed to restore $ORIGINAL_REF. Run 'git checkout $ORIGINAL_REF' manually." >&2
-  rm -rf "$TMP_DIR"
-  rm -f "$LOCK_FILE"
-  exit $status
-}
-trap cleanup EXIT INT TERM
-
 PREV_LOCK_HASH=""
 
-# 4. Build at each ref and capture CSV
+# 5. Build at each ref and capture CSV
 build_and_capture() {
   local sha="$1"
   local out_csv="$2"
@@ -157,9 +167,11 @@ build_and_capture() {
   raw_out=$(mktemp -t maxgraph-raw-XXXXXX)
   ./scripts/build-all-examples.bash 2>&1 | tee /dev/stderr > "$raw_out"
 
-  # Extract the last two non-empty lines, which are the CSV header and CSV values.
+  # Extract the last two non-blank lines, which are the CSV header and CSV values.
+  # Whitespace-only lines must be filtered too, otherwise they would displace a real CSV
+  # line out of the `tail -n 2` window.
   local last_two
-  last_two=$(grep -v '^$' "$raw_out" | tail -n 2)
+  last_two=$(grep -vE '^[[:space:]]*$' "$raw_out" | tail -n 2)
   echo "$last_two" > "$out_csv"
   rm -f "$raw_out"
 
@@ -172,7 +184,7 @@ build_and_capture() {
 build_and_capture "$FROM_SHA" "$FROM_CSV" "$FROM_RAW"
 build_and_capture "$TO_SHA" "$TO_CSV" "$TO_RAW"
 
-# 5. Parse CSVs and emit markdown table.
+# 6. Parse CSVs and emit markdown table.
 #    Each CSV file has exactly 2 lines: header (example names) and values (kB sizes).
 python3 - "$FROM_CSV" "$TO_CSV" "$FROM_LABEL" "$FROM_SHORT" "$TO_LABEL" "$TO_SHORT" <<'PY'
 import sys
@@ -184,6 +196,13 @@ def load(path):
         lines = [ln.rstrip("\n") for ln in f if ln.strip()]
     header = lines[0].split(",")
     values = lines[1].split(",")
+    # zip() would silently truncate to the shorter list, producing a partial table that
+    # still looks trustworthy. Fail loudly instead.
+    if len(header) != len(values):
+        sys.exit(
+            f"Error: CSV header/values column count mismatch in {path} "
+            f"({len(header)} vs {len(values)})."
+        )
     return dict(zip(header, values))
 
 from_sizes = load(from_csv)
