@@ -36,6 +36,9 @@ from the commit history and the CHANGELOG, then optionally push it into the GitH
   placeholders. The one-line summary is drafted by the skill, not left blank.
 - **Never delete `## Resources` or anything after it** in the draft (see [step 8](#8-update-the-draft)).
   That content is auto-generated (`generateReleaseNotes: true`) and cannot be regenerated.
+- **An empty commit filter result is a valid outcome.** The `git log ... | grep` lookups in steps 3 to
+  5 exit with code 1 when the release contains no commit of that type. Read it as "no such commits":
+  drop the corresponding section and move on, instead of retrying with looser patterns.
 - **Do NOT hard-wrap prose.** GitHub release notes render a single newline as a visible line break,
   so a wrapped paragraph shows mid-sentence breaks in the published notes. Keep each paragraph and each
   list item on a single line, however long. (Code fences and Markdown tables are naturally multi-line
