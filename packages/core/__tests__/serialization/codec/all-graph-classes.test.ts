@@ -58,6 +58,8 @@ function buildXml(name: string): string {
     <ImageBox src="./collapsed-new.gif" width="10" height="10" as="collapsedImage" />
     <ImageBox src="./expanded.gif" width="9" height="9" as="expandedImage" />
   </Object>
+  <Rectangle _x="123" _y="453" _width="60" _height="60" as="pageFormat" />
+  <ImageBox src="./warning.gif" width="16" height="16" as="warningImage" />
   <GraphDataModel as="model">
     <root>
       <Cell id="0">
@@ -87,8 +89,6 @@ function buildXml(name: string): string {
       <add value="#446299" as="fontColor" />
     </add>
   </Stylesheet>
-  <Rectangle _x="123" _y="453" _width="60" _height="60" as="pageFormat" />
-  <ImageBox src="./warning.gif" width="16" height="16" as="warningImage" />
 </@NAME@>
 `;
 

@@ -17,15 +17,14 @@ limitations under the License.
 import { afterAll, beforeEach, describe, expect, jest, test } from '@jest/globals';
 import {
   BaseGraph,
-  Cell,
   CellState,
   EdgeStyle,
   type EdgeStyleFunction,
   type GraphPlugin,
-  Multiplicity,
   registerDefaultEdgeStyles,
   unregisterAllEdgeStyles,
 } from '../../src';
+import { describeNoGlobalStateForMixinProperties } from './no-global-state-for-mixin-properties';
 
 const customEdgeStyle: EdgeStyleFunction = () => {
   // do nothing, we just need a custom implementation that is not registered by default
@@ -147,85 +146,4 @@ describe('destroy', () => {
   });
 });
 
-// For "complex" properties, for example: arrays or object.
-describe('Expect no global state for properties coming from mixins', () => {
-  test('alternateEdgeStyle', () => {
-    const graph1 = new BaseGraph();
-    const graph2 = new BaseGraph();
-
-    graph1.alternateEdgeStyle.arcSize = 10;
-    graph1.alternateEdgeStyle.fillColor = 'red';
-    expect(graph1.alternateEdgeStyle).not.toEqual(graph2.alternateEdgeStyle);
-    expect(graph1.alternateEdgeStyle).not.toBe(graph2.alternateEdgeStyle);
-  });
-
-  test('cells', () => {
-    const graph1 = new BaseGraph();
-    const graph2 = new BaseGraph();
-
-    graph1.cells.push(new Cell());
-    expect(graph2.cells).toStrictEqual([]);
-    expect(graph1.cells).not.toBe(graph2.cells);
-  });
-
-  test('mouseListeners', () => {
-    const graph1 = new BaseGraph();
-    expect(graph1.mouseListeners).toHaveLength(1);
-    const graph2 = new BaseGraph();
-    expect(graph2.mouseListeners).toHaveLength(1);
-
-    graph1.mouseListeners.push({
-      mouseDown: () => {},
-      mouseMove: () => {},
-      mouseUp: () => {},
-    });
-    expect(graph2.mouseListeners).toHaveLength(1);
-    expect(graph1.mouseListeners).toHaveLength(2);
-    expect(graph1.mouseListeners).not.toBe(graph2.mouseListeners);
-  });
-
-  test('multiplicities', () => {
-    const graph1 = new BaseGraph();
-    const graph2 = new BaseGraph();
-
-    graph1.multiplicities.push(
-      new Multiplicity(
-        true,
-        'rectangle',
-        null,
-        null,
-        0,
-        2,
-        ['circle'],
-        'Only 2 targets allowed',
-        'Only circle targets allowed'
-      )
-    );
-    expect(graph2.multiplicities).toStrictEqual([]);
-    expect(graph1.multiplicities).not.toBe(graph2.multiplicities);
-  });
-
-  test('options', () => {
-    const graph1 = new BaseGraph();
-    const graph2 = new BaseGraph();
-
-    graph1.options.foldingEnabled = false;
-    expect(graph1.options).not.toBe(graph2.options);
-  });
-
-  // Even though SelectionMixin declares `selectionModel: null` on the prototype,
-  // the null value is harmless because BaseGraph.initializeCollaborators calls
-  // this.setSelectionModel(new GraphSelectionModel(this)). The assignment creates
-  // a per-instance property that shadows the prototype null, and GraphSelectionModel's
-  // constructor allocates its own `cells = []` array.
-  test('selectionModel', () => {
-    const graph1 = new BaseGraph();
-    const graph2 = new BaseGraph();
-
-    expect(graph1.getSelectionModel()).not.toBe(graph2.getSelectionModel());
-
-    graph1.getSelectionModel().cells.push(new Cell());
-    expect(graph2.getSelectionModel().cells).toStrictEqual([]);
-    expect(graph1.getSelectionModel().cells).not.toBe(graph2.getSelectionModel().cells);
-  });
-});
+describeNoGlobalStateForMixinProperties(() => new BaseGraph());
