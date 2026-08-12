@@ -71,7 +71,7 @@ When maxGraph forked from mxGraph 4.2.2 in 2020, the `mxGraph` class was renamed
 
 - **Handlers** (cell editing, tooltips, panning, etc.) were extracted into **plugins** that can be loaded selectively.
 - **Shapes, edge styles, perimeters, and edge markers** were moved from monolithic registries (`StyleRegistry`, `CellRenderer`) into dedicated per-type registries (`ShapeRegistry`, `EdgeStyleRegistry`, `PerimeterRegistry`, `EdgeMarkerRegistry`) that can be populated selectively.
-- In version 0.18.0, the `Graph` class was split into `AbstractGraph`, `Graph`, and `BaseGraph` to enable tree-shaking at the class level.
+- In version 0.18.0, the `Graph` class was split into `AbstractGraph`, `Graph`, and `BaseGraph` to enable [tree-shaking](./tree-shaking.md) at the class level.
 
 If you are migrating from mxGraph, `Graph` is the closest equivalent to the original `mxGraph` class. See the [migration guide](./migrate-from-mxgraph.md) for details.
 
@@ -100,7 +100,7 @@ At a high level, the `AbstractGraph` constructor goes through the following phas
 Plugin authors should keep in mind that plugins are constructed after `view.init()` but before the first `view.revalidate()`.
 
 :::note[Future direction]
-Some methods and behaviors currently embedded in `AbstractGraph` are planned to be extracted into dedicated plugins. This will improve separation of concerns, tree-shaking, and modularity. See [issue #762](https://github.com/maxGraph/maxGraph/issues/762) for details.
+Some methods and behaviors currently embedded in `AbstractGraph` are planned to be extracted into dedicated plugins. This will improve separation of concerns, [tree-shaking](./tree-shaking.md), and modularity. See [issue #762](https://github.com/maxGraph/maxGraph/issues/762) for details.
 :::
 
 ## Graph
@@ -116,6 +116,10 @@ When instantiated, `Graph` automatically:
 2. **Loads all default [plugins](./plugins.md)** via `getDefaultPlugins()`.
 
 3. **Exposes factory methods** (`createCellRenderer()`, `createGraphDataModel()`, etc.) that subclasses can override to customize collaborators.
+
+:::warning
+Steps 1 and 2 happen whether the application uses these elements or not, so they set a floor on the size of your bundle. This is the reason `Graph` is not recommended for production. See the [Tree-Shaking](./tree-shaking.md) page.
+:::
 
 ### Adding plugins on top of the defaults
 
@@ -139,7 +143,7 @@ const graph = new Graph(container, undefined, [
 
 **Source:** `packages/core/src/view/BaseGraph.ts`
 
-`BaseGraph` is the minimal, **production-optimized** implementation, introduced in version 0.18.0. Unlike `Graph`, it **prevents loading any maxGraph defaults** — no built-in shapes, edge styles, perimeters, markers, or plugins are registered at construction time. You opt into the specific plugins and styles your application needs, and everything else is eliminated from the bundle by tree-shaking.
+`BaseGraph` is the minimal, **production-optimized** implementation, introduced in version 0.18.0. Unlike `Graph`, it **prevents loading any maxGraph defaults** — no built-in shapes, edge styles, perimeters, markers, or plugins are registered at construction time. You opt into the specific plugins and styles your application needs, and everything else is eliminated from the bundle by [tree-shaking](./tree-shaking.md).
 
 `BaseGraph` differs from `Graph` in the following ways:
 
@@ -309,7 +313,7 @@ With `Graph`, you often need `undefined` placeholders to reach a later parameter
 | Plugins | All default plugins loaded | None — pass what you need |
 | Collaborator customization | Via factory methods | Via constructor options |
 | Constructor signature | Positional parameters | Single options object |
-| Tree-shaking | Limited — all defaults are imported | Full — only imported code is bundled |
+| [Tree-shaking](./tree-shaking.md) | Limited — all defaults are imported | Full — only imported code is bundled |
 | Setup effort | Minimal | Requires explicit configuration |
 | Familiarity for mxGraph users | Closest match — `Graph` is the renamed `mxGraph` class | New API — requires opting in to features mxGraph loaded by default |
 
@@ -325,13 +329,15 @@ With `Graph`, you often need `undefined` placeholders to reach a later parameter
 - **Applications using a limited set of features** — no need to ship code for shapes and plugins you never use
 - **Embedding maxGraph in a larger application** — control exactly what is included in your bundle
 
+If the application already runs on `Graph`, the switch is described step by step in the [tree-shaking guide](./tree-shaking.md#guide-improving-the-tree-shaking-of-an-application-using-graph).
+
 ## Examples and Demos
 
 To see `Graph` and `BaseGraph` in action:
 
 - **Storybook stories** — most stories use `Graph` for simplicity. See the [live demo](https://maxgraph.github.io/maxGraph/demo) or browse the [source](https://github.com/maxGraph/maxGraph/tree/main/packages/html/stories).
 - **[ts-example](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example)** — a `Graph`-based application with custom shapes (Vite + TypeScript).
-- **[ts-example-selected-features](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example-selected-features)** — a `BaseGraph`-based application that registers only the features it needs, demonstrating tree-shaking (Vite + TypeScript).
+- **[ts-example-selected-features](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example-selected-features)** — a `BaseGraph`-based application that registers only the features it needs, demonstrating [tree-shaking](./tree-shaking.md#measuring-the-impact) (Vite + TypeScript).
 - **[ts-example-without-defaults](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example-without-defaults)** — a minimal `BaseGraph` application with no default plugins or styles (Vite + TypeScript).
 
 JavaScript equivalents are also available: [js-example-selected-features](https://github.com/maxGraph/maxGraph/tree/main/packages/js-example-selected-features) and [js-example-without-defaults](https://github.com/maxGraph/maxGraph/tree/main/packages/js-example-without-defaults) (Webpack).
@@ -343,3 +349,5 @@ For the full list of examples and integration demos, see the [Demos and Examples
 - Use **`Graph`** for quick setup, prototyping, and learning — it mirrors the original mxGraph experience.
 - Use **`BaseGraph`** for production — register only what you need and let the bundler eliminate the rest.
 - Both classes share the **same API** via `AbstractGraph` — switching from `Graph` to `BaseGraph` is primarily a configuration change, not an API change.
+
+To move an existing `Graph`-based application to `BaseGraph`, follow the step-by-step [guide](./tree-shaking.md#guide-improving-the-tree-shaking-of-an-application-using-graph) on the Tree-Shaking page. It also covers the features that are registered on demand independently of the graph class: codecs, i18n and the logger.

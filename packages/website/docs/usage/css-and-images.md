@@ -18,6 +18,10 @@ These elements require the application to provide CSS rules for correct display.
 import '@maxgraph/core/css/common.css';
 ```
 
+:::note
+CSS files are the only part of the npm package declared as having side effects, so an imported stylesheet is never removed by the bundler. Import it only when a feature you use needs it. See the [Tree-Shaking](./tree-shaking.md#css-and-images) page.
+:::
+
 ### Customizing CSS
 
 It is possible to customize the defaults by providing new CSS rules.

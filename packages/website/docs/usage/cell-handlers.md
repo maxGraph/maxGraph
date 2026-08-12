@@ -18,7 +18,8 @@ Handlers are not part of the rendering of a cell. They exist only while a cell i
 
 This means that **a graph without the `SelectionCellsHandler` plugin has no handlers at all**. This is the expected
 setup for read-only or visualization-only applications, and it also keeps the handler classes out of the bundle. See
-[Choosing the Plugins to Use](./plugins.md#choosing-the-plugins-to-use).
+[Choosing the Plugins to Use](./plugins.md#choosing-the-plugins-to-use) and the
+[Tree-Shaking](./tree-shaking.md) page.
 
 maxGraph provides two families of handlers, both created by `SelectionCellsHandler`:
 
