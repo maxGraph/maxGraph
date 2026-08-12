@@ -37,7 +37,7 @@ Run the bundled script with the two refs:
 The script:
 1. Verifies the working tree is strictly clean (`git status --porcelain` empty). Aborts with an error if not.
 2. Resolves both refs via `git rev-parse --verify`. Aborts on unknown refs.
-3. Normalizes the column order: the **older** commit (by committer timestamp) becomes column 1, the **newer** becomes column 2, regardless of the order the user passed them on the CLI. A note is printed to stderr if a swap happened. Δ is therefore always `newer − older` (positive Δ = size grew over time).
+3. Normalizes the column order: the commit with the **earlier** committer timestamp becomes column 1, the **later** one becomes column 2, regardless of the order the user passed them on the CLI. A note is printed to stderr if a swap happened. Δ is therefore always `column 2 − column 1`.
 4. Saves the current branch (or SHA if detached) and installs a `trap` so the original ref is restored on any exit, including build failures or Ctrl-C. An interrupted run exits with a non-zero status (130 on Ctrl-C, 143 on `SIGTERM`), so a caller can tell it apart from a successful comparison.
 5. For each ref, in order older then newer:
    - `git checkout <ref>`
@@ -57,14 +57,35 @@ GitHub-flavored markdown table on stdout:
 | Example | <older-label> <older-short-sha> (kB) | <newer-label> <newer-short-sha> (kB) | Δ kB | Δ % |
 ```
 
-- Column 1 is always the **older** commit, column 2 the **newer**, even if the user passed them in the reverse order on the CLI.
+- Column 1 is always the commit with the **earlier** timestamp, column 2 the **later** one, even if the user passed them in the reverse order on the CLI.
 - `<label>` is the branch or tag name the user supplied. If the user supplied a raw SHA, the label is omitted and only the short SHA appears.
-- `Δ kB` is signed (`+` or `-`) and equals `newer − older`.
-- `Δ %` is signed and uses the older size as the denominator.
+- `Δ kB` is signed (`+` or `-`) and equals `column 2 − column 1`.
+- `Δ %` is signed and uses the column 1 size as the denominator.
 - Rows are sorted alphabetically by example name.
 - `N/A` is used when an example exists at one ref but not the other.
 
 No commentary on causes of variation, just the numbers.
+
+### Reading the sign of Δ
+
+The sign is only chronological when one ref is an ancestor of the other. In that case a positive Δ does mean the
+bundle grew as the history advanced.
+
+When the two refs have **diverged** (neither is an ancestor of the other, which is the normal case for a feature
+branch that has fallen behind its base), the timestamp ordering carries no before/after meaning, and a positive Δ
+does **not** mean the size grew over time. A branch based on an old `main` will show a large positive Δ against a
+newer `main` purely because it lacks the size reductions `main` has since gained.
+
+Check the relationship before interpreting the sign:
+
+```bash
+git merge-base --is-ancestor <ref1> <ref2>   # exit 0 means ref1 is an ancestor of ref2
+```
+
+If the refs have diverged, report the Δ as the difference between the two states and say explicitly that it is not a
+chronological progression. Do not describe it as growth or as a regression introduced by either ref. When the intent
+was to measure a branch's own impact, the right comparison is the branch against its merge base
+(`git merge-base <branch> main`), or the branch rebased onto its base.
 
 ## Prerequisites and constraints
 

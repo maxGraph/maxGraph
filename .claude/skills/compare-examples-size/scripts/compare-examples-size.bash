@@ -68,10 +68,14 @@ resolve_ref() {
 FROM_SHA=$(resolve_ref "$FROM_RAW")
 TO_SHA=$(resolve_ref "$TO_RAW")
 
-# Normalize order: older commit first (column 1), newer commit second (column 2),
-# regardless of CLI argument order. "Older" is determined by committer timestamp,
-# which works even when the two refs are not in an ancestor relationship.
-# Δ semantics become "newer minus older" → positive Δ means size grew over time.
+# Normalize order: earlier commit first (column 1), later commit second (column 2), regardless of
+# CLI argument order. "Earlier" is determined by committer timestamp, which is always defined, even
+# when the two refs are not in an ancestor relationship. Δ semantics become "column 2 minus column 1".
+#
+# The timestamp only implies a chronological before/after when one ref is an ancestor of the other.
+# For diverged refs a positive Δ does NOT mean the size grew over time: a branch based on an old main
+# reports a large positive Δ against a newer main simply because it lacks main's later size
+# reductions. See "Reading the sign of Δ" in SKILL.md.
 FROM_TS=$(git show -s --format=%ct "$FROM_SHA")
 TO_TS=$(git show -s --format=%ct "$TO_SHA")
 if (( FROM_TS > TO_TS )); then
