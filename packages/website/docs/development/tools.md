@@ -71,8 +71,35 @@ For example, to compare the current `main` branch against the `v0.23.0` release 
 .claude/skills/compare-examples-size/scripts/compare-examples-size.bash main v0.23.0
 ```
 
-For each of the two references, the script checks out the revision, runs `npm ci`, builds `@maxgraph/core`, and runs `scripts/build-all-examples.bash` to capture the bundle sizes. It then prints a Markdown table to stdout (build logs go to stderr) with one row per example and the following columns: example name, bundle size at the older revision, bundle size at the newer revision, delta in kB, and delta in %.
+For each of the two references, the script checks out the revision, runs `npm ci`, builds `@maxgraph/core`, and runs `scripts/build-all-examples.bash` to capture the bundle sizes. It then prints a Markdown table to stdout (build logs go to stderr) with one row per example and the following columns: example name, bundle size at the revision in column 1, bundle size at the revision in column 2, delta in kB, and delta in %.
 
-The column order is normalized by the commit date so that the older revision is always in column 1 and the newer one in column 2, regardless of the argument order. The delta is therefore always `newer − older`: a positive delta means the bundle grew between the two revisions.
+The column order is normalized by the commit date so that the revision with the earlier commit date is always in column 1 and the later one in column 2, regardless of the argument order. The delta is therefore always `column 2 − column 1`.
+
+Below the table, the script prints a short note stating how the two revisions are related, as computed by `git merge-base --is-ancestor`. This matters when reading the sign of the delta: it is chronological only when one revision is an ancestor of the other. Two revisions that have diverged, which is the usual case for a feature branch that has fallen behind its base, produce a delta that is merely the difference between two independent states. A branch behind its base shows a positive delta simply because it lacks the size reductions the base has since gained.
 
 The working tree must be clean before running. The original branch is restored automatically at the end of the run, including on Ctrl-C or build failure.
+
+### Reusing sizes already measured
+
+Building both revisions takes several minutes. When the sizes of one revision are already known, they can be passed to the script, which then builds only the other revision:
+
+```bash
+# reuse the sizes of <ref-1>, build only <ref-2>
+.claude/skills/compare-examples-size/scripts/compare-examples-size.bash --from-sizes sizes.md <ref-1> <ref-2>
+
+# reuse the sizes of <ref-2>, build only <ref-1>
+.claude/skills/compare-examples-size/scripts/compare-examples-size.bash --to-sizes sizes.md <ref-1> <ref-2>
+```
+
+Both revisions are still required, even the one that is not built, because they determine the column labels and the ancestry check. Only one side may be supplied: the script refuses to run without at least one revision to build.
+
+The file may be a Markdown table produced by a previous run of the script, the Markdown table printed by `scripts/build-all-examples.bash`, or its 2-line CSV output. Values are accepted bare (`303.69`), with the unit (`303.69 kB`), or as `N/A`.
+
+A table produced by a previous run holds two size columns, so the intended one must be named with `--sizes-column`, either by a substring of its header or by its 1-based index among the size columns:
+
+```bash
+.claude/skills/compare-examples-size/scripts/compare-examples-size.bash \
+  --from-sizes previous-comparison.md --sizes-column main main my-branch
+```
+
+Reused sizes are only comparable to freshly built ones if they were measured with the same Node version and the same dependencies; nothing in the file records that, so it is up to the caller to check. As a safety net, when the selected column header embeds a short SHA, as the script's own tables do, the script verifies it against the revision given on the command line and aborts on a mismatch rather than emitting a table that pairs sizes with the wrong revision.
