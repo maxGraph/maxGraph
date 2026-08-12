@@ -260,9 +260,16 @@ build_and_capture() {
   echo "--- Building examples and capturing sizes ---" >&2
   # build-all-examples.bash emits a CSV at the end: a header line and a values line.
   # Stream to stderr for the user while teeing to a tmp file we parse afterwards.
+  #
+  # tee writes the capture file by name and duplicates to the inherited fd 2. The reverse
+  # (`tee /dev/stderr > "$raw_out"`) looks equivalent but corrupts the log whenever stderr is a
+  # regular file: /dev/stderr resolves through /proc/self/fd/2 back to the file's path, so tee
+  # reopens it with O_TRUNC and restarts at offset 0, discarding everything written so far and
+  # leaving NUL padding where the shell's own fd 2 offset had moved past. Redirecting stderr to a
+  # file is a documented use of this script, so it has to survive it.
   local raw_out
   raw_out=$(mktemp -t maxgraph-raw-XXXXXX)
-  ./scripts/build-all-examples.bash 2>&1 | tee /dev/stderr > "$raw_out"
+  ./scripts/build-all-examples.bash 2>&1 | tee "$raw_out" >&2
 
   # Extract the last two non-blank lines, which are the CSV header and CSV values.
   # Whitespace-only lines must be filtered too, otherwise they would displace a real CSV
