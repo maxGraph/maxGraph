@@ -477,9 +477,7 @@ export abstract class AbstractGraph extends EventSource {
       'SelectionCellsHandler'
     );
     for (const [handlerKind, factory] of Object.entries(factories ?? {})) {
-      if (!isNullish(factory)) {
-        selectionCellsHandler?.setEdgeHandlerFactory(handlerKind, factory);
-      }
+      factory && selectionCellsHandler?.setEdgeHandlerFactory(handlerKind, factory);
     }
   }
 
