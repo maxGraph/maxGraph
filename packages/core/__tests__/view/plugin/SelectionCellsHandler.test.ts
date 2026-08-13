@@ -622,6 +622,82 @@ describe('Handler lifecycle on selection', () => {
   });
 });
 
+const getHandlerOfSelectedEdge = (
+  graph: AbstractGraph,
+  style: CellStyle = {}
+): CellHandler | undefined => {
+  const source = graph.insertVertex({
+    value: 'source',
+    position: [0, 0],
+    size: [40, 40],
+  });
+  const target = graph.insertVertex({
+    value: 'target',
+    position: [200, 200],
+    size: [40, 40],
+  });
+  const edge = graph.insertEdge({ value: 'an edge', source, target, style });
+  graph.setSelectionCell(edge);
+  return graph
+    .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+    .getHandler(edge);
+};
+
+describe('edgeHandlerFactories option', () => {
+  afterEach(() => {
+    unregisterAllEdgeStyles();
+  });
+
+  class CustomEdgeHandler extends EdgeHandler {}
+  class CustomElbowEdgeHandler extends ElbowEdgeHandler {}
+
+  // The factories are set while the graph is built, so they already apply to the very first selection, unlike
+  // setEdgeHandlerFactory which only affects the handlers created after the call.
+  test('Use the factory passed for the elbow kind on the first selection', () => {
+    registerDefaultEdgeStyles();
+    const graph = new BaseGraph({
+      plugins: [SelectionCellsHandler],
+      edgeHandlerFactories: { elbow: (state) => new CustomElbowEdgeHandler(state) },
+    });
+
+    const handler = getHandlerOfSelectedEdge(graph, { edgeStyle: 'elbowEdgeStyle' });
+
+    expect(handler).toBeInstanceOf(CustomElbowEdgeHandler);
+  });
+
+  test('Use the factory passed for the default kind', () => {
+    const graph = new BaseGraph({
+      plugins: [SelectionCellsHandler],
+      edgeHandlerFactories: { default: (state) => new CustomEdgeHandler(state) },
+    });
+
+    const handler = getHandlerOfSelectedEdge(graph);
+
+    expect(handler).toBeInstanceOf(CustomEdgeHandler);
+  });
+
+  test('Ignore the option when the SelectionCellsHandler plugin is not registered', () => {
+    expect(
+      () =>
+        new BaseGraph({
+          edgeHandlerFactories: { default: (state) => new CustomEdgeHandler(state) },
+        })
+    ).not.toThrow();
+  });
+
+  test('Ignore an entry whose factory is nullish', () => {
+    registerDefaultEdgeStyles();
+    const graph = new BaseGraph({
+      plugins: [SelectionCellsHandler],
+      edgeHandlerFactories: { elbow: undefined },
+    });
+
+    const handler = getHandlerOfSelectedEdge(graph, { edgeStyle: 'elbowEdgeStyle' });
+
+    expect(handler).toBeInstanceOf(ElbowEdgeHandler);
+  });
+});
+
 // Which edge handler kinds a graph provides out of the box is part of its public contract, so it is pinned per graph
 // class and goes through the real selection path.
 describe('Edge handler kinds available per graph class', () => {
@@ -632,27 +708,6 @@ describe('Edge handler kinds available per graph class', () => {
     unregisterAllEdgeStylesAndPerimeters();
     unregisterAllShapes();
   });
-
-  const getHandlerOfSelectedEdge = (
-    graph: AbstractGraph,
-    style: CellStyle = {}
-  ): CellHandler | undefined => {
-    const source = graph.insertVertex({
-      value: 'source',
-      position: [0, 0],
-      size: [40, 40],
-    });
-    const target = graph.insertVertex({
-      value: 'target',
-      position: [200, 200],
-      size: [40, 40],
-    });
-    const edge = graph.insertEdge({ value: 'an edge', source, target, style });
-    graph.setSelectionCell(edge);
-    return graph
-      .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
-      .getHandler(edge);
-  };
 
   describe.each([
     ['Graph', (): AbstractGraph => new Graph()],

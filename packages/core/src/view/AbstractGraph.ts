@@ -55,6 +55,7 @@ import Multiplicity from './other/Multiplicity.js';
 import { applyGraphMixins } from './mixin/_graph-mixins-apply.js';
 import { isNullish } from '../internal/utils.js';
 import { isI18nEnabled } from '../internal/i18n-utils.js';
+import type SelectionCellsHandler from './plugin/SelectionCellsHandler.js';
 import type TooltipHandler from './plugin/TooltipHandler.js';
 
 /**
@@ -455,7 +456,34 @@ export abstract class AbstractGraph extends EventSource {
     // Initializes plugins
     options?.plugins?.forEach((p) => this.plugins.set(p.pluginId, new p(this)));
 
+    this.configureEdgeHandlerFactories(options?.edgeHandlerFactories);
+
     this.view.revalidate();
+  }
+
+  /**
+   * Passes the factories declared in {@link GraphOptions.edgeHandlerFactories} to the {@link SelectionCellsHandler}
+   * plugin, which owns them. Doing it here, once the plugins are instantiated, is what makes them apply to the first
+   * selection.
+   *
+   * Configuring a plugin from the graph options is specific to this plugin for now. It is meant to be replaced by a
+   * lifecycle hook letting every plugin read the options it understands, so it is kept isolated in this single method.
+   */
+  private configureEdgeHandlerFactories(
+    factories: GraphOptions['edgeHandlerFactories']
+  ): void {
+    if (isNullish(factories)) {
+      return;
+    }
+
+    const selectionCellsHandler = this.getPlugin<SelectionCellsHandler>(
+      'SelectionCellsHandler'
+    );
+    for (const [handlerKind, factory] of Object.entries(factories)) {
+      if (!isNullish(factory)) {
+        selectionCellsHandler?.setEdgeHandlerFactory(handlerKind, factory);
+      }
+    }
   }
 
   getContainer = () => this.container;

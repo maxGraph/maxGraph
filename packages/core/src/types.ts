@@ -1561,6 +1561,20 @@ export type ShapeConstructor = Constructor<Shape>;
  */
 export type GraphOptions = {
   container?: HTMLElement;
+  /**
+   * The factories creating the {@link EdgeHandler} managing a selected edge, for each
+   * {@link EdgeStyleHandlerKind}. They are set on the {@link SelectionCellsHandler} plugin while the graph is built,
+   * so they already apply to the first selection.
+   *
+   * Only the declared kinds are configured, the others keep the factory the plugin provides. Use
+   * {@link getDefaultEdgeHandlerFactories} to declare all the builtin ones at once.
+   *
+   * This is ignored when the {@link SelectionCellsHandler} plugin is not registered in {@link GraphOptions.plugins},
+   * as nothing creates cell handlers in that case.
+   *
+   * @since 0.25.0
+   */
+  edgeHandlerFactories?: Partial<Record<EdgeStyleHandlerKind, EdgeHandlerFactory>>;
   plugins?: GraphPluginConstructor[];
 } & GraphCollaboratorsOptions;
 
