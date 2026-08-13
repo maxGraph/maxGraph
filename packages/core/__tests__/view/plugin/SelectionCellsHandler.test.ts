@@ -28,7 +28,6 @@ import {
   BaseGraph,
   Cell,
   type CellHandler,
-  CellState,
   type CellStyle,
   EdgeHandler,
   EdgeSegmentHandler,
@@ -40,8 +39,6 @@ import {
   Geometry,
   Graph,
   Point,
-  Rectangle,
-  RectangleShape,
   registerDefaultEdgeStyles,
   SelectionCellsHandler,
   unregisterAllEdgeMarkers,
@@ -50,7 +47,7 @@ import {
   unregisterAllShapes,
   VertexHandler,
 } from '../../../src';
-import { hasListener } from '../../utils';
+import { createCellStateOfEdge, createCellStateOfVertex, hasListener } from '../../utils';
 
 describe('onDestroy', () => {
   test('removes refreshHandler from selectionModel', () => {
@@ -106,22 +103,6 @@ describe('onDestroy', () => {
 });
 
 describe('Handler management', () => {
-  const createCellState = (graph: AbstractGraph, isEdge: boolean): CellState => {
-    const cell = new Cell();
-    cell.setEdge(isEdge);
-    cell.setVertex(!isEdge);
-    const cellState = new CellState(graph.view, cell, {});
-    cellState.absolutePoints = [new Point(0, 0)];
-    cellState.shape = new RectangleShape(new Rectangle(), 'green', 'blue');
-    return cellState;
-  };
-
-  const createCellStateOfEdge = (graph: AbstractGraph): CellState =>
-    createCellState(graph, true);
-
-  const createCellStateOfVertex = (graph: AbstractGraph): CellState =>
-    createCellState(graph, false);
-
   const createNewGraph = () => new BaseGraph({ plugins: [SelectionCellsHandler] });
 
   const getPlugin = (graph: BaseGraph) =>

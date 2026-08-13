@@ -15,7 +15,16 @@ limitations under the License.
 */
 
 import { expect } from '@jest/globals';
-import { Cell, type CellStateStyle, Graph } from '../src';
+import {
+  type AbstractGraph,
+  Cell,
+  CellState,
+  type CellStateStyle,
+  Graph,
+  Point,
+  Rectangle,
+  RectangleShape,
+} from '../src';
 
 /**
  * Creates a new {@link Graph} without `container` (use the default value of the parameters).
@@ -31,6 +40,28 @@ export const createGraphWithoutPlugins = (): Graph => new Graph(undefined, undef
 
 export const hasListener = (eventListeners: { funct: Function }[], listener: Function) =>
   eventListeners.some((l) => l.funct === listener);
+
+const createCellState = (graph: AbstractGraph, isEdge: boolean): CellState => {
+  const cell = new Cell();
+  cell.setEdge(isEdge);
+  cell.setVertex(!isEdge);
+  const cellState = new CellState(graph.view, cell, {});
+  cellState.absolutePoints = [new Point(0, 0)];
+  cellState.shape = new RectangleShape(new Rectangle(), 'green', 'blue');
+  return cellState;
+};
+
+/**
+ * Creates the {@link CellState} of an edge, complete enough to have a cell handler created for it.
+ */
+export const createCellStateOfEdge = (graph: AbstractGraph): CellState =>
+  createCellState(graph, true);
+
+/**
+ * Creates the {@link CellState} of a vertex, complete enough to have a cell handler created for it.
+ */
+export const createCellStateOfVertex = (graph: AbstractGraph): CellState =>
+  createCellState(graph, false);
 
 export const createCellWithStyle = (style: CellStateStyle): Cell => {
   const cell = new Cell();

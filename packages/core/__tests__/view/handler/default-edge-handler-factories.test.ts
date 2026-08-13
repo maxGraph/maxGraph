@@ -17,27 +17,13 @@ limitations under the License.
 import { describe, expect, test } from '@jest/globals';
 import {
   BaseGraph,
-  Cell,
-  CellState,
   EdgeHandler,
   EdgeSegmentHandler,
   type EdgeStyleHandlerKind,
   ElbowEdgeHandler,
   getDefaultEdgeHandlerFactories,
-  Point,
-  Rectangle,
-  RectangleShape,
 } from '../../../src';
-
-const createEdgeCellState = (): CellState => {
-  const graph = new BaseGraph();
-  const cell = new Cell();
-  cell.setEdge(true);
-  const cellState = new CellState(graph.view, cell, {});
-  cellState.absolutePoints = [new Point(0, 0)];
-  cellState.shape = new RectangleShape(new Rectangle(), 'green', 'blue');
-  return cellState;
-};
+import { createCellStateOfEdge } from '../../utils';
 
 describe('getDefaultEdgeHandlerFactories', () => {
   test('returns a factory for the three builtin handler kinds', () => {
@@ -68,6 +54,8 @@ describe('getDefaultEdgeHandlerFactories', () => {
     const factory =
       getDefaultEdgeHandlerFactories()[handlerKind as EdgeStyleHandlerKind]!;
 
-    expect(factory(createEdgeCellState()).constructor).toBe(expectedClass);
+    expect(factory(createCellStateOfEdge(new BaseGraph())).constructor).toBe(
+      expectedClass
+    );
   });
 });
