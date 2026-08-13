@@ -59,6 +59,7 @@ export { default as VertexHandle } from './view/cell/VertexHandle.js';
 export { default as KeyHandler } from './view/handler/KeyHandler.js';
 export { default as VertexHandler } from './view/handler/VertexHandler.js';
 export * from './view/handler/config.js';
+export * from './view/handler/default-edge-handler-factories.js';
 
 export { default as CircleLayout } from './view/layout/CircleLayout.js';
 export { default as CompactTreeLayout } from './view/layout/CompactTreeLayout.js';
