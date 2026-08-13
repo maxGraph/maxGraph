@@ -22,6 +22,7 @@ import {
   constants,
   EdgeMarker,
   EdgeMarkerRegistry,
+  EdgeSegmentHandler,
   EllipseShape,
   FitPlugin,
   InternalEvent,
@@ -61,6 +62,13 @@ const initializeGraph = (container: HTMLElement) => {
 
   const graph = new CustomGraph({
     container,
+    // The example uses 'orthogonalEdgeStyle', registered under the 'segment' handler kind. SelectionCellsHandler only
+    // provides the handler of the 'default' kind, so declare this one to get the per segment handles on the edges.
+    // Only the kinds declared here are bundled, and this one brings ElbowEdgeHandler along, as EdgeSegmentHandler
+    // extends it.
+    edgeHandlerFactories: {
+      segment: (state) => new EdgeSegmentHandler(state),
+    },
     plugins: [
       CellEditorHandler, // Enables in-place editing of cell labels
       FitPlugin, // Enables the fitCenter method
