@@ -1571,6 +1571,9 @@ export type GraphOptions = {
  * @since 0.18.0
  * @category Graph
  */
+// TODO: rename to GraphCollaboratorOptions, for consistency with GraphPluginOptions and with the singular modifier
+// used elsewhere. This is a breaking change: the type is exported, and it is the parameter of the abstract
+// initializeCollaborators method that every AbstractGraph subclass implements. Do it in a grouped renaming pass.
 export type GraphCollaboratorsOptions = {
   cellRenderer?: CellRenderer;
   model?: GraphDataModel;
