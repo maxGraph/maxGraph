@@ -1,12 +1,17 @@
 ---
 paths:
   - "packages/core/src/**"
+  - "packages/core/__tests__/**"
 ---
 # Coding Practices — Core Package
+
+Unless a section says otherwise, these practices apply to the sources and to the tests of the package.
 
 ## Import Extensions
 
 ALWAYS include `.js` extensions in import statements. Enforced by linter.
+
+Sources only. Test files omit the extension, see the testing conventions.
 
 ## Zero Runtime Dependencies
 
@@ -14,8 +19,10 @@ The core package has zero third-party runtime dependencies. NEVER add new runtim
 
 ## Null/Undefined Checks
 
-ALWAYS use `isNullish` from `internal/utils.js` to test whether a value is `null` or `undefined`. Prefer it over every
-direct form: `!variable`, `variable === null`, `variable !== undefined`, `variable == null`.
+Use `isNullish` from `internal/utils.js` to test whether a value is `null` or `undefined` **when a present value of
+that type can be falsy**: `number`, `string`, `boolean`, and any union containing them. That is where a truthiness
+check is a bug, as `0`, `''` and `false` are present values it reports as absent. Indexes, sizes, coordinates and
+scales are pervasive in this codebase, so the case is common.
 
 ```typescript
 import { isNullish } from '../internal/utils.js';
@@ -23,31 +30,43 @@ import { isNullish } from '../internal/utils.js';
 if (isNullish(index)) { ... }       // Good
 if (!isNullish(index)) { ... }      // Good — narrows to the non-nullish type
 
-if (!index) { ... }                 // Bad — treats 0, "" and false as absent
-if (index === null) { ... }         // Bad — misses undefined
-if (index != null) { ... }          // Bad — correct but inconsistent, and easy to misread as a typo for !==
+if (!index) { ... }                 // Bad — treats 0, '' and false as absent
 ```
 
-Why a helper rather than the built-in operators:
+`isNullish` is a type guard (`v is null | undefined`), so `!isNullish(x)` narrows `x` for the compiler. Hand-written
+comparisons narrow too, but only when written exactly right.
 
-- `!variable` is a bug for any type whose value can be falsy but present (`0`, `""`, `false`). This is the common case
-  for indexes, sizes, coordinates and scales, which are pervasive in this codebase.
-- `=== null` and `=== undefined` each cover only half of nullish, so they silently drift when a signature later widens
-  from `T | null` to `T | null | undefined`.
-- `isNullish` is a type guard (`v is null | undefined`), so `!isNullish(x)` narrows `x` for the compiler. Hand-written
-  comparisons narrow too, but only when written exactly right.
-- One spelling everywhere makes the intent greppable and removes the "is this `!=` deliberate or a typo?" question.
-
-Exception: keep `?.` and `??` where they apply. They already have nullish semantics and are clearer than an explicit
-check.
+For a value whose type has no falsy inhabitant — an object, an array, a function, a class instance — truthiness and
+nullishness coincide. A plain check says the same thing, and is shorter. Both forms are accepted; do not rewrite
+existing code from one to the other.
 
 ```typescript
-const points = geo?.points ?? undefined;   // Good — no isNullish needed
+if (!factory) { ... }               // Good — a function is never falsy when it is present
+if (isNullish(factory)) { ... }     // Also fine
 ```
+
+Whatever the type, avoid `=== null` and `=== undefined`: each covers only half of nullish, so they silently drift when
+a signature later widens from `T | null` to `T | null | undefined`. Avoid `!= null` too: it is correct, but it reads
+as a typo for `!==`.
+
+Prefer `?.` and `??` wherever they express the check, whatever the type. They already have nullish semantics, they are
+shorter than an explicit test, and they often remove the need for a guard clause altogether.
+
+```typescript
+const points = geo?.points ?? undefined;                 // Good — no isNullish needed
+for (const [key, value] of Object.entries(options ?? {})) { ... }   // Good — no guard clause needed
+```
+
+The boundary between the two cases is not enforced by tooling today. `@typescript-eslint/strict-boolean-expressions`
+with `allowNullableObject: true` encodes exactly it, but it requires type-aware linting, which the ESLint
+configuration does not set up.
 
 ## Logging
 
 Use `log()` from `internal/utils.js`. NEVER access `GlobalConfig.logger` directly.
+
+Sources only. A test MAY read or replace `GlobalConfig.logger`, to assert on what was logged or to restore it
+afterwards.
 
 ```typescript
 import { log } from '../internal/utils.js';
@@ -113,6 +132,9 @@ isSelected(cell: Cell) {                     // Bad — return type implicit
 ```
 
 Arrow callbacks (e.g. `cells.filter((cell) => ...)`) MAY rely on inference when the type is obvious from a single return.
+
+Sources only. In tests, a local helper MAY rely on inference; declare the return type when the helper is shared
+between test files, or when the inferred type is not obvious at the call site.
 
 ## XML Parsing
 
