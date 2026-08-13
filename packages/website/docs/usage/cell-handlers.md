@@ -137,31 +137,56 @@ different configurations coexist in the same page.
 
 ## Choosing the handler of an edge
 
-The edge handler is selected from the `EdgeStyle` of the edge, through the `handlerKind` metadata declared when
-registering the style in the `EdgeStyleRegistry`. See [Custom EdgeStyle](./edge-styles.md#custom-edgestyle).
+The handler is not chosen by the edge, nor by the handler classes. It comes from the `handlerKind` metadata attached to
+the `EdgeStyle` of the edge, when that style is registered in the `EdgeStyleRegistry`.
 
 Three handler kinds are built in:
 
-| `handlerKind` | Handler | Built-in EdgeStyles |
+| `handlerKind` | Handler | Built-in `EdgeStyle`, with its registration key |
 |---|---|---|
-| `'default'` | `EdgeHandler` | `entityRelationEdgeStyle`, and any edge without an `EdgeStyle` |
-| `'elbow'` | `ElbowEdgeHandler` | `elbowEdgeStyle`, `loopEdgeStyle`, `sideToSideEdgeStyle`, `topToBottomEdgeStyle` |
-| `'segment'` | `EdgeSegmentHandler` | `manhattanEdgeStyle`, `orthogonalEdgeStyle`, `segmentEdgeStyle` |
+| `'default'` | `EdgeHandler` | `EntityRelation` (`entityRelationEdgeStyle`), and any edge without an `EdgeStyle` |
+| `'elbow'` | `ElbowEdgeHandler` | `ElbowConnector` (`elbowEdgeStyle`), `Loop` (`loopEdgeStyle`), `SideToSide` (`sideToSideEdgeStyle`), `TopToBottom` (`topToBottomEdgeStyle`) |
+| `'segment'` | `EdgeSegmentHandler` | `ManhattanConnector` (`manhattanEdgeStyle`), `OrthConnector` (`orthogonalEdgeStyle`), `SegmentConnector` (`segmentEdgeStyle`) |
 
 An `EdgeStyle` registered without a `handlerKind`, or with a kind that has no matching handler, falls back to the
 `'default'` one.
 
-Of these three kinds, `SelectionCellsHandler` only provides the handler of the `'default'` one, so that applications
-not using the two others do not bundle them. `Graph` declares all three when it is created, so it behaves as the table
-describes. With `BaseGraph`, declare the kinds the application needs, see
-[Declaring the factories at construction](#declaring-the-factories-at-construction). Until then, the edges of the
-`'elbow'` and `'segment'` kinds are managed by `EdgeHandler`.
+### Registering the built-in styles
+
+Because the kind is carried by the registration, the table above only holds for styles registered with their dedicated
+`register*EdgeStyle` helper, which declares the metadata for you. This is the way to register a built-in `EdgeStyle`,
+whichever graph class is used. Registering it with a bare `EdgeStyleRegistry.add(key, edgeStyle)` leaves it without a
+`handlerKind`, hence with the `'default'` handler.
+
+`Graph` calls all these helpers when it is instantiated. `BaseGraph` registers nothing, so the application declares
+what it uses:
+
+```typescript
+import { registerOrthogonalEdgeStyle } from '@maxgraph/core';
+
+// registers OrthConnector under the 'orthogonalEdgeStyle' key, with the 'segment' handler kind
+registerOrthogonalEdgeStyle();
+```
+
+See [Styles](./global-configuration.md#styles) for how the registries are filled by each graph class, and
+[How to Use a Specific EdgeStyle](./edge-styles.md#how-to-use-a-specific-edgestyle) for the usage of the registration
+key in a cell style.
+
+### Declaring the matching handler factory
+
+Registering the style is one half. The plugin must also know which handler to create for that kind, and
+`SelectionCellsHandler` only provides the factory of the `'default'` kind, so that applications not using the other
+two do not bundle them.
+
+`Graph` declares the three built-in factories when it is instantiated, so it behaves exactly as the table describes.
+With `BaseGraph`, the edges of the `'elbow'` and `'segment'` kinds are managed by `EdgeHandler` until the application
+declares their factories, see
+[Declaring the factories at construction](#declaring-the-factories-at-construction).
 
 :::warning
-When registering a custom `EdgeStyle`, make sure to declare the correct `handlerKind`. A wrong value produces a
+When registering a **custom** `EdgeStyle`, make sure to declare the correct `handlerKind`. A wrong value produces a
 handler that does not match the actual routing of the edge, for instance bend handles that cannot be moved
-meaningfully. Prefer the dedicated `register*EdgeStyle` helpers for the built-in styles, which set the metadata for
-you.
+meaningfully. See [Custom EdgeStyle](./edge-styles.md#custom-edgestyle).
 :::
 
 ## Configuring the handler factories
@@ -214,7 +239,18 @@ This also covers the kinds registered afterwards, since any kind without a dedic
 those declared for custom kinds. Call it first, then declare the per-kind factories that must differ.
 :::
 
+:::info[Changed in 0.25.0]
+`setVertexHandlerFactory`, `setEdgeHandlerFactory` and `setEdgeHandlerFactoryForAllKinds` were introduced in version
+`0.25.0`.
+
+Previously, the handlers were configured by subclassing the graph and overriding factory methods on it. Those methods
+no longer exist on `AbstractGraph`, `Graph` and `BaseGraph`. See the [Graph](./graph.md) page for the current
+extension points of the graph classes, and the `CHANGELOG` for the detailed migration.
+:::
+
 ### Declaring the factories at construction
+
+_Since version `0.25.0`._
 
 The setters above only affect the handlers created after the call. The `edgeHandlerFactories` graph option declares
 them while the graph is built, so they already govern the first selection:
@@ -230,9 +266,8 @@ const graph = new BaseGraph({
 });
 ```
 
-This is how the built-in handlers other than the `'default'` one are made available. Declare only the kinds the
-application uses, so that the handlers it does not need stay out of its bundle. To get them all, use
-`getDefaultEdgeHandlerFactories()`, which is what `Graph` does:
+Declare only the kinds the application uses, so that the handlers it does not need stay out of its bundle. To get them
+all, use `getDefaultEdgeHandlerFactories()`, which is what `Graph` does:
 
 ```typescript
 const graph = new BaseGraph({
@@ -256,19 +291,6 @@ const graph = new BaseGraph({
 
 The option only declares the kinds it lists, the others keep what the plugin provides. It is ignored when the
 `SelectionCellsHandler` plugin is not registered, as nothing creates cell handlers in that case.
-
-:::info[Changed in 0.25.0]
-`setVertexHandlerFactory` and `setEdgeHandlerFactory` were introduced in version `0.25.0`, along with the
-`edgeHandlerFactories` graph option and `getDefaultEdgeHandlerFactories`.
-
-In that same version, `SelectionCellsHandler` stopped providing the `'elbow'` and `'segment'` factories. `Graph` keeps
-declaring the three built-in kinds, so it is unaffected. `BaseGraph` consumers relying on those two handlers must now
-declare them.
-
-Previously, the handlers were configured by subclassing the graph and overriding factory methods on it. Those methods
-no longer exist on `AbstractGraph`, `Graph` and `BaseGraph`. See the [Graph](./graph.md) page for the current
-extension points of the graph classes, and the `CHANGELOG` for the detailed migration.
-:::
 
 ## Examples and Demos
 
