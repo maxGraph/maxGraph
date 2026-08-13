@@ -473,14 +473,10 @@ export abstract class AbstractGraph extends EventSource {
   private configureEdgeHandlerFactories(
     factories: GraphPluginOptions['edgeHandlerFactories']
   ): void {
-    if (isNullish(factories)) {
-      return;
-    }
-
     const selectionCellsHandler = this.getPlugin<SelectionCellsHandler>(
       'SelectionCellsHandler'
     );
-    for (const [handlerKind, factory] of Object.entries(factories)) {
+    for (const [handlerKind, factory] of Object.entries(factories ?? {})) {
       if (!isNullish(factory)) {
         selectionCellsHandler?.setEdgeHandlerFactory(handlerKind, factory);
       }
