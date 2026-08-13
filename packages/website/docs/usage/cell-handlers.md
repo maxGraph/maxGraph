@@ -151,6 +151,12 @@ Three handler kinds are built in:
 An `EdgeStyle` registered without a `handlerKind`, or with a kind that has no matching handler, falls back to the
 `'default'` one.
 
+Of these three kinds, `SelectionCellsHandler` only provides the handler of the `'default'` one, so that applications
+not using the two others do not bundle them. `Graph` declares all three when it is created, so it behaves as the table
+describes. With `BaseGraph`, declare the kinds the application needs, see
+[Declaring the factories at construction](#declaring-the-factories-at-construction). Until then, the edges of the
+`'elbow'` and `'segment'` kinds are managed by `EdgeHandler`.
+
 :::warning
 When registering a custom `EdgeStyle`, make sure to declare the correct `handlerKind`. A wrong value produces a
 handler that does not match the actual routing of the edge, for instance bend handles that cannot be moved
@@ -208,8 +214,56 @@ This also covers the kinds registered afterwards, since any kind without a dedic
 those declared for custom kinds. Call it first, then declare the per-kind factories that must differ.
 :::
 
+### Declaring the factories at construction
+
+The setters above only affect the handlers created after the call. The `edgeHandlerFactories` graph option declares
+them while the graph is built, so they already govern the first selection:
+
+```typescript
+import { BaseGraph, EdgeSegmentHandler, SelectionCellsHandler } from '@maxgraph/core';
+
+const graph = new BaseGraph({
+  plugins: [SelectionCellsHandler],
+  edgeHandlerFactories: {
+    segment: (state) => new EdgeSegmentHandler(state),
+  },
+});
+```
+
+This is how the built-in handlers other than the `'default'` one are made available. Declare only the kinds the
+application uses, so that the handlers it does not need stay out of its bundle. To get them all, use
+`getDefaultEdgeHandlerFactories()`, which is what `Graph` does:
+
+```typescript
+const graph = new BaseGraph({
+  plugins: [SelectionCellsHandler],
+  edgeHandlerFactories: getDefaultEdgeHandlerFactories(),
+});
+```
+
+Overriding the handler of the `'default'` kind works the same way, and combines with the built-in ones through a
+spread:
+
+```typescript
+const graph = new BaseGraph({
+  plugins: [SelectionCellsHandler],
+  edgeHandlerFactories: {
+    ...getDefaultEdgeHandlerFactories(),
+    default: (state) => new MyEdgeHandler(state),
+  },
+});
+```
+
+The option only declares the kinds it lists, the others keep what the plugin provides. It is ignored when the
+`SelectionCellsHandler` plugin is not registered, as nothing creates cell handlers in that case.
+
 :::info[Changed in 0.25.0]
-`setVertexHandlerFactory` and `setEdgeHandlerFactory` were introduced in version `0.25.0`.
+`setVertexHandlerFactory` and `setEdgeHandlerFactory` were introduced in version `0.25.0`, along with the
+`edgeHandlerFactories` graph option and `getDefaultEdgeHandlerFactories`.
+
+In that same version, `SelectionCellsHandler` stopped providing the `'elbow'` and `'segment'` factories. `Graph` keeps
+declaring the three built-in kinds, so it is unaffected. `BaseGraph` consumers relying on those two handlers must now
+declare them.
 
 Previously, the handlers were configured by subclassing the graph and overriding factory methods on it. Those methods
 no longer exist on `AbstractGraph`, `Graph` and `BaseGraph`. See the [Graph](./graph.md) page for the current
