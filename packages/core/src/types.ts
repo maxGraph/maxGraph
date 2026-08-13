@@ -1561,22 +1561,9 @@ export type ShapeConstructor = Constructor<Shape>;
  */
 export type GraphOptions = {
   container?: HTMLElement;
-  /**
-   * The factories creating the {@link EdgeHandler} managing a selected edge, for each
-   * {@link EdgeStyleHandlerKind}. They are set on the {@link SelectionCellsHandler} plugin while the graph is built,
-   * so they already apply to the first selection.
-   *
-   * Only the declared kinds are configured, the others keep the factory the plugin provides. Use
-   * {@link getDefaultEdgeHandlerFactories} to declare all the builtin ones at once.
-   *
-   * This is ignored when the {@link SelectionCellsHandler} plugin is not registered in {@link GraphOptions.plugins},
-   * as nothing creates cell handlers in that case.
-   *
-   * @since 0.25.0
-   */
-  edgeHandlerFactories?: Partial<Record<EdgeStyleHandlerKind, EdgeHandlerFactory>>;
   plugins?: GraphPluginConstructor[];
-} & GraphCollaboratorsOptions;
+} & GraphCollaboratorsOptions &
+  GraphPluginOptions;
 
 /**
  * Collaborators injected in the {@link AbstractGraph} when it is instantiated.
@@ -1590,6 +1577,29 @@ export type GraphCollaboratorsOptions = {
   selectionModel?: (graph: AbstractGraph) => GraphSelectionModel;
   stylesheet?: Stylesheet;
   view?: (graph: AbstractGraph) => GraphView;
+};
+
+/**
+ * Configuration of the plugins registered on the {@link AbstractGraph} when it is instantiated, passed to them once
+ * they exist.
+ *
+ * Each property is only honored when the plugin owning it is registered in {@link GraphOptions.plugins}. Otherwise it
+ * is ignored, as nothing consumes it.
+ *
+ * @since 0.25.0
+ * @category Graph
+ * @category Plugin
+ */
+export type GraphPluginOptions = {
+  /**
+   * The factories creating the {@link EdgeHandler} managing a selected edge, for each
+   * {@link EdgeStyleHandlerKind}. They are set on the {@link SelectionCellsHandler} plugin while the graph is built,
+   * so they already apply to the first selection.
+   *
+   * Only the declared kinds are configured, the others keep the factory the plugin provides. Use
+   * {@link getDefaultEdgeHandlerFactories} to declare all the builtin ones at once.
+   */
+  edgeHandlerFactories?: Partial<Record<EdgeStyleHandlerKind, EdgeHandlerFactory>>;
 };
 
 /**

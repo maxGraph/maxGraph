@@ -312,7 +312,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    * Edge styles whose kind has no factory fall back to the `'default'` one.
    *
    * The factory only affects handlers created after this call. To have it apply to the first selection as well, use
-   * the `edgeHandlerFactories` graph option instead.
+   * the {@link GraphOptions.edgeHandlerFactories} instead.
    *
    * @param handlerKind the {@link EdgeStyleHandlerKind} the factory applies to.
    * @param factory creates the {@link EdgeHandler} for the {@link CellState} it receives.

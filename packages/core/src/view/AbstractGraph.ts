@@ -48,6 +48,7 @@ import type {
   GraphFoldingOptions,
   GraphOptions,
   GraphPlugin,
+  GraphPluginOptions,
   MouseListenerSet,
   PluginId,
 } from '../types.js';
@@ -470,7 +471,7 @@ export abstract class AbstractGraph extends EventSource {
    * lifecycle hook letting every plugin read the options it understands, so it is kept isolated in this single method.
    */
   private configureEdgeHandlerFactories(
-    factories: GraphOptions['edgeHandlerFactories']
+    factories: GraphPluginOptions['edgeHandlerFactories']
   ): void {
     if (isNullish(factories)) {
       return;
