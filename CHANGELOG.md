@@ -33,6 +33,17 @@ _**Note:** Yet to be released breaking changes appear here._
   ```
 - The dispatch methods `createHandler` and `createEdgeHandler` are now defined on `SelectionCellsHandler`. If you were overriding them to change the dispatch logic itself (and not only the instantiated class), extend `SelectionCellsHandler` and pass your subclass in the `plugins` option.
 - `SelectionCellsHandler.createHandler` returns a non-nullable `CellHandler` (the new `EdgeHandler | VertexHandler` union type exported from the package), whereas `AbstractGraph.createHandler` was typed as nullable. TypeScript users can drop the now-useless null checks on the returned value.
+- The `SelectionCellsHandler` plugin now only provides the edge handler of the `'default'` kind. Edges whose `EdgeStyle` is registered with the `'elbow'` or `'segment'` handler kind are managed by `EdgeHandler` instead of `ElbowEdgeHandler` and `EdgeSegmentHandler`, unless the graph declares the corresponding factories.
+  This lets applications that do not need them drop `ElbowEdgeHandler` and `EdgeSegmentHandler` from their bundle, which was impossible before as the plugin always referenced all three. See [issue #890](https://github.com/maxGraph/maxGraph/issues/890).
+  `Graph` is not impacted, it declares the three builtin factories itself. `BaseGraph` consumers relying on the elbow or segment handlers must now opt in with the new `edgeHandlerFactories` option:
+  ```typescript
+  const graph = new BaseGraph({
+    plugins: [SelectionCellsHandler],
+    // all the builtin edge handlers, as Graph does. Declare only the kinds in use to keep the bundle smaller.
+    edgeHandlerFactories: getDefaultEdgeHandlerFactories(),
+  });
+  ```
+  Declaring only the kinds actually in use keeps `ElbowEdgeHandler` and `EdgeSegmentHandler` out of the bundle when they are not needed. The factories are set while the graph is built, so they already apply to the first selection, unlike `setEdgeHandlerFactory` which only affects the handlers created after the call.
 
 **Other Changes**:
 - The order of the child elements produced by the XML serialization of `<Graph>` and `<BaseGraph>` has changed: `pageFormat` and `warningImage` are now emitted right after `options`, instead of last.

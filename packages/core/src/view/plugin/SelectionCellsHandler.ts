@@ -35,8 +35,6 @@ import type {
 import EdgeHandler from '../handler/EdgeHandler.js';
 import VertexHandler from '../handler/VertexHandler.js';
 import InternalMouseEvent from '../event/InternalMouseEvent.js';
-import ElbowEdgeHandler from '../handler/ElbowEdgeHandler.js';
-import EdgeSegmentHandler from '../handler/EdgeSegmentHandler.js';
 import { EdgeStyleRegistry } from '../style/edge/EdgeStyleRegistry.js';
 import { isNullish } from '../../internal/utils.js';
 
@@ -64,14 +62,19 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
     return new VertexHandler(state);
   };
 
+  /**
+   * Only the `'default'` kind is provided, as it is the fallback of {@link createEdgeHandler} and must always be
+   * there. The other kinds are opt-in, through the `edgeHandlerFactories` graph option or {@link
+   * setEdgeHandlerFactory}.
+   *
+   * This must keep referencing {@link EdgeHandler} only. Referencing its subclasses here, directly or through
+   * `getDefaultEdgeHandlerFactories`, puts them in the bundle of every application registering this plugin, which is
+   * exactly what this design avoids.
+   */
   private readonly edgeHandlerFactories = new Map<
     EdgeStyleHandlerKind,
     EdgeHandlerFactory
-  >([
-    ['default', (state) => new EdgeHandler(state)],
-    ['elbow', (state) => new ElbowEdgeHandler(state)],
-    ['segment', (state) => new EdgeSegmentHandler(state)],
-  ]);
+  >([['default', (state) => new EdgeHandler(state)]]);
 
   constructor(graph: AbstractGraph) {
     super();

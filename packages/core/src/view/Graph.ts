@@ -25,6 +25,7 @@ import { Stylesheet } from './style/Stylesheet.js';
 import GraphSelectionModel from './GraphSelectionModel.js';
 import { registerDefaultStyleElements } from './register-style-elements.js';
 import { getDefaultPlugins } from './plugin/index.js';
+import { getDefaultEdgeHandlerFactories } from './handler/default-edge-handler-factories.js';
 
 /**
  * An implementation of {@link AbstractGraph} that automatically loads some default built-ins (plugins, style elements).
@@ -91,6 +92,14 @@ export class Graph extends AbstractGraph {
     plugins: GraphPluginConstructor[] = getDefaultPlugins(),
     stylesheet?: Stylesheet | null
   ) {
-    super({ container, model, plugins, stylesheet: stylesheet ?? undefined });
+    super({
+      container,
+      // Graph provides all the builtin edge handlers, whereas the SelectionCellsHandler plugin only provides the
+      // 'default' one.
+      edgeHandlerFactories: getDefaultEdgeHandlerFactories(),
+      model,
+      plugins,
+      stylesheet: stylesheet ?? undefined,
+    });
   }
 }

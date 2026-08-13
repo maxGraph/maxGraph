@@ -31,12 +31,14 @@ import {
   type CellStyle,
   EdgeHandler,
   EdgeSegmentHandler,
+  type EdgeHandlerFactory,
   EdgeStyle,
   type EdgeStyleFunction,
   type EdgeStyleHandlerKind,
   EdgeStyleRegistry,
   ElbowEdgeHandler,
   Geometry,
+  getDefaultEdgeHandlerFactories,
   Graph,
   Point,
   registerDefaultEdgeStyles,
@@ -48,6 +50,21 @@ import {
   VertexHandler,
 } from '../../../src';
 import { createCellStateOfEdge, createCellStateOfVertex, hasListener } from '../../utils';
+
+// Test-only escape hatch to inspect the private `edgeHandlerFactories` field. Kept here (not in src) so the property
+// stays hidden from production code, stories, and downstream consumers.
+const internals = (
+  plugin: SelectionCellsHandler
+): { edgeHandlerFactories: Map<EdgeStyleHandlerKind, EdgeHandlerFactory> } =>
+  plugin as unknown as {
+    edgeHandlerFactories: Map<EdgeStyleHandlerKind, EdgeHandlerFactory>;
+  };
+
+const expectExactInstanceOfEdgeHandler = (handler: CellHandler | undefined): void => {
+  expect(handler).toBeInstanceOf(EdgeHandler);
+  expect(handler).not.toBeInstanceOf(EdgeSegmentHandler);
+  expect(handler).not.toBeInstanceOf(ElbowEdgeHandler);
+};
 
 describe('onDestroy', () => {
   test('removes refreshHandler from selectionModel', () => {
@@ -108,12 +125,6 @@ describe('Handler management', () => {
   const getPlugin = (graph: BaseGraph) =>
     graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!;
 
-  const expectExactInstanceOfEdgeHandler = (handler: EdgeHandler): void => {
-    expect(handler).toBeInstanceOf(EdgeHandler);
-    expect(handler).not.toBeInstanceOf(EdgeSegmentHandler);
-    expect(handler).not.toBeInstanceOf(ElbowEdgeHandler);
-  };
-
   describe('createHandler', () => {
     describe('vertex', () => {
       test('Expect VertexHandler', () => {
@@ -143,7 +154,7 @@ describe('Handler management', () => {
       const plugin = getPlugin(graph);
 
       const cellState = createCellStateOfEdge(graph);
-      expectExactInstanceOfEdgeHandler(<EdgeHandler>plugin.createHandler(cellState));
+      expectExactInstanceOfEdgeHandler(plugin.createHandler(cellState));
     });
 
     test('Pass the edge geometry and the visible terminal states to getEdgeStyle', () => {
@@ -208,34 +219,62 @@ describe('Handler management', () => {
         registerDefaultEdgeStyles();
       });
 
+      // The 'elbow' and 'segment' kinds have no factory unless the graph declares one, so these expectations only
+      // hold for a graph configured with the builtin factories.
+      describe('Builtin edge handler factories configured', () => {
+        const createGraphWithBuiltinEdgeHandlers = () =>
+          new BaseGraph({
+            plugins: [SelectionCellsHandler],
+            edgeHandlerFactories: getDefaultEdgeHandlerFactories(),
+          });
+
+        test.each([
+          ['ElbowConnector', EdgeStyle.ElbowConnector],
+          ['Loop', EdgeStyle.Loop],
+          ['SideToSide', EdgeStyle.SideToSide],
+          ['TopToBottom', EdgeStyle.TopToBottom],
+        ])('Expect ElbowEdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
+          const graph = createGraphWithBuiltinEdgeHandlers();
+          const plugin = getPlugin(graph);
+
+          const cellState = createCellStateOfEdge(graph);
+          expect(plugin.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
+            ElbowEdgeHandler
+          );
+        });
+
+        test.each([
+          ['ManhattanConnector', EdgeStyle.ManhattanConnector],
+          ['OrthogonalConnector', EdgeStyle.OrthConnector],
+          ['SegmentConnector', EdgeStyle.SegmentConnector],
+        ])('Expect EdgeSegmentHandler for edgeStyle: %s', (_name, edgeStyle) => {
+          const graph = createGraphWithBuiltinEdgeHandlers();
+          const plugin = getPlugin(graph);
+
+          const cellState = createCellStateOfEdge(graph);
+          expect(plugin.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
+            EdgeSegmentHandler
+          );
+        });
+      });
+
+      // Without any factory declared, every kind falls back to the 'default' one.
       test.each([
         ['ElbowConnector', EdgeStyle.ElbowConnector],
-        ['Loop', EdgeStyle.Loop],
-        ['SideToSide', EdgeStyle.SideToSide],
-        ['TopToBottom', EdgeStyle.TopToBottom],
-      ])('Expect ElbowEdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
-        const graph = createNewGraph();
-        const plugin = getPlugin(graph);
-
-        const cellState = createCellStateOfEdge(graph);
-        expect(plugin.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-          ElbowEdgeHandler
-        );
-      });
-
-      test.each([
         ['ManhattanConnector', EdgeStyle.ManhattanConnector],
-        ['OrthogonalConnector', EdgeStyle.OrthConnector],
         ['SegmentConnector', EdgeStyle.SegmentConnector],
-      ])('Expect EdgeSegmentHandler for edgeStyle: %s', (_name, edgeStyle) => {
-        const graph = createNewGraph();
-        const plugin = getPlugin(graph);
+      ])(
+        'Expect EdgeHandler when no factory is declared for edgeStyle: %s',
+        (_name, edgeStyle) => {
+          const graph = createNewGraph();
+          const plugin = getPlugin(graph);
 
-        const cellState = createCellStateOfEdge(graph);
-        expect(plugin.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-          EdgeSegmentHandler
-        );
-      });
+          const cellState = createCellStateOfEdge(graph);
+          expectExactInstanceOfEdgeHandler(
+            plugin.createEdgeHandler(cellState, edgeStyle)
+          );
+        }
+      );
 
       test.each([
         ['custom', customEdgeStyle],
@@ -685,16 +724,41 @@ describe('edgeHandlerFactories option', () => {
     ).not.toThrow();
   });
 
-  test('Ignore an entry whose factory is nullish', () => {
+  // Asserted on the private map because it is not observable otherwise: a nullish factory stored for a kind and a kind
+  // left unconfigured both end up creating the handler of the 'default' kind.
+  test('Skip an entry whose factory is nullish instead of storing it', () => {
+    const graph = new BaseGraph({
+      plugins: [SelectionCellsHandler],
+      edgeHandlerFactories: {
+        default: (state) => new CustomEdgeHandler(state),
+        elbow: undefined,
+      },
+    });
+    const plugin = graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!;
+
+    expect([...internals(plugin).edgeHandlerFactories.keys()]).toStrictEqual(['default']);
+    // the nullish entry does not prevent the other ones from being applied
+    expect(getHandlerOfSelectedEdge(graph)).toBeInstanceOf(CustomEdgeHandler);
+  });
+
+  test('Restore the three builtin kinds with getDefaultEdgeHandlerFactories', () => {
     registerDefaultEdgeStyles();
     const graph = new BaseGraph({
       plugins: [SelectionCellsHandler],
-      edgeHandlerFactories: { elbow: undefined },
+      edgeHandlerFactories: getDefaultEdgeHandlerFactories(),
     });
 
-    const handler = getHandlerOfSelectedEdge(graph, { edgeStyle: 'elbowEdgeStyle' });
+    expectExactInstanceOfEdgeHandler(getHandlerOfSelectedEdge(graph));
 
-    expect(handler).toBeInstanceOf(ElbowEdgeHandler);
+    const elbowHandler = getHandlerOfSelectedEdge(graph, {
+      edgeStyle: 'elbowEdgeStyle',
+    });
+    expect(elbowHandler).toBeInstanceOf(ElbowEdgeHandler);
+    expect(elbowHandler).not.toBeInstanceOf(EdgeSegmentHandler);
+
+    expect(
+      getHandlerOfSelectedEdge(graph, { edgeStyle: 'segmentEdgeStyle' })
+    ).toBeInstanceOf(EdgeSegmentHandler);
   });
 });
 
@@ -709,26 +773,15 @@ describe('Edge handler kinds available per graph class', () => {
     unregisterAllShapes();
   });
 
-  describe.each([
-    ['Graph', (): AbstractGraph => new Graph()],
-    [
-      'BaseGraph',
-      (): AbstractGraph => {
-        registerDefaultEdgeStyles();
-        return new BaseGraph({ plugins: [SelectionCellsHandler] });
-      },
-    ],
-  ])('%s', (_name, createGraph) => {
+  describe('Graph', () => {
     test('provides the default handler', () => {
-      const handler = getHandlerOfSelectedEdge(createGraph());
+      const handler = getHandlerOfSelectedEdge(new Graph());
 
-      expect(handler).toBeInstanceOf(EdgeHandler);
-      expect(handler).not.toBeInstanceOf(ElbowEdgeHandler);
-      expect(handler).not.toBeInstanceOf(EdgeSegmentHandler);
+      expectExactInstanceOfEdgeHandler(handler);
     });
 
     test('provides the elbow handler', () => {
-      const handler = getHandlerOfSelectedEdge(createGraph(), {
+      const handler = getHandlerOfSelectedEdge(new Graph(), {
         edgeStyle: 'elbowEdgeStyle',
       });
 
@@ -737,11 +790,42 @@ describe('Edge handler kinds available per graph class', () => {
     });
 
     test('provides the segment handler', () => {
-      const handler = getHandlerOfSelectedEdge(createGraph(), {
+      const handler = getHandlerOfSelectedEdge(new Graph(), {
         edgeStyle: 'segmentEdgeStyle',
       });
 
       expect(handler).toBeInstanceOf(EdgeSegmentHandler);
+    });
+  });
+
+  // BaseGraph gets what it is configured with, and it is configured with nothing here: only the 'default' kind the
+  // plugin provides, which every other kind falls back to.
+  describe('BaseGraph', () => {
+    const createGraph = (): BaseGraph => {
+      registerDefaultEdgeStyles();
+      return new BaseGraph({ plugins: [SelectionCellsHandler] });
+    };
+
+    test('provides the default handler', () => {
+      const handler = getHandlerOfSelectedEdge(createGraph());
+
+      expectExactInstanceOfEdgeHandler(handler);
+    });
+
+    test('falls back to the default handler for the elbow kind', () => {
+      const handler = getHandlerOfSelectedEdge(createGraph(), {
+        edgeStyle: 'elbowEdgeStyle',
+      });
+
+      expectExactInstanceOfEdgeHandler(handler);
+    });
+
+    test('falls back to the default handler for the segment kind', () => {
+      const handler = getHandlerOfSelectedEdge(createGraph(), {
+        edgeStyle: 'segmentEdgeStyle',
+      });
+
+      expectExactInstanceOfEdgeHandler(handler);
     });
   });
 });
