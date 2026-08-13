@@ -35,9 +35,20 @@ import { isI18nEnabled, translate } from '../../internal/i18n-utils.js';
  *
  * **Instantiation**
  *
- * This is the handler of the `'elbow'` {@link EdgeStyleHandlerKind}. {@link SelectionCellsHandler} creates it for
- * each selected edge whose `EdgeStyle` is registered under that kind in {@link EdgeStyleRegistry}, which the built-in
- * `elbowEdgeStyle`, `loopEdgeStyle`, `sideToSideEdgeStyle` and `topToBottomEdgeStyle` are.
+ * This is the handler of the `'elbow'` {@link EdgeStyleHandlerKind}, which the built-in `elbowEdgeStyle`,
+ * `loopEdgeStyle`, `sideToSideEdgeStyle` and `topToBottomEdgeStyle` are registered under in
+ * {@link EdgeStyleRegistry}.
+ *
+ * {@link SelectionCellsHandler} provides no factory for that kind, so it is only created when the graph declares one,
+ * which {@link Graph} does. Otherwise those edges are managed by {@link EdgeHandler}, the handler of the `'default'`
+ * kind. With {@link BaseGraph}, declare it with the `edgeHandlerFactories` option, or use
+ * {@link getDefaultEdgeHandlerFactories} to declare all the builtin ones at once:
+ * ```typescript
+ * const graph = new BaseGraph({
+ *   plugins: [SelectionCellsHandler],
+ *   edgeHandlerFactories: { elbow: (state) => new ElbowEdgeHandler(state) },
+ * });
+ * ```
  *
  * To have maxGraph create a custom implementation instead, register a factory on the plugin:
  * ```typescript

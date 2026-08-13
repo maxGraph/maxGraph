@@ -35,9 +35,19 @@ import { EdgeHandlerConfig } from './config.js';
  *
  * **Instantiation**
  *
- * This is the handler of the `'segment'` {@link EdgeStyleHandlerKind}. {@link SelectionCellsHandler} creates it for
- * each selected edge whose `EdgeStyle` is registered under that kind in {@link EdgeStyleRegistry}, which the built-in
- * `manhattanEdgeStyle`, `orthogonalEdgeStyle` and `segmentEdgeStyle` are.
+ * This is the handler of the `'segment'` {@link EdgeStyleHandlerKind}, which the built-in `manhattanEdgeStyle`,
+ * `orthogonalEdgeStyle` and `segmentEdgeStyle` are registered under in {@link EdgeStyleRegistry}.
+ *
+ * {@link SelectionCellsHandler} provides no factory for that kind, so it is only created when the graph declares one,
+ * which {@link Graph} does. Otherwise those edges are managed by {@link EdgeHandler}, the handler of the `'default'`
+ * kind. With {@link BaseGraph}, declare it with the `edgeHandlerFactories` option, or use
+ * {@link getDefaultEdgeHandlerFactories} to declare all the builtin ones at once:
+ * ```typescript
+ * const graph = new BaseGraph({
+ *   plugins: [SelectionCellsHandler],
+ *   edgeHandlerFactories: { segment: (state) => new EdgeSegmentHandler(state) },
+ * });
+ * ```
  *
  * To have maxGraph create a custom implementation instead, register a factory on the plugin:
  * ```typescript

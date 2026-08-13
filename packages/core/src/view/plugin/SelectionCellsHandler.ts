@@ -306,11 +306,13 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    * selectionCellsHandler.setEdgeHandlerFactory('elbow', (state) => new MyElbowEdgeHandler(state));
    * ```
    *
-   * The three built-in kinds are `'default'`, `'elbow'` and `'segment'`. Custom kinds are supported: register the
-   * `EdgeStyle` with `EdgeStyleRegistry.add(name, edgeStyle, { handlerKind: 'my-kind' })`, then declare the matching
-   * factory here. Edge styles whose kind has no factory fall back to the `'default'` one.
+   * The three built-in kinds are `'default'`, `'elbow'` and `'segment'`, but this plugin only provides a factory for
+   * `'default'`. Custom kinds are supported: register the `EdgeStyle` with
+   * `EdgeStyleRegistry.add(name, edgeStyle, { handlerKind: 'my-kind' })`, then declare the matching factory here.
+   * Edge styles whose kind has no factory fall back to the `'default'` one.
    *
-   * The factory only affects handlers created after this call.
+   * The factory only affects handlers created after this call. To have it apply to the first selection as well, use
+   * the `edgeHandlerFactories` graph option instead.
    *
    * @param handlerKind the {@link EdgeStyleHandlerKind} the factory applies to.
    * @param factory creates the {@link EdgeHandler} for the {@link CellState} it receives.
