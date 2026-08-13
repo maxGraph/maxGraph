@@ -27,6 +27,7 @@ import {
   AbstractGraph,
   BaseGraph,
   Cell,
+  type CellHandler,
   CellState,
   type CellStyle,
   EdgeHandler,
@@ -37,12 +38,16 @@ import {
   EdgeStyleRegistry,
   ElbowEdgeHandler,
   Geometry,
+  Graph,
   Point,
   Rectangle,
   RectangleShape,
   registerDefaultEdgeStyles,
   SelectionCellsHandler,
+  unregisterAllEdgeMarkers,
   unregisterAllEdgeStyles,
+  unregisterAllEdgeStylesAndPerimeters,
+  unregisterAllShapes,
   VertexHandler,
 } from '../../../src';
 import { hasListener } from '../../utils';
@@ -632,6 +637,75 @@ describe('Handler lifecycle on selection', () => {
       plugin.updateHandler(graph.view.getState(vertex)!);
 
       expect(plugin.isHandled(vertex)).toBe(false);
+    });
+  });
+});
+
+// Which edge handler kinds a graph provides out of the box is part of its public contract, so it is pinned per graph
+// class and goes through the real selection path.
+describe('Edge handler kinds available per graph class', () => {
+  // Graph populates the global style registries when it is instantiated, so all of them are cleaned up here, not only
+  // the edge styles as elsewhere in this file.
+  afterEach(() => {
+    unregisterAllEdgeMarkers();
+    unregisterAllEdgeStylesAndPerimeters();
+    unregisterAllShapes();
+  });
+
+  const getHandlerOfSelectedEdge = (
+    graph: AbstractGraph,
+    style: CellStyle = {}
+  ): CellHandler | undefined => {
+    const source = graph.insertVertex({
+      value: 'source',
+      position: [0, 0],
+      size: [40, 40],
+    });
+    const target = graph.insertVertex({
+      value: 'target',
+      position: [200, 200],
+      size: [40, 40],
+    });
+    const edge = graph.insertEdge({ value: 'an edge', source, target, style });
+    graph.setSelectionCell(edge);
+    return graph
+      .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+      .getHandler(edge);
+  };
+
+  describe.each([
+    ['Graph', (): AbstractGraph => new Graph()],
+    [
+      'BaseGraph',
+      (): AbstractGraph => {
+        registerDefaultEdgeStyles();
+        return new BaseGraph({ plugins: [SelectionCellsHandler] });
+      },
+    ],
+  ])('%s', (_name, createGraph) => {
+    test('provides the default handler', () => {
+      const handler = getHandlerOfSelectedEdge(createGraph());
+
+      expect(handler).toBeInstanceOf(EdgeHandler);
+      expect(handler).not.toBeInstanceOf(ElbowEdgeHandler);
+      expect(handler).not.toBeInstanceOf(EdgeSegmentHandler);
+    });
+
+    test('provides the elbow handler', () => {
+      const handler = getHandlerOfSelectedEdge(createGraph(), {
+        edgeStyle: 'elbowEdgeStyle',
+      });
+
+      expect(handler).toBeInstanceOf(ElbowEdgeHandler);
+      expect(handler).not.toBeInstanceOf(EdgeSegmentHandler);
+    });
+
+    test('provides the segment handler', () => {
+      const handler = getHandlerOfSelectedEdge(createGraph(), {
+        edgeStyle: 'segmentEdgeStyle',
+      });
+
+      expect(handler).toBeInstanceOf(EdgeSegmentHandler);
     });
   });
 });
