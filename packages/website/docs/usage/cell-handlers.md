@@ -168,15 +168,16 @@ import { registerOrthogonalEdgeStyle } from '@maxgraph/core';
 registerOrthogonalEdgeStyle();
 ```
 
-See [Styles](./global-configuration.md#styles) for how the registries are filled by each graph class, and
+See [Styles](./global-configuration.md#styles) for how the registries are filled by each graph class,
 [How to Use a Specific EdgeStyle](./edge-styles.md#how-to-use-a-specific-edgestyle) for the usage of the registration
-key in a cell style.
+key in a cell style, and [Tree-Shaking, EdgeStyles](./tree-shaking.md#edgestyles) for the effect of these registrations
+on the bundle.
 
 ### Declaring the matching handler factory
 
 Registering the style is one half. The plugin must also know which handler to create for that kind, and
 `SelectionCellsHandler` only provides the factory of the `'default'` kind, so that applications not using the other
-two do not bundle them.
+two do not bundle them. See the [Tree-Shaking](./tree-shaking.md) page for that reasoning.
 
 `Graph` declares the three built-in factories when it is instantiated, so it behaves exactly as the table describes.
 With `BaseGraph`, the edges of the `'elbow'` and `'segment'` kinds are managed by `EdgeHandler` until the application
@@ -266,8 +267,9 @@ const graph = new BaseGraph({
 });
 ```
 
-Declare only the kinds the application uses, so that the handlers it does not need stay out of its bundle. To get them
-all, use `getDefaultEdgeHandlerFactories()`, which is what `Graph` does:
+Declare only the kinds the application uses, so that the handlers it does not need stay out of its bundle, which is the
+[tree-shaking](./tree-shaking.md#plugins) benefit of the option. To get them all, use
+`getDefaultEdgeHandlerFactories()`, which is what `Graph` does:
 
 ```typescript
 const graph = new BaseGraph({

@@ -103,7 +103,7 @@ This is a long-running effort. The main milestones so far:
 | 0.18.0 | `BaseGraph` is introduced, along with the `registerDefault*` functions |
 | 0.20.0 | Dedicated registries replace the monolithic `StyleRegistry` and `CellRenderer` registration |
 | 0.24.0 | A dedicated registration helper per built-in `EdgeStyle`, and the image bundle feature moves to a plugin |
-| 0.25.0 | The cell handlers move from `AbstractGraph` to the `SelectionCellsHandler` plugin, so an application that does not register that plugin no longer bundles `VertexHandler`, `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler` |
+| 0.25.0 | The cell handlers move from `AbstractGraph` to the `SelectionCellsHandler` plugin, so an application that does not register that plugin bundles none of them. The plugin itself only provides `VertexHandler` and `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler` becoming opt-in |
 
 The impact of these changes is measured on the example applications and communicated in the release notes. See for
 instance the [0.18.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.18.0) and
@@ -289,8 +289,9 @@ features it provides.
 
 A read-only or visualization-only application typically needs very few of them. In particular, **omitting
 `SelectionCellsHandler` keeps all the cell handler classes out of the bundle**, since it is the plugin that instantiates
-`VertexHandler`, `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler`. See the [Cell Handlers](./cell-handlers.md)
-page.
+them. Registering it pulls in `VertexHandler` and `EdgeHandler` only: the handlers of the elbow and segment edge styles
+are declared by the application itself, through the `edgeHandlerFactories` option, see
+[Declaring the factories at construction](./cell-handlers.md#declaring-the-factories-at-construction).
 
 ### Codecs
 
@@ -473,7 +474,10 @@ const graph = new BaseGraph({
 ```
 
 Check the [Available Plugins](./plugins.md#available-plugins) table for what each one provides, and remember that
-dropping `SelectionCellsHandler` also drops all the cell handlers.
+dropping `SelectionCellsHandler` also drops all the cell handlers. When it is kept, declare the edge handlers matching
+the edge styles registered in the previous step, with the `edgeHandlerFactories` option described in
+[Declaring the factories at construction](./cell-handlers.md#declaring-the-factories-at-construction). This is a step of
+its own for an application coming from `Graph`, which used to get the three built-in handlers without asking.
 
 ### 4. Trim the style elements
 
@@ -536,6 +540,7 @@ approach of the previous steps worthwhile:
 | EdgeStyle | The routing is not applied, so the edge is drawn as a straight line between its terminals |
 | Edge marker | No marker is drawn, so the arrowhead is missing |
 | `EdgeStyle` metadata | The wrong `EdgeHandler` is instantiated, so the handles do not match the actual routing |
+| Edge handler factory | Same symptom, with the metadata correctly declared: the kind has no factory, so the selected edge falls back to the handles of `EdgeHandler` |
 
 Review the diagrams visually, and pay attention to the styles exercised only by rarely used screens.
 
@@ -556,7 +561,6 @@ for the topic and links all the sub-issues. The main ones still open are:
 
 - [#758](https://github.com/maxGraph/maxGraph/issues/758): make `Graph.defaultLoopStyle` configurable with a registered `EdgeStyle` string
 - [#762](https://github.com/maxGraph/maxGraph/issues/762): refactor the `Graph` class and its mixins to improve modularity and tree-shaking
-- [#890](https://github.com/maxGraph/maxGraph/issues/890): make the `EdgeHandler` registration in `SelectionCellsHandler` optional and modular
 
 The main known limitation today is that the mixins of `AbstractGraph` are still loaded as a whole, so part of the graph
 API is included even when unused. Issue #762 tracks the extraction of these behaviors into dedicated plugins.
