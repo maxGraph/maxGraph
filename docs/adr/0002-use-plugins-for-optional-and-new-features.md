@@ -11,7 +11,6 @@
   [issue #762](https://github.com/maxGraph/maxGraph/issues/762),
   **[discussion #51](https://github.com/maxGraph/maxGraph/discussions/51): first mention of the plugin system**,
   [discussion #151](https://github.com/maxGraph/maxGraph/discussions/151#discussioncomment-4376164),
-  inspiration: [Apache ECharts](https://echarts.apache.org/en/index.html),
   user documentation: [`plugins.md`](../../packages/website/docs/usage/plugins.md),
   [`migrate-from-mxgraph.md`](../../packages/website/docs/usage/migrate-from-mxgraph.md)
 
@@ -29,10 +28,9 @@ kept the public API intact, but it left three problems unsolved, and created a f
 - **A growing class again.** Anything new with nowhere else to go lands back on `AbstractGraph`, which is how the class
   reached 1337 lines despite 21 mixins existing.
 
-The plugin system was first proposed in
-[discussion #51](https://github.com/maxGraph/maxGraph/discussions/51), and is inspired by
-[Apache ECharts](https://echarts.apache.org/en/index.html), where the library ships a small core and features are
-registered into it rather than being built into a single object.
+The plugin system was first proposed in [discussion #51](https://github.com/maxGraph/maxGraph/discussions/51), where a
+configurable plugin system is named as the eventual replacement for the namespace split then being used to make
+tree-shaking possible.
 
 Meanwhile the codebase already had a working answer for part of this. The `mxGraph` handlers were per-instance
 collaborators created by the `Graph` constructor, and they were gradually turned into registered plugins. Seven
