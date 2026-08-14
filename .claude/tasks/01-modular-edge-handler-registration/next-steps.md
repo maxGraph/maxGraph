@@ -5,7 +5,34 @@ State at the time of writing: the implementation of issue #890 is complete on
 full CI validation list of `CLAUDE.md` passes, 576 tests green, and the Docusaurus site builds with no broken link or
 anchor.
 
-## 1. Write the pull request description
+## 1. Write the ADR on the graph options convention
+
+To do now, in this branch, not as a follow-up.
+
+This work introduces `GraphPluginOptions`, the second member of `GraphOptions` after `GraphCollaboratorsOptions`. Two
+members make a convention, and every option added from now on will follow it by imitation. Writing it down now costs a
+page, while the reasoning is still fresh and while the shape can still change: `edgeHandlerFactories` is unreleased, so
+moving it is free until 0.25.0 ships and breaking afterwards.
+
+**The repository has no ADR yet**: no directory, no template, no occurrence of "architecture decision". This first one
+therefore also settles where they live, in which format and how they are numbered. Two plausible homes:
+`packages/website/docs/development/`, alongside `contributing.md` and `release.md`, which publishes them on the website
+in the contributor section, or a directory outside the website, which keeps them internal to the repository. A
+lightweight format is enough: context, decision, consequences.
+
+What the ADR has to state:
+
+- the three-way split of `GraphOptions`: what the graph is built from, `container` and `plugins`, what it delegates to
+  its collaborators, `GraphCollaboratorsOptions`, and what it hands over to its plugins, `GraphPluginOptions`. Each
+  member exists because a distinct phase of the constructor consumes it;
+- the naming convention, singular modifier, which is why `GraphCollaboratorsOptions` carries a `TODO` in `types.ts`
+  and would be renamed in a grouped pass;
+- an option is only honored when the component consuming it is present, and its absence is a silent no-op. The
+  rationale is decision _D2_ of `plan.md`;
+- the open question below, flat against grouped per plugin, with its deadline. The ADR is the right place to settle it
+  rather than a comment in a task file.
+
+## 2. Write the pull request description
 
 Not started. Nothing about it is written anywhere else.
 
@@ -43,7 +70,7 @@ Points the description must make:
 Suggested labels to propose: `enhancement`, `breaking change`, `typescript`. Confirm against the repository label
 list before creating the PR.
 
-## 2. Dedicated PR: make the bundle size guard blocking
+## 3. Dedicated PR: make the bundle size guard blocking
 
 Not started. Fully specified in `explore.md`, section _Making the size guard blocking (verified on this repo)_ and
 decision _E_ of the same file: the plugin skeleton, the verified behavior, the current limit values and the trade-off
@@ -58,7 +85,7 @@ It is independent of #890 and touches the three Vite example configurations plus
 before any further size-sensitive work, so the next bundle regression fails the build instead of printing a warning
 nobody reads.
 
-## 3. The `onConfigure` plugin lifecycle hook
+## 4. The `onConfigure` plugin lifecycle hook
 
 Out of scope here, and no GitHub issue exists for it yet. The forwarding block of
 `AbstractGraph.configureEdgeHandlerFactories` is deliberately isolated in a single private method to make its
@@ -71,6 +98,8 @@ Side benefit to mention when opening the issue: the 0.23 kB the forwarding curre
 registering no plugin at all, would move into the plugin that needs it.
 
 ### Decide the shape of the plugin options before 0.25.0 ships
+
+This is the open question of the ADR of item 1, which is where it gets settled. What follows is the material for it.
 
 `GraphPluginOptions` is flat today, `edgeHandlerFactories` sitting directly at its top level. Grouping the options per
 plugin is the alternative, and it has to be settled **before the release**: changing the shape is free while 0.25.0 is
