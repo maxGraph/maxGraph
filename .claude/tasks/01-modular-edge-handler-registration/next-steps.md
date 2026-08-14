@@ -98,7 +98,7 @@ against the class:
 | Option | State of the class | Note |
 |---|---|---|
 | `fadeOut` | `fadeOut`, default `false` | maps as is |
-| `opacity` | the property is `defaultOpacity`, default `20`, from 0 to 100 | the option name does not map one to one, unless it is named `defaultOpacity`, which reads oddly for a public option |
+| `defaultOpacity` | `defaultOpacity`, default `20`, from 0 to 100 | maps as is. The option keeps the property name rather than being shortened to `opacity`, so that every option of the group maps one to one onto the property it drives |
 | `fadeOutDuration` | does not exist | new property, default taken from the current hardcoded value, 200 ms |
 
 `fadeOutDuration` is hardcoded **twice** in `reset()`, as `'all 0.2s linear'` in the transition style and as `200` in
