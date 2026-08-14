@@ -18,7 +18,7 @@ The examples in this page use `TypeScript`; adapt them if you write `JavaScript`
 
 The maxGraph plugins system aims to:
 - reduce coupling in the code, in particular in the `Graph` class
-- improve the tree-shaking
+- improve the [tree-shaking](./tree-shaking.md)
 - provide extension points
 
 Historically, the [Graph class](./graph.md) coming from `mxGraph` was a monolithic class that included all the features.
@@ -65,6 +65,8 @@ panningHandler.ignoreCell = true;
 
 The plugins to use can be specified when creating a graph. \
 The default plugins depend on which Graph class you use — see the [Graph documentation page](./graph.md) for details on choosing between `Graph` and `BaseGraph`.
+
+Every plugin passed to the constructor is bundled with your application, so pass only the ones you need. See [Register Only What You Use](./tree-shaking.md#plugins) for the impact on the bundle size, in particular for read-only applications.
 
 You can pass exactly the plugins you need via the constructor. Here is an example with `Graph`, where the `RubberBandHandler` plugin is added on top of the [default plugins](#available-plugins):
 

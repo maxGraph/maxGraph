@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeEach, describe, expect, test } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globals';
 import {
   EdgeMarkerRegistry,
   EdgeStyleRegistry,
@@ -33,7 +33,11 @@ const unregisterAll = (): void => {
 };
 
 beforeEach(unregisterAll);
-afterEach(unregisterAll);
+afterEach(() => {
+  unregisterAll();
+  // Restore here rather than at the end of each test, so that a spy is removed even when the test throws before it.
+  jest.restoreAllMocks();
+});
 
 describe('registerDefaultStyleElements', () => {
   test.each([
@@ -47,6 +51,21 @@ describe('registerDefaultStyleElements', () => {
     registerDefaultStyleElements();
 
     expect(registry.get(key)).not.toBeNull();
+  });
+
+  // The number of builtin elements is documented in the tree-shaking page, see the table listing what `Graph` loads in
+  // packages/website/docs/usage/tree-shaking.md. Update that table when adding or removing a builtin element.
+  test.each([
+    ['edge marker', EdgeMarkerRegistry, 9],
+    ['edge style', EdgeStyleRegistry, 8],
+    ['perimeter', PerimeterRegistry, 5],
+    ['shape', ShapeRegistry, 16],
+  ])('registers all builtin %s elements', (_name, registry, expectedCount) => {
+    const addSpy = jest.spyOn(registry, 'add');
+
+    registerDefaultStyleElements();
+
+    expect(addSpy).toHaveBeenCalledTimes(expectedCount);
   });
 
   test('is idempotent', () => {
