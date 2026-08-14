@@ -58,8 +58,52 @@ It is independent of #890 and touches the three Vite example configurations plus
 before any further size-sensitive work, so the next bundle regression fails the build instead of printing a warning
 nobody reads.
 
-## Not planned here, on purpose
+## 3. The `onConfigure` plugin lifecycle hook
 
-The `onConfigure(options)` plugin lifecycle hook, which will replace the specific forwarding block of
-`AbstractGraph.configureEdgeHandlerFactories`. It is a separate issue to open. The block is deliberately isolated in a
-single private method to make that extraction trivial.
+Out of scope here, and no GitHub issue exists for it yet. The forwarding block of
+`AbstractGraph.configureEdgeHandlerFactories` is deliberately isolated in a single private method to make its
+extraction trivial.
+
+The design rationale is in `plan.md`, decision _D2_, and the insertion point in `explore.md`. `GraphPlugin` currently
+declares `onDestroy` only, so it is the interface to extend.
+
+Side benefit to mention when opening the issue: the 0.23 kB the forwarding currently costs every application, even one
+registering no plugin at all, would move into the plugin that needs it.
+
+### Decide the shape of the plugin options before 0.25.0 ships
+
+`GraphPluginOptions` is flat today, `edgeHandlerFactories` sitting directly at its top level. Grouping the options per
+plugin is the alternative, and it has to be settled **before the release**: changing the shape is free while 0.25.0 is
+unreleased, and breaking afterwards.
+
+Two forms, and the choice decides more than aesthetics:
+
+- **keys are plugin ids**. The mapping from a configuration entry to its owning plugin is then carried by the key
+  itself, so `onConfigure` dispatches generically, and it works for custom plugins too since their id is their id.
+  This reopens decision _D2_: detecting configuration provided for a plugin that is not registered becomes possible
+  without the mapping table that was judged unworkable. The cost is that option keys inherit the current id
+  inconsistency, `'RubberBandHandler'` and `'SelectionCellsHandler'` in legacy PascalCase against `'image-bundle'` and
+  `'fit'` in the current kebab-case convention, giving
+  `{ 'image-bundle': { … }, SelectionCellsHandler: { … } }`.
+- **keys are chosen names**, `rubberBand` rather than `'RubberBandHandler'`. More readable, but the name to plugin
+  link becomes implicit again, so no generic dispatch and no detection of an unregistered plugin.
+
+If grouping wins, `edgeHandlerFactories` moves under the key of `SelectionCellsHandler`.
+
+### Worked example for that PR: options for the rubber band plugin
+
+Group of options mapping onto `RubberBandHandler`, to be implemented once the hook exists. Property names checked
+against the class:
+
+| Option | State of the class | Note |
+|---|---|---|
+| `fadeOut` | `fadeOut`, default `false` | maps as is |
+| `opacity` | the property is `defaultOpacity`, default `20`, from 0 to 100 | the option name does not map one to one, unless it is named `defaultOpacity`, which reads oddly for a public option |
+| `fadeOutDuration` | does not exist | new property, default taken from the current hardcoded value, 200 ms |
+
+`fadeOutDuration` is hardcoded **twice** in `reset()`, as `'all 0.2s linear'` in the transition style and as `200` in
+the `setTimeout` removing the element. Both must be derived from the option, the transition string being built from the
+value. They cannot drift today, they will be able to.
+
+Naming of the group: `rubberBand` or `rubberBandSelection`. Moot if the keys are plugin ids. Otherwise `rubberBand`
+keeps a mechanical link with what the id would become under the current convention, `'rubber-band'`.
