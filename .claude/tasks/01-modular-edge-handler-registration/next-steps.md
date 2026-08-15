@@ -1,9 +1,12 @@
 # Next steps
 
 State at the time of writing: the implementation of issue #890 is complete on
-`feat/890-edgehandler_only_default_in_basegraph`, 14 commits above `main`, working tree clean, nothing pushed. The
+`feat/890-edgehandler_only_default_in_basegraph`, 21 commits above `main`, working tree clean, nothing pushed. The
 full CI validation list of `CLAUDE.md` passes, 576 tests green, and the Docusaurus site builds with no broken link or
 anchor.
+
+The branch has since been rebased on `main`, which brought in the `tree-shaking.md` documentation page. That page
+stated things this work invalidates, so the last commit corrects it and cross-links it with `cell-handlers.md`.
 
 ## 1. Write the ADR on the graph options convention
 
@@ -66,6 +69,9 @@ Points the description must make:
 - The structural proof, independent of the sizes: in the emitted `lib/esm`, `AbstractGraph.js` imports no plugin at
   all, and `SelectionCellsHandler.js` imports only `EdgeHandler` and `VertexHandler`.
 - Breaking change, already described in `CHANGELOG.md` under `## Unreleased`.
+- The documentation of `tree-shaking.md` is corrected by the same branch: the plugin no longer instantiates
+  `ElbowEdgeHandler` and `EdgeSegmentHandler`, the migration guide gains the step declaring the factories, and #890 is
+  removed from its list of open tree-shaking issues.
 
 Suggested labels to propose: `enhancement`, `breaking change`, `typescript`. Confirm against the repository label
 list before creating the PR.
