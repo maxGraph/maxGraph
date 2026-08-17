@@ -93,7 +93,7 @@ export const resetOrthogonalConnectorConfig = (): void => {
  * @category Configuration
  * @category EdgeStyle
  */
-export type ManhattanConnectorConfigType = {
+export interface ManhattanConnectorConfigType {
   /**
    * Limit for directions change when searching route.
    * @default 90
@@ -121,7 +121,7 @@ export type ManhattanConnectorConfigType = {
    * @default 12
    */
   step: number;
-};
+}
 
 const allDirections = (): DirectionValue[] => {
   return ['north', 'south', 'east', 'west'];

@@ -28,13 +28,13 @@ import type GraphDataModel from '../view/GraphDataModel.js';
  * @since 0.6.0
  * @category Serialization with Codecs
  */
-export type ModelExportOptions = {
+export interface ModelExportOptions {
   /**
    * If `true`, prettify the exported xml.
    * @default true
    */
   pretty?: boolean;
-};
+}
 
 /**
  * Convenient utility class using {@link Codec} to manage maxGraph model import and export.

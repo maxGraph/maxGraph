@@ -18,7 +18,10 @@ import { describe, expect, test } from '@jest/globals';
 import { Cell, EventObject, InternalEvent, SelectionChange } from '../../../src';
 import type { AbstractGraph } from '../../../src';
 
-type CallLog = { kind: 'added' | 'removed'; cell: Cell };
+interface CallLog {
+  kind: 'added' | 'removed';
+  cell: Cell;
+}
 
 const createGraphStub = () => {
   const calls: CallLog[] = [];

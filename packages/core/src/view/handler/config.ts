@@ -37,7 +37,7 @@ import { shallowCopy } from '../../internal/clone-utils.js';
  * @since 0.14.0
  * @category Configuration
  */
-export type EdgeHandlerConfigType = {
+export interface EdgeHandlerConfigType {
   /**
    * Specifies if adding bends by shift-click is enabled.
    *
@@ -116,7 +116,7 @@ export type EdgeHandlerConfigType = {
    * @since 0.15.0
    */
   virtualBendsEnabled: boolean;
-};
+}
 
 /**
  * Global configuration for {@link EdgeHandler} (including subclasses).

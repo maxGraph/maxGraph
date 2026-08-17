@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-type ImageMap = {
+interface ImageMap {
   [key: string]: {
     value: string;
     fallback?: string;
   };
-};
+}
 
 /**
  * Maps from keys to base64 encoded images or file locations. All values must

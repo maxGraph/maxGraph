@@ -21,10 +21,10 @@ import { NONE } from '../../../src/util/Constants';
 /**
  * Additional properties to test extension points by extending `CellStyle` and `CustomCellStateStyle`.
  */
-type CustomStyleAdditions = {
+interface CustomStyleAdditions {
   customProp1: number;
   customProp2: string;
-};
+}
 type CustomCellStyle = CellStyle & CustomStyleAdditions;
 type CustomCellStateStyle = CellStateStyle & CustomStyleAdditions;
 
@@ -33,21 +33,21 @@ type CustomCellStateStyle = CellStateStyle & CustomStyleAdditions;
 describe('Default styles', () => {
   test('Default edge style is set', () => {
     expect(new Stylesheet().getDefaultEdgeStyle()).toEqual(
-      expect.objectContaining(<CellStyle>{
+      expect.objectContaining({
         align: 'center',
         endArrow: 'classic',
         shape: 'connector',
-      })
+      } satisfies CellStyle)
     );
   });
 
   test('Default vertex style is set', () => {
     expect(new Stylesheet().getDefaultVertexStyle()).toEqual(
-      expect.objectContaining(<CellStyle>{
+      expect.objectContaining({
         align: 'center',
         fillColor: '#C3D9FF',
         shape: 'rectangle',
-      })
+      } satisfies CellStyle)
     );
   });
 });

@@ -269,10 +269,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
-  type CellValueAttribute = {
+  interface CellValueAttribute {
     nodeName: string;
     nodeValue: string;
-  };
+  }
 
   /**
    * Creates the textfield for the given property.
