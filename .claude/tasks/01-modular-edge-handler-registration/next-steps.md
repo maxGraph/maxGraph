@@ -135,10 +135,51 @@ against the class:
 | `fadeOut` | `fadeOut`, default `false` | maps as is |
 | `defaultOpacity` | `defaultOpacity`, default `20`, from 0 to 100 | maps as is. The option keeps the property name rather than being shortened to `opacity`, so that every option of the group maps one to one onto the property it drives |
 | `fadeOutDuration` | does not exist | new property, default taken from the current hardcoded value, 200 ms |
+| `triggerModifierKey` | does not exist, `isForceRubberbandEvent()` hardcodes the alt key | new property, `'alt' \| 'control' \| 'meta' \| 'shift' \| null`, default `null`, meaning no modifier is required, which is the current behavior |
 
 `fadeOutDuration` is hardcoded **twice** in `reset()`, as `'all 0.2s linear'` in the transition style and as `200` in
 the `setTimeout` removing the element. Both must be derived from the option, the transition string being built from the
 value. They cannot drift today, they will be able to.
+
+#### `triggerModifierKey`, and why it unblocks left button panning
+
+The option answers a concrete conflict, already acknowledged in the sources: `PanningHandler.useLeftButtonForPanning`
+carries the comment _"Setting this to true may conflict with {@link RubberBandHandler}"_
+(`packages/core/src/view/plugin/PanningHandler.ts:141`). Both plugins claim a plain left press on the background, both
+in their `mouseDown`, both guarded by `!me.isConsumed()`, so the winner is whichever plugin comes first in the mouse
+listener list, that is first in the `plugins` option. One of the two features is unusable.
+
+Setting `triggerModifierKey` to `'shift'` splits the gesture instead of ordering it: a plain left drag on the
+background pans, a shift left drag rubber band selects. The two features coexist, which is the behavior every diagram
+editor offers.
+
+Description for the JSDoc, to be refined when implemented: _the modifier key that must be held down for a mouse press
+to start a rubber band selection. When `null`, no modifier is required and any press on the background starts one,
+which conflicts with `PanningHandler.useLeftButtonForPanning`. Set it to free the plain left press for another
+plugin._
+
+Three implementation constraints, each verified against the current code:
+
+- the option cannot simply gate `mouseDown`. `PanningHandler.isPanningTrigger()` matches on the left button alone
+  (`PanningHandler.ts:275`), so a shift left press is also a panning trigger, and the plugin registered first still
+  wins. The modifier press must be handled in the `FIRE_MOUSE_EVENT` path, the one `isForceRubberbandEvent` already
+  uses, because `EventsMixin.fireMouseEvent` fires that event before dispatching to the mouse listeners
+  (`EventsMixin.ts:673`). The rubber band then consumes the press before `PanningHandler.mouseDown` ever sees it,
+  whatever the plugin order.
+- that path must keep the `!me.getState()` check that `mouseDown` has, which `isForceRubberbandEvent` deliberately
+  does not. Shift is already `AbstractGraph.isConstrainedEvent` (`EventsMixin.ts:880`), used by `SelectionHandler` for
+  constrained moves, so starting a rubber band on a shift press **over a cell** would break constrained dragging. Only
+  presses on the background may trigger it.
+- when the option is set, the plain press must stop starting a selection, otherwise nothing is freed. So the option
+  moves the trigger, it does not add one.
+
+Whether the alt override of `isForceRubberbandEvent` survives as an unconditional second trigger, or whether
+`triggerModifierKey` simply replaces it with `'alt'` as its default, is the one open point. Replacing it is the smaller
+API, and it keeps a single answer to "what starts a rubber band", at the price of making `null` mean something the
+current class cannot express.
+
+Naming: `startModifierKey` was the alternative. Rejected because `start()` is the method both trigger paths call, so
+the name would suggest it gates the alt override too. `triggerModifierKey` names the trigger, which is what it selects.
 
 Naming of the group: `rubberBand` or `rubberBandSelection`. Moot if the keys are plugin ids. Otherwise `rubberBand`
 keeps a mechanical link with what the id would become under the current convention, `'rubber-band'`.
