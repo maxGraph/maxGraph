@@ -78,9 +78,22 @@ list before creating the PR.
 
 ## 3. Dedicated PR: make the bundle size guard blocking
 
-Not started. Fully specified in `explore.md`, section _Making the size guard blocking (verified on this repo)_ and
-decision _E_ of the same file: the plugin skeleton, the verified behavior, the current limit values and the trade-off
-to accept.
+**In progress in the `chore/improve_build_of_examples` branch**, out of this one. Fully specified in `explore.md`,
+section _Making the size guard blocking (verified on this repo)_ and decision _E_ of the same file: the plugin
+skeleton, the verified behavior, the current limit values and the trade-off to accept.
+
+Two requirements settled since `explore.md` was written, both scoped to that branch:
+
+- the check is implemented **once** and shared by the three Vite configs, which already duplicate the whole
+  `codeSplitting.groups` block and differ only by the limit. The limit stays declared once per example and feeds both
+  `chunkSizeWarningLimit` and the blocking check, so the warning and the error cannot drift apart.
+- `scripts/build-all-examples.bash` gains a `--fail-at-end` option, and the CI uses it. Once the check blocks, the
+  first failing example aborts the whole script under `set -euo pipefail`, hiding both the other examples and the size
+  table. With the option, every example is built, failures are collected, the file listing, the markdown table and the
+  CSV are still printed, and the summary of the violations comes last, with a non-zero exit code. Default behavior is
+  unchanged. The single CI call site is `.github/workflows/_reusable_build_examples.yml:33`, a reusable workflow used
+  by `build.yml:93` and `create-github-release.yml:25`, so one change covers both, and the consequence for its
+  `Upload all examples as artifact` step has to be decided explicitly.
 
 Summary: Vite has no built-in way to fail a build on `chunkSizeWarningLimit`, see
 [vitejs/vite#18496](https://github.com/vitejs/vite/issues/18496), but a plugin calling `this.error()` from
