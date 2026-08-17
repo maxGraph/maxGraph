@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --version && tsc && vite build --base ./",
+    "build:analyze": "cross-env ANALYZE=true npm run build",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "~8.2.1"
+    "cross-env": "~10.1.0",
+    "vite": "~8.2.1",
+    "vite-bundle-analyzer": "~1.3.9"
   }
 }
