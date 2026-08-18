@@ -35,7 +35,7 @@ _**Note:** Yet to be released breaking changes appear here._
 - `SelectionCellsHandler.createHandler` returns a non-nullable `CellHandler` (the new `EdgeHandler | VertexHandler` union type exported from the package), whereas `AbstractGraph.createHandler` was typed as nullable. TypeScript users can drop the now-useless null checks on the returned value.
 - The minimum supported TypeScript version is now **3.9**, up from 3.8. Applications still on TypeScript 3.8 must upgrade to use this release.
   Module augmentation of the types exposed by the package silently does not work on TypeScript 3.8. TypeScript 3.9 fixes it.
-  TypeScript 3.8.2 was released in February 2020 and 3.9.3 in May 2020. Both are more than six years old, so most applications already use a newer version and the impact of this change should be limited.
+  TypeScript 3.8 was released in February 2020, 3.9 in May 2020 and 4.0 in August 2020. Both 3.8 and 3.9 are more than six years old, and 3.9 was superseded three months after its release, so most applications already use a newer version and the impact of this change should be limited.
 
 **Other Changes**:
 - The order of the child elements produced by the XML serialization of `<Graph>` and `<BaseGraph>` has changed: `pageFormat` and `warningImage` are now emitted right after `options`, instead of last.
