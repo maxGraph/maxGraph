@@ -9,6 +9,36 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+**Breaking Changes**:
+- The cell handler factory methods have been moved from `AbstractGraph` to the `SelectionCellsHandler` plugin. The following methods no longer exist on `AbstractGraph`, `Graph`, or `BaseGraph`: `createHandler`, `createEdgeHandler`, `createEdgeHandlerInstance`, `createElbowEdgeHandler`, `createEdgeSegmentHandler` and `createVertexHandler`.
+  This keeps `AbstractGraph` free of any reference to `VertexHandler`, `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler`, so `BaseGraph` consumers that do not register `SelectionCellsHandler` no longer bundle these classes. See [issue #762](https://github.com/maxGraph/maxGraph/issues/762).
+- Customizing the handlers no longer requires subclassing the graph. `SelectionCellsHandler` exposes factory setters instead, which must be called on the plugin instance retrieved with `graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')`:
+  - `setVertexHandlerFactory(factory)` replaces an override of `createVertexHandler`.
+  - `setEdgeHandlerFactory(handlerKind, factory)` replaces an override of `createEdgeHandlerInstance` (kind `'default'`), `createElbowEdgeHandler` (kind `'elbow'`) and `createEdgeSegmentHandler` (kind `'segment'`). It also accepts custom kinds registered in `EdgeStyleRegistry`, which was not possible before.
+  - `setEdgeHandlerFactoryForAllKinds(factory)` sets a single factory for every kind, which is the equivalent of overriding `createEdgeHandler` to always return the same implementation.
+
+  For example, migrate:
+  ```typescript
+  class MyGraph extends Graph {
+    override createVertexHandler(state: CellState) {
+      return new MyVertexHandler(state);
+    }
+  }
+  ```
+  to:
+  ```typescript
+  // Assume that the SelectionCellsHandler plugin has been registered on the graph. Then get it and set the factory:
+  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!;
+  selectionCellsHandler.setVertexHandlerFactory((state) => new MyVertexHandler(state));
+  ```
+- The dispatch methods `createHandler` and `createEdgeHandler` are now defined on `SelectionCellsHandler`. If you were overriding them to change the dispatch logic itself (and not only the instantiated class), extend `SelectionCellsHandler` and pass your subclass in the `plugins` option.
+- `SelectionCellsHandler.createHandler` returns a non-nullable `CellHandler` (the new `EdgeHandler | VertexHandler` union type exported from the package), whereas `AbstractGraph.createHandler` was typed as nullable. TypeScript users can drop the now-useless null checks on the returned value.
+
+**Other Changes**:
+- The order of the child elements produced by the XML serialization of `<Graph>` and `<BaseGraph>` has changed: `pageFormat` and `warningImage` are now emitted right after `options`, instead of last.
+  This is not a breaking change, decoding matches elements by their `as` attribute and is order-independent, so existing documents keep decoding identically and previously exported documents are still valid.
+  It is mentioned here only for consumers comparing exported XML as text, for instance in golden-file tests.
+
 ## 0.24.0
 
 Release date: `2026-07-08`

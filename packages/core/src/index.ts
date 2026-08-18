@@ -204,6 +204,7 @@ export { default as Rectangle } from './view/geometry/Rectangle.js';
 export * from './view/style/builtin-style-elements.js';
 export * from './view/style/config.js';
 export * from './view/style/register.js';
+export * from './view/register-style-elements.js';
 export * from './view/style/edge/EdgeStyleRegistry.js';
 export { EdgeMarkerRegistry } from './view/style/marker/EdgeMarkerRegistry.js';
 export { PerimeterRegistry } from './view/style/perimeter/PerimeterRegistry.js';

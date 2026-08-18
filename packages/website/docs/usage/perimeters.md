@@ -21,7 +21,7 @@ By default, a vertex perimeter is a _rectangle_.
 
 :::note
 All perimeters provided by `maxGraph` are automatically registered in the `PerimeterRegistry` when a `Graph` instance is created, but not when instantiating [`BaseGraph`](./graph.md#basegraph).
-For more details, see the [`Graph`](./graph.md) reference page and the [Global Configuration](global-configuration.md#styles) documentation.
+For more details, see the [`Graph`](./graph.md) reference page, the [Global Configuration](global-configuration.md#styles) documentation and the [Tree-Shaking](./tree-shaking.md#perimeters) page.
 
 To check the list of registered perimeters, refer to the `registerDefaultStyleElements` function.
 :::

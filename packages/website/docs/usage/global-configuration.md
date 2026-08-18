@@ -63,7 +63,7 @@ See also discussions in [issue #192](https://github.com/maxGraph/maxGraph/issues
 The behavior depends on which Graph class you use (see the [Graph documentation page](./graph.md) for more details):
 
 - **`Graph`**: when instantiated, the registries are automatically filled with all `maxGraph` default style configurations.
-- **`BaseGraph`**: the registries are **not** filled automatically. You must register only the style elements your application needs, typically by overriding `registerDefaults()` in a subclass. This enables tree-shaking — unused shapes, edge styles, perimeters, and markers are not included in your bundle.
+- **`BaseGraph`**: the registries are **not** filled automatically. You must register only the style elements your application needs, typically by overriding `registerDefaults()` in a subclass. This enables [tree-shaking](./tree-shaking.md) — unused shapes, edge styles, perimeters, and markers are not included in your bundle.
 
 There are no default stencil shapes registered by default with either class.
 
@@ -81,6 +81,16 @@ registerDefaultEdgeStyles();
 registerDefaultPerimeters();
 registerDefaultShapes();
 ```
+
+`registerDefaultStyleElements` (since 0.25.0) calls the four of them at once, which is exactly what `Graph` registers when it is instantiated:
+
+```javascript
+registerDefaultStyleElements();
+```
+
+:::warning
+Registering all default style elements defeats tree-shaking: every built-in shape, edge style, perimeter and edge marker ends up in your bundle, whether the application uses it or not. Register only the elements you need, see the [Tree-Shaking](./tree-shaking.md) page.
+:::
 
 It is possible to unregister all elements from a style registry using the related `unregister` function. For example:
 

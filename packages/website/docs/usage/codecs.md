@@ -36,7 +36,7 @@ To use codecs, you must register them for the classes you want to encode/decode 
 
 From [version 0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0) of `maxGraph`, codecs supplied by `maxGraph` are no longer registered by default, they **MUST** be registered before performing an `encode` or `decode`
 
-Registering codecs has an impact on the tree-shaking, so, only register the codecs you need to reduce the size of the final bundle.
+Registering codecs has an impact on the [tree-shaking](./tree-shaking.md), so, only register the codecs you need to reduce the size of the final bundle.
 :::
 
 It is possible to unregister all elements from `CodecRegistry` using the related `unregister` function:

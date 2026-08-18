@@ -618,7 +618,7 @@ export const CellsMixin: PartialType = {
     source = null,
     target = null,
     absolute = false,
-    constrain = false,
+    constrain = true,
     extend = true
   ) {
     this.batchUpdate(() => {
@@ -671,16 +671,12 @@ export const CellsMixin: PartialType = {
         }
 
         // Extends the parent or constrains the child
-        if (
-          (!extend || extend) &&
-          this.isExtendParentsOnAdd(cell) &&
-          this.isExtendParent(cell)
-        ) {
+        if (extend && this.isExtendParentsOnAdd(cell) && this.isExtendParent(cell)) {
           this.extendParent(cell);
         }
 
         // Additionally constrains the child after extending the parent
-        if (!constrain || constrain) {
+        if (constrain) {
           this.constrainChild(cell);
         }
 

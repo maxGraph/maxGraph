@@ -31,6 +31,8 @@ import type GraphDataModel from './view/GraphDataModel.js';
 import type { Stylesheet } from './view/style/Stylesheet.js';
 import type GraphSelectionModel from './view/GraphSelectionModel.js';
 import type GraphView from './view/GraphView.js';
+import type EdgeHandler from './view/handler/EdgeHandler.js';
+import type VertexHandler from './view/handler/VertexHandler.js';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -1754,3 +1756,32 @@ export type DropHandler = (
   x?: number,
   y?: number
 ) => void;
+
+/**
+ * The handler managing a selected {@link Cell}, as created by {@link SelectionCellsHandler.createHandler}.
+ *
+ * @since 0.25.0
+ */
+export type CellHandler = EdgeHandler | VertexHandler;
+
+/**
+ * Creates the {@link VertexHandler} used to manage a selected vertex.
+ *
+ * Pass an implementation to {@link SelectionCellsHandler.setVertexHandlerFactory} to have maxGraph instantiate a
+ * custom {@link VertexHandler} subclass.
+ *
+ * @param state the {@link CellState} of the vertex to create the handler for.
+ * @since 0.25.0
+ */
+export type VertexHandlerFactory = (state: CellState) => VertexHandler;
+
+/**
+ * Creates the {@link EdgeHandler} used to manage a selected edge.
+ *
+ * Pass an implementation to {@link SelectionCellsHandler.setEdgeHandlerFactory} to have maxGraph instantiate a custom
+ * {@link EdgeHandler} subclass for a given {@link EdgeStyleHandlerKind}.
+ *
+ * @param state the {@link CellState} of the edge to create the handler for.
+ * @since 0.25.0
+ */
+export type EdgeHandlerFactory = (state: CellState) => EdgeHandler;

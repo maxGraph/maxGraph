@@ -14,15 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { describe, expect, test } from '@jest/globals';
+import { afterEach, describe, expect, test } from '@jest/globals';
 import {
   parseCssNumber,
+  setPrefixedStyle,
   setStyleFlag,
   setCellStyleFlags,
   setCellStyles,
 } from '../../src/util/styleUtils';
 import { FONT_STYLE_MASK } from '../../src/util/Constants';
-import { type CellStyle, BaseGraph } from '../../src';
+import { type CellStyle, BaseGraph, Client } from '../../src';
 import { createGraphWithoutPlugins } from '../utils';
 
 describe('parseCssNumber', () => {
@@ -40,6 +41,153 @@ describe('parseCssNumber', () => {
     ['1.5em', 1.5],
   ])('parses %s correctly to %d', (input, expected) => {
     expect(parseCssNumber(input)).toBe(expected);
+  });
+});
+
+describe('setPrefixedStyle', () => {
+  const browserFlags = ['IS_SF', 'IS_GC', 'IS_MT'] as const;
+  type BrowserFlags = Partial<Record<(typeof browserFlags)[number], boolean>>;
+
+  // Captured while the describe block is evaluated, so before any test runs and mutates them. Do not move this
+  // into a beforeAll hook, which would run later and could capture values already altered by another test.
+  const originalFlags = new Map(browserFlags.map((flag) => [flag, Client[flag]]));
+
+  /** Simulates the browser detected by {@link Client}, defaulting every unset flag to `false`. */
+  const simulateBrowser = (flags: BrowserFlags): void => {
+    for (const flag of browserFlags) {
+      Client[flag] = flags[flag] ?? false;
+    }
+  };
+
+  const newStyle = (): CSSStyleDeclaration => document.createElement('div').style;
+
+  /**
+   * Reads a property by its raw name, without going through the CSSOM.
+   * Vendor prefixed names are not supported by jsdom, so they only exist as plain JavaScript
+   * properties on the declaration. This is what lets the tests below observe them at all.
+   */
+  const rawProperty = (style: CSSStyleDeclaration, name: string): string | undefined =>
+    (style as unknown as Record<string, string | undefined>)[name];
+
+  // Client flags are global mutable state, restore them so that the other tests are not impacted
+  afterEach(() => {
+    for (const [flag, value] of originalFlags) {
+      Client[flag] = value;
+    }
+  });
+
+  describe('without vendor prefix', () => {
+    // The camelCase case is the regression reported in https://github.com/maxGraph/maxGraph/issues/1046
+    test.each([
+      ['camelCase', 'transformOrigin', 'transform-origin'],
+      ['kebab-case', 'transform-origin', 'transform-origin'],
+      ['single word', 'transition', 'transition'],
+    ])('sets the standard property given a %s name', (_name, input, cssProperty) => {
+      simulateBrowser({});
+      const style = newStyle();
+
+      setPrefixedStyle(style, input, '0px 0px');
+
+      expect(style.getPropertyValue(cssProperty)).toBe('0px 0px');
+    });
+
+    test('does not set any vendor prefixed property', () => {
+      simulateBrowser({});
+      const style = newStyle();
+
+      setPrefixedStyle(style, 'transformOrigin', '0px 0px');
+
+      expect(rawProperty(style, 'WebkitTransformOrigin')).toBeUndefined();
+      expect(rawProperty(style, 'MozTransformOrigin')).toBeUndefined();
+    });
+  });
+
+  // Custom properties have no attribute on CSSStyleDeclaration, unlike the standard properties above, so they can
+  // only be set with setProperty. They are never vendor prefixed.
+  describe('with a CSS custom property', () => {
+    test.each([
+      ['without vendor prefix', {}],
+      ['with vendor prefix', { IS_GC: true }],
+    ])('sets the custom property %s', (_name, flags) => {
+      simulateBrowser(flags);
+      const style = newStyle();
+
+      setPrefixedStyle(style, '--overlay-offset', '10px');
+
+      expect(style.getPropertyValue('--overlay-offset')).toBe('10px');
+    });
+
+    test('does not add a vendor prefixed variant', () => {
+      simulateBrowser({ IS_GC: true });
+      const style = newStyle();
+
+      setPrefixedStyle(style, '--overlay-offset', '10px');
+
+      expect(style.cssText).toBe('--overlay-offset: 10px;');
+      expect(rawProperty(style, 'Webkit--overlay-offset')).toBeUndefined();
+      expect(rawProperty(style, '--overlay-offset')).toBeUndefined();
+    });
+  });
+
+  describe('with vendor prefix', () => {
+    test.each([
+      ['Safari', { IS_SF: true }, 'WebkitTransformOrigin'],
+      ['Chrome', { IS_GC: true }, 'WebkitTransformOrigin'],
+      ['Firefox', { IS_MT: true }, 'MozTransformOrigin'],
+    ])(
+      'sets both the standard and the prefixed property on %s',
+      (_name, flags, prefixedProperty) => {
+        simulateBrowser(flags);
+        const style = newStyle();
+
+        setPrefixedStyle(style, 'transformOrigin', '0px 0px');
+
+        expect(style.getPropertyValue('transform-origin')).toBe('0px 0px');
+        expect(rawProperty(style, prefixedProperty)).toBe('0px 0px');
+      }
+    );
+
+    test('prefixes a single word name', () => {
+      simulateBrowser({ IS_GC: true });
+      const style = newStyle();
+
+      setPrefixedStyle(style, 'transition', 'all 0.2s linear');
+
+      expect(style.getPropertyValue('transition')).toBe('all 0.2s linear');
+      expect(rawProperty(style, 'WebkitTransition')).toBe('all 0.2s linear');
+    });
+
+    test('prefers the Webkit prefix over the Moz one', () => {
+      simulateBrowser({ IS_SF: true, IS_MT: true });
+      const style = newStyle();
+
+      setPrefixedStyle(style, 'transformOrigin', '0px 0px');
+
+      expect(rawProperty(style, 'WebkitTransformOrigin')).toBe('0px 0px');
+      expect(rawProperty(style, 'MozTransformOrigin')).toBeUndefined();
+    });
+
+    test('does not prefix an empty name', () => {
+      simulateBrowser({ IS_GC: true });
+      const style = newStyle();
+
+      setPrefixedStyle(style, '', '0px 0px');
+
+      expect(rawProperty(style, 'Webkit')).toBeUndefined();
+    });
+
+    // Documents the limitation warned about in the JSDoc of setPrefixedStyle: the prefix is built by
+    // capitalizing the first character, which only produces a valid property name from a camelCase input.
+    test('skips the prefixed property given a kebab-case name', () => {
+      simulateBrowser({ IS_GC: true });
+      const style = newStyle();
+
+      setPrefixedStyle(style, 'transform-origin', '0px 0px');
+
+      expect(style.getPropertyValue('transform-origin')).toBe('0px 0px');
+      expect(rawProperty(style, 'WebkitTransformOrigin')).toBeUndefined();
+      expect(rawProperty(style, 'WebkitTransform-origin')).toBe('0px 0px');
+    });
   });
 });
 

@@ -56,7 +56,7 @@ const graph = new BaseGraph({
 });
 ```
 
-For more details about the plugin system, see the [Plugins](plugins.md) documentation.
+For more details about the plugin system, see the [Plugins](plugins.md) documentation, and the [Tree-Shaking](./tree-shaking.md#plugins) page for the impact of the plugin list on the bundle size.
 
 
 ## Adding a Bundle

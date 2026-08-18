@@ -28,6 +28,8 @@ describe('getDefaultPlugins', () => {
   test('returns an array with the correct length', () => {
     const plugins = getDefaultPlugins();
     // detect any changes in default plugins, order does not matter
+    // This number is documented in the tree-shaking page, see the table listing what `Graph` loads in
+    // packages/website/docs/usage/tree-shaking.md. Update that table when adding or removing a default plugin.
     expect(plugins).toHaveLength(9);
   });
 

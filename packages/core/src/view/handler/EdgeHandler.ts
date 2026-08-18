@@ -71,12 +71,25 @@ import { EdgeHandlerConfig, HandleConfig } from './config.js';
 
 /**
  * Graph event handler that reconnects edges, modifies control points and the edge label location.
+ * It displays a handle on each waypoint of the edge, and one on each terminal to reconnect it.
  *
  * Uses {@link CellMarker} for finding and highlighting new source and target vertices.
  *
- * This handler is automatically created in {@link AbstractGraph.createHandler} for each selected edge.
+ * **Instantiation**
  *
- * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
+ * This is the handler of the `'default'` {@link EdgeStyleHandlerKind}. {@link SelectionCellsHandler} creates it for
+ * each selected edge whose `EdgeStyle` is registered under that kind in {@link EdgeStyleRegistry}, which covers the
+ * built-in `entityRelationEdgeStyle`, the edges without `EdgeStyle`, and any kind having no registered factory.
+ *
+ * To have maxGraph create a custom implementation instead, register a factory on the plugin:
+ * ```typescript
+ * selectionCellsHandler.setEdgeHandlerFactory('default', (state) => new MyEdgeHandler(state));
+ * ```
+ *
+ * **Configuration**
+ *
+ * Some elements of this handler and its subclasses can be configured globally using {@link EdgeHandlerConfig} and
+ * {@link HandleConfig}.
  */
 class EdgeHandler implements MouseListenerSet {
   /**

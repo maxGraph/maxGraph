@@ -16,29 +16,29 @@ limitations under the License.
 */
 
 import {
-  Graph,
-  RubberBandHandler,
-  InternalEvent,
-  CellRenderer,
-  EdgeHandler,
-  HierarchicalLayout,
+  type Cell,
   CellOverlay,
-  getDefaultPlugins,
-  ImageBox,
+  CellRenderer,
+  type CellState,
   Client,
-  Morphing,
+  type ConnectionHandler,
+  EdgeHandler,
   EventObject,
   eventUtils,
-  styleUtils,
-  type Cell,
-  type CellState,
-  type ConnectionHandler,
-  type EdgeStyleFunction,
+  getDefaultPlugins,
+  Graph,
+  type GraphPluginConstructor,
+  HierarchicalLayout,
+  ImageBox,
+  InternalEvent,
   type InternalMouseEvent,
+  Morphing,
   type PopupMenuHandler,
   type Rectangle,
+  RubberBandHandler,
+  type SelectionCellsHandler,
   type Shape,
-  type GraphPluginConstructor,
+  styleUtils,
 } from '@maxgraph/core';
 
 import {
@@ -119,13 +119,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       super(container, undefined, plugins);
     }
 
-    override createEdgeHandler(
-      state: CellState,
-      _edgeStyle: EdgeStyleFunction | null
-    ): EdgeHandler {
-      return new MyCustomEdgeHandler(state);
-    }
-
     override createCellRenderer() {
       return new MyCustomCellRenderer();
     }
@@ -146,6 +139,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setPanning(true);
 
   graph.setAllowDanglingEdges(false);
+
+  // use the same handler for all edge styles
+  graph
+    .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+    .setEdgeHandlerFactoryForAllKinds((state) => new MyCustomEdgeHandler(state));
 
   const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   connectionHandler.select = false;

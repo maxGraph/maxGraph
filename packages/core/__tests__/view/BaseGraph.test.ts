@@ -16,25 +16,15 @@ limitations under the License.
 
 import { afterAll, beforeEach, describe, expect, jest, test } from '@jest/globals';
 import {
-  AbstractGraph,
   BaseGraph,
-  Cell,
   CellState,
-  EdgeHandler,
-  EdgeSegmentHandler,
   EdgeStyle,
   type EdgeStyleFunction,
-  EdgeStyleRegistry,
-  ElbowEdgeHandler,
   type GraphPlugin,
-  Multiplicity,
-  Point,
-  Rectangle,
-  RectangleShape,
   registerDefaultEdgeStyles,
   unregisterAllEdgeStyles,
-  VertexHandler,
 } from '../../src';
+import { describeNoGlobalStateForMixinProperties } from './no-global-state-for-mixin-properties';
 
 const customEdgeStyle: EdgeStyleFunction = () => {
   // do nothing, we just need a custom implementation that is not registered by default
@@ -118,151 +108,6 @@ describe('isOrthogonal', () => {
   );
 });
 
-const createCellState = (graph: AbstractGraph, isEdge: boolean): CellState => {
-  const cell = new Cell();
-  cell.setEdge(isEdge);
-  cell.setVertex(!isEdge);
-  const cellState = new CellState(graph.view, cell, {});
-  cellState.absolutePoints = [new Point(0, 0)];
-  cellState.shape = new RectangleShape(new Rectangle(), 'green', 'blue');
-  return cellState;
-};
-
-const createCellStateOfEdge = (graph: AbstractGraph): CellState =>
-  createCellState(graph, true);
-
-describe('createEdgeHandler', () => {
-  describe('Default builtin styles registered', () => {
-    beforeEach(() => {
-      registerDefaultEdgeStyles();
-    });
-
-    test.each([
-      ['ElbowConnector', EdgeStyle.ElbowConnector],
-      ['Loop', EdgeStyle.Loop],
-      ['SideToSide', EdgeStyle.SideToSide],
-      ['TopToBottom', EdgeStyle.TopToBottom],
-    ])('Expect ElbowEdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
-      const graph = new BaseGraph();
-      const cellState = createCellStateOfEdge(graph);
-      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-        ElbowEdgeHandler
-      );
-    });
-
-    test.each([
-      ['ManhattanConnector', EdgeStyle.ManhattanConnector],
-      ['OrthogonalConnector', EdgeStyle.OrthConnector],
-      ['SegmentConnector', EdgeStyle.SegmentConnector],
-    ])('Expect EdgeSegmentHandler for edgeStyle: %s', (_name, edgeStyle) => {
-      const graph = new BaseGraph();
-      const cellState = createCellStateOfEdge(graph);
-      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-        EdgeSegmentHandler
-      );
-    });
-
-    test.each([
-      ['custom', customEdgeStyle],
-      ['EntityRelation', EdgeStyle.EntityRelation],
-      ['null', null],
-    ])('Expect EdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
-      const graph = new BaseGraph();
-      const cellState = createCellStateOfEdge(graph);
-      expectExactInstanceOfEdgeHandler(graph.createEdgeHandler(cellState, edgeStyle));
-    });
-  });
-
-  test.each([
-    ['custom', customEdgeStyle],
-    ['EntityRelation', EdgeStyle.EntityRelation],
-    ['ElbowConnector', EdgeStyle.ElbowConnector],
-    ['Loop', EdgeStyle.Loop],
-    ['ManhattanConnector', EdgeStyle.ManhattanConnector],
-    ['OrthogonalConnector', EdgeStyle.OrthConnector],
-    ['SegmentConnector', EdgeStyle.SegmentConnector],
-    ['SideToSide', EdgeStyle.SideToSide],
-    ['TopToBottom', EdgeStyle.TopToBottom],
-    ['null', null],
-  ])(
-    'Default builtin styles NOT registered - Expect EdgeHandler for edgeStyle: %s',
-    (_name, edgeStyle) => {
-      const graph = new BaseGraph();
-      const cellState = createCellStateOfEdge(graph);
-      expectExactInstanceOfEdgeHandler(graph.createEdgeHandler(cellState, edgeStyle));
-    }
-  );
-
-  describe('Custom edge handler', () => {
-    test('default', () => {
-      class CustomEdgeHandler extends EdgeHandler {}
-      const edgeStyle = customEdgeStyle;
-
-      const graph = new BaseGraph();
-      graph.createEdgeHandlerInstance = (state) => {
-        return new CustomEdgeHandler(state);
-      };
-
-      const cellState = createCellStateOfEdge(graph);
-      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-        CustomEdgeHandler
-      );
-    });
-
-    test('elbow', () => {
-      class CustomEdgeHandler extends ElbowEdgeHandler {}
-      const edgeStyle = customEdgeStyle;
-      EdgeStyleRegistry.add('custom', edgeStyle, { handlerKind: 'elbow' });
-
-      const graph = new BaseGraph();
-      graph.createElbowEdgeHandler = (state) => {
-        return new CustomEdgeHandler(state);
-      };
-
-      const cellState = createCellStateOfEdge(graph);
-      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-        CustomEdgeHandler
-      );
-    });
-
-    test('segment', () => {
-      class CustomEdgeHandler extends EdgeSegmentHandler {}
-      const edgeStyle = customEdgeStyle;
-      EdgeStyleRegistry.add('custom', edgeStyle, { handlerKind: 'segment' });
-
-      const graph = new BaseGraph();
-      graph.createEdgeSegmentHandler = (state) => {
-        return new CustomEdgeHandler(state);
-      };
-
-      const cellState = createCellStateOfEdge(graph);
-      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-        CustomEdgeHandler
-      );
-    });
-  });
-});
-
-describe('createHandler', () => {
-  test('Expect VertexHandler', () => {
-    const graph = new BaseGraph();
-    const cellState = createCellState(graph, false);
-    expect(graph.createHandler(cellState)).toBeInstanceOf(VertexHandler);
-  });
-
-  test('Expect EdgeHandler', () => {
-    const graph = new BaseGraph();
-    const cellState = createCellStateOfEdge(graph);
-    expectExactInstanceOfEdgeHandler(<EdgeHandler>graph.createHandler(cellState));
-  });
-});
-
-function expectExactInstanceOfEdgeHandler(handler: EdgeHandler): void {
-  expect(handler).toBeInstanceOf(EdgeHandler);
-  expect(handler).not.toBeInstanceOf(EdgeSegmentHandler);
-  expect(handler).not.toBeInstanceOf(ElbowEdgeHandler);
-}
-
 describe('destroy', () => {
   test('calls onDestroy on registered plugins', () => {
     const onDestroyMock = jest.fn();
@@ -301,85 +146,4 @@ describe('destroy', () => {
   });
 });
 
-// For "complex" properties, for example: arrays or object.
-describe('Expect no global state for properties coming from mixins', () => {
-  test('alternateEdgeStyle', () => {
-    const graph1 = new BaseGraph();
-    const graph2 = new BaseGraph();
-
-    graph1.alternateEdgeStyle.arcSize = 10;
-    graph1.alternateEdgeStyle.fillColor = 'red';
-    expect(graph1.alternateEdgeStyle).not.toEqual(graph2.alternateEdgeStyle);
-    expect(graph1.alternateEdgeStyle).not.toBe(graph2.alternateEdgeStyle);
-  });
-
-  test('cells', () => {
-    const graph1 = new BaseGraph();
-    const graph2 = new BaseGraph();
-
-    graph1.cells.push(new Cell());
-    expect(graph2.cells).toStrictEqual([]);
-    expect(graph1.cells).not.toBe(graph2.cells);
-  });
-
-  test('mouseListeners', () => {
-    const graph1 = new BaseGraph();
-    expect(graph1.mouseListeners).toHaveLength(1);
-    const graph2 = new BaseGraph();
-    expect(graph2.mouseListeners).toHaveLength(1);
-
-    graph1.mouseListeners.push({
-      mouseDown: () => {},
-      mouseMove: () => {},
-      mouseUp: () => {},
-    });
-    expect(graph2.mouseListeners).toHaveLength(1);
-    expect(graph1.mouseListeners).toHaveLength(2);
-    expect(graph1.mouseListeners).not.toBe(graph2.mouseListeners);
-  });
-
-  test('multiplicities', () => {
-    const graph1 = new BaseGraph();
-    const graph2 = new BaseGraph();
-
-    graph1.multiplicities.push(
-      new Multiplicity(
-        true,
-        'rectangle',
-        null,
-        null,
-        0,
-        2,
-        ['circle'],
-        'Only 2 targets allowed',
-        'Only circle targets allowed'
-      )
-    );
-    expect(graph2.multiplicities).toStrictEqual([]);
-    expect(graph1.multiplicities).not.toBe(graph2.multiplicities);
-  });
-
-  test('options', () => {
-    const graph1 = new BaseGraph();
-    const graph2 = new BaseGraph();
-
-    graph1.options.foldingEnabled = false;
-    expect(graph1.options).not.toBe(graph2.options);
-  });
-
-  // Even though SelectionMixin declares `selectionModel: null` on the prototype,
-  // the null value is harmless because BaseGraph.initializeCollaborators calls
-  // this.setSelectionModel(new GraphSelectionModel(this)). The assignment creates
-  // a per-instance property that shadows the prototype null, and GraphSelectionModel's
-  // constructor allocates its own `cells = []` array.
-  test('selectionModel', () => {
-    const graph1 = new BaseGraph();
-    const graph2 = new BaseGraph();
-
-    expect(graph1.getSelectionModel()).not.toBe(graph2.getSelectionModel());
-
-    graph1.getSelectionModel().cells.push(new Cell());
-    expect(graph2.getSelectionModel().cells).toStrictEqual([]);
-    expect(graph1.getSelectionModel().cells).not.toBe(graph2.getSelectionModel().cells);
-  });
-});
+describeNoGlobalStateForMixinProperties(() => new BaseGraph());

@@ -14,12 +14,35 @@ The core package has zero third-party runtime dependencies. NEVER add new runtim
 
 ## Null/Undefined Checks
 
-Use `isNullish` from `internal/utils.js` when checking variables that can have falsy values (0, "", false). NEVER use `!variable` for nullish checks on such variables.
+ALWAYS use `isNullish` from `internal/utils.js` to test whether a value is `null` or `undefined`. Prefer it over every
+direct form: `!variable`, `variable === null`, `variable !== undefined`, `variable == null`.
 
 ```typescript
 import { isNullish } from '../internal/utils.js';
-if (isNullish(index)) { ... }  // Good — handles index = 0
-if (!index) { ... }            // Bad — treats 0 as falsy
+
+if (isNullish(index)) { ... }       // Good
+if (!isNullish(index)) { ... }      // Good — narrows to the non-nullish type
+
+if (!index) { ... }                 // Bad — treats 0, "" and false as absent
+if (index === null) { ... }         // Bad — misses undefined
+if (index != null) { ... }          // Bad — correct but inconsistent, and easy to misread as a typo for !==
+```
+
+Why a helper rather than the built-in operators:
+
+- `!variable` is a bug for any type whose value can be falsy but present (`0`, `""`, `false`). This is the common case
+  for indexes, sizes, coordinates and scales, which are pervasive in this codebase.
+- `=== null` and `=== undefined` each cover only half of nullish, so they silently drift when a signature later widens
+  from `T | null` to `T | null | undefined`.
+- `isNullish` is a type guard (`v is null | undefined`), so `!isNullish(x)` narrows `x` for the compiler. Hand-written
+  comparisons narrow too, but only when written exactly right.
+- One spelling everywhere makes the intent greppable and removes the "is this `!=` deliberate or a typo?" question.
+
+Exception: keep `?.` and `??` where they apply. They already have nullish semantics and are clearer than an explicit
+check.
+
+```typescript
+const points = geo?.points ?? undefined;   // Good — no isNullish needed
 ```
 
 ## Logging

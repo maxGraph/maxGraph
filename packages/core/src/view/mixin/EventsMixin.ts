@@ -800,6 +800,13 @@ export const EventsMixin: PartialType = {
   },
 
   sizeDidChange() {
+    // This method reads container-sizing members only (getBorder, getMinimumContainerSize, isResizeContainer,
+    // doResizeContainer, isPreferPageSize, getPreferredPageSize, getMinimumGraphSize) plus updatePageBreaks, so it
+    // looks like an obvious candidate to move to a dedicated sizing unit, away from the event concern of this mixin.
+    // It cannot move to a plugin for now: AbstractGraph calls it from its constructor, from graphModelChanged and from
+    // refresh, and none of these can depend on an optional plugin being registered. Extracting the members it reads
+    // while leaving the caller behind would only turn this method into a chain of getPlugin()?. calls with fallbacks.
+    // Relocating it to AbstractGraph itself remains possible and is the natural next step.
     const bounds = this.getGraphBounds();
 
     const border = this.getBorder();

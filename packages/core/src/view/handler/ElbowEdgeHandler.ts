@@ -27,16 +27,27 @@ import { EdgeHandlerConfig, HandleConfig } from './config.js';
 import { isI18nEnabled, translate } from '../../internal/i18n-utils.js';
 
 /**
- * Graph event handler that reconnects edges and modifies control points and
- * the edge label location. Uses {@link CellMarker} for finding and
- * highlighting new source and target vertices. This handler is automatically
- * created in {@link AbstractGraph.createHandler}. It extends {@link EdgeHandler}.
+ * Graph event handler that reconnects edges, modifies control points and the edge label location.
+ * It extends {@link EdgeHandler} to display a single intermediate handle, which suits the elbow shaped routings
+ * whose geometry is driven by one control point.
  *
- * Constructor: mxEdgeHandler
+ * Uses {@link CellMarker} for finding and highlighting new source and target vertices.
  *
- * Constructs an edge handler for the specified {@link CellState}.
+ * **Instantiation**
  *
- * @param state {@link CellState} of the cell to be modified.
+ * This is the handler of the `'elbow'` {@link EdgeStyleHandlerKind}. {@link SelectionCellsHandler} creates it for
+ * each selected edge whose `EdgeStyle` is registered under that kind in {@link EdgeStyleRegistry}, which the built-in
+ * `elbowEdgeStyle`, `loopEdgeStyle`, `sideToSideEdgeStyle` and `topToBottomEdgeStyle` are.
+ *
+ * To have maxGraph create a custom implementation instead, register a factory on the plugin:
+ * ```typescript
+ * selectionCellsHandler.setEdgeHandlerFactory('elbow', (state) => new MyElbowEdgeHandler(state));
+ * ```
+ *
+ * **Configuration**
+ *
+ * Some elements of this handler and its subclasses can be configured globally using {@link EdgeHandlerConfig} and
+ * {@link HandleConfig}.
  */
 class ElbowEdgeHandler extends EdgeHandler {
   constructor(state: CellState) {

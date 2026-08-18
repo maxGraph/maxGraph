@@ -19,7 +19,7 @@ By default, an edge `EdgeStyle` is unset.
 
 :::note
 All EdgeStyles provided by `maxGraph` are automatically registered in the `EdgeStyleRegistry` when a `Graph` instance is created, but not when instantiating [`BaseGraph`](./graph.md#basegraph).
-For more details, see the [`Graph`](./graph.md) reference page and the [Global Configuration](global-configuration.md#styles) documentation.
+For more details, see the [`Graph`](./graph.md) reference page, the [Global Configuration](global-configuration.md#styles) documentation and the [Tree-Shaking](./tree-shaking.md#edgestyles) page.
 
 To check the list of registered EdgeStyles, refer to the `registerDefaultStyleElements` function.
 :::
@@ -96,6 +96,8 @@ When registering the `EdgeStyle`, be sure to register it in the `EdgeStyleRegist
 Some maxGraph features depend on the `EdgeStyleMetaData` to work correctly.
 
 In particular:
+- The `handlerKind` property selects the `EdgeHandler` implementation instantiated when the edge is selected, so that the handles offered to the user match the actual routing of the edge. Defaults to `'default'`.
+For the built-in values and how to supply your own handler, see the [Cell Handlers](cell-handlers.md#choosing-the-handler-of-an-edge) documentation.
 - The `isOrthogonal` property controls how the terminal points of edges are computed on the vertex perimeter.
 When set to `true`, the perimeter point is computed using an orthogonal projection instead of a segment intersection.
 For more details, see the [Orthogonal Projection on the Perimeter](perimeters.md#orthogonal-projection-on-the-perimeter) documentation.

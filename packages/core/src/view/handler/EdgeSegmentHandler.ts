@@ -26,6 +26,29 @@ import Cell from '../cell/Cell.js';
 import InternalMouseEvent from '../event/InternalMouseEvent.js';
 import { EdgeHandlerConfig } from './config.js';
 
+/**
+ * Graph event handler that reconnects edges, modifies control points and the edge label location.
+ * It extends {@link ElbowEdgeHandler} to display a handle on each segment of the computed routing, so that the
+ * segments of an orthogonal edge can be moved individually.
+ *
+ * Uses {@link CellMarker} for finding and highlighting new source and target vertices.
+ *
+ * **Instantiation**
+ *
+ * This is the handler of the `'segment'` {@link EdgeStyleHandlerKind}. {@link SelectionCellsHandler} creates it for
+ * each selected edge whose `EdgeStyle` is registered under that kind in {@link EdgeStyleRegistry}, which the built-in
+ * `manhattanEdgeStyle`, `orthogonalEdgeStyle` and `segmentEdgeStyle` are.
+ *
+ * To have maxGraph create a custom implementation instead, register a factory on the plugin:
+ * ```typescript
+ * selectionCellsHandler.setEdgeHandlerFactory('segment', (state) => new MyEdgeSegmentHandler(state));
+ * ```
+ *
+ * **Configuration**
+ *
+ * Some elements of this handler and its subclasses can be configured globally using {@link EdgeHandlerConfig} and
+ * {@link HandleConfig}.
+ */
 class EdgeSegmentHandler extends ElbowEdgeHandler {
   constructor(state: CellState) {
     super(state);
