@@ -29,7 +29,7 @@ from the analysis, the fourth was found while implementing it:
 declaration merging. After a move, `graph.scrollPointToVisible(...)` still compiles and still runs, on `AbstractGraph`,
 `BaseGraph` and `Graph` alike.
 
-**Moving a member to a mixin brings no tree-shaking gain.** For the same reason: all 21 mixins are imported and applied
+**Moving a member to a mixin brings no tree-shaking gain.** For the same reason: every mixin is imported and applied
 by `_graph-mixins-apply.ts` whatever the graph flavour. A mixin move buys cohesion, readability and a smaller
 `AbstractGraph.ts`, nothing more. Only a move to a plugin buys bundle size, at the price of a breaking change.
 

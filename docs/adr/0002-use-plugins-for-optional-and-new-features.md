@@ -26,7 +26,7 @@ kept the public API intact, but it left three problems unsolved, and created a f
 - **No extension point.** A mixin cannot be swapped, disabled, or replaced by a consumer. Customising behaviour means
   subclassing `Graph` and overriding methods.
 - **A growing class again.** Anything new with nowhere else to go lands back on `AbstractGraph`, which is how the class
-  reached 1337 lines despite 21 mixins existing.
+  kept growing despite the mixins existing.
 
 The plugin system was first proposed in [discussion #51](https://github.com/maxGraph/maxGraph/discussions/51), where a
 configurable plugin system is named as the eventual replacement for the namespace split then being used to make

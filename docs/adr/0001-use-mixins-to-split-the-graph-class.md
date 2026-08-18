@@ -85,7 +85,7 @@ API.
 
 ### Positive
 
-- The God object is split by concern into 21 mixins, each independently readable.
+- The God object is split by concern, one mixin per concern, each independently readable.
 - **The public API is unchanged**, and stays unchanged when a member moves between the class and a mixin, or between two
   mixins. Declaration merging keeps every member on the `AbstractGraph` interface wherever it is declared. This property
   is what makes the incremental cleanup of [ADR 0003](0003-move-members-out-of-abstract-graph.md) possible at zero cost
@@ -94,7 +94,7 @@ API.
 
 The strongest evidence that the API was preserved is negative: the word "mixin" does not appear once in
 [`migrate-from-mxgraph.md`](../../packages/website/docs/usage/migrate-from-mxgraph.md), the guide that documents every
-user-visible difference with `mxGraph`. Splitting a 13000-line class into 21 units cost users nothing. By contrast the
+user-visible difference with `mxGraph`. Splitting the God object into mixins cost users nothing. By contrast the
 same guide devotes a section and a seven-row table to the handler-to-plugin conversion, because that one did break call
 sites. The two approaches sit at opposite ends of the same trade-off, and
 [ADR 0002](0002-use-plugins-for-optional-and-new-features.md) explains why the more expensive one was still the right
@@ -111,7 +111,7 @@ of a particular mixin.
   workaround in place is a dedicated block in `AbstractGraph` ("Variables that should be in the mixins but requiring
   per-instance initialization") holding the properties that cannot move. The failure mode is silent: no compile error,
   and no failing test unless one is written for it.
-- **No tree-shaking.** All 21 mixins are imported and applied unconditionally, whatever the graph flavour. A consumer
+- **No tree-shaking.** Every mixin is imported and applied unconditionally, whatever the graph flavour. A consumer
   using none of the swimlane API still ships `SwimlaneMixin`. This directly contradicts one of the goals that motivated
   the split.
 - **Serialization asymmetry.** `Object.defineProperty` leaves `enumerable` at `false`, so members installed by a mixin
@@ -120,8 +120,8 @@ of a particular mixin.
   exporting a graph with Codecs, whereas properties defined directly on the class are.
 - **Two files per concern.** Documentation and implementation are separated, so reading a member means opening the
   `.type.ts` for the contract and the `.ts` for the behaviour.
-- **Indirect navigation.** The `AbstractGraph` interface is assembled from 22 files. A reader looking for a method has
-  no single declaration site to jump to.
+- **Indirect navigation.** The `AbstractGraph` interface is assembled from the class plus one `.type.ts` file per
+  mixin. A reader looking for a method has no single declaration site to jump to.
 
 ## Later evolution
 
