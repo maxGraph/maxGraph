@@ -27,20 +27,20 @@ function keep2digits(value: number): number {
  * @since 0.17.0
  * @category Navigation
  */
-export type FitCenterOptions = {
+export interface FitCenterOptions {
   /**
    * Margin between the graph and the container.
    * @default 2
    */
   margin?: number;
-};
+}
 
 /**
  * Options of the {@link FitPlugin.fit} method.
  * @since 0.21.0
  * @category Navigation
  */
-export type FitOptions = {
+export interface FitOptions {
   /**
    * Optional number that specifies the border.
    * @default{@link Graph.getBorder}
@@ -76,7 +76,7 @@ export type FitOptions = {
    * @default null
    */
   maxHeight?: number | null;
-};
+}
 
 /**
  * A plugin providing methods to fit the graph within its container.

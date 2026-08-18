@@ -18,10 +18,10 @@ limitations under the License.
 
 import EventObject from './EventObject.js';
 
-type EventListenerObject = {
+interface EventListenerObject {
   funct: Function;
   name: string;
-};
+}
 
 /**
  * Base class for objects that dispatch named events.

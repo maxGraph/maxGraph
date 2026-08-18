@@ -26,7 +26,7 @@ import { type AbstractGraph, Cell, Multiplicity } from '../../src';
 // guarantee down, so moving one of them into a mixin fails here instead of silently corrupting state.
 //
 // When adding a property to that group, add a case here too.
-type PerInstanceProperty = {
+interface PerInstanceProperty {
   name: string;
   /** Reads the property under test on a graph. */
   read: (graph: AbstractGraph) => object;
@@ -34,7 +34,7 @@ type PerInstanceProperty = {
   mutate: (value: never) => void;
   /** Extracts what the mutation is expected to change, to compare two graphs without deep equality. */
   signature: (value: never) => unknown;
-};
+}
 
 const perInstanceProperties: PerInstanceProperty[] = [
   {

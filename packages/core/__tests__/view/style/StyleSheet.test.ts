@@ -19,35 +19,48 @@ import { CellStateStyle, CellStyle, Stylesheet } from '../../../src';
 import { NONE } from '../../../src/util/Constants';
 
 /**
- * Additional properties to test extension points by extending `CellStyle` and `CustomCellStateStyle`.
+ * Additional properties to test extension points by extending `CellStyle` and `CellStateStyle`.
+ *
+ * An application would declare such properties with module augmentation, which is possible now that `CellStyle` and
+ * `CellStateStyle` are interfaces:
+ * ```typescript
+ * declare module '@maxgraph/core' {
+ *   interface CellStateStyle {
+ *     customProp1: number;
+ *   }
+ * }
+ * ```
+ * This is deliberately not done here: an augmentation applies to the whole TypeScript program, so the custom
+ * properties would leak into every other test of the package and weaken them. The `ts-support` package checks the
+ * augmentation itself, in a program of its own.
  */
-type CustomStyleAdditions = {
+interface CustomStyleAdditions {
   customProp1: number;
   customProp2: string;
-};
-type CustomCellStyle = CellStyle & CustomStyleAdditions;
-type CustomCellStateStyle = CellStateStyle & CustomStyleAdditions;
+}
+interface CustomCellStyle extends CellStyle, CustomStyleAdditions {}
+interface CustomCellStateStyle extends CellStateStyle, CustomStyleAdditions {}
 
 // Here we just check that the default styles are initialized, and some properties set
 // We don't test all properties on purpose
 describe('Default styles', () => {
   test('Default edge style is set', () => {
     expect(new Stylesheet().getDefaultEdgeStyle()).toEqual(
-      expect.objectContaining(<CellStyle>{
+      expect.objectContaining({
         align: 'center',
         endArrow: 'classic',
         shape: 'connector',
-      })
+      } satisfies CellStyle)
     );
   });
 
   test('Default vertex style is set', () => {
     expect(new Stylesheet().getDefaultVertexStyle()).toEqual(
-      expect.objectContaining(<CellStyle>{
+      expect.objectContaining({
         align: 'center',
         fillColor: '#C3D9FF',
         shape: 'rectangle',
-      })
+      } satisfies CellStyle)
     );
   });
 });

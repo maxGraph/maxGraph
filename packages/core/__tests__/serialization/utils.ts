@@ -17,10 +17,10 @@ limitations under the License.
 import { expect } from '@jest/globals';
 import type { Cell, CellStyle, Geometry, GraphDataModel } from '../../src';
 
-type ExpectCellProperties = {
+interface ExpectCellProperties {
   geometry?: Geometry;
   style?: CellStyle;
-};
+}
 
 type NullableStringOrObject = string | object | null;
 

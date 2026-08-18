@@ -21,11 +21,11 @@ function getNavigatorLanguage() {
   return typeof window !== 'undefined' ? navigator.language : 'en';
 }
 
-type TranslationsConfigValuesType = {
+interface TranslationsConfigValuesType {
   defaultLanguage: string;
   language: string;
   languages: string[];
-};
+}
 
 const values: TranslationsConfigValuesType = {
   defaultLanguage: 'en',

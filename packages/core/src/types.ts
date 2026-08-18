@@ -37,11 +37,11 @@ import type VertexHandler from './view/handler/VertexHandler.js';
 export type FilterFunction = (cell: Cell) => boolean;
 
 /** @category Change */
-export type UndoableChange = {
+export interface UndoableChange {
   execute: () => void;
   undo?: () => void;
   redo?: () => void;
-};
+}
 
 /** @category Style */
 export type StyleValue = string | number;
@@ -49,7 +49,7 @@ export type StyleValue = string | number;
 export type Properties = Record<string, any>;
 
 /** @category Style */
-export type CellStyle = CellStateStyle & {
+export interface CellStyle extends CellStateStyle {
   /**
    * Names of styles used to fill properties before applying the specific properties defined in {@link CellStateStyle}.
    *
@@ -74,10 +74,10 @@ export type CellStyle = CellStateStyle & {
    * @since 0.11.0
    */
   ignoreDefaultStyle?: boolean;
-};
+}
 
 /** @category Style */
-export type CellStateStyle = {
+export interface CellStateStyle {
   /**
    * This specifies if {@link arcSize} for rectangles is absolute or relative.
    * @default false
@@ -974,7 +974,7 @@ export type CellStateStyle = {
    * @default 'nowrap'
    */
   whiteSpace?: WhiteSpaceValue;
-};
+}
 
 /** @category Style */
 export type NumericCellStateStyleKeys = NonNullable<
@@ -1095,7 +1095,7 @@ export type ShapeValue =
  */
 export type StyleShapeValue = ShapeValue | (string & Record<never, never>);
 
-export type CanvasState = {
+export interface CanvasState {
   alpha: number;
   dashPattern: string;
   dashed: boolean;
@@ -1133,7 +1133,7 @@ export type CanvasState = {
   strokeColor: ColorValue;
   strokeWidth: number;
   transform: string | null;
-};
+}
 
 export interface Gradient extends SVGLinearGradientElement {
   mxRefCount: number;
@@ -1142,7 +1142,7 @@ export interface Gradient extends SVGLinearGradientElement {
 export type GradientMap = Record<string, Gradient>;
 
 export type EdgeParametersValue = Record<string | number | symbol, any> | string;
-export type EdgeParameters = {
+export interface EdgeParameters {
   /**
    * Optional string that defines the id of the new edge. If not set, the id is auto-generated when creating the vertex.
    */
@@ -1164,9 +1164,9 @@ export type EdgeParameters = {
    * Object to be used as the user object which is generally used to display the label of the vertex. The default implementation handles `string` object.
    */
   value?: EdgeParametersValue;
-};
+}
 
-export type VertexParameters = {
+export interface VertexParameters {
   /**
    * Class reference to a class derived from {@link Geometry}.
    * This can be useful for defining custom constraints.
@@ -1222,7 +1222,7 @@ export type VertexParameters = {
    * If not set, falls back to the {@link position} property.
    */
   y?: number;
-};
+}
 
 /**
  * The ids of all built-in {@link GraphPlugin} provided by maxGraph.
@@ -1261,15 +1261,15 @@ export interface GraphPlugin {
 
 // Events
 /** @category Event */
-export type Listener = {
+export interface Listener {
   name: string;
   f: MouseEventListener | KeyboardEventListener;
-};
+}
 
 /** @category Event */
-export type ListenerTarget = {
+export interface ListenerTarget {
   mxListenerList?: Listener[];
-};
+}
 
 /** @category Event */
 export type Listenable = (EventTarget | (Window & typeof globalThis)) & ListenerTarget;
@@ -1287,11 +1287,11 @@ export type GestureEvent = Event &
   };
 
 /** @category Event */
-export type MouseListenerSet = {
+export interface MouseListenerSet {
   mouseDown: (sender: EventSource, me: InternalMouseEvent) => void;
   mouseMove: (sender: EventSource, me: InternalMouseEvent) => void;
   mouseUp: (sender: EventSource, me: InternalMouseEvent) => void;
-};
+}
 
 /** @category Event */
 export type EventCache = GestureEvent[];
@@ -1326,10 +1326,10 @@ export type IdentityObject = {
   [IDENTITY_FIELD_NAME]?: string;
 } & Record<string, any>;
 
-export type IdentityFunction = {
+export interface IdentityFunction {
   (): any;
   [IDENTITY_FIELD_NAME]?: string;
-};
+}
 
 /**
  * Describes a perimeter for the given bounds.
@@ -1517,7 +1517,7 @@ export interface I18nProvider {
 /**
  * @category Graph
  */
-export type GraphFoldingOptions = {
+export interface GraphFoldingOptions {
   /**
    * Specifies if folding (collapse and expand via an image icon in the graph should be enabled).
    * @default true
@@ -1538,7 +1538,7 @@ export type GraphFoldingOptions = {
    * @default true
    */
   collapseToPreferredSize: boolean;
-};
+}
 
 /**
  * Represents a constructor function for a class that produces instances of type `T`.
@@ -1570,13 +1570,13 @@ export type GraphOptions = {
  * @since 0.18.0
  * @category Graph
  */
-export type GraphCollaboratorsOptions = {
+export interface GraphCollaboratorsOptions {
   cellRenderer?: CellRenderer;
   model?: GraphDataModel;
   selectionModel?: (graph: AbstractGraph) => GraphSelectionModel;
   stylesheet?: Stylesheet;
   view?: (graph: AbstractGraph) => GraphView;
-};
+}
 
 /**
  * @since 0.20.0
@@ -1637,7 +1637,7 @@ export type EdgeStyleHandlerKind =
  * @category Style
  * @category Configuration
  */
-export type EdgeStyleMetaData = {
+export interface EdgeStyleMetaData {
   /**
    * The kind of {@link EdgeHandler} to use for this edge style.
    * This value is used to select the implementation of the edge handler to use to manage the underlying edge.
@@ -1656,7 +1656,7 @@ export type EdgeStyleMetaData = {
    * @since 0.24.0
    */
   allowIntermediateHandles?: boolean;
-};
+}
 
 /**
  * The definition of a registry that stores the {@link EdgeStyleFunction}s and their configuration.
