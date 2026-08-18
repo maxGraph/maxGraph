@@ -46,9 +46,10 @@ module.exports = {
     .concat(isBundleAnalysisEnabled ? [new RsdoctorWebpackPlugin()] : []),
   // Fail the production build when the bundle grows, which would mean that defaults are no longer tree-shaken.
   // Sizes are in bytes, rounded up to the next kB from the current build: update them when an increase is intended.
-  // Development bundles are not minified, so no budget is enforced there.
+  // Development bundles are not minified, so no budget is enforced there, and an analyze run is a diagnostic:
+  // reporting a size error there would only add noise to the report that was asked for to understand the size.
   performance: {
-    hints: isDevMode ? false : 'error',
+    hints: isDevMode || isBundleAnalysisEnabled ? false : 'error',
     maxAssetSize: 240_000,
     maxEntrypointSize: 241_000,
   },
