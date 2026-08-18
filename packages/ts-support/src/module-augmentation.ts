@@ -7,7 +7,9 @@
 import { CellStyle, Stylesheet } from '@maxgraph/core';
 
 declare module '@maxgraph/core' {
-  interface CellStyle {
+  // Augment CellStateStyle rather than CellStyle: CellStyle extends CellStateStyle, so the added property is available
+  // on both, and on everything else built on CellStateStyle (CellState.style, the Stylesheet default and named styles).
+  interface CellStateStyle {
     myCustomStyleProperty?: number;
   }
 }
