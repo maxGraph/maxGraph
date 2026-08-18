@@ -55,10 +55,14 @@ Use the `getPlugin` method to retrieve a plugin instance from a `Graph` instance
 
 ```typescript
 const graph = new Graph(container);
-const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler');
+const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler')!;
 panningHandler.useLeftButtonForPanning = true;
 panningHandler.ignoreCell = true;
 ```
+
+`getPlugin` returns `undefined` when no plugin is registered with the given id, so its return type is nullable.
+Here, the non-null assertion (`!`) is intentional: `PanningHandler` is one of the [default plugins](#available-plugins) of `Graph`, so it is always available.
+When the plugin may be absent, for example with `BaseGraph` or with a plugin list built at runtime, use optional chaining (`?.`) or an explicit check instead.
 
 
 ## Choosing the Plugins to Use
@@ -114,7 +118,7 @@ When replacing a built-in plugin with a custom implementation, make sure you do 
 ## Creating a Custom Plugin
 
 A custom plugin is defined as a class:
-- It must implement the `GraphPlugin` interface.
+- It must implement the `GraphPlugin` interface, whose only member, `onDestroy`, is mandatory. It is called when the graph is destroyed.
 - Its constructor must satisfy the `GraphPluginConstructor` type.
 - It can provide new methods to extend the existing API or introduce new behavior (using listeners, for example).
 
@@ -125,6 +129,13 @@ class MyCustomPlugin implements GraphPlugin {
 
   constructor(graph: Graph) {
     // Initialization and configuration code
+  }
+
+  /** Releases the resources acquired by the plugin. */
+  onDestroy(): void {
+    // Unregister the event listeners, clear the timers, drop the references to the graph
+    // and to its cells, and empty the caches, to help garbage collection.
+    // Plugins holding none of these can leave the method empty, as `FitPlugin` does.
   }
 }
 ```
