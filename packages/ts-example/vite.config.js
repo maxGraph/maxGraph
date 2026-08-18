@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import process from 'node:process';
 import { defineConfig } from 'vite';
 
 import { analyzer } from 'vite-bundle-analyzer';
