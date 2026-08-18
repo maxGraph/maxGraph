@@ -75,7 +75,7 @@ Active development ensures continuous bug fixes and new capabilities.
 - **Undo/redo**: Full history tracking for all operations with UndoManager
 
 ### Developer Experience
-- Written in TypeScript with complete type definitions. TypeScript integration requires **TypeScript 3.8** or higher
+- Written in TypeScript with complete type definitions. TypeScript integration requires **TypeScript 3.9** or higher (**TypeScript 3.8** for version 0.24.0 and earlier)
 - Zero third-party dependencies
 - [Tree-shakable](./usage/tree-shaking.md): use [`BaseGraph`](./usage/graph.md#basegraph) to import only what you need and reduce bundle size
 - Available as both ES Module and CommonJS. The JavaScript code conforms to the `ES2020` standard
