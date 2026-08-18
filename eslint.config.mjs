@@ -66,6 +66,7 @@ export default tsEslint.config(
       'import/no-absolute-path': 'warn',
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/ban-types': 'off',
+      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
       '@typescript-eslint/no-this-alias': 'warn',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-duplicate-enum-values': 'off', // check the impact of changing enum values if we want to enable this

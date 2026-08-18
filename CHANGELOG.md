@@ -33,11 +33,27 @@ _**Note:** Yet to be released breaking changes appear here._
   ```
 - The dispatch methods `createHandler` and `createEdgeHandler` are now defined on `SelectionCellsHandler`. If you were overriding them to change the dispatch logic itself (and not only the instantiated class), extend `SelectionCellsHandler` and pass your subclass in the `plugins` option.
 - `SelectionCellsHandler.createHandler` returns a non-nullable `CellHandler` (the new `EdgeHandler | VertexHandler` union type exported from the package), whereas `AbstractGraph.createHandler` was typed as nullable. TypeScript users can drop the now-useless null checks on the returned value.
+- The minimum supported TypeScript version is now **3.9**, up from 3.8. Applications still on TypeScript 3.8 must upgrade to use this release.
+  Module augmentation of the types exposed by the package silently does not work on TypeScript 3.8. TypeScript 3.9 fixes it.
+  TypeScript 3.8 was released in February 2020, 3.9 in May 2020 and 4.0 in August 2020. Both 3.8 and 3.9 are more than six years old, and 3.9 was superseded three months after its release, so most applications already use a newer version and the impact of this change should be limited.
 
 **Other Changes**:
 - The order of the child elements produced by the XML serialization of `<Graph>` and `<BaseGraph>` has changed: `pageFormat` and `warningImage` are now emitted right after `options`, instead of last.
   This is not a breaking change, decoding matches elements by their `as` attribute and is order-independent, so existing documents keep decoding identically and previously exported documents are still valid.
   It is mentioned here only for consumers comparing exported XML as text, for instance in golden-file tests.
+- The object types exposed by the package are now declared with `interface` instead of `type`, in particular `CellStyle`, `CellStateStyle`, `EdgeParameters`, `VertexParameters`, `FitOptions`, `FitCenterOptions`, `EdgeStyleMetaData`, `UndoableChange`, `GraphFoldingOptions` and `GraphCollaboratorsOptions`. `CellStyle` in particular is now `interface CellStyle extends CellStateStyle` instead of an intersection.
+
+  This unlocks a new extension point: unlike type aliases, interfaces support [module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation), so applications can now declare their own style properties instead of casting or widening the style objects. This requires TypeScript 3.9 or higher, see the breaking change above:
+  ```typescript
+  declare module '@maxgraph/core' {
+    interface CellStateStyle {
+      myCustomStyleProperty?: number;
+    }
+  }
+  ```
+  Since `CellStyle` extends `CellStateStyle`, the declaration above applies to both. Augment `CellStyle` directly when the property only makes sense on the style declared on a cell and not on the computed state style.
+
+  This is not a breaking change for the vast majority of consumers, and JavaScript users are not impacted at all. The only TypeScript behavior that differs is that an interface has no implicit index signature, so a value typed with one of these interfaces is no longer implicitly assignable to `Record<string, unknown>` or to a similar index-signature type. Should you hit this, declare the intermediate variable with an explicit index signature or spread the object.
 
 ## 0.24.0
 

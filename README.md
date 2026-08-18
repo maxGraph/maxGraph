@@ -71,7 +71,7 @@ yarn add @maxgraph/core
 
 Compatibility of the npm package:
 - The JavaScript code conforms to the `ES2020` standard and is available in both CommonJS and ES Module formats
-- TypeScript integration requires **TypeScript 3.8** or higher
+- TypeScript integration requires **TypeScript 3.9** or higher (**TypeScript 3.8** for version 0.24.0 and earlier)
 
 <!-- END OF 'copied into packages/website/docs/getting-started.mdx' -->
 
