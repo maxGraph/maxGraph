@@ -118,6 +118,24 @@ export default tsEslint.config(
     files: ['packages/html/stories/**/*.stories.@(ts|tsx|js|jsx|mjs|cjs)'],
   })),
 
+  // The webpack configurations of the examples and the module they share are CommonJS build tooling, not sources.
+  // Without this, every 'require', 'module', 'process' and '__dirname' of those files is reported as undefined.
+  {
+    files: ['**/webpack.config.js', 'scripts/**/*.cjs'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: {
+        __dirname: 'readonly',
+        module: 'writable',
+        process: 'readonly',
+        require: 'readonly',
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+
   // Enables eslint-plugin-prettier, eslint-config-prettier and prettier/prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration.
   prettierRecommendedConfig
 );
