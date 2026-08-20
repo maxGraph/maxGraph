@@ -22,6 +22,8 @@ For more build information see: [@maxgraph/core](../../README.md#development).
 Run `npm run dev` from this directory and go to http://localhost:8080/
 
 If you want to bundle the application, run `npm run build` and then run `npm run preview` to access to a preview of the bundle application.
+
+
 ## Analyze the bundle
 
 [Rsdoctor](https://rsdoctor.rs/) is available to inspect what ends up in the bundle, which is useful to check the effect

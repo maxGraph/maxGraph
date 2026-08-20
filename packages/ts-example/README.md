@@ -25,6 +25,7 @@ Run `npm run dev` and go to http://localhost:5173/
 
 If you want to bundle the application, run `npm run build` and then run `npm run preview` to access to a preview of the
 bundle application.
+
 ## Analyze the bundle
 
 [vite-bundle-analyzer](https://github.com/nonzzz/vite-bundle-analyzer) is available to inspect what ends up in the
