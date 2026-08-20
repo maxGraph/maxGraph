@@ -1,9 +1,12 @@
 # Bundle Size Budgets
 
-Applies to the size guards of the example packages, whichever bundler they use:
+Applies to the size guards of the example packages, whichever bundler they use. Each example declares its own limits,
+while the machinery enforcing them is shared:
 
-- the `performance` section of `packages/*-example*/webpack.config.js`,
-- the chunk size limit of `packages/*-example*/vite.config.js`.
+- webpack: the values are passed to `withBundleAnalysisAndSizeBudget` in `packages/*-example*/webpack.config.js`, and
+  `scripts/webpack/bundle-analysis.cjs` turns them into the `performance` section,
+- vite: the value is the `chunkSizeLimitInKB` constant of `packages/*-example*/vite.config.js`, fed to both
+  `build.chunkSizeWarningLimit` and the `failOnChunkSizeExceeded` plugin of `scripts/vite/chunk-size-limit.mjs`.
 
 The rule for choosing the value is the same for every example. What differs between the two bundlers is the unit, what
 the value is compared against, and what makes the build fail.
@@ -15,20 +18,16 @@ of 1000. Never write the exact byte count, and never add margin on top of the ro
 
 ```javascript
 // Good, webpack: current build is 239 112 B for the asset and 240 095 B for the entrypoint
-performance: {
-  hints: isDevMode ? false : 'error',
-  maxAssetSize: 240_000,
-  maxEntrypointSize: 241_000,
-},
+module.exports = withBundleAnalysisAndSizeBudget(
+  { isDevMode, maxAssetSize: 240_000, maxEntrypointSize: 241_000 },
+  config
+);
 
 // Good, vite: current maxgraph chunk is 220 859 B
 const chunkSizeLimitInKB = 221;
 
 // Bad, exact byte counts
-performance: {
-  maxAssetSize: 239_112,
-  maxEntrypointSize: 240_095,
-},
+{ isDevMode, maxAssetSize: 239_112, maxEntrypointSize: 240_095 },
 ```
 
 The point of these limits is to **follow the size evolution**, not to leave room to grow into. Rounding exists so the
@@ -61,17 +60,21 @@ bytes there silently disables the guard, since no chunk is ever 240 000 kB.
 
 The two webpack limits therefore differ from each other, and they are not interchangeable.
 
-## Make the guard blocking, in production only
+## Where the guard applies
 
-webpack fails the build on its own: set `hints` to `'error'` for production builds and to `false` otherwise.
-Development bundles are not minified and are several times larger, so enforcing a budget there would break
-`npm run dev` on every start.
+`npm run build` is the command that enforces a budget, and it is the one the CI runs. Neither bundler enforces anything
+during a development build, since those bundles are not minified and are several times larger, nor during an analyze
+run, which is a diagnostic: failing it would suppress the very report needed to understand the size.
+
+webpack fails the build on its own, so `scripts/webpack/bundle-analysis.cjs` keeps `hints` at `'error'` only when
+neither exemption applies, `isDevMode || isBundleAnalysisEnabled ? false : 'error'`.
 
 Vite does not. `chunkSizeWarningLimit` only makes it log a warning, and the build still exits 0, so a regression ends up
-as one line in a CI log that nobody reads. The examples therefore pass the same limit to `failOnChunkSizeExceeded` from
-`scripts/vite/chunk-size-limit.mjs`, which fails the build and names the chunk and both sizes. Declare the limit once,
-in a `chunkSizeLimitInKB` constant, and pass it to both `chunkSizeWarningLimit` and the plugin, so the warning and the
-error can never drift apart. The plugin only applies to `build`, so `npm run dev` is unaffected.
+as one line in a CI log that nobody reads. `scripts/vite/chunk-size-limit.mjs` therefore fails the build and names the
+chunk and both sizes. Declare the limit once, in a `chunkSizeLimitInKB` constant, and pass it to both
+`chunkSizeWarningLimit` and the plugin, so the warning and the error can never drift apart. That plugin is registered
+instead of the analyzer, never alongside it: the analyzer is a post plugin, so the guard's error would abort the build
+before any report is written.
 
 ## Updating a budget
 

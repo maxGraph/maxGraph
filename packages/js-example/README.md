@@ -35,6 +35,7 @@ report in the browser. Press `Ctrl+C` to stop the report server.
 Rsdoctor is intentionally not part of `npm run build`: it slows the build down and starts a server, so it is only
 enabled by the `build:analyze` script. The report is generated locally and is never published by the CI.
 
-The production build also enforces a size budget, see `performance` in `webpack.config.js`. The limits are the current
-bundle size rounded up to the next kB, so `npm run build` fails when the bundle grows. Use `npm run build:analyze` to
-find out what was added, and update the limits in `webpack.config.js` when the increase is intended.
+The production build also enforces a size budget, see the limits passed to `withBundleAnalysisAndSizeBudget` at the
+bottom of `webpack.config.js`. They are the current bundle size rounded up to the next kB, so `npm run build` fails when
+the bundle grows. Use `npm run build:analyze` to find out what was added, and update the limits when the increase is
+intended.
