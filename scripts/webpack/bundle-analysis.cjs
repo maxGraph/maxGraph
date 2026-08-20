@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+const process = require('node:process');
 const { RsdoctorWebpackPlugin } = require('@rsdoctor/webpack-plugin');
 
 /**
