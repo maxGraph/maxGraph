@@ -47,11 +47,15 @@ export interface GraphOptions extends GraphCollaboratorsOptions {
 
 Where the plugin configuration goes has two candidate shapes, and **this issue does not decide between them**.
 
+The examples below are **illustrations only, nothing in them is decided**. They use the only configuration that exists once #890 is implemented, the edge handler factories of `SelectionCellsHandler`, and a key derived from the current plugin id. The shape, the naming rule and every identifier they show are settled during the analysis of this issue.
+
 _Option A, one member per plugin, at the top level of the graph options._ The member name is `camelCase(pluginId)` suffixed by `Plugin`, and the members are grouped in an interface the options extend:
 
 ```ts
 export interface GraphPluginOptions {
-  rubberBandPlugin?: { fadeOut?: boolean; defaultOpacity?: number };
+  selectionCellsHandlerPlugin?: {
+    edgeHandlerFactories?: Partial<Record<EdgeStyleHandlerKind, EdgeHandlerFactory>>;
+  };
 }
 
 export interface GraphOptions extends GraphCollaboratorsOptions, GraphPluginOptions {
@@ -63,14 +67,16 @@ export interface GraphOptions extends GraphCollaboratorsOptions, GraphPluginOpti
 ```ts
 new BaseGraph({
   container,
-  plugins: [RubberBandHandler],
-  rubberBandPlugin: { fadeOut: true },
+  plugins: [SelectionCellsHandler],
+  selectionCellsHandlerPlugin: {
+    edgeHandlerFactories: { segment: (state) => new EdgeSegmentHandler(state) },
+  },
 });
 ```
 
-The `Plugin` suffix is not decoration. The options being flat, a bare `rubberBand: { … }` would sit next to `plugins: [ … ]`, `model:` and `view:`, where it reads like a graph-level setting.
+The `Plugin` suffix is not decoration. The options being flat, a bare `selectionCellsHandler: { … }` would sit next to `plugins: [ … ]`, `model:` and `view:`, where it reads like a graph-level setting.
 
-_Option B, a single container keyed by plugin ids._
+_Option B, a single container gathering the plugin options._ The member name is `camelCase(pluginId)`, with no suffix: the container already says these are plugin options.
 
 ```ts
 export interface GraphOptions extends GraphCollaboratorsOptions {
@@ -80,30 +86,38 @@ export interface GraphOptions extends GraphCollaboratorsOptions {
 }
 
 export interface GraphPluginOptions {
-  'rubber-band'?: { fadeOut?: boolean; defaultOpacity?: number };
+  selectionCellsHandler?: {
+    edgeHandlerFactories?: Partial<Record<EdgeStyleHandlerKind, EdgeHandlerFactory>>;
+  };
 }
 ```
 
 ```ts
 new BaseGraph({
   container,
-  plugins: [RubberBandHandler],
-  pluginOptions: { 'rubber-band': { fadeOut: true } },
+  plugins: [SelectionCellsHandler],
+  pluginOptions: {
+    selectionCellsHandler: {
+      edgeHandlerFactories: { segment: (state) => new EdgeSegmentHandler(state) },
+    },
+  },
 });
 ```
 
-In both shapes the key derives from the **plugin id**, never from the class name: the id is the runtime identity, the one `getPlugin` takes, and the only thing a custom plugin is guaranteed to expose. The class name happens to coincide, since the convention already forces `class = PascalCase(id) + 'Plugin'`.
+_Variant of option B, the plugin id used directly._ `pluginOptions: { SelectionCellsHandler: { edgeHandlerFactories: … } }` today, and a quoted kebab-case key, `pluginOptions: { 'image-bundle': { … } }`, for a plugin already following the current convention. The key is then literally the string passed to `getPlugin`, which helps discoverability and removes any naming rule to learn or to document: dispatching the configuration is a plain lookup, and a custom plugin needs no convention at all since its id is its id. The counterpart is that a kebab-case key has to be quoted, and that the key inherits every id, including the eight legacy ones, so renaming a plugin also breaks its option key. **To be decided during the analysis.**
+
+In both shapes the key derives from the **plugin id**, never from the class name: the id is the runtime identity, the one `getPlugin` takes, and the only thing a custom plugin is guaranteed to expose. The class name happens to coincide, since the convention already forces `class = PascalCase(id) + 'Plugin'`. Deriving from the id also keeps the key a valid identifier, `imageBundle` rather than the quoted `'image-bundle'` a kebab-case id would impose.
 
 What separates the two:
 
 | | Option A | Option B |
 |---|---|---|
-| key | `camelCase(id) + 'Plugin'` | the id, verbatim |
-| dispatch to the owning plugin | needs the id to key transformation | plain lookup |
-| legacy plugin ids in user code | avoidable, see below | exposed as is, `'SelectionCellsHandler'` |
+| key | `camelCase(id) + 'Plugin'` | `camelCase(id)` |
+| reads like a graph-level setting | no, the suffix marks it | no, the container marks it |
 | extra nesting | none | one level |
+| grouping in the IDE completion of the options | mixed with the other options | one entry, then the plugins |
 
-The legacy ids are what makes this a real choice rather than a matter of taste. Eight of the ten builtin plugins carry an id predating the current naming convention, `'SelectionCellsHandler'` and `'PanningHandler'` against `'image-bundle'` and `'fit'`, and they are going to be renamed in a dedicated change. Option A can name the member after the plugin's **target** name right away, so the public key is published once and never changes, while the id catches up later. Option B locks the current id into the public API, and the rename then breaks the option key too.
+Both shapes share the same consequence, and it has to be settled with them: eight of the ten builtin plugins carry an id predating the current naming convention, `'SelectionCellsHandler'` and `'PanningHandler'` against `'image-bundle'` and `'fit'`, and they are going to be renamed in a dedicated change. Since the key derives from the id, it has to be named after the plugin's **target** name right away, so the public key is published once and never changes while the id catches up later. The cost is that, until the renames happen, the key is not mechanically derivable from the current id, so dispatching the configuration needs a table for those eight plugins, deleted once they are renamed. The variant above makes the opposite trade: nothing to name now, and a breaking change to the option key when the plugin is renamed.
 
 **2. A new optional `onConfigure` lifecycle hook on `GraphPlugin`.**
 
