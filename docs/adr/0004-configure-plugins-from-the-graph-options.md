@@ -1,6 +1,6 @@
 # ADR 0004: Configure plugins from the graph options
 
-- **Status**: Proposed. Nothing below is settled, two candidate shapes are on the table
+- **Status**: Proposed. The lifecycle hook is described, the shape of the options is open with two candidates
 - **Date**: 2026-08-20
 - **Deadline**: before `0.25.0` ships. `GraphPluginOptions` and its only member are unreleased, so the shape can still
   change for free. Once released, every change to it breaks applications
@@ -9,11 +9,58 @@
 - **Analysis basis**: commit `cd8701bc1`, during the development of version 0.25.0. Any file or line reference below
   points to that commit
 - **Related**: [ADR 0002](0002-use-plugins-for-optional-and-new-features.md),
-  [issue #890](https://github.com/maxGraph/maxGraph/issues/890), user documentation:
+  [issue #890](https://github.com/maxGraph/maxGraph/issues/890),
+  [issue #1149](https://github.com/maxGraph/maxGraph/issues/1149): the issue this ADR decides,
+  [issue #1150](https://github.com/maxGraph/maxGraph/issues/1150): its second consumer, user documentation:
   [`plugins.md`](../../packages/website/docs/usage/plugins.md),
   [`cell-handlers.md`](../../packages/website/docs/usage/cell-handlers.md)
 
 ## Context
+
+### A plugin cannot be configured while the graph is built
+
+`GraphPlugin` declares `onDestroy` and nothing else, so the graph hands nothing to a plugin. An application configures
+one by fetching the instance after construction and mutating it:
+
+```ts
+const graph = new BaseGraph({ container, plugins: [RubberBandHandler] });
+graph.getPlugin<RubberBandHandler>('RubberBandHandler')!.fadeOut = true;
+```
+
+Three consequences:
+
+- **it can be too late.** Anything the plugin reads during the first render or the first selection has already been read
+  with its default value;
+- **the application has to know internals**: the plugin id as a string, the class for the generic parameter, and the
+  mutable property names. A typo in the id yields `undefined`, so the line above becomes a silent no-op or a runtime
+  error, depending on the non-null assertion;
+- **nothing is discoverable.** The graph options are the documented entry point of the library, and they say nothing
+  about what the registered plugins accept.
+
+Readability alone justifies the feature, even when timing does not: naming a plugin and its configuration in the same
+place beats fetching the instance afterwards, repeating the id as a string and asserting it is not `undefined`. That is
+the whole content of [issue #1150](https://github.com/maxGraph/maxGraph/issues/1150) for `RubberBandHandler`.
+
+Third-party plugins get nothing at all: the options type is closed, so a plugin published on npm cannot add its own
+configuration, even though `PluginId` accepts any string and custom plugins are a documented feature.
+
+### The exception this work introduces, and what it costs
+
+Making the edge handler registration modular needed the factories before the first selection, so `GraphPluginOptions`
+was extracted and the graph forwards its only member, `edgeHandlerFactories`, to `SelectionCellsHandler` through the
+private `AbstractGraph.configureEdgeHandlerFactories`, called after the plugins are instantiated and before
+`view.revalidate()`.
+
+It works, and it is the only mechanism available today. Its costs:
+
+- `AbstractGraph` hardcodes the plugin id `'SelectionCellsHandler'` and the setter it calls, so the graph knows about
+  one specific plugin, which is exactly what [ADR 0002](0002-use-plugins-for-optional-and-new-features.md) moves away
+  from;
+- it adds **0.23 kB** to every application, including one that registers no plugin at all, measured on
+  `ts-example-without-defaults`;
+- it does not scale: one option to forward means one more method on `AbstractGraph`.
+
+### What this ADR settles
 
 `GraphOptions` is the single parameter of the `AbstractGraph` constructor. It is a flat intersection of three groups,
 and each group exists because a distinct phase of the constructor consumes it:
@@ -23,24 +70,52 @@ and each group exists because a distinct phase of the constructor consumes it:
   `cellRenderer` and `selectionModel`;
 - what it hands over to its plugins: `GraphPluginOptions`.
 
-The third group is new. It was extracted while making the edge handler registration modular, and it holds exactly one
-member today, `edgeHandlerFactories`, sitting flat at its top level. That member is consumed by a single plugin,
-`SelectionCellsHandler`, and the graph forwards it to that plugin with a hardcoded private method.
+The third group is new, and it holds exactly one member. Two groups make a convention, and every option added from now
+on will follow the shape of this one by imitation. The question is therefore not "where does `edgeHandlerFactories` go",
+but "how is any plugin configured from the graph options, for the next years".
 
-Two groups make a convention, and every option added from now on will follow the shape of this one by imitation. The
-question this ADR has to answer is therefore not "where does `edgeHandlerFactories` go", but "how is any plugin
-configured from the graph options, for the next years".
-
-A related question comes with it, and cannot be separated from it: the graph forwards that option by name, in code it
-owns, which means `AbstractGraph` knows about a specific plugin. That is exactly what
-[ADR 0002](0002-use-plugins-for-optional-and-new-features.md) moves away from. The `onConfigure` lifecycle hook is what
-removes that knowledge, and the shape chosen below decides how the hook dispatches. Both are decided here.
+Two decisions answer it, and they cannot be separated: how a plugin receives its configuration, _D1_, and how that
+configuration is written in the options, _D2_. The second one is still open.
 
 ## Decision
 
+### D1. A plugin receives its configuration through an optional `onConfigure` hook
+
+`GraphPlugin` gains a second member, optional so that every existing plugin and every plugin published outside this
+repository keeps compiling and keeps working:
+
+```ts
+export interface GraphPlugin {
+  onDestroy: () => void;
+  onConfigure?: (options: GraphPluginOptions) => void;
+}
+```
+
+`AbstractGraph` calls it for each registered plugin, at the exact point where `configureEdgeHandlerFactories` is called
+today: after every plugin is instantiated, so a plugin may reach a sibling, and before `view.revalidate()`, so the
+configuration applies to the first render and the first selection.
+
+The iteration starts from the plugins that were **actually registered**, and each one pulls the configuration it
+understands. Two things follow:
+
+- the hardcoded forwarding disappears. `AbstractGraph.configureEdgeHandlerFactories` is deleted,
+  `SelectionCellsHandler` reads `edgeHandlerFactories` from its own `onConfigure`, and the 0.23 kB moves into the
+  plugin, so an application registering no plugin stops paying for it. The method was deliberately kept as a single
+  isolated private block to make that extraction trivial;
+- a configuration entry for a plugin that is **not** registered is a silent no-op, and it is undetectable by
+  construction: detecting it would need a mapping from option key to owning plugin, which cannot exist for a custom
+  plugin whose package is not even installed. This is the rationale of decision _D2_ of the `#890` plan, and it matches
+  the existing precedent, `AbstractGraph.setTooltips` no-ops through `?.` when `TooltipHandler` is absent. Whether the
+  shape retained in _D2_ makes detection possible after all, and whether to then warn, is part of that decision.
+
+Left open, to settle when the hook is implemented: what a plugin is allowed to do from `onConfigure`, and what it must
+not do.
+
+### D2. The shape of the plugin options
+
 **Open.** Two candidate shapes, neither retained yet.
 
-### The rule both options share
+#### The rule both options share
 
 The key identifying a group of options derives from the **plugin id**, in kebab-case, not from the plugin class name:
 
@@ -50,7 +125,7 @@ The key identifying a group of options derives from the **plugin id**, in kebab-
 - the class name happens to coincide anyway, since the naming convention already forces
   `class = PascalCase(id) + 'Plugin'`. That coincidence is a mnemonic, not the rule.
 
-### Option A: one key per plugin, at the top level of the graph options
+#### Option A: one key per plugin, at the top level of the graph options
 
 The key is `camelCase(pluginId)` suffixed by `Plugin`. `'image-bundle'` gives `imageBundlePlugin`, `'fit'` gives
 `fitPlugin`.
@@ -68,7 +143,7 @@ The `Plugin` suffix is not decoration. `GraphOptions` being a flat intersection,
 `plugins: [ … ]`, `model:` and `view:`, where it reads like a graph-level setting. `fitPlugin: { … }` cannot be
 misread, and it cannot collide with a collaborator option or with a future top-level option.
 
-### Option B: a single container keyed by plugin ids
+#### Option B: a single container keyed by plugin ids
 
 The keys are the plugin ids, verbatim, inside one `pluginOptions` member.
 
@@ -87,7 +162,7 @@ No transformation, no suffix, and the three-way split described in the context b
 being an intersection the reader has to know about. Dispatching configuration to a plugin is a plain lookup by id,
 which works for custom plugins with no rule at all.
 
-### What separates them
+#### What separates them
 
 | | Option A | Option B |
 |---|---|---|
@@ -110,7 +185,7 @@ id: `cellHandlerPlugin` against `'SelectionCellsHandler'`. A generic dispatch wo
 first, or a small internal table for the eight legacy plugins, deleted once they are renamed. This is not urgent: the
 current forwarding is hardcoded for a single option, and the question only becomes real when `onConfigure` lands.
 
-### Still to settle
+#### Still to settle
 
 - Option A or option B.
 - The target name of `SelectionCellsHandler`, since `edgeHandlerFactories` belongs to it and its key is published in
@@ -120,23 +195,6 @@ current forwarding is hardcoded for a single option, and the question only becom
   migration issue.
 - An option is only honored when the plugin consuming it is registered, and its absence is a silent no-op today. Both
   options above make detection possible. Whether to detect, and then warn or throw, is part of this decision.
-
-## The `onConfigure` plugin lifecycle hook
-
-TODO. Placeholder, to be written once the shape above is chosen, since the shape decides how the hook receives and
-dispatches the configuration.
-
-What this section has to cover:
-
-- why the hook exists: `GraphPlugin` declares `onDestroy` only, so a plugin has no way to receive configuration after
-  the graph built it. The graph therefore forwards options itself, by name, and knows about a specific plugin;
-- what it replaces: the hardcoded forwarding of `edgeHandlerFactories` in `AbstractGraph`, deliberately isolated in a
-  single private method to make the extraction trivial;
-- the signature, and where it is called in the constructor sequence, after the plugins exist and before the first
-  render;
-- the side benefit, measured: the forwarding costs 0.23 kB to every application, including one registering no plugin at
-  all. The hook moves that cost into the plugin that needs it;
-- what a plugin is allowed to do from the hook, and what it must not do.
 
 ## Consequences
 
