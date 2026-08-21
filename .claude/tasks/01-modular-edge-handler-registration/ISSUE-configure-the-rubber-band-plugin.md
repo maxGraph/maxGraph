@@ -28,22 +28,28 @@ Two behaviors have no property at all today:
 
 ### Describe the solution you'd like
 
-A group of options mapping onto `RubberBandHandler`, passed at construction through the mechanism of #1149. Each option maps one to one onto the property it drives, which is why `defaultOpacity` keeps that name rather than being shortened to `opacity`.
+A group of options mapping onto `RubberBandHandler`, passed at construction through the mechanism of #1149. Each option is named after the property it drives, one to one, so `defaultOpacity` and not `opacity`. Renaming the property itself is a separate question, see below.
 
 The two new options are also two new **public properties of the plugin**, like `fadeOut` and `defaultOpacity` already are. The option only sets the property while the graph is being built, so everything stays configurable after construction, and an application that does not use the graph options gains the two behaviors all the same.
 
 | Option | State of the class | Note |
 |---|---|---|
 | `fadeOut` | `fadeOut`, default `false` | maps as is |
-| `defaultOpacity` | `defaultOpacity`, default `20`, from 0 to 100 | maps as is |
+| `defaultOpacity` | `defaultOpacity`, default `20`, from 0 to 100 | maps as is. `default` names the value the div gets when it is created, which the fade out then drives to `0`, not a value a stylesheet could override: `createShape()` writes it as an inline style through `setOpacity`, and the `div.mxRubberband` rule of `css/common.css` sets no opacity at all |
 | `fadeOutDuration` | does not exist | new property, default taken from the current hardcoded value, 200 ms |
-| `triggerModifierKey` | does not exist, `isForceRubberbandEvent()` hardcodes the alt key | new property, `'shift' \| null`, default `null`, meaning no modifier is required, which is the current behavior. A string union rather than a boolean, so another modifier can be added later without a breaking change |
+| `triggerModifierKey` | does not exist, `isForceRubberbandEvent()` hardcodes the alt key | new property, `'alt' \| 'control' \| 'meta' \| 'shift' \| null`, default `null`, meaning no modifier is required, which is the current behavior |
+
+**To consider, renaming `defaultOpacity` to `opacity`.** Now that what `default` means is established, the value the div is created with, before the fade out drives it to `0`, the prefix carries little for a reader: nothing else sets the opacity, and no CSS can. `opacity` would say the same thing in one word and match the style property it writes. It is a **breaking change** on a public property of the plugin, so it needs the `BREAKING CHANGE` footer and a `CHANGELOG.md` entry, and it drags the option name with it. Worth deciding here rather than later, since the option is published at the same time and would otherwise be renamed twice.
 
 **`fadeOutDuration`** replaces both hardcoded values, the transition string being built from it, so the animation and the removal timeout can no longer disagree.
 
 **`triggerModifierKey`** is what makes the rubber band and left button panning coexist. Setting it to `'shift'` splits the gesture instead of ordering the plugins: a plain left drag on the background pans, a shift left drag rubber band selects, which is what diagram editors usually offer.
 
-**Only `'shift'` and `null` are supported for now.** The type stays a string union so control, meta or alt can be added later by extending it, which is not a breaking change, while a boolean would have to be deprecated to get there. Restricting it also settles a question a wider union would open: the alt override of `isForceRubberbandEvent` stays exactly as it is, since the option cannot express it. Folding both into a single option only becomes a question if more modifiers are supported later.
+**The four modifier keys are supported**, each value mapping one to one onto the existing `isAltDown`, `isControlDown`, `isMetaDown` and `isShiftDown` helpers of `EventUtils`, so the implementation is a lookup rather than a branch per key. `'shift'` is the value the panning conflict calls for, the others cost nothing once the mechanism is there and let an application match the conventions of its own editor.
+
+One open point, which the wider union opens: whether the alt override of `isForceRubberbandEvent` survives as an unconditional second trigger, or whether `triggerModifierKey` replaces it with `'alt'` as its default. Replacing it is the smaller API and keeps a single answer to "what starts a rubber band", at the price of making `null` mean something the current class cannot express.
+
+Whether "no modifier" is spelled `null` or `undefined` is left to the implementation. `null` states the absence explicitly, which suits a property a user reads and writes, while `undefined` is what an omitted option carries anyway and avoids the plugin having to accept both. The two forms are interchangeable for every call site here, since the nullish checks of the package cover both.
 
 JSDoc, to be refined when implemented: _the modifier key that must be held down for a mouse press to start a rubber band selection. When `null`, no modifier is required and any press on the background starts one, which conflicts with `PanningHandler.useLeftButtonForPanning`. Set it to free the plain left press for another plugin._
 
@@ -62,13 +68,15 @@ Naming: `startModifierKey` was considered and rejected, because `start()` is the
 - **Keep mutating the instance after construction.** Works for the two existing properties, and is the status quo. It does not help the two missing behaviors, and it separates the registration of the plugin from its configuration.
 - **Subclass `RubberBandHandler` and override `isForceRubberbandEvent`.** Possible today and needs no library change, but it requires a subclass per application for what is a one-line preference, and it does not stop `mouseDown` from consuming the plain left press, which is what actually blocks panning.
 - **Make panning ignore the modifier instead**, by giving `PanningHandler` an option to exclude shift from its triggers. It solves the same conflict from the other side, but it leaves the rubber band grabbing every plain press on the background, so the conflict returns with any other plugin interested in that gesture.
-- **A boolean, `requireShiftToStart`, instead of a string union.** Shorter for the only value supported today, but a second modifier would need a second boolean, and two booleans can contradict each other. A union carrying a single value costs nothing now and grows by extension, each value mapping one to one onto the existing `isShiftDown`, `isAltDown`, `isControlDown` and `isMetaDown` helpers.
+- **A boolean, `requireShiftToStart`, instead of a key union.** Shorter for the case that motivates the option, but a second modifier would need a second boolean, and two booleans can contradict each other. The union keeps a single source of truth and grows by extension.
 
 ### Tasks
 
 - [ ] Add the `fadeOutDuration` property, default 200, and derive both the transition string and the removal timeout of `reset()` from it.
 - [ ] Add the `triggerModifierKey` property and move the trigger to the `FIRE_MOUSE_EVENT` path when it is set, keeping the "background only" check.
 - [ ] Review the implementation constraints above before writing any code, and confirm they still hold.
+- [ ] Decide what happens to the alt override of `isForceRubberbandEvent`, and document the outcome in the JSDoc of the plugin.
+- [ ] Decide whether to rename `defaultOpacity` to `opacity`. If so, document the break and add the `CHANGELOG.md` entry, which the project reserves for breaking changes.
 - [ ] Expose the four options through the plugin configuration mechanism of #1149.
 - [ ] Tests: the fade out timeout follows the option, a press without the required modifier starts nothing, a press with it starts a selection, a press with it over a cell starts nothing, and panning on the left button keeps working while the modifier trigger is set.
 - [ ] Document the options in `packages/website/docs/usage/plugins.md`, where `RubberBandHandler` is listed, including the combination with `PanningHandler.useLeftButtonForPanning`.
@@ -77,3 +85,4 @@ Naming: `startModifierKey` was considered and rejected, because `start()` is the
 
 - Depends on #1149. The two new properties are useful on their own and could land before it, but the option group cannot.
 - `RubberBandHandler` is not part of the default plugins and requires the CSS shipped with the package, see `packages/website/docs/usage/plugins.md` and `css-and-images.md`.
+- Worth documenting while touching these options: the opacity is written as an inline style, so no CSS rule can change it whatever its selector or specificity, `!important` excepted. And an `!important` rule pins the div at that value, so the fade out, which also sets the opacity inline, stops fading. The stylesheet shipped with the package styles the border and the background only, which nothing writes inline.

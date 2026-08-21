@@ -78,65 +78,25 @@ list before creating the PR.
 
 ## 3. Dedicated PR: make the bundle size guard blocking
 
-**In progress in the `chore/improve_build_of_examples` branch**, out of this one. Fully specified in `explore.md`,
-section _Making the size guard blocking (verified on this repo)_ and decision _E_ of the same file: the plugin
-skeleton, the verified behavior, the current limit values and the trade-off to accept.
+**Done, and superseded: [PR #1145](https://github.com/maxGraph/maxGraph/pull/1145) is open and covers more than what
+was planned here.** It adds the shared Vite plugin `scripts/vite/chunk-size-limit.mjs`, each example declaring its
+limit once so `chunkSizeWarningLimit` and the blocking check cannot drift, `--fail-at-end` in
+`scripts/build-all-examples.bash` used by the CI, `performance` budgets with `hints: 'error'` for the three webpack
+examples, which had no guard at all, opt-in bundle analysis in the six bundled examples, the shared
+`scripts/vite/maxgraph-chunk.mjs`, and the budget convention recorded in
+`.claude/rules/tooling/bundle-size-budgets.md`.
 
-Two requirements settled since `explore.md` was written, both scoped to that branch:
-
-- the check is implemented **once** and shared by the three Vite configs, which already duplicate the whole
-  `codeSplitting.groups` block and differ only by the limit. The limit stays declared once per example and feeds both
-  `chunkSizeWarningLimit` and the blocking check, so the warning and the error cannot drift apart.
-- `scripts/build-all-examples.bash` gains a `--fail-at-end` option, and the CI uses it. Once the check blocks, the
-  first failing example aborts the whole script under `set -euo pipefail`, hiding both the other examples and the size
-  table. With the option, every example is built, failures are collected, the file listing, the markdown table and the
-  CSV are still printed, and the summary of the violations comes last, with a non-zero exit code. Default behavior is
-  unchanged. The single CI call site is `.github/workflows/_reusable_build_examples.yml:33`, a reusable workflow used
-  by `build.yml:93` and `create-github-release.yml:25`, so one change covers both, and the consequence for its
-  `Upload all examples as artifact` step has to be decided explicitly.
-
-Summary: Vite has no built-in way to fail a build on `chunkSizeWarningLimit`, see
-[vitejs/vite#18496](https://github.com/vitejs/vite/issues/18496), but a plugin calling `this.error()` from
-`generateBundle` does, which was verified on this repository with vite 8.2.1. Its byte count matches the sizes already
-published, so the existing limits stay valid.
-
-It is independent of #890 and touches the three Vite example configurations plus one new shared file. Recommended
-before any further size-sensitive work, so the next bundle regression fails the build instead of printing a warning
-nobody reads.
+Nothing left to carry here. The material that fed it stays in `explore.md`, section
+_Making the size guard blocking (verified on this repo)_ and decision _E_.
 
 ## 4. The `onConfigure` plugin lifecycle hook
 
-Out of scope here, and no GitHub issue exists for it yet. The forwarding block of
-`AbstractGraph.configureEdgeHandlerFactories` is deliberately isolated in a single private method to make its
-extraction trivial.
+**Tracked in [issue #1149](https://github.com/maxGraph/maxGraph/issues/1149), which holds everything that used to be
+described here**: why the hook is needed, the two candidate shapes of the plugin options with the id variant, module
+augmentation for custom plugins, the silent no-op when the plugin is absent, and the task list. Its content is kept in
+`ISSUE-configure-plugins-at-construction-time.md`, in this directory.
 
-The design rationale is in `plan.md`, decision _D2_, and the insertion point in `explore.md`. `GraphPlugin` currently
-declares `onDestroy` only, so it is the interface to extend.
-
-Side benefit to mention when opening the issue: the 0.23 kB the forwarding currently costs every application, even one
-registering no plugin at all, would move into the plugin that needs it.
-
-### Decide the shape of the plugin options before 0.25.0 ships
-
-This is the open question of the ADR of item 1, which is where it gets settled. What follows is the material for it.
-
-`GraphPluginOptions` is flat today, `edgeHandlerFactories` sitting directly at its top level. Grouping the options per
-plugin is the alternative, and it has to be settled **before the release**: changing the shape is free while 0.25.0 is
-unreleased, and breaking afterwards.
-
-Two forms, and the choice decides more than aesthetics:
-
-- **keys are plugin ids**. The mapping from a configuration entry to its owning plugin is then carried by the key
-  itself, so `onConfigure` dispatches generically, and it works for custom plugins too since their id is their id.
-  This reopens decision _D2_: detecting configuration provided for a plugin that is not registered becomes possible
-  without the mapping table that was judged unworkable. The cost is that option keys inherit the current id
-  inconsistency, `'RubberBandHandler'` and `'SelectionCellsHandler'` in legacy PascalCase against `'image-bundle'` and
-  `'fit'` in the current kebab-case convention, giving
-  `{ 'image-bundle': { … }, SelectionCellsHandler: { … } }`.
-- **keys are chosen names**, `rubberBand` rather than `'RubberBandHandler'`. More readable, but the name to plugin
-  link becomes implicit again, so no generic dispatch and no detection of an unregistered plugin.
-
-If grouping wins, `edgeHandlerFactories` moves under the key of `SelectionCellsHandler`.
+The deadline of the shape decision is not in the issue, on purpose: it belongs to the ADR of item 1, which states it.
 
 ### Worked example for that PR: options for the rubber band plugin
 
