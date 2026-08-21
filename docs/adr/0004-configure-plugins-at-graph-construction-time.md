@@ -114,8 +114,9 @@ not do.
 ### D2. The shape of the plugin options
 
 **Open.** Two shapes and one variant, none retained yet. The examples below are illustrations, nothing in them is
-decided: they use the only configuration that exists today, the edge handler factories of `SelectionCellsHandler`, and a
-key derived from its current id.
+decided. They configure two plugins, chosen because their ids sit on either side of the naming convention: the edge
+handler factories of `SelectionCellsHandler`, the only configuration that exists today, and image bundles for
+`ImageBundlePlugin`, whose id `'image-bundle'` already follows it. Both keys are derived from the current ids.
 
 #### The rule every shape shares
 
@@ -137,6 +138,7 @@ gives `fitPlugin`. The members are grouped in an interface the options extend:
 
 ```ts
 export interface GraphPluginOptions {
+  imageBundlePlugin?: { imageBundles?: ImageBundle[] };
   selectionCellsHandlerPlugin?: {
     edgeHandlerFactories?: Partial<Record<EdgeStyleHandlerKind, EdgeHandlerFactory>>;
   };
@@ -151,7 +153,8 @@ export interface GraphOptions extends GraphCollaboratorsOptions, GraphPluginOpti
 ```ts
 new BaseGraph({
   container,
-  plugins: [SelectionCellsHandler],
+  plugins: [SelectionCellsHandler, ImageBundlePlugin],
+  imageBundlePlugin: { imageBundles: [iconBundle] },
   selectionCellsHandlerPlugin: {
     edgeHandlerFactories: { segment: (state) => new EdgeSegmentHandler(state) },
   },
@@ -175,6 +178,7 @@ export interface GraphOptions extends GraphCollaboratorsOptions {
 }
 
 export interface GraphPluginOptions {
+  imageBundle?: { imageBundles?: ImageBundle[] };
   selectionCellsHandler?: {
     edgeHandlerFactories?: Partial<Record<EdgeStyleHandlerKind, EdgeHandlerFactory>>;
   };
@@ -184,8 +188,9 @@ export interface GraphPluginOptions {
 ```ts
 new BaseGraph({
   container,
-  plugins: [SelectionCellsHandler],
+  plugins: [SelectionCellsHandler, ImageBundlePlugin],
   pluginOptions: {
+    imageBundle: { imageBundles: [iconBundle] },
     selectionCellsHandler: {
       edgeHandlerFactories: { segment: (state) => new EdgeSegmentHandler(state) },
     },
@@ -198,10 +203,23 @@ has to know about.
 
 #### Variant of option B: the plugin id used directly
 
-`pluginOptions: { 'image-bundle': { … } }`, and `pluginOptions: { SelectionCellsHandler: { … } }` for a plugin not yet
-renamed. The key is then literally the string passed to `getPlugin`, which helps discoverability and removes any naming
-rule to learn or to document: dispatching the configuration is a plain lookup, and a custom plugin needs no convention
-at all since its id is its id.
+```ts
+new BaseGraph({
+  container,
+  plugins: [SelectionCellsHandler, ImageBundlePlugin],
+  pluginOptions: {
+    'image-bundle': { imageBundles: [iconBundle] },
+    SelectionCellsHandler: {
+      edgeHandlerFactories: { segment: (state) => new EdgeSegmentHandler(state) },
+    },
+  },
+});
+```
+
+The key is then literally the string passed to `getPlugin`, which helps discoverability and removes any naming rule to
+learn or to document: dispatching the configuration is a plain lookup, and a custom plugin needs no convention at all
+since its id is its id. The example also shows what it exposes, the two id conventions side by side in the same object,
+until the legacy ids are renamed.
 
 The counterpart is that a kebab-case key has to be quoted, and that the key inherits every id, including the legacy
 ones, so renaming a plugin also breaks its option key.
