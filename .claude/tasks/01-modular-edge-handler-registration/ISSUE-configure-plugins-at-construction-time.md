@@ -1,6 +1,7 @@
 # [FEAT] Configure plugins at graph construction time
 
-<!-- Content for a GitHub issue, following .github/ISSUE_TEMPLATE/02-feature-request.md. Not created on GitHub yet. -->
+<!-- Content for a GitHub issue, following the sections of .github/ISSUE_TEMPLATE/02-feature-request.md. Not created on GitHub yet.
+     When creating it: issue type "Enhancement", and no label. The template applies "enhancement" and "triage" by default, remove them. -->
 
 > [!NOTE]
 > This description applies to version 0.24.0, the release available when this issue was created, and assumes that #890 is implemented before the work described here.
@@ -178,4 +179,3 @@ Once the hook exists, the block forwarding the edge handler factories is deleted
 - #890 introduces the first construction-time configuration of a plugin, hardcoded in `AbstractGraph` for lack of a generic mechanism. This issue generalizes it and removes that code.
 - #1146 already made module augmentation the extension point of the package, with a `CellStateStyle` example in the CHANGELOG. It also documents the only behavior difference of interfaces, no implicit index signature, so a value is no longer implicitly assignable to `Record<string, unknown>`.
 - Eight of the ten builtin plugins still carry an id predating the current naming convention. Renaming them is a separate change and needs its own issue, but the option keys depend on the target names.
-- Suggested labels: `enhancement` and `triage`, the defaults of the feature request template.
