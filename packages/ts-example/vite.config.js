@@ -14,39 +14,43 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { realpathSync } from 'node:fs';
-import { createRequire } from 'node:module';
-import { dirname } from 'node:path';
-import { defineConfig, normalizePath } from 'vite';
+import process from 'node:process';
+import { defineConfig } from 'vite';
 
-// Vite resolves symlinks to their real path, so the module ids of @maxgraph/core point to the workspace directory
-// instead of node_modules. Matching the resolved package directory keeps the chunk correct in both setups.
-// Both sides are normalized because realpathSync returns native separators on Windows, and the trailing separator
-// prevents matching a sibling directory whose name merely starts with 'core'.
-const maxGraphCoreDirectory = `${normalizePath(
-  realpathSync(
-    dirname(createRequire(import.meta.url).resolve('@maxgraph/core/package.json'))
-  )
-)}/`;
+import { analyzer } from 'vite-bundle-analyzer';
+
+import { failOnChunkSizeExceeded } from '../../scripts/vite/chunk-size-limit.mjs';
+import { maxGraphCodeSplitting } from '../../scripts/vite/maxgraph-chunk.mjs';
+
+// The maximum size of the maxgraph chunk, in kB. Declared once and passed to both the Vite warning and the blocking
+// check, so they cannot drift apart.
+const chunkSizeLimitInKB = 429;
 
 export default defineConfig(({ mode }) => {
+  // The analyzer slows the build down and starts a report server, so only analyze the production bundle when
+  // explicitly asked for it: see the 'build:analyze' script.
+  const isBundleAnalysisEnabled = mode === 'production' && process.env.ANALYZE === 'true';
+
   return {
+    plugins: [
+      // The analyzer runs after the size check, which aborts the build, so an oversized chunk would leave no report at
+      // all: exactly the case where the report is needed to find out what grew. Only one of the two is registered, and
+      // the plain 'npm run build' remains the one that enforces the limit.
+      ...(isBundleAnalysisEnabled
+        ? [analyzer()]
+        : [failOnChunkSizeExceeded(chunkSizeLimitInKB)]),
+    ],
     build: {
+      // The analyzer relies on the source map to report how much each module contributes to the bundle. 'hidden' emits
+      // the map without appending a sourceMappingURL comment, so what gets analyzed is byte for byte what the regular
+      // build produces. false is the Vite default, restated here to make the analysis-only nature explicit.
+      sourcemap: isBundleAnalysisEnabled ? 'hidden' : false,
       rolldownOptions: {
         output: {
-          codeSplitting: {
-            groups: [
-              {
-                // put the maxgraph code in a dedicated file. It lets know the size the produced bundle in an external application and if tree shaking works
-                name: 'maxgraph',
-                test: (moduleId) =>
-                  normalizePath(moduleId).startsWith(maxGraphCoreDirectory),
-              },
-            ],
-          },
+          codeSplitting: maxGraphCodeSplitting(),
         },
       },
-      chunkSizeWarningLimit: 429, // @maxgraph/core
+      chunkSizeWarningLimit: chunkSizeLimitInKB,
     },
   };
 });

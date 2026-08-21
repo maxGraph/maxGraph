@@ -3,11 +3,14 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const {
+  withBundleAnalysisAndSizeBudget,
+} = require('../../scripts/webpack/bundle-analysis.cjs');
 
 // hack to get the webpack mode
 const isDevMode = !process.argv.includes('--mode=production');
 
-module.exports = {
+const config = {
   mode: 'development',
   entry: './src/index.js',
   output: {
@@ -35,3 +38,8 @@ module.exports = {
     }),
   ].concat(isDevMode ? [] : [new MiniCssExtractPlugin()]),
 };
+
+module.exports = withBundleAnalysisAndSizeBudget(
+  { isDevMode, maxAssetSize: 385_000, maxEntrypointSize: 391_000 },
+  config
+);

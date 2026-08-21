@@ -56,8 +56,13 @@ updates:
           - "jsdom"
           - "jsdom-*"
           - "ts-jest"
+      vite:
+        patterns:
+          - "vite"
+          - "vite-*"
       webpack:
         patterns:
+          - "@rsdoctor/*"
           - "copy-webpack-plugin"
           - "css-loader"
           - "html-webpack-plugin"

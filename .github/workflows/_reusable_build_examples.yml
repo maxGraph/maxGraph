@@ -30,9 +30,13 @@ jobs:
 
       - name: Build all examples
         shell: bash
-        run: ./scripts/build-all-examples.bash
+        run: ./scripts/build-all-examples.bash --fail-at-end
 
+      # Runs even when the build step failed, so that the examples that did build can still be inspected. This is the
+      # point of '--fail-at-end': get the whole picture from a single run. A failed build job still blocks the jobs
+      # that depend on it, the release included.
       - name: Upload all examples as artifact
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7
         with:
           name: ${{ inputs['artifact-name'] }}
