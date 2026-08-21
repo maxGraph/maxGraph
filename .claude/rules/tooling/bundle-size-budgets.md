@@ -62,9 +62,16 @@ The two webpack limits therefore differ from each other, and they are not interc
 
 ## Where the guard applies
 
-`npm run build` is the command that enforces a budget, and it is the one the CI runs. Neither bundler enforces anything
-during a development build, since those bundles are not minified and are several times larger, nor during an analyze
-run, which is a diagnostic: failing it would suppress the very report needed to understand the size.
+`npm run build` is the command that enforces a budget, and it is the one the CI runs. Nothing is enforced while
+developing, nor during an analyze run, which is a diagnostic: failing it would suppress the very report needed to
+understand the size.
+
+The two bundlers reach that exemption differently. webpack reads the mode: `isDevMode` is true unless
+`--mode=production` is passed, so `hints` is off for `webpack serve` and for a plain `webpack`, whose bundle is
+unminified and several times larger. Vite needs no such condition: `npm run dev` starts a server that emits no bundle,
+so `generateBundle` never runs, and `build.minify` stays on whatever `--mode` says. Every `vite build` therefore emits
+the same minified chunks the limit was measured on, which is why the plugin declares only `apply: 'build'` and checks a
+`vite build --mode development` as well.
 
 webpack fails the build on its own, so `scripts/webpack/bundle-analysis.cjs` keeps `hints` at `'error'` only when
 neither exemption applies, `isDevMode || isBundleAnalysisEnabled ? false : 'error'`.
@@ -72,9 +79,9 @@ neither exemption applies, `isDevMode || isBundleAnalysisEnabled ? false : 'erro
 Vite does not. `chunkSizeWarningLimit` only makes it log a warning, and the build still exits 0, so a regression ends up
 as one line in a CI log that nobody reads. `scripts/vite/chunk-size-limit.mjs` therefore fails the build and names the
 chunk and both sizes. Declare the limit once, in a `chunkSizeLimitInKB` constant, and pass it to both
-`chunkSizeWarningLimit` and the plugin, so the warning and the error can never drift apart. That plugin is registered
-instead of the analyzer, never alongside it: the analyzer is a post plugin, so the guard's error would abort the build
-before any report is written.
+`chunkSizeWarningLimit` and the plugin, so the two thresholds cannot be set to different values. That plugin is
+registered instead of the analyzer, never alongside it: the analyzer is a post plugin, so the guard's error would abort
+the build before any report is written.
 
 ## Updating a budget
 

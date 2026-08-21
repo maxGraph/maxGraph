@@ -23,8 +23,8 @@ import { Buffer } from 'node:buffer';
  * and lets the build exit 0. A bundle regression then produces a single line in a CI log that nobody reads. See
  * https://github.com/vitejs/vite/issues/18496 for the upstream feature request.
  *
- * Pass the same value to `build.chunkSizeWarningLimit` and to this plugin, so the warning and the error cannot drift
- * apart. Sizes are computed in kB (1000 bytes) from the generated code, which matches both what Vite reports and what
+ * Pass the same value to `build.chunkSizeWarningLimit` and to this plugin, so the two thresholds cannot be set to
+ * different values. Sizes are computed in kB (1000 bytes) from the generated code, which matches what
  * `scripts/build-all-examples.bash` prints.
  *
  * @param {number} limitInKB the maximum size, in kB, allowed for a single chunk.
