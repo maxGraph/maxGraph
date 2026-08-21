@@ -1,6 +1,6 @@
-# ADR 0004: Configure plugins from the graph options
+# ADR 0004: Configure plugins at graph construction time
 
-- **Status**: Proposed. The lifecycle hook is described, the shape of the options is open with two candidates
+- **Status**: Proposed. The lifecycle hook is described, the shape of the options is open: two shapes and one variant
 - **Date**: 2026-08-20
 - **Deadline**: before `0.25.0` ships. `GraphPluginOptions` and its only member are unreleased, so the shape can still
   change for free. Once released, every change to it breaks applications
@@ -113,11 +113,13 @@ not do.
 
 ### D2. The shape of the plugin options
 
-**Open.** Two candidate shapes, neither retained yet.
+**Open.** Two shapes and one variant, none retained yet. The examples below are illustrations, nothing in them is
+decided: they use the only configuration that exists today, the edge handler factories of `SelectionCellsHandler`, and a
+key derived from its current id.
 
-#### The rule both options share
+#### The rule every shape shares
 
-The key identifying a group of options derives from the **plugin id**, in kebab-case, not from the plugin class name:
+The key identifying a group of options derives from the **plugin id**, never from the plugin class name:
 
 - the id is the runtime identity, the one `getPlugin('fit')` takes, and the only thing a custom plugin is guaranteed to
   expose;
@@ -125,76 +127,144 @@ The key identifying a group of options derives from the **plugin id**, in kebab-
 - the class name happens to coincide anyway, since the naming convention already forces
   `class = PascalCase(id) + 'Plugin'`. That coincidence is a mnemonic, not the rule.
 
-#### Option A: one key per plugin, at the top level of the graph options
+Deriving the key from the id in `camelCase` also keeps it a valid identifier: `imageBundle` for `'image-bundle'`, rather
+than the quoted `'image-bundle'` a verbatim kebab-case id would impose.
 
-The key is `camelCase(pluginId)` suffixed by `Plugin`. `'image-bundle'` gives `imageBundlePlugin`, `'fit'` gives
-`fitPlugin`.
+#### Option A: one member per plugin, at the top level of the graph options
+
+The member name is `camelCase(pluginId)` suffixed by `Plugin`, so `'image-bundle'` gives `imageBundlePlugin` and `'fit'`
+gives `fitPlugin`. The members are grouped in an interface the options extend:
 
 ```ts
-new BaseGraph({
-  container,
-  plugins: [FitPlugin, ImageBundlePlugin],
-  fitPlugin: { /* … */ },
-  imageBundlePlugin: { /* … */ },
-});
+export interface GraphPluginOptions {
+  selectionCellsHandlerPlugin?: {
+    edgeHandlerFactories?: Partial<Record<EdgeStyleHandlerKind, EdgeHandlerFactory>>;
+  };
+}
+
+export interface GraphOptions extends GraphCollaboratorsOptions, GraphPluginOptions {
+  container?: HTMLElement;
+  plugins?: GraphPluginConstructor[];
+}
 ```
 
-The `Plugin` suffix is not decoration. `GraphOptions` being a flat intersection, a bare `fit: { … }` would sit next to
-`plugins: [ … ]`, `model:` and `view:`, where it reads like a graph-level setting. `fitPlugin: { … }` cannot be
-misread, and it cannot collide with a collaborator option or with a future top-level option.
-
-#### Option B: a single container keyed by plugin ids
-
-The keys are the plugin ids, verbatim, inside one `pluginOptions` member.
-
 ```ts
 new BaseGraph({
   container,
-  plugins: [FitPlugin, ImageBundlePlugin],
-  pluginOptions: {
-    fit: { /* … */ },
-    'image-bundle': { /* … */ },
+  plugins: [SelectionCellsHandler],
+  selectionCellsHandlerPlugin: {
+    edgeHandlerFactories: { segment: (state) => new EdgeSegmentHandler(state) },
   },
 });
 ```
 
-No transformation, no suffix, and the three-way split described in the context becomes visible in the type instead of
-being an intersection the reader has to know about. Dispatching configuration to a plugin is a plain lookup by id,
-which works for custom plugins with no rule at all.
+The `Plugin` suffix is not decoration. The options being flat, a bare `imageBundle: { … }` would sit next to
+`plugins: [ … ]`, `model:` and `view:`, where it reads like a graph-level setting. `imageBundlePlugin: { … }` cannot be
+misread, and it cannot collide with a collaborator option or with a future top-level option.
+
+#### Option B: a single container gathering the plugin options
+
+The member name is `camelCase(pluginId)`, with no suffix: the container already says these are plugin options, so
+`imageBundle` rather than `imageBundlePlugin`.
+
+```ts
+export interface GraphOptions extends GraphCollaboratorsOptions {
+  container?: HTMLElement;
+  plugins?: GraphPluginConstructor[];
+  pluginOptions?: GraphPluginOptions;
+}
+
+export interface GraphPluginOptions {
+  selectionCellsHandler?: {
+    edgeHandlerFactories?: Partial<Record<EdgeStyleHandlerKind, EdgeHandlerFactory>>;
+  };
+}
+```
+
+```ts
+new BaseGraph({
+  container,
+  plugins: [SelectionCellsHandler],
+  pluginOptions: {
+    selectionCellsHandler: {
+      edgeHandlerFactories: { segment: (state) => new EdgeSegmentHandler(state) },
+    },
+  },
+});
+```
+
+The three-way split described in the context becomes visible in the type, instead of being an intersection the reader
+has to know about.
+
+#### Variant of option B: the plugin id used directly
+
+`pluginOptions: { 'image-bundle': { … } }`, and `pluginOptions: { SelectionCellsHandler: { … } }` for a plugin not yet
+renamed. The key is then literally the string passed to `getPlugin`, which helps discoverability and removes any naming
+rule to learn or to document: dispatching the configuration is a plain lookup, and a custom plugin needs no convention
+at all since its id is its id.
+
+The counterpart is that a kebab-case key has to be quoted, and that the key inherits every id, including the legacy
+ones, so renaming a plugin also breaks its option key.
 
 #### What separates them
 
-| | Option A | Option B |
-|---|---|---|
-| key | `camelCase(id) + 'Plugin'` | the id, verbatim |
-| ambiguity with the other graph options | none, the suffix marks it | none, the container marks it |
-| dispatch in `onConfigure` | needs the id to key transformation | plain lookup |
-| legacy plugin ids in user code | avoidable, see below | exposed as is, `'SelectionCellsHandler'` |
-| extra nesting | none | one level |
+| | Option A | Option B | Variant of B |
+|---|---|---|---|
+| key | `camelCase(id) + 'Plugin'` | `camelCase(id)` | the id, verbatim |
+| reads like a graph-level setting | no, the suffix marks it | no, the container marks it | no, the container marks it |
+| quoting in user code | never | never | for every kebab-case id |
+| dispatch in `onConfigure` | needs the id to key transformation | needs the id to key transformation | plain lookup |
+| extra nesting | none | one level | one level |
+| grouping in the IDE completion | mixed with the other options | one entry, then the plugins | one entry, then the plugins |
 
-The legacy ids are what makes this a real choice rather than a matter of taste. Eight of the ten builtin plugins still
-carry an id predating the current convention, `'SelectionCellsHandler'` and `'PanningHandler'` against `'image-bundle'`
-and `'fit'`. They are going to be renamed, in their own dedicated change.
+#### The consequence the two shapes share: legacy ids and target names
 
-Option A can name the key after the plugin's **target** name today, so the option key is published once and never
-changes again, while the id catches up later. Option B locks the current id into the public API, and the rename then
-breaks the option key too.
+Eight of the ten builtin plugins still carry an id predating the current convention, `'SelectionCellsHandler'` and
+`'PanningHandler'` against `'image-bundle'` and `'fit'`. They are going to be renamed, in their own dedicated change.
 
-The cost of naming keys after target names is that, until the renames happen, the key is not derivable from the current
-id: `cellHandlerPlugin` against `'SelectionCellsHandler'`. A generic dispatch would then need either the renames done
-first, or a small internal table for the eight legacy plugins, deleted once they are renamed. This is not urgent: the
-current forwarding is hardcoded for a single option, and the question only becomes real when `onConfigure` lands.
+Since the key derives from the id, options A and B have to name it after the plugin's **target** name right away, so the
+public key is published once and never changes while the id catches up later. The cost is that, until the renames
+happen, the key is not mechanically derivable from the current id, `cellHandlerPlugin` against
+`'SelectionCellsHandler'`, so dispatching needs a table for those eight plugins, deleted once they are renamed. This is
+not urgent: the current forwarding is hardcoded for a single option, and the question only becomes real when
+`onConfigure` lands.
+
+The variant makes the opposite trade: nothing to name now, and a breaking change to the option key when the plugin is
+renamed.
+
+#### Part of the shape too: the options become interfaces, and custom plugins augment them
+
+Whichever shape wins, the options have to be declared as interfaces rather than as the current type aliases, because
+declaration merging applies to interfaces only. This is what lets a plugin published outside the core package declare
+its own configuration:
+
+```ts
+declare module '@maxgraph/core' {
+  interface GraphPluginOptions {
+    myPlugin?: { threshold?: number };
+  }
+}
+```
+
+It is already the extension point of the library: `refactor(typescript): favor interface over type for object types`
+(#1146) declared the object types with `interface`, added
+`@typescript-eslint/consistent-type-definitions: ['error', 'interface']` to the lint configuration, and documented the
+augmentation of `CellStateStyle` in the CHANGELOG, including its only behavior difference, an interface having no
+implicit index signature.
+
+`GraphPluginOptions` is the type third parties augment in every shape, so `GraphOptions` itself only has to become an
+interface for option A, which extends it.
 
 #### Still to settle
 
-- Option A or option B.
+- Option A, option B, or the variant of B.
 - The target name of `SelectionCellsHandler`, since `edgeHandlerFactories` belongs to it and its key is published in
-  `0.25.0`. Candidates: `'cell-handler'` giving `cellHandlerPlugin`, or `'selection-cell-handler'` giving
-  `selectionCellHandlerPlugin`.
+  `0.25.0`. Candidates: `'cell-handler'` giving `cellHandlerPlugin` or `cellHandler`, or `'selection-cell-handler'`
+  giving `selectionCellHandlerPlugin` or `selectionCellHandler`.
 - Whether this ADR records the target name of every legacy plugin, or only the convention, leaving the table to the
   migration issue.
-- An option is only honored when the plugin consuming it is registered, and its absence is a silent no-op today. Both
-  options above make detection possible. Whether to detect, and then warn or throw, is part of this decision.
+- An option is only honored when the plugin consuming it is registered, and its absence is a silent no-op, see _D1_.
+  Whether to detect it, and then warn or throw, is part of this decision.
 
 ## Consequences
 
