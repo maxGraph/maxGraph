@@ -716,13 +716,18 @@ class VertexHandler implements MouseListenerSet {
       }
 
       if (index === InternalEvent.ROTATION_HANDLE) {
-        // With the rotation handle in a corner, need the angle and distance
+        // With the rotation handle in a corner, need the angle and distance.
+        // The handle position derives from the bounds, whose coordinates are rounded, so the centre must be taken from
+        // the same bounds. Comparing it with the unrounded centre of the state made dx a sub-pixel rounding artifact
+        // whose sign flipped the angle by 180 degrees at some scales.
         const pos = this.getRotationHandlePosition();
 
-        const dx = pos.x - this.state.getCenterX();
-        const dy = pos.y - this.state.getCenterY();
+        const dx = pos.x - this.bounds.getCenterX();
+        const dy = pos.y - this.bounds.getCenterY();
 
-        this.startAngle = dx !== 0 ? (Math.atan(dy / dx) * 180) / Math.PI + 90 : 0;
+        // `Math.atan(dy / dx) + 90` only holds for a handle painted right of the centre: on the left it returns a
+        // bearing 180 degrees off. atan2 covers the four quadrants, and still returns 0 for the default handle.
+        this.startAngle = (Math.atan2(dx, -dy) * 180) / Math.PI;
         this.startDist = Math.sqrt(dx * dx + dy * dy);
       }
 
