@@ -16,11 +16,11 @@ limitations under the License.
 
 import { expect, test } from '@jest/globals';
 import { BaseGraph, FitPlugin, Rectangle } from '../../../src';
-import { createContainer } from '../../utils';
+import { createBaseGraph, createContainer } from '../../utils';
 
 describe('fitCenter', () => {
   test('graph has dimensions set to zero', () => {
-    const graph = new BaseGraph({ plugins: [FitPlugin] });
+    const graph = createBaseGraph({ plugins: [FitPlugin] });
     const originalScale = 0.65;
     graph.view.scale = originalScale; // Set an initial scale to test it is returned and not changed
     const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
@@ -37,7 +37,7 @@ describe('fitCenter', () => {
       clientHeight: 20,
     });
 
-    const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+    const graph = createBaseGraph({ container, plugins: [FitPlugin] });
     graph.view.setGraphBounds(new Rectangle(30, 20, 1000, 1000));
     const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
@@ -54,7 +54,7 @@ describe('fitCenter', () => {
       clientHeight: 532,
     });
 
-    const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+    const graph = createBaseGraph({ container, plugins: [FitPlugin] });
     graph.view.setGraphBounds(new Rectangle(-172, 67, 100, 200));
     const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
@@ -70,7 +70,7 @@ describe('fitCenter', () => {
       clientHeight: 3000,
     });
 
-    const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+    const graph = createBaseGraph({ container, plugins: [FitPlugin] });
     graph.view.setGraphBounds(new Rectangle(70, -30, 100, 100));
     const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
@@ -86,7 +86,7 @@ describe('fitCenter', () => {
 describe('fit', () => {
   describe('no ignored dimensions', () => {
     test('container and graph have dimensions set to zero', () => {
-      const graph = new BaseGraph({ plugins: [FitPlugin] });
+      const graph = createBaseGraph({ plugins: [FitPlugin] });
       const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
       const scale = graph.getPlugin<FitPlugin>('fit')!.fit();
@@ -100,7 +100,7 @@ describe('fit', () => {
         offsetHeight: 20,
       });
 
-      const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+      const graph = createBaseGraph({ container, plugins: [FitPlugin] });
       graph.view.setGraphBounds(new Rectangle(30, 20, 100, 100));
       const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
@@ -117,7 +117,7 @@ describe('fit', () => {
         offsetHeight: 0,
       });
 
-      const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+      const graph = createBaseGraph({ container, plugins: [FitPlugin] });
       graph.view.setGraphBounds(new Rectangle(30, 20, 100, 100));
       const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
@@ -136,7 +136,7 @@ describe('fit', () => {
         offsetHeight: 820,
       });
 
-      const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+      const graph = createBaseGraph({ container, plugins: [FitPlugin] });
       graph.view.setGraphBounds(new Rectangle(70, -60, 100, 100));
       const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
@@ -153,7 +153,7 @@ describe('fit', () => {
         offsetHeight: 820,
       });
 
-      const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+      const graph = createBaseGraph({ container, plugins: [FitPlugin] });
       graph.view.setGraphBounds(new Rectangle(70, -60, 100, 100));
       const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
@@ -171,7 +171,7 @@ describe('fit', () => {
         offsetHeight: 200,
       });
 
-      const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+      const graph = createBaseGraph({ container, plugins: [FitPlugin] });
       graph.view.setGraphBounds(new Rectangle(0, 0, 100, 100));
       const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
@@ -187,7 +187,7 @@ describe('fit', () => {
         offsetHeight: 200,
       });
 
-      const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+      const graph = createBaseGraph({ container, plugins: [FitPlugin] });
       graph.view.setGraphBounds(new Rectangle(0, 0, 100, 100));
       const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
       const setScaleSpy = jest.spyOn(graph.view, 'setScale');
@@ -206,7 +206,7 @@ describe('fit', () => {
         offsetHeight: 200,
       });
 
-      const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+      const graph = createBaseGraph({ container, plugins: [FitPlugin] });
       graph.view.setGraphBounds(new Rectangle(0, 0, 100, 100));
       const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
@@ -222,7 +222,7 @@ describe('fit', () => {
       offsetHeight: 860,
     });
 
-    const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+    const graph = createBaseGraph({ container, plugins: [FitPlugin] });
     graph.view.setGraphBounds(new Rectangle(70, -60, 1000, 100));
     const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
@@ -238,7 +238,7 @@ describe('fit', () => {
       offsetWidth: 860,
     });
 
-    const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+    const graph = createBaseGraph({ container, plugins: [FitPlugin] });
     graph.view.setGraphBounds(new Rectangle(70, -60, 150, 300));
     const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
@@ -251,7 +251,7 @@ describe('fit', () => {
 
   describe('special cases', () => {
     test('no container', () => {
-      const graph = new BaseGraph({ plugins: [FitPlugin] });
+      const graph = createBaseGraph({ plugins: [FitPlugin] });
       graph.container = undefined!; // hack because currently, when passing no container to the constructor, a new div is created and used as the container. See https://github.com/maxGraph/maxGraph/issues/367
       graph.view.setGraphBounds(new Rectangle(70, -60, 150, 300));
       const originalScale = 0.7;
@@ -269,7 +269,7 @@ describe('fit', () => {
       'graph bounds without positive %s',
       (dimension: string) => {
         const container = createContainer({});
-        const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+        const graph = createBaseGraph({ container, plugins: [FitPlugin] });
         graph.view.setGraphBounds(
           new Rectangle(
             70,

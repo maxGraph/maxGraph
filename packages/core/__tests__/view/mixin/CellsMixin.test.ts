@@ -16,6 +16,7 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import {
+  createBaseGraph,
   createCellWithStyle,
   createGraphWithoutPlugins,
   expectGeometryBounds,
@@ -314,7 +315,7 @@ describe('isValidAncestor', () => {
 });
 
 describe('postProcessCellStyle', () => {
-  const createGraph = (): BaseGraph => new BaseGraph({ plugins: [ImageBundlePlugin] });
+  const createGraph = (): BaseGraph => createBaseGraph({ plugins: [ImageBundlePlugin] });
 
   const registerBundle = (
     graph: BaseGraph,
@@ -352,7 +353,7 @@ describe('postProcessCellStyle', () => {
 
   describe('bundle resolution without data-URI normalization', () => {
     test('plain key, plugin not registered on the graph: style.image unchanged', () => {
-      const graph = new BaseGraph();
+      const graph = createBaseGraph();
       const style: CellStateStyle = { image: 'myKey' };
 
       const result = graph.postProcessCellStyle(style);

@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import { expect, test } from '@jest/globals';
-import { BaseGraph, CellTracker } from '../../../src';
+import { CellTracker } from '../../../src';
+import { createBaseGraph } from '../../utils';
 
 describe('destroy', () => {
   test('sets destroyed flag', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const tracker = new CellTracker(graph, '#00FF00');
 
     expect(tracker.destroyed).toBe(false);
@@ -30,7 +31,7 @@ describe('destroy', () => {
   });
 
   test('removes mouse listener from graph', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const tracker = new CellTracker(graph, '#00FF00');
 
     expect(graph.mouseListeners).toContain(tracker);
@@ -41,7 +42,7 @@ describe('destroy', () => {
   });
 
   test('clears eventListeners', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const tracker = new CellTracker(graph, '#00FF00');
     tracker.addListener('testEvent', () => {});
     expect(tracker.eventListeners.length).toBeGreaterThan(0);
@@ -52,7 +53,7 @@ describe('destroy', () => {
   });
 
   test('is idempotent', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const tracker = new CellTracker(graph, '#00FF00');
 
     tracker.destroy();

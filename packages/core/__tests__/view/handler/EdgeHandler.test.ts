@@ -35,14 +35,14 @@ import {
   type Shape,
   unregisterAllEdgeStyles,
 } from '../../../src';
-import { createCellHandleStub, createContainer } from '../../utils';
+import { createBaseGraph, createCellHandleStub, createContainer } from '../../utils';
 
 const createEdgeHandlerForStyle = (
   edgeStyle: EdgeStyleFunction | undefined,
   pointCount: number,
   { skipDefaultRegistration = false } = {}
 ): EdgeHandler => {
-  const graph = new BaseGraph();
+  const graph = createBaseGraph();
   if (!skipDefaultRegistration) {
     registerDefaultEdgeStyles();
   }
@@ -64,7 +64,7 @@ const createEdgeHandlerForStyle = (
 };
 
 const createEdgeHandlerWithoutGeometry = (): EdgeHandler => {
-  const graph = new BaseGraph();
+  const graph = createBaseGraph();
   const cell = new Cell();
   cell.setEdge(true);
   cell.setVertex(false);

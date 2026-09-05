@@ -17,12 +17,13 @@ limitations under the License.
 import { afterEach, beforeEach, describe, expect, test } from '@jest/globals';
 import { type AbstractGraph, BaseGraph, type Cell } from '../../src';
 import { findTreeRoots } from '../../src/util/treeTraversal';
+import { createBaseGraph } from '../utils';
 
 describe('findTreeRoots', () => {
   let graph: AbstractGraph;
 
   beforeEach(() => {
-    graph = new BaseGraph();
+    graph = createBaseGraph();
   });
 
   afterEach(() => {

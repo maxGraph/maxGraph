@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import { expect, test } from '@jest/globals';
-import { BaseGraph, CellMarker } from '../../../src';
+import { CellMarker } from '../../../src';
+import { createBaseGraph } from '../../utils';
 
 describe('destroy', () => {
   test('clears eventListeners', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const marker = new CellMarker(graph);
     marker.addListener('testEvent', () => {});
     expect(marker.eventListeners.length).toBeGreaterThan(0);

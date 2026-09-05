@@ -16,11 +16,12 @@ limitations under the License.
 
 import { afterEach, beforeEach, expect, test } from '@jest/globals';
 import { type CellStyle, Graph, Point } from '../../../../src';
+import { createGraphWithoutContainer } from '../../../utils';
 
 let graph: Graph;
 
 beforeEach(() => {
-  graph = new Graph();
+  graph = createGraphWithoutContainer();
 });
 
 afterEach(() => {

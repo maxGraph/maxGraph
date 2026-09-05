@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import { expect, test } from '@jest/globals';
-import { BaseGraph, PanningHandler } from '../../../src';
+import { PanningHandler } from '../../../src';
+import { createBaseGraph } from '../../utils';
 
 describe('onDestroy', () => {
   test('PanningManager.destroy() is called when PanningHandler is destroyed', () => {
-    const graph = new BaseGraph({ plugins: [PanningHandler] });
+    const graph = createBaseGraph({ plugins: [PanningHandler] });
     const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler')!;
     const destroyMock = jest.fn(panningHandler.panningManager.destroy);
     panningHandler.panningManager.destroy = destroyMock;
@@ -30,7 +31,7 @@ describe('onDestroy', () => {
   });
 
   test('clears eventListeners', () => {
-    const graph = new BaseGraph({ plugins: [PanningHandler] });
+    const graph = createBaseGraph({ plugins: [PanningHandler] });
     const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler')!;
     panningHandler.addListener('testEvent', () => {});
     expect(panningHandler.eventListeners.length).toBeGreaterThan(0);
@@ -41,7 +42,7 @@ describe('onDestroy', () => {
   });
 
   test('PanningManager.stop() is called during destroy to clear interval timer', () => {
-    const graph = new BaseGraph({ plugins: [PanningHandler] });
+    const graph = createBaseGraph({ plugins: [PanningHandler] });
     const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler')!;
     const stopMock = jest.fn(panningHandler.panningManager.stop);
     panningHandler.panningManager.stop = stopMock;

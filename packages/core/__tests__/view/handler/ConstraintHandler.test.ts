@@ -23,12 +23,13 @@ import {
   InternalMouseEvent,
   Point,
 } from '../../../src';
+import { createBaseGraph } from '../../utils';
 
 let graph: BaseGraph;
 let constraintHandler: ConstraintHandler;
 
 beforeEach(() => {
-  graph = new BaseGraph();
+  graph = createBaseGraph();
   constraintHandler = new ConstraintHandler(graph);
 });
 

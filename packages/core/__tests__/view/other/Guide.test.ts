@@ -17,11 +17,12 @@ limitations under the License.
 import { afterEach, beforeEach, expect, test } from '@jest/globals';
 import { BaseGraph, type CellState, Point, Rectangle } from '../../../src';
 import Guide from '../../../src/view/other/Guide';
+import { createBaseGraph } from '../../utils';
 
 let graph: BaseGraph;
 
 beforeEach(() => {
-  graph = new BaseGraph();
+  graph = createBaseGraph();
 });
 
 afterEach(() => {

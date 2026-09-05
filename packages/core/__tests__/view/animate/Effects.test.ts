@@ -23,11 +23,12 @@ import {
   InternalEvent,
   type UndoableChange,
 } from '../../../src';
+import { createBaseGraph } from '../../utils';
 
 let graph: BaseGraph;
 
 beforeEach(() => {
-  graph = new BaseGraph();
+  graph = createBaseGraph();
 });
 
 afterEach(() => {
