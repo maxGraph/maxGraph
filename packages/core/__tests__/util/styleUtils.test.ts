@@ -23,8 +23,8 @@ import {
   setCellStyles,
 } from '../../src/util/styleUtils';
 import { FONT_STYLE_MASK } from '../../src/util/Constants';
-import { type CellStyle, BaseGraph, Client } from '../../src';
-import { createGraphWithoutPlugins } from '../utils';
+import { type CellStyle, Client } from '../../src';
+import { createBaseGraph, createGraphWithoutPlugins } from '../utils';
 
 describe('parseCssNumber', () => {
   test.each([
@@ -278,9 +278,10 @@ describe('setStyleFlag', () => {
 
 // In this test, we need a graph to have a view and ensure that the cell state is updated
 test.each([
-  ['BaseGraph', new BaseGraph()],
-  ['Graph', createGraphWithoutPlugins()],
-])('setCellStyleFlags on vertex using %s', (_name, graph) => {
+  ['BaseGraph', createBaseGraph],
+  ['Graph', createGraphWithoutPlugins],
+])('setCellStyleFlags on vertex using %s', (_name, createGraph) => {
+  const graph = createGraph();
   const style: CellStyle = { fontStyle: 4, spacing: 8 };
   const cell = graph.insertVertex({
     value: 'a value',
@@ -304,9 +305,10 @@ test.each([
 
 // In this test, we need a graph to have a view and ensure that the cell state is updated
 test.each([
-  ['BaseGraph', new BaseGraph()],
-  ['Graph', createGraphWithoutPlugins()],
-])('setCellStyles on vertex using %s', (_name, graph) => {
+  ['BaseGraph', createBaseGraph],
+  ['Graph', createGraphWithoutPlugins],
+])('setCellStyles on vertex using %s', (_name, createGraph) => {
+  const graph = createGraph();
   const style: CellStyle = { strokeColor: 'yellow', labelWidth: 100 };
   const cell = graph.insertVertex({
     value: 'a value',
