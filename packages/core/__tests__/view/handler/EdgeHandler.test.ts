@@ -35,7 +35,12 @@ import {
   type Shape,
   unregisterAllEdgeStyles,
 } from '../../../src';
-import { createBaseGraph, createCellHandleStub, createContainer } from '../../utils';
+import {
+  createBaseGraph,
+  createCellHandleStub,
+  createContainer,
+  createGraph,
+} from '../../utils';
 
 const createEdgeHandlerForStyle = (
   edgeStyle: EdgeStyleFunction | undefined,
@@ -141,7 +146,7 @@ describe('loops over the handles', () => {
    * Selects an edge with 2 waypoints, whose absolute points are (40, 20), (150, 20), (150, 220) and (300, 220).
    */
   const selectEdge = (): EdgeHandler => {
-    graph = new Graph(createContainer({ offsetWidth: 1200, offsetHeight: 900 }));
+    graph = createGraph(createContainer({ offsetWidth: 1200, offsetHeight: 900 }));
     const source = graph.insertVertex({ position: [0, 0], size: [40, 40] });
     const target = graph.insertVertex({ position: [300, 200], size: [40, 40] });
     const edge = graph.insertEdge({ source, target });

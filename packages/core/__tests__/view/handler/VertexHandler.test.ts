@@ -27,7 +27,7 @@ import {
   VertexHandler,
   VertexHandlerConfig,
 } from '../../../src';
-import { createCellHandleStub, createContainer } from '../../utils';
+import { createCellHandleStub, createContainer, createGraph } from '../../utils';
 
 const createMouseEvent = (type: string, x: number, y: number): InternalMouseEvent => {
   // Alt disables the grid, so that the angle is not snapped to the rotation raster
@@ -38,15 +38,12 @@ const createMouseEvent = (type: string, x: number, y: number): InternalMouseEven
   return mouseEvent;
 };
 
-const createdGraphs: Graph[] = [];
-
-const createGraph = (scale: number): Graph => {
+const createGraphAtScale = (scale: number): Graph => {
   const container = createContainer({ offsetWidth: 1200, offsetHeight: 900 });
   document.body.appendChild(container);
 
-  const graph = new Graph(container);
+  const graph = createGraph(container);
   graph.view.setScale(scale);
-  createdGraphs.push(graph);
   return graph;
 };
 
@@ -58,15 +55,6 @@ beforeEach(() => {
 afterEach(() => {
   // VertexHandlerConfig is global and outlives the test that changed it
   resetVertexHandlerConfig();
-
-  // Every test builds its own graph on a container appended to the document. No assertion depends on this teardown
-  // and the tests do pass without it, but without it each graph stays alive with its plugins, its view listeners and
-  // its model listener registered, and its container stays in the body, for the whole file.
-  for (const graph of createdGraphs.splice(0)) {
-    const { container } = graph;
-    graph.destroy();
-    container.remove();
-  }
 });
 
 /**
@@ -136,7 +124,7 @@ describe('rotation with the rotation handle', () => {
     ['zoom out twice', 0.69],
     ['zoom out 3 times', 0.57],
   ])('applies the dragged angle after %s', (_description, scale) => {
-    const graph = createGraph(scale);
+    const graph = createGraphAtScale(scale);
     const vertex = graph.insertVertex({
       value: 'X1',
       position: [160, 110],
@@ -150,7 +138,7 @@ describe('rotation with the rotation handle', () => {
   });
 
   test('applies the dragged angle on consecutive rotations of an initially rotated vertex', () => {
-    const graph = createGraph(1);
+    const graph = createGraphAtScale(1);
     const vertex = graph.insertVertex({
       value: 'X1',
       position: [160, 110],
@@ -167,7 +155,7 @@ describe('rotation with the rotation handle', () => {
   });
 
   test('leaves the angle unchanged when the rotation handle is only clicked', () => {
-    const graph = createGraph(1);
+    const graph = createGraphAtScale(1);
     const vertex = graph.insertVertex({
       value: 'X1',
       position: [160, 110],
@@ -198,7 +186,7 @@ describe('rotation with the rotation handle', () => {
   });
 
   test('applies the dragged angle when a subclass paints the handle in a corner', () => {
-    const graph = createGraph(1);
+    const graph = createGraphAtScale(1);
     const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
       'SelectionCellsHandler'
     )!;
@@ -246,7 +234,7 @@ describe('loops over the handles', () => {
       .getHandler(cell) as VertexHandler;
 
   const selectVertex = (): { graph: Graph; handler: VertexHandler } => {
-    const graph = createGraph(1);
+    const graph = createGraphAtScale(1);
     const cell = graph.insertVertex({ position: [100, 100], size: [80, 60] });
     graph.setSelectionCell(cell);
     return { graph, handler: getHandler(graph, cell) };
@@ -317,7 +305,7 @@ describe('loops over the handles', () => {
   });
 
   test('start with a live preview collects the handler of every connected edge', () => {
-    const graph = createGraph(1);
+    const graph = createGraphAtScale(1);
     const cell = graph.insertVertex({ position: [100, 100], size: [80, 60] });
     const edges = [
       graph.insertEdge({
@@ -351,7 +339,7 @@ describe('rotateCell', () => {
   };
 
   test('rotates a vertex without children', () => {
-    const graph = createGraph(1);
+    const graph = createGraphAtScale(1);
     const vertex = graph.insertVertex({
       value: 'vertex',
       position: [100, 100],
@@ -365,7 +353,7 @@ describe('rotateCell', () => {
   });
 
   test('rotates the children of a vertex and moves them around its centre', () => {
-    const graph = createGraph(1);
+    const graph = createGraphAtScale(1);
     const group = graph.insertVertex({
       value: 'group',
       position: [100, 100],
@@ -391,7 +379,7 @@ describe('rotateCell', () => {
   });
 
   test('rotates the descendants recursively', () => {
-    const graph = createGraph(1);
+    const graph = createGraphAtScale(1);
     const group = graph.insertVertex({
       value: 'group',
       position: [100, 100],
@@ -417,7 +405,7 @@ describe('rotateCell', () => {
   });
 
   test('rotates a relative child without moving its geometry', () => {
-    const graph = createGraph(1);
+    const graph = createGraphAtScale(1);
     const group = graph.insertVertex({
       value: 'group',
       position: [100, 100],
@@ -440,7 +428,7 @@ describe('rotateCell', () => {
   });
 
   test('does nothing when the angle is 0', () => {
-    const graph = createGraph(1);
+    const graph = createGraphAtScale(1);
     const group = graph.insertVertex({
       value: 'group',
       position: [100, 100],
