@@ -21,7 +21,10 @@ import {
   Cell,
   type CellStateStyle,
   Graph,
+  type GraphDataModel,
   type GraphOptions,
+  type GraphPluginConstructor,
+  type Stylesheet,
 } from '../src';
 
 const createdGraphs: AbstractGraph[] = [];
@@ -56,18 +59,30 @@ export const destroyCreatedGraphs = (): void => {
 };
 
 /**
+ * Creates a new {@link Graph}, registered for teardown.
+ *
+ * Prefer this over `new Graph(...)` in tests, so that the graph is destroyed after the test that built it. It takes
+ * the parameters of the {@link Graph} constructor, so the two specializations below cover the common cases.
+ */
+export const createGraph = (
+  container?: HTMLElement,
+  model?: GraphDataModel,
+  plugins?: GraphPluginConstructor[],
+  stylesheet?: Stylesheet | null
+): Graph => registerGraphForTeardown(new Graph(container, model, plugins, stylesheet));
+
+/**
  * Creates a new {@link Graph} without `container` (use the default value of the parameters).
  *
  * This is useful when tests don't check the view.
  */
-export const createGraphWithoutContainer = (): Graph =>
-  registerGraphForTeardown(new Graph());
+export const createGraphWithoutContainer = (): Graph => createGraph();
 
 /**
  * Creates a new {@link Graph} without any plugins (pass an empty array of plugins).
  */
 export const createGraphWithoutPlugins = (): Graph =>
-  registerGraphForTeardown(new Graph(undefined, undefined, []));
+  createGraph(undefined, undefined, []);
 
 /**
  * Creates a new {@link BaseGraph}, registered for teardown.
