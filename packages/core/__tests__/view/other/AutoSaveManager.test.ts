@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import { expect, test } from '@jest/globals';
-import { AutoSaveManager, BaseGraph } from '../../../src';
+import { AutoSaveManager } from '../../../src';
+import { createBaseGraph } from '../../utils';
 
 describe('destroy', () => {
   test('clears eventListeners', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const manager = new AutoSaveManager(graph);
     manager.addListener('testEvent', () => {});
     expect(manager.eventListeners.length).toBeGreaterThan(0);

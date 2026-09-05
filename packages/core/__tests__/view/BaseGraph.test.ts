@@ -16,7 +16,6 @@ limitations under the License.
 
 import { afterAll, beforeEach, describe, expect, jest, test } from '@jest/globals';
 import {
-  BaseGraph,
   CellState,
   EdgeStyle,
   type EdgeStyleFunction,
@@ -25,6 +24,7 @@ import {
   unregisterAllEdgeStyles,
 } from '../../src';
 import { describeNoGlobalStateForMixinProperties } from './no-global-state-for-mixin-properties';
+import { createBaseGraph } from '../utils';
 
 const customEdgeStyle: EdgeStyleFunction = () => {
   // do nothing, we just need a custom implementation that is not registered by default
@@ -39,18 +39,18 @@ afterAll(() => {
 
 describe('isOrthogonal', () => {
   test('Style of the CellState, orthogonal: true', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const cellState = new CellState(graph.view, null, { orthogonal: true });
     expect(graph.isOrthogonal(cellState)).toBeTruthy();
   });
 
   test('No style in the CellState', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     expect(graph.isOrthogonal(new CellState())).toBeFalsy();
   });
 
   test.each([undefined, null])('Style of the CellState, orthogonal: %s', (orthogonal) => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const cellState = new CellState(graph.view, null, { orthogonal });
     expect(graph.isOrthogonal(cellState)).toBeFalsy();
   });
@@ -69,7 +69,7 @@ describe('isOrthogonal', () => {
       ['SideToSide', EdgeStyle.SideToSide],
       ['TopToBottom', EdgeStyle.TopToBottom],
     ])('Style of the CellState, edgeStyle: %s', (_name, edgeStyle) => {
-      const graph = new BaseGraph();
+      const graph = createBaseGraph();
       const cellState = new CellState(graph.view, null, { edgeStyle });
       expect(graph.isOrthogonal(cellState)).toBeTruthy();
     });
@@ -80,7 +80,7 @@ describe('isOrthogonal', () => {
       ['null', null],
       ['undefined', undefined],
     ])('Style of the CellState, edgeStyle: %s', (_name, edgeStyle) => {
-      const graph = new BaseGraph();
+      const graph = createBaseGraph();
       const cellState = new CellState(graph.view, null, { edgeStyle });
       expect(graph.isOrthogonal(cellState)).toBeFalsy();
     });
@@ -101,7 +101,7 @@ describe('isOrthogonal', () => {
   ])(
     'Default builtin styles NOT registered - Style of the CellState, edgeStyle: %s',
     (_name, edgeStyle) => {
-      const graph = new BaseGraph();
+      const graph = createBaseGraph();
       const cellState = new CellState(graph.view, null, { edgeStyle });
       expect(graph.isOrthogonal(cellState)).toBeFalsy();
     }
@@ -117,7 +117,7 @@ describe('destroy', () => {
       onDestroy = onDestroyMock;
     }
 
-    const graph = new BaseGraph({
+    const graph = createBaseGraph({
       plugins: [CustomPlugin],
     });
 
@@ -127,7 +127,7 @@ describe('destroy', () => {
   });
 
   test('nulls container reference', () => {
-    const graph = new BaseGraph({});
+    const graph = createBaseGraph({});
     expect(graph.container).not.toBeNull();
 
     graph.destroy();
@@ -136,7 +136,7 @@ describe('destroy', () => {
   });
 
   test('clears eventListeners', () => {
-    const graph = new BaseGraph({});
+    const graph = createBaseGraph({});
     graph.addListener('testEvent', () => {});
     expect(graph.eventListeners.length).toBeGreaterThan(0);
 
@@ -146,4 +146,4 @@ describe('destroy', () => {
   });
 });
 
-describeNoGlobalStateForMixinProperties(() => new BaseGraph());
+describeNoGlobalStateForMixinProperties(() => createBaseGraph());

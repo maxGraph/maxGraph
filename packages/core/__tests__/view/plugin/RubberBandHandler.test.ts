@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import { expect, test } from '@jest/globals';
-import { BaseGraph, RubberBandHandler } from '../../../src';
-import { hasListener } from '../../utils';
+import { RubberBandHandler } from '../../../src';
+import { createBaseGraph, hasListener } from '../../utils';
 
 describe('onDestroy', () => {
   test('removes all graph listeners registered in constructor', () => {
-    const graph = new BaseGraph({ plugins: [RubberBandHandler] });
+    const graph = createBaseGraph({ plugins: [RubberBandHandler] });
     const handler = graph.getPlugin<RubberBandHandler>('RubberBandHandler')!;
 
     expect(hasListener(graph.eventListeners, handler.forceRubberbandHandler)).toBe(true);
