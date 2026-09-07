@@ -11,10 +11,10 @@ here, read both.
 
 ## Task list
 
-- [ ] **Task 01**: Shared fixture for the boolean property matrix, `task-01.md`
-- [ ] **Task 02**: Characterize the mxGraph style string path, `task-02.md` (needs 01)
-- [ ] **Task 03**: Characterize the native XML attribute path, `task-03.md` (needs 01)
-- [ ] **Task 04**: Characterize the stylesheet path, `task-04.md` (needs 01)
+- [x] **Task 01**: Shared fixture for the boolean property matrix, `task-01.md`
+- [x] **Task 02**: Characterize the mxGraph style string path, `task-02.md` (needs 01)
+- [x] **Task 03**: Characterize the native XML attribute path, `task-03.md` (needs 01)
+- [x] **Task 04**: Characterize the stylesheet path, `task-04.md` (needs 01)
 - [ ] **Task 05**: Characterize the boolean fields of the codec-registered classes, `task-05.md` (needs 03, same file)
 - [ ] **Task 06**: Foundations for boolean-aware decoding, `task-06.md` (needs 02, 03, 04, 05 green and committed)
 - [ ] **Task 07**: Boolean-aware decoding in the generic attribute decoder, `task-07.md` (needs 06)

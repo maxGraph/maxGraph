@@ -58,3 +58,37 @@ Done. New file `packages/core/__tests__/serialization/boolean-style-properties.t
 ### Follow-ups
 
 - None for this task. Next is task 02, which consumes the fixture on the mxGraph style string path.
+
+## Tasks 02, 03 and 04, the three decode paths characterized
+
+Done, in parallel, one commit each: `a9a8dd7b5`, `c4d5edb68`, `b6fcea57c`. Each task owns the expected value function
+and the input builder for its own path, so the shared fixture keeps only what more than one path needs.
+
+### What landed
+
+- Task 02, `codec/mxgraph/utils.test.ts`: 4 aggregate tests plus 144 per-case plus 4 for the property the parser
+  renames, where the raw string and the interface disagree on the spelling. 157 tests in that suite. Dropped a cast
+  that was the only reason for a type suppression in a neighbouring test.
+- Task 03, new `serialization.xml.booleanProperties.test.ts`: 296 tests, the isolated element form and the realistic
+  form on a cell inside a full model. Widened `ExpectCellProperties.style` in `serialization/utils.ts`, the single
+  line that was forcing the seven existing suppressions.
+- Task 04, `codec/StylesheetCodec.test.ts`: 152 tests, including two dedicated named tests for the defects unique to
+  this path, a property written as zero vanishing from the style and a property written as the word false being kept
+  as a truthy string.
+
+### Verification
+
+- Full core suite green: 63 suites, 1159 tests, up from 62 and 561.
+- `npm run test-check -w packages/core` clean, repo-wide `npm run lint` clean.
+- Zero type suppressions in any of the new code. The ten remaining in the serialization tests are pre-existing: seven
+  `FIX should be` markers that task 10 deletes, and three documenting an intentional mxGraph compatibility deviation.
+- Task 03 ran a red check that was not asked for and should have been: making its expected value a real boolean fails
+  all 296 cases, proving none passes vacuously and that the fix flips the whole matrix through one function.
+
+### Notes carried forward to the fix
+
+- `ignoreDefaultStyle` behaves as an ordinary property on the style string path, while the leading semicolon shorthand
+  bypasses the value converter entirely. That is why the existing test asserting `true` for it is already correct and
+  must stay untouched.
+- Two `CellStyle` casts remain in pre-existing tests of the style string file. They force no suppression today, so
+  they were left alone as out of scope.
