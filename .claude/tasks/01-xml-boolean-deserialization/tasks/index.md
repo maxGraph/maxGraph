@@ -22,7 +22,7 @@ here, read both.
 - [x] **Task 09**: Boolean-aware decoding in the stylesheet codec, and its dropped values, `task-09.md` (needs 06)
 - [x] **Task 10**: Flip the expectations and land the decode fix, `task-10.md` (needs 07, 08, 09)
 - [x] **Task 11**: Align the two encoders that emit the words true and false onto 1 and 0, `task-11.md` (needs 09)
-- [ ] **Task 12**: Registration API for custom boolean cell style properties, `task-12.md` (needs 06, 10)
+- [x] **Task 12**: Registration API for custom boolean cell style properties, `task-12.md` (needs 06, 10)
 - [ ] **Task 13**: Extending guide, and links from the codec and configuration pages, `task-13.md` (needs 12, 15)
 - [ ] **Task 14**: Record the decision and rule on the changelog, `task-14.md` (needs 12)
 - [ ] **Task 15**: Decide and handle the child element form of a style value, `task-15.md` (BLOCKED, see below)

@@ -228,3 +228,34 @@ it would buy nothing and lose fidelity.
 Two test expectations updated, the only two that recorded the word form as correct: the graph view export and the
 stylesheet export. The INPUT of the stylesheet import test keeps the word form permanently, as the regression case for
 files exported by released versions, and it is now the only `="true"` left under `packages/core/__tests__`.
+
+## Task 12, the registration API
+
+Done, commit `a1e863a12`. Suite 64 suites and 1210 tests, and every CI check green including the ts-support compile
+check and the circular dependency check.
+
+Exported as planned: `registerCustomBooleanCellStylePropertiesForCodecs` and
+`unregisterAllCustomBooleanCellStylePropertiesForCodecs`, named exports in `index.ts` rather than an `export *`, so
+the list and the predicates stay out of the public API. Verified: the package `exports` map only exposes the root, so
+a consumer cannot deep import them either.
+
+### The finding that changed the shape of the test
+
+Declaring the augmentation inside a core test file BREAKS the library's own exhaustiveness assertion. `test-check`
+compiles the tests together with the sources they import, so the augmented property joins `BooleanCellStyleKeys` and
+the built-in list no longer covers it, which is exactly what that assertion is there to report. The guard and an
+in-repo augmentation are mutually exclusive by construction.
+
+So the two halves are checked in the two places that can each carry one:
+
+- the core unit test uses a documented cast and covers the RUNTIME contract: a declared property decodes as a boolean
+  on all three paths in all four spellings, an undeclared one still decodes as a number, the teardown clears only the
+  custom set, and the built-in properties keep working with no call.
+- `packages/ts-support` covers the TYPE contract from outside the package, compiling against the published
+  declarations with TypeScript 3.9.10: an augmented boolean property is accepted, while a misspelled name and a
+  declared property of another type are both rejected, each behind `@ts-expect-error` so the check fails if they ever
+  start compiling.
+
+Verified that the private assertion is absent from the emitted declarations, so a consumer's augmentation cannot make
+the library's own `.d.ts` fail to compile. And verified with a red check that a misspelled property name is a compile
+error: `error TS2345: Argument of type '"myCustomFlg"' is not assignable to parameter of type 'BooleanCellStyleKeys'`.
