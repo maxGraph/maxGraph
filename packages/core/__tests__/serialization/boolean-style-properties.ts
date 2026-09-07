@@ -14,80 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { CellStyle } from '../../src';
-
-/**
- * The properties of {@link CellStyle} and {@link CellStateStyle} declared as `boolean`.
- *
- * Derived from the interface instead of being restated, so that it cannot drift from it. Mirrors
- * `NumericCellStateStyleKeys` with one difference: `NonNullable` is applied to the property type, otherwise
- * `orthogonal?: boolean | null` does not satisfy the constraint and is silently left out.
- */
-export type BooleanCellStyleKey = NonNullable<
-  {
-    [K in keyof CellStyle]: NonNullable<CellStyle[K]> extends boolean ? K : never;
-  }[keyof CellStyle]
->;
-
-/**
- * Every boolean property the decoders can produce, in the order they are declared in `types.ts`.
- *
- * TypeScript types are erased at runtime, so the list has to be spelled out, and two checks tie it back to the
- * interface. The `satisfies` clause rejects a name that is not a boolean property, and the assertion below rejects a
- * boolean property that is missing from the list, so `npm run test-check` fails either way.
- *
- * The `as const` is what makes the second check work: without it, the element type widens to
- * {@link BooleanCellStyleKey} and the assertion passes for any list, including an empty one.
- */
-export const booleanCellStyleKeys = [
-  'ignoreDefaultStyle',
-  'absoluteArcSize',
-  'anchorPointDirection',
-  'autoSize',
-  'backgroundOutline',
-  'bendable',
-  'cloneable',
-  'curved',
-  'dashed',
-  'deletable',
-  'editable',
-  'endFill',
-  'entryPerimeter',
-  'exitPerimeter',
-  'fixDash',
-  'flipH',
-  'flipV',
-  'foldable',
-  'glass',
-  'horizontal',
-  'imageAspect',
-  'movable',
-  'noEdgeStyle',
-  'noLabel',
-  'orthogonal',
-  'orthogonalLoop',
-  'pointerEvents',
-  'portConstraintRotation',
-  'resizable',
-  'resizeHeight',
-  'resizeWidth',
-  'rotatable',
-  'rounded',
-  'shadow',
-  'startFill',
-  'swimlaneLine',
-] as const satisfies readonly BooleanCellStyleKey[];
-
-type UnlistedBooleanCellStyleKey = Exclude<
-  BooleanCellStyleKey,
-  (typeof booleanCellStyleKeys)[number]
->;
-
-const noBooleanPropertyIsUnlisted: [UnlistedBooleanCellStyleKey] extends [never]
-  ? true
-  : 'booleanCellStyleKeys is missing at least one boolean property of CellStyle' = true;
-
-void noBooleanPropertyIsUnlisted;
+import { booleanCellStyleProperties } from '../../src/serialization/boolean-attributes';
 
 /**
  * The spellings a boolean can take in XML. maxGraph and mxGraph both write `1` and `0`, while `true` and `false`
@@ -99,8 +26,8 @@ export type SerializedBooleanValue = (typeof serializedBooleanValues)[number];
 
 export interface BooleanCellStyleCase {
   /**
-   * Deliberately widened to `string` rather than {@link BooleanCellStyleKey}: it is used to index expected values that
-   * hold the wrong type on purpose, and a narrower type would force a type suppression at every use site.
+   * Deliberately widened to `string` rather than `BooleanCellStyleKeys`: it is used to index expected values that hold
+   * the wrong type on purpose, and a narrower type would force a type suppression at every use site.
    */
   readonly key: string;
   readonly serializedValue: SerializedBooleanValue;
@@ -109,7 +36,7 @@ export interface BooleanCellStyleCase {
 export const booleanCellStyleCasesFor = (
   serializedValue: SerializedBooleanValue
 ): readonly BooleanCellStyleCase[] =>
-  booleanCellStyleKeys.map((key) => ({ key, serializedValue }));
+  booleanCellStyleProperties.map((key) => ({ key, serializedValue }));
 
 export const allBooleanCellStyleCases: readonly BooleanCellStyleCase[] =
   serializedBooleanValues.flatMap((serializedValue) =>

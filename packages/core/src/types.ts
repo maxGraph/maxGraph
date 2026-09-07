@@ -983,6 +983,24 @@ export type NumericCellStateStyleKeys = NonNullable<
   }[keyof CellStateStyle]
 >;
 
+/**
+ * The properties of {@link CellStyle} declared as `boolean`, the counterpart of {@link NumericCellStateStyleKeys}.
+ *
+ * Derived from {@link CellStyle} rather than from {@link CellStateStyle}, because {@link CellStyle.ignoreDefaultStyle}
+ * is a boolean property that a serialized style can carry like any other.
+ *
+ * `NonNullable` is applied to the property type, without which {@link CellStateStyle.orthogonal}, declared
+ * `boolean | null`, would not satisfy the constraint and would be silently left out.
+ *
+ * @category Style
+ * @since 0.25.0
+ */
+export type BooleanCellStyleKeys = NonNullable<
+  {
+    [k in keyof CellStyle]: NonNullable<CellStyle[k]> extends boolean ? k : never;
+  }[keyof CellStyle]
+>;
+
 /** @category Style */
 export type ColorValue = string;
 /**

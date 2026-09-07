@@ -45,6 +45,28 @@ export const isElement = (node?: Node | UserObject | null): node is Element =>
 export const isNullish = (v: unknown): v is null | undefined => v == undefined;
 
 /**
+ * Converts a serialized boolean into a boolean, or returns `undefined` when the value is not one.
+ *
+ * Both spellings are accepted: `1` and `0`, which is what mxGraph, draw.io and maxGraph write, and `true` and
+ * `false`, which occur in stylesheets exported by earlier versions of maxGraph and in hand written files.
+ *
+ * Returning `undefined` for an unrecognized value is deliberate: the caller must then leave the value alone rather
+ * than default it, so that a property carrying something unexpected keeps the behavior it has always had instead of
+ * silently becoming `false`.
+ *
+ * @private not part of the public API, can be removed or changed without prior notice
+ */
+export const parseBoolean = (value: string | null | undefined): boolean | undefined => {
+  if (value === '1' || value === 'true') {
+    return true;
+  }
+  if (value === '0' || value === 'false') {
+    return false;
+  }
+  return undefined;
+};
+
+/**
  * Returns the global logger.
  */
 export const log = (): Logger => GlobalConfig.logger;
