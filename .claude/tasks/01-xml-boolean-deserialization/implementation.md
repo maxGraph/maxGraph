@@ -160,3 +160,48 @@ so the suite stays at 63 suites and 1200 tests.
   fixture shrank from 200 lines to 83.
 - `booleanCellStyleProperties` is exported so the fixture can iterate it, but it is not re-exported from `index.ts`
   and is marked `@internal`, as is `isBooleanCellStyleProperty`.
+
+## Tasks 07, 08, 09 and 10, the decode fix
+
+Done. Landed as two commits rather than one, because the source change was committed before the flip on request:
+`eafbabf9b` for the three decode sites, `8c273a496` for the expectations. Full suite green again at 63 suites and
+1200 tests, `test-check`, lint, build and the circular dependency check all clean.
+
+### The three sites
+
+- `ObjectCodec` gained the public overridable `isBooleanValueAttribute`, consulted before the numeric branch. It keys
+  on the RAW attribute name, and for a better reason than the mapping being computed later: `decodeAttribute` assigns
+  with the raw name, so a mapped lookup would test a different field from the one being written.
+- The style string parser converts at its call site, keyed on the MAPPED name, verified as `autosize=1` giving
+  `{ autoSize: true }`.
+- The stylesheet codec converts in its own decode override, and its truthiness guard became a nullish check, without
+  which a property written as `0` would have kept vanishing and the fix would have been invisible on that path.
+
+### The gap that task 07 uncovered, and how it was closed
+
+Four fields are assigned from a constructor argument, so the object being decoded into holds `undefined` and no
+runtime check can see them: `CollapseChange.collapsed`, `VisibleChange.visible`, `TerminalChange.source` and
+`Editor.isActive`. Rather than three ad-hoc predicate overrides, `ObjectCodec` gained a declarative `booleanFields`,
+the counterpart of its existing `exclude` and `idrefs`, and each codec names its own exceptions.
+`GenericChangeCodec` takes an optional third argument, since it serves six change classes and only two have a boolean
+variable. Keying this on codec names was rejected: they come from `template.constructor.name` here, which minification
+would mangle.
+
+### Verification beyond the suite
+
+Each fork probed the behavior rather than reasoning about it. Confirmed: `entryX="0"`, `exitY="0"`, `fontSize="0"`,
+`strokeWidth`, `fontStyle`, `opacity`, `arcSize` and `html` all stay numbers, `entryX` being the regression the plan
+flagged; `Geometry._x="0"` stays `0` while `relative="1"` becomes `true`; unrecognized spellings keep today's values,
+`rounded="yes"` staying `'yes'` and `shadow="2"` staying `2`; and the byte identical round trip passes, so the format
+did not change.
+
+### Deviations
+
+- The three per-path expectation functions collapsed into one shared function in the fixture. The split existed
+  because the paths disagreed, which is precisely what the fix removed, so keeping three identical wrappers would have
+  been duplication describing a divergence that no longer exists.
+- Two side effects of the nullish guard on the stylesheet path, both correct and both worth a line in the pull
+  request: an explicitly empty `value=""` is now stored rather than dropped, and an evaluated-text result of `0`,
+  `false` or `''` is no longer discarded.
+- No `FIX should be` marker remains anywhere under `packages/core/__tests__`. The only suppressions left in the
+  serialization tests are the three documenting an intentional mxGraph compatibility deviation.
