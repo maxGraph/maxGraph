@@ -21,8 +21,10 @@ import type Cell from '../../view/cell/Cell.js';
 import type Point from '../../view/geometry/Point.js';
 import type Codec from '../Codec.js';
 
-function setNodeAttribute(node: Element, name: string, value: number) {
-  node.setAttribute(name, `${value}`);
+function setNodeAttribute(node: Element, name: string, value: number | boolean) {
+  // A boolean is written as 1 or 0, the same form as ObjectCodec.convertAttributeToXml and the only one mxGraph and
+  // draw.io read back. Style values reach this function, and in maxGraph a style property really can hold a boolean.
+  node.setAttribute(name, typeof value === 'boolean' ? (value ? '1' : '0') : `${value}`);
 }
 
 /**
@@ -92,6 +94,8 @@ export class GraphViewCodec extends ObjectCodec {
           node.setAttribute('label', lab);
 
           if (view.graph.isHtmlLabel(cell)) {
+            // Deliberately the word rather than 1, to stay byte identical with mxGraphViewCodec, which writes
+            // `setAttribute('html', true)`. This marker is not a style property, and this format has no decoder.
             node.setAttribute('html', 'true');
           }
         }

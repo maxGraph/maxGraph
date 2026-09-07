@@ -86,10 +86,24 @@ export class StylesheetCodec extends ObjectCodec {
     const type = typeof value;
 
     // Tries to turn functions into strings
-    if (type === 'function') {
-      value = getNameFromRegistries(value);
-    } else if (type === 'object') {
-      value = null;
+    switch (type) {
+      case 'function': {
+        value = getNameFromRegistries(value);
+
+        break;
+      }
+      case 'object': {
+        value = null;
+
+        break;
+      }
+      case 'boolean': {
+        // Same form as ObjectCodec.convertAttributeToXml, and the only one mxGraph and draw.io read back
+        value = value ? '1' : '0';
+
+        break;
+      }
+      // No default
     }
 
     return value;

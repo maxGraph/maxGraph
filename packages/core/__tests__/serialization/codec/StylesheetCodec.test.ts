@@ -63,6 +63,21 @@ test('import', () => {
   });
 });
 
+// Ties the two halves of the boolean fix together: the encoder must write 0 and the decoder must both recognize it
+// and store it, the second half being what the previous truthiness guard prevented.
+test('export then import - a false property survives the round trip', () => {
+  const exported = new Stylesheet();
+  exported.putCellStyle('custom', { rounded: false, shadow: true });
+
+  const xml = exportObject(exported);
+  expect(xml).toContain('<add value="0" as="rounded" />');
+  expect(xml).toContain('<add value="1" as="shadow" />');
+
+  const imported = new Stylesheet();
+  importToObject(imported, xml);
+  expect(imported.styles.get('custom')).toEqual({ rounded: false, shadow: true });
+});
+
 test('export', () => {
   const stylesheet = new Stylesheet();
   stylesheet.putCellStyle('custom', {
@@ -93,7 +108,7 @@ test('export', () => {
   </add>
   <add as="custom">
     <add value="red" as="fillColor" />
-    <add value="true" as="rounded" />
+    <add value="1" as="rounded" />
     <add value="blue" as="strokeColor" />
   </add>
 </Stylesheet>

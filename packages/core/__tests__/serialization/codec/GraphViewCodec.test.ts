@@ -95,7 +95,7 @@ test('export', () => {
       <vertex label="child" shape="cloud" perimeter="rectanglePerimeter" verticalAlign="middle" align="center" fillColor="#C3D9FF" strokeColor="red" fontColor="#774400" x="21" y="31" width="10" height="10" />
     </group>
     <vertex label="ellipse" shape="ellipse" perimeter="ellipsePerimeter" verticalAlign="top" align="center" fillColor="orange" strokeColor="#6482B9" fontColor="#774400" verticalLabelPosition="bottom" x="350" y="90" width="50" height="50" dy="50" />
-    <edge label="edge" shape="connector" endArrow="classic" verticalAlign="middle" align="center" strokeColor="#6482B9" fontColor="#446299" edgeStyle="orthogonalEdgeStyle" rounded="true" points="111,61 230,61 230,115 350,115" dx="230" dy="88" />
+    <edge label="edge" shape="connector" endArrow="classic" verticalAlign="middle" align="center" strokeColor="#6482B9" fontColor="#446299" edgeStyle="orthogonalEdgeStyle" rounded="1" points="111,61 230,61 230,115 350,115" dx="230" dy="88" />
   </layer>
 </graph>
 `
