@@ -21,7 +21,8 @@ import type Codec from '../Codec.js';
 import { clone } from '../../util/cloneUtils.js';
 import { isNumeric } from '../../util/mathUtils.js';
 import { getTextContent } from '../../util/domUtils.js';
-import { doEval, isElement, log } from '../../internal/utils.js';
+import { isBooleanCellStyleProperty } from '../boolean-attributes.js';
+import { doEval, isElement, isNullish, log, parseBoolean } from '../../internal/utils.js';
 
 /**
  * Codec for {@link Stylesheet}s.
@@ -168,12 +169,21 @@ export class StylesheetCodec extends ObjectCodec {
                 } else {
                   value = entry.getAttribute('value');
 
-                  if (isNumeric(value)) {
+                  // A boolean property must be converted before the numeric conversion, which would otherwise turn
+                  // the "1" and "0" written by mxGraph, draw.io and maxGraph into numbers. An unrecognized value
+                  // produces no boolean and falls through, keeping the behavior it has always had.
+                  const booleanValue = isBooleanCellStyleProperty(key)
+                    ? parseBoolean(value)
+                    : undefined;
+
+                  if (!isNullish(booleanValue)) {
+                    value = booleanValue;
+                  } else if (isNumeric(value)) {
                     value = Number.parseFloat(value);
                   }
                 }
 
-                if (value) {
+                if (!isNullish(value)) {
                   style[key] = value;
                 }
               } else if (entry.nodeName === 'remove') {

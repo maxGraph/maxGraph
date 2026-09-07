@@ -23,7 +23,11 @@ import { isInteger, isNumeric } from '../util/mathUtils.js';
 import { getTextContent } from '../util/domUtils.js';
 import { load } from '../util/requestUtils.js';
 import type Codec from './Codec.js';
-import { doEval, isElement, log } from '../internal/utils.js';
+import { doEval, isElement, isNullish, log, parseBoolean } from '../internal/utils.js';
+import {
+  isBooleanCellStyleProperty,
+  isBooleanFieldOfTarget,
+} from './boolean-attributes.js';
 
 const geometryNumericAttributes: Array<keyof Geometry> = [
   '_x',
@@ -566,8 +570,11 @@ class ObjectCodec {
   }
 
   /**
-   * Converts booleans and numeric values to the respective types. Values are
-   * numeric if {@link isNumericAttribute} returns true.
+   * Converts booleans and numeric values to the respective types.
+   *
+   * Values are boolean if {@link isBooleanValueAttribute} returns true, and numeric if {@link isNumericAttribute}
+   * does. The boolean conversion comes first, because `1` and `0` satisfy both questions and only the boolean one
+   * looks at what the value is for.
    *
    * @param dec {@link Codec} that controls the decoding process.
    * @param attr XML attribute to be converted.
@@ -575,6 +582,14 @@ class ObjectCodec {
    */
   convertAttributeFromXml(dec: Codec, attr: any, obj: any): any {
     let { value } = attr;
+
+    if (this.isBooleanValueAttribute(dec, attr, obj)) {
+      const booleanValue = parseBoolean(value);
+      // An unrecognized spelling is left to the conversions below, rather than defaulted to false
+      if (!isNullish(booleanValue)) {
+        return booleanValue;
+      }
+    }
 
     if (this.isNumericAttribute(dec, attr, obj)) {
       value = Number.parseFloat(value);
@@ -585,6 +600,59 @@ class ObjectCodec {
     }
 
     return value;
+  }
+
+  /**
+   * Returns true if the given XML attribute is or should be a boolean value.
+   *
+   * Hook for subclassers. Consulted by {@link convertAttributeFromXml} BEFORE {@link isNumericAttribute}, so
+   * returning `true` here wins over the numeric conversion; this is the decode side counterpart of
+   * {@link isBooleanAttribute}, whose signature it deliberately does not share.
+   *
+   * The decision is taken in two steps, in this order:
+   * - the target wins: a field that already holds a boolean is a boolean, which covers every class instance, since a
+   *   field is initialized by its declaration, and every plain object reached through the field of another one, such
+   *   as the graph folding options, since it carries its own defaults. A field holding anything else, a number in
+   *   particular, is left alone;
+   * - only where the target holds nothing does the name decide, against the boolean properties of {@link CellStyle}.
+   *   This is what serves a style, which is decoded into an empty object by the generic `Object` codec and therefore
+   *   says nothing about the type of its own properties.
+   *
+   * Accepted looseness, unchanged from {@link isNumericAttribute}: an `Object` element that is not a style is decoded
+   * with style semantics too, so an attribute of a plain object that happens to be named after a boolean style
+   * property becomes a boolean.
+   *
+   * The lookup is keyed by the ATTRIBUTE name, not by the mapped field name, because that is the name the value is
+   * assigned to in {@link decodeAttribute}. Reading a mapped name here would test a different field from the one
+   * being written.
+   *
+   * Override this to declare a boolean style property added through module augmentation of {@link CellStateStyle},
+   * which the built-in list cannot know about.
+   *
+   * @param dec {@link Codec} that controls the decoding process.
+   * @param attr XML attribute to be converted.
+   * @param obj Object to convert the attribute for.
+   * @since 0.25.0
+   */
+  /**
+   * Fields that hold a boolean but that the target cannot be asked about, because they are assigned from a
+   * constructor argument rather than initialized by their declaration, so the object being decoded into holds
+   * `undefined` for them.
+   *
+   * Declarative counterpart of {@link exclude} and {@link idrefs} for {@link isBooleanValueAttribute}. Prefer it to
+   * overriding the predicate: a subclass names its own exceptions without having to know how the predicate decides.
+   *
+   * @since 0.25.0
+   */
+  booleanFields: readonly string[] = [];
+
+  isBooleanValueAttribute(dec: Codec, attr: any, obj: any): boolean {
+    const name = attr.nodeName;
+    return (
+      this.booleanFields.includes(name) ||
+      isBooleanFieldOfTarget(obj, name) ||
+      (isNullish(obj?.[name]) && isBooleanCellStyleProperty(name))
+    );
   }
 
   /**
@@ -754,10 +822,8 @@ class ObjectCodec {
     if (!this.isIgnoredAttribute(dec, attr, obj)) {
       const name = attr.nodeName;
 
-      // Converts the string true and false to their boolean values.
-      // This may require an additional check on the obj to see if
-      // the existing field is a boolean value or uninitialized, in
-      // which case we may want to convert true and false to a string.
+      // Converts 1 and 0, as well as the strings true and false, to their boolean values, which requires knowing
+      // whether the field being written is a boolean one. See isBooleanValueAttribute.
       let value = this.convertAttributeFromXml(dec, attr, obj);
       const fieldname = this.getFieldName(name);
 

@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import { isNumeric } from '../../../util/mathUtils.js';
+import { isNullish, parseBoolean } from '../../../internal/utils.js';
+import { isBooleanCellStyleProperty } from '../../boolean-attributes.js';
 import type { CellStyle } from '../../../types.js';
 
 // from mxGraph to maxGraph
@@ -34,12 +36,40 @@ export function convertStyleFromString(input: string) {
       style.baseStyleNames.push(element);
     } else {
       const [key, value] = element.split('=');
+      // The property name, not the mxGraph key, decides how the value is converted
+      const property = fieldMapping.get(key) ?? key;
       // @ts-ignore
-      style[fieldMapping.get(key) ?? key] = convertToNumericIfNeeded(value);
+      style[property] = convertValueFromString(property, value);
     }
   }
 
   return style;
+}
+
+/**
+ * Converts a serialized style value, using the property it is assigned to.
+ *
+ * A boolean property is the only case where the value alone is not enough: `1` is indistinguishable from a number by
+ * shape, so {@link isBooleanCellStyleProperty} has to be consulted. Everything else keeps the historical rule, a
+ * numeric looking value becomes a number and anything else stays a string.
+ *
+ * An unrecognized token on a boolean property, `rounded=yes` for instance, falls through to that historical rule
+ * rather than being defaulted, so it keeps the behavior it has always had.
+ *
+ * The caller must pass the maxGraph property name, not the raw mxGraph key: the two differ for the properties in
+ * {@link fieldMapping}, and the boolean properties are named after the {@link CellStyle} interface.
+ */
+function convertValueFromString(
+  property: string,
+  value: string
+): boolean | string | number {
+  if (isBooleanCellStyleProperty(property)) {
+    const booleanValue = parseBoolean(value);
+    if (!isNullish(booleanValue)) {
+      return booleanValue;
+    }
+  }
+  return convertToNumericIfNeeded(value);
 }
 
 function convertToNumericIfNeeded(value: string): string | number {

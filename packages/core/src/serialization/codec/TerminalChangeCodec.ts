@@ -43,6 +43,8 @@ export class TerminalChangeCodec extends ObjectCodec {
       ['model', 'previous'] as Array<keyof TerminalChange>,
       ['cell', 'terminal'] as Array<keyof TerminalChange>
     );
+    // Assigned from a constructor argument, so the decoded object cannot say that it is a boolean
+    this.booleanFields = ['source'];
   }
 
   /**

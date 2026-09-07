@@ -49,6 +49,8 @@ export class EditorCodec extends ObjectCodec {
       'graphContainer',
       'toolbarContainer',
     ] as Array<keyof Editor>);
+    // Declared boolean or null and initialized to null, so the decoded object cannot say that it is a boolean
+    this.booleanFields = ['isActive'];
   }
 
   /**

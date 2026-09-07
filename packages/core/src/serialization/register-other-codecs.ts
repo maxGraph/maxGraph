@@ -50,7 +50,11 @@ const registerGenericChangeCodecs = () => {
     new GenericChangeCodec(new CellAttributeChange(__dummy, __dummy, __dummy), 'value')
   );
   CodecRegistry.register(
-    new GenericChangeCodec(new CollapseChange(__dummy, __dummy, __dummy), 'collapsed')
+    new GenericChangeCodec(
+      new CollapseChange(__dummy, __dummy, __dummy),
+      'collapsed',
+      true
+    )
   );
   CodecRegistry.register(
     new GenericChangeCodec(new GeometryChange(__dummy, __dummy, __dummy), 'geometry')
@@ -62,7 +66,7 @@ const registerGenericChangeCodecs = () => {
     new GenericChangeCodec(new ValueChange(__dummy, __dummy, __dummy), 'value')
   );
   CodecRegistry.register(
-    new GenericChangeCodec(new VisibleChange(__dummy, __dummy, __dummy), 'visible')
+    new GenericChangeCodec(new VisibleChange(__dummy, __dummy, __dummy), 'visible', true)
   );
 };
 

@@ -41,10 +41,15 @@ export class GenericChangeCodec extends ObjectCodec {
    *
    * @param obj An instance of the change object.
    * @param variable The field name for the change data.
+   * @param variableIsBoolean `true` when the change data is a boolean, so that it is decoded as one. Required because
+   * the field is assigned from a constructor argument, which leaves the decoded object holding `undefined` for it.
    */
-  constructor(obj: any, variable: string) {
+  constructor(obj: any, variable: string, variableIsBoolean = false) {
     super(obj, ['model', 'previous'], ['cell']);
     this.variable = variable;
+    if (variableIsBoolean) {
+      this.booleanFields = [variable];
+    }
   }
 
   variable: string;
