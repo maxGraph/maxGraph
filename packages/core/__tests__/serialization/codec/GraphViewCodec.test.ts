@@ -15,17 +15,13 @@ limitations under the License.
 */
 
 import { expect, test } from '@jest/globals';
-import {
-  BaseGraph,
-  GraphView,
-  registerCoreCodecs,
-  unregisterAllCodecs,
-} from '../../../src';
+import { GraphView, registerCoreCodecs, unregisterAllCodecs } from '../../../src';
 import { exportObject } from './shared';
 import Rectangle from '../../../src/view/geometry/Rectangle';
+import { createBaseGraph } from '../../utils';
 
 function createGraphView(): GraphView {
-  const graph = new BaseGraph();
+  const graph = createBaseGraph();
   return graph.view;
 }
 

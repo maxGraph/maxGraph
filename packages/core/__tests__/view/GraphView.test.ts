@@ -16,7 +16,6 @@ limitations under the License.
 
 import { afterAll, beforeEach, describe, expect, test } from '@jest/globals';
 import {
-  BaseGraph,
   CellState,
   EdgeStyle,
   EdgeStyleRegistry,
@@ -26,6 +25,7 @@ import {
   unregisterAllEdgeStyles,
   unregisterAllPerimeters,
 } from '../../src';
+import { createBaseGraph } from '../utils';
 
 describe('getEdgeStyle ', () => {
   describe('isLoopStyleEnabled returns true', () => {
@@ -37,7 +37,7 @@ describe('getEdgeStyle ', () => {
     }
 
     const createGraph = () =>
-      new BaseGraph({ view: (graph) => new GraphViewLoopStyleEnabled(graph) });
+      createBaseGraph({ view: (graph) => new GraphViewLoopStyleEnabled(graph) });
 
     test('no loopStyle in CellStateStyle', () => {
       const graph = createGraph();
@@ -71,7 +71,7 @@ describe('getEdgeStyle ', () => {
     }
 
     const createGraph = () =>
-      new BaseGraph({ view: (graph) => new GraphViewLoopStyleDisabled(graph) });
+      createBaseGraph({ view: (graph) => new GraphViewLoopStyleDisabled(graph) });
 
     test('no edgeStyle in CellStateStyle, no element matching in the registry', () => {
       const graph = createGraph();
@@ -118,7 +118,7 @@ describe('getEdgeStyle ', () => {
 
 describe('destroy', () => {
   test('clears eventListeners', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const view = graph.getView();
     view.addListener('testEvent', () => {});
     expect(view.eventListeners.length).toBeGreaterThan(0);
@@ -139,13 +139,13 @@ describe('getPerimeterFunction', () => {
   });
 
   test('no perimeter in CellStateStyle, no element matching in the registry', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const cellState = new CellState(graph.view, null, {});
     expect(graph.view.getPerimeterFunction(cellState)).toBeNull();
   });
 
   test('perimeter in CellStateStyle is a string, no element matching in the registry', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const cellState = new CellState(graph.view, null, { perimeter: 'customPerimeter' });
     expect(graph.view.getPerimeterFunction(cellState)).toBeNull();
   });
@@ -154,7 +154,7 @@ describe('getPerimeterFunction', () => {
     const perimeter = Perimeter.HexagonPerimeter;
     PerimeterRegistry.add('customPerimeter', perimeter);
 
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const cellState = new CellState(graph.view, null, { perimeter: 'customPerimeter' });
     expect(graph.view.getPerimeterFunction(cellState)).toBe(perimeter);
   });
@@ -162,7 +162,7 @@ describe('getPerimeterFunction', () => {
   test('perimeter in CellStateStyle is a function', () => {
     const perimeter = Perimeter.HexagonPerimeter;
 
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const cellState = new CellState(graph.view, null, { perimeter });
     expect(graph.view.getPerimeterFunction(cellState)).toBe(perimeter);
   });

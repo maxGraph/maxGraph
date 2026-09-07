@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import { expect, test } from '@jest/globals';
-import { BaseGraph, LayoutManager } from '../../../src';
+import { LayoutManager } from '../../../src';
+import { createBaseGraph } from '../../utils';
 
 describe('destroy', () => {
   test('clears eventListeners', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const manager = new LayoutManager(graph);
     manager.addListener('testEvent', () => {});
     expect(manager.eventListeners.length).toBeGreaterThan(0);

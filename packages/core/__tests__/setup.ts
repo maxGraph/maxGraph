@@ -14,19 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { expect, test } from '@jest/globals';
-import { CellMarker } from '../../../src';
-import { createBaseGraph } from '../../utils';
+import { afterEach } from '@jest/globals';
+import { destroyCreatedGraphs } from './utils';
 
-describe('destroy', () => {
-  test('clears eventListeners', () => {
-    const graph = createBaseGraph();
-    const marker = new CellMarker(graph);
-    marker.addListener('testEvent', () => {});
-    expect(marker.eventListeners.length).toBeGreaterThan(0);
-
-    marker.destroy();
-
-    expect(marker.eventListeners).toHaveLength(0);
-  });
-});
+// Runs before every test file, see `setupFilesAfterEnv` in jest.config.cjs. Tearing the graphs down here rather than in
+// each file means a test never inherits the graphs of the ones that ran before it.
+afterEach(destroyCreatedGraphs);

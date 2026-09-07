@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import { test } from '@jest/globals';
-import { Graph } from '../../src';
-import { createGraphWithoutPlugins } from '../utils';
+import { createGraphWithoutContainer, createGraphWithoutPlugins } from '../utils';
 import { describeNoGlobalStateForMixinProperties } from './no-global-state-for-mixin-properties';
 
 test('setTooltips - the "TooltipHandler" plugin is not available', () => {
@@ -25,4 +24,4 @@ test('setTooltips - the "TooltipHandler" plugin is not available', () => {
   graph.setTooltips(true);
 });
 
-describeNoGlobalStateForMixinProperties(() => new Graph());
+describeNoGlobalStateForMixinProperties(() => createGraphWithoutContainer());

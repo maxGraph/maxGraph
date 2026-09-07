@@ -16,12 +16,13 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { BaseGraph, ImageBundle, ImageBundlePlugin } from '../../../src';
+import { createBaseGraph } from '../../utils';
 
 const createGraphWithPlugin = (): {
   graph: BaseGraph;
   plugin: ImageBundlePlugin;
 } => {
-  const graph = new BaseGraph({ plugins: [ImageBundlePlugin] });
+  const graph = createBaseGraph({ plugins: [ImageBundlePlugin] });
   const plugin = graph.getPlugin<ImageBundlePlugin>('image-bundle')!;
   return { graph, plugin };
 };
