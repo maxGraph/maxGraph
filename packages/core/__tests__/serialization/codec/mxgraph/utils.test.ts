@@ -17,6 +17,28 @@ limitations under the License.
 import { describe, expect, test } from '@jest/globals';
 import { convertStyleFromString } from '../../../../src/serialization/codec/mxGraph/utils';
 import type { CellStyle } from '../../../../src';
+import {
+  allBooleanCellStyleCases,
+  booleanCellStyleCasesFor,
+  buildExpectedStyle,
+  coerceNumericLookingValue,
+  serializedBooleanValues,
+  type BooleanCellStyleCase,
+  type SerializedBooleanValue,
+} from '../../boolean-style-properties';
+
+/**
+ * Expected value when a boolean property is decoded from an mxGraph style string.
+ *
+ * Characterizes the CURRENT WRONG behavior of {@link convertStyleFromString}: a numeric looking value becomes a
+ * number and anything else stays a string, so a property declared as `boolean` never decodes to a boolean. Flipping
+ * this function is how the fix turns these tests green again.
+ */
+const decodedFromStyleString = (serializedValue: SerializedBooleanValue): unknown =>
+  coerceNumericLookingValue(serializedValue);
+
+const buildStyleString = (cases: readonly BooleanCellStyleCase[]): string =>
+  cases.map(({ key, serializedValue }) => `${key}=${serializedValue}`).join(';');
 
 describe('convertStyleFromString', () => {
   test('Basic', () => {
@@ -73,9 +95,52 @@ describe('convertStyleFromString', () => {
 
   // renamed properties (see migration guide)
   test('With renamed properties', () => {
-    // @ts-ignore
-    expect(convertStyleFromString('autosize=1')).toEqual(<CellStyle>{
+    expect(convertStyleFromString('autosize=1')).toEqual({
       autoSize: 1, // FIX should be true
     });
+  });
+
+  // Characterization of the current behavior for every property declared as boolean: all of them decode to a number
+  // or to a string, never to a boolean. The expectations are flipped once the parser converts them.
+  describe('all boolean properties', () => {
+    test.each(
+      serializedBooleanValues.map(
+        (serializedValue) =>
+          [`serialized as ${serializedValue}`, serializedValue] as const
+      )
+    )('every boolean property at once, %s', (_description, serializedValue) => {
+      const cases = booleanCellStyleCasesFor(serializedValue);
+
+      expect(convertStyleFromString(buildStyleString(cases))).toEqual(
+        buildExpectedStyle(cases, decodedFromStyleString)
+      );
+    });
+
+    test.each(
+      allBooleanCellStyleCases.map(
+        (styleCase) =>
+          [`${styleCase.key}=${styleCase.serializedValue}`, styleCase] as const
+      )
+    )('%s', (_description, styleCase) => {
+      expect(convertStyleFromString(buildStyleString([styleCase]))).toEqual(
+        buildExpectedStyle([styleCase], decodedFromStyleString)
+      );
+    });
+
+    // The mxGraph name is 'autosize' while the maxGraph property is 'autoSize', renamed by the fieldMapping of the
+    // parser. The boolean conversion must look the property up under its mapped name, otherwise this one property
+    // keeps decoding as a number once the others are fixed.
+    test.each(
+      serializedBooleanValues.map(
+        (serializedValue) => [`autosize=${serializedValue}`, serializedValue] as const
+      )
+    )(
+      '%s is decoded as the renamed autoSize property',
+      (_description, serializedValue) => {
+        expect(convertStyleFromString(`autosize=${serializedValue}`)).toEqual({
+          autoSize: decodedFromStyleString(serializedValue),
+        });
+      }
+    );
   });
 });
