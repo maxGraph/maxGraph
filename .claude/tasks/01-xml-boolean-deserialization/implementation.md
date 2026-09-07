@@ -92,3 +92,37 @@ and the input builder for its own path, so the shared fixture keeps only what mo
   must stay untouched.
 - Two `CellStyle` casts remain in pre-existing tests of the style string file. They force no suppression today, so
   they were left alone as out of scope.
+
+## Task 05, the boolean fields of the codec registered classes
+
+Done, commit `8619556ff`, 190 lines appended to `serialization.xml.booleanProperties.test.ts`. Full suite now 63
+suites and 1200 tests. `test-check` and repo-wide `lint` clean.
+
+### Reachable surface, established by probing rather than assumed
+
+Covered, all decoding as numbers today, in each of the four spellings: `Cell` (6 fields), `Geometry` (2),
+`GraphDataModel` (4), `GraphView` (4), `CollapseChange.collapsed`, `VisibleChange.visible`,
+`TerminalChange.source`, `Editor` (11), the 18 own flags of the graph, and the 2 folding options.
+
+Not reachable, so not covered:
+
+- `GraphView` cannot be decoded through a `<Graph>` document at all, because `GraphCodec` excludes the `view` field.
+  It is covered as a standalone `<GraphView>` document instead.
+- The `previous` field of the change classes is excluded from decoding by their codecs.
+- `Multiplicity` attributes are not decoded at all. A `<Multiplicity source="1"/>` inside a graph produces an instance
+  whose `source` is `undefined`, so the XML value is LOST rather than mistyped. Recorded as a test documenting the
+  behavior, and it deserves its own issue: it is a different defect from this one.
+
+### The finding that matters for the fix
+
+The graph folding options are a plain object, not a class instance, so they look like a style object to the decoder.
+But unlike a style they are reached through a field of the graph, so the object being decoded into already holds real
+booleans, which means a runtime check of the target field can serve them while it cannot serve a style. The test
+asserts that precondition explicitly before decoding, so task 07 cannot regress it silently.
+
+### Deviations and notes
+
+- One aggregate assertion per class and spelling rather than one test per field: the equality diff already names the
+  offending field, and it avoids constructing an `Editor`, which builds a whole graph under jsdom, once per field.
+- The Apache header of task 03's file was briefly duplicated: the rtk proxy strips comment blocks from `cat` output,
+  so the file looked headerless. Verify headers with `python3` or `grep`, never with `cat`.
