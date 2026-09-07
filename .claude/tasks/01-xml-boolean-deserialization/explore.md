@@ -207,3 +207,49 @@ word in a style silently enables the flag.
    `?? true`. #1028 (draft) owns the write side: type-safe `setCellStyles` plus the `GraphLayout` call sites. This
    branch is off `origin/main` and contains neither. Keep this diff to the serialization layer so it conflicts with
    neither, and rebase once they land.
+
+## Decisions taken by the maintainer on the open questions
+
+1. **Allow-list, agreed.** Derive `BooleanCellStateStyleKeys` from `CellStateStyle` the way `NumericCellStateStyleKeys`
+   (types.ts:980-985) is derived, back it with a runtime array declared `satisfies`, and add a compile-time
+   exhaustiveness assertion (`Exclude<BooleanCellStateStyleKeys, (typeof list)[number]> extends never`) so a boolean
+   property added to the interface later cannot be forgotten.
+2. **Registration API: evaluate feasibility and cost** during the plan step, do not assume it. The need comes from
+   module augmentation (`packages/ts-support/src/module-augmentation.ts`): a user-declared boolean style property
+   cannot appear in the library's runtime list. Look at how the existing registries and config objects expose
+   extension points before designing anything.
+3. **Characterization tests first.** Assert the current numeric behavior over every boolean property, commit that as
+   the record of the defect, then flip the expectations in the fix commit so the diff shows exactly what changed.
+4. **Scope: all classes**, not only the style properties. `Cell` (6 fields), `Geometry` (2), `GraphDataModel` (4),
+   `AbstractGraph` (18), `GraphView` (4), the change classes (5) and the editor classes (14), plus the two
+   `ModelChecker` markers on `vertex` / `edge`.
+5. **Encoding: pending.** See the analysis below; the earlier claim in this document that the encoder must keep
+   emitting 1/0 for draw.io compatibility was WRONG. maxGraph exports only its own `<GraphDataModel>` /
+   `<Object as="style">` format, which mxGraph and draw.io cannot read anyway (they read `<mxGraphModel>` with a
+   semicolon style string), and `ModelXmlSerializer.export()` offers only a `pretty` option. The constraint is
+   decode-only. Two maxGraph codecs already emit the words: `GraphViewCodec` writes `rounded="true"`
+   (GraphViewCodec.test.ts:98) and `StylesheetCodec` writes `<add value="true" as="rounded" />`
+   (StylesheetCodec.test.ts:84) while importing it back as the STRING 'true' (StylesheetCodec.test.ts:48), which is a
+   live bug and means the DECODER must accept `true` / `false` whatever we decide about the encoder.
+   DECIDED, and the opposite of what I first proposed: the XML keeps 1/0 everywhere, only the decoded JS value has to
+   be a real boolean. `ObjectCodec.ts:551` therefore stays as it is, no observable output change, the byte-identical
+   round trip at serialization.xml.test.ts:286 keeps passing, no CHANGELOG breaking entry for it, and the two
+   `FIX boolean values should be set to true/false` comments at :347 and :409 are WRONG and get deleted.
+   Instead, align the two codecs that currently emit the words onto 1/0, which is far cheaper:
+   - `StylesheetCodec.getStringValue` (:83-94) returns a boolean untouched, so setAttribute writes "true". Add a
+     `type === 'boolean'` branch returning '1' / '0'. One line, plus the expectation at StylesheetCodec.test.ts:84.
+   - `GraphViewCodec` (:113-127) writes `${value}` through setNodeAttribute, same effect. One line, plus the
+     expectation at GraphViewCodec.test.ts:98. Cosmetic only: that codec is export-only and its output is never read
+     back by maxGraph.
+   CONSEQUENCE that promotes an optional fix to a mandatory one: once StylesheetCodec exports `false` as `value="0"`,
+   the import path hits `StylesheetCodec.ts:176` `if (value) { style[key] = value; }`, which DROPS falsy values, so a
+   stylesheet carrying `rounded: false` would come back with the property missing. `if (value != null)` is part of
+   this work, not a follow-up.
+   The DECODER must still accept `true` / `false` in addition to 1/0, for a concrete reason rather than defensiveness:
+   released maxGraph versions have been exporting `value="true"` from StylesheetCodec, so such files exist in the wild
+   and today decode to the truthy STRING 'true' (StylesheetCodec.test.ts:48). One extra comparison in the shared
+   helper covers it.
+   Whether the StylesheetCodec output change (`value="true"` becomes `value="1"`) deserves a CHANGELOG line is left
+   to the maintainer: it is observable to anyone parsing exported stylesheet XML, but it is a consistency fix within
+   a format only maxGraph reads.
+6. **Rebase once #1160 and #1028 land.** Keep this diff inside the serialization layer so it conflicts with neither.
