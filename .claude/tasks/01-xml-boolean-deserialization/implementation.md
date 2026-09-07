@@ -205,3 +205,26 @@ did not change.
   `false` or `''` is no longer discarded.
 - No `FIX should be` marker remains anywhere under `packages/core/__tests__`. The only suppressions left in the
   serialization tests are the three documenting an intentional mxGraph compatibility deviation.
+
+## Task 11, the encoders aligned onto 1 and 0
+
+Done, commit `b4a4301d6`. Full suite 63 suites and 1201 tests, one more than before because of the new round trip
+test. Build, `test-check`, lint and the circular dependency check clean.
+
+- The stylesheet value stringifier converts a boolean instead of returning it from a method declared to return a
+  string and letting the DOM spell it out.
+- The graph view attribute writer accepts a boolean and converts it in that one place, where it previously only
+  received one because a type suppression widened the value.
+- New round trip test: exporting a false property writes `0` and importing it back yields `false`. It is the test that
+  ties task 09 and task 11 together, since the old truthiness guard would have dropped the value on the way back in.
+
+### Open decision 4, settled with evidence
+
+The hardcoded word on the `html` marker of the graph view format STAYS, and the code now says why: mxGraph's own
+`mxGraphViewCodec.js:96` does `setAttribute('html', true)`, which the DOM spells as `html="true"`, so the maxGraph
+port is byte identical to the ancestor. It is not a style property and that export format has no decoder, so aligning
+it would buy nothing and lose fidelity.
+
+Two test expectations updated, the only two that recorded the word form as correct: the graph view export and the
+stylesheet export. The INPUT of the stylesheet import test keeps the word form permanently, as the regression case for
+files exported by released versions, and it is now the only `="true"` left under `packages/core/__tests__`.
