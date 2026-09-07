@@ -1,4 +1,6 @@
-# Raw exploration 5: mxGraph reference behavior (checkout /mnt/SharedData/code/open-source/maxGraph/mxgraph)
+# Raw exploration 5: mxGraph reference behavior
+
+All paths below are relative to the root of a local mxGraph checkout (the `maxGraph/mxgraph` repository).
 
 ## Style string parsing: numbers, never booleans
 
