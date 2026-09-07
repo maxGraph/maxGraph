@@ -23,9 +23,9 @@ here, read both.
 - [x] **Task 10**: Flip the expectations and land the decode fix, `task-10.md` (needs 07, 08, 09)
 - [x] **Task 11**: Align the two encoders that emit the words true and false onto 1 and 0, `task-11.md` (needs 09)
 - [x] **Task 12**: Registration API for custom boolean cell style properties, `task-12.md` (needs 06, 10)
-- [ ] **Task 13**: Extending guide, and links from the codec and configuration pages, `task-13.md` (needs 12, 15)
-- [ ] **Task 14**: Record the decision and rule on the changelog, `task-14.md` (needs 12)
-- [ ] **Task 15**: Decide and handle the child element form of a style value, `task-15.md` (BLOCKED, see below)
+- [x] **Task 13**: Extending guide, and links from the codec and configuration pages, `task-13.md` (needs 12, 15)
+- [x] **Task 14**: Record the decision and rule on the changelog, `task-14.md` (needs 12)
+- [x] **Task 15**: Decide and handle the child element form of a style value, `task-15.md` (decided: option B)
 
 ## Execution order
 
@@ -39,11 +39,11 @@ here, read both.
    before 09, since aligning the stylesheet output makes the discarding guard reachable for booleans.
 6. **Task 12**, then **14** and **13** in parallel, with 13 also waiting on the answer to task 15.
 
-## Blocked, and what it blocks
+## No longer blocked
 
-**Task 15** waits on open decision 3 in `../plan.md`: whether to route the child element form of a style value through
-the same conversion. If it is routed, it belongs in the same commit as task 07. Either way its outcome must be stated
-in the limits section of the guide, so task 13 cannot be finished before the answer.
+**Task 15** was waiting on open decision 3 in `../plan.md`. Answered: route the child element form through the boolean
+conversion only, leaving its numeric half alone. It landed after task 12 rather than with task 07, so it is its own
+commit. Task 13 states the outcome in its limits section.
 
 ## The other two open decisions
 

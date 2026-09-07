@@ -406,4 +406,11 @@ both halves meet.
    conversion: after the fix, `<Object rounded="1" as="style"/>` gives `true` while the `<add>` form gives `'1'`,
    an inconsistency inside a single format, and it would make the answer to "does registration cover the native
    format" conditional. One extra call site in a function the fix already touches nearby.
+
+   **DECIDED: option B, booleans only, for the `as` named form.** The child form now decodes a boolean exactly like
+   the attribute form does, and nothing else about it changes: a numeric looking value is still stored as a string,
+   so `<add as="strokeWidth" value="2"/>` stays `"2"`, and array elements, which carry no `as`, are untouched. Making
+   the two forms fully equivalent (option C) was rejected as a separate decision from "make booleans decode as
+   booleans", and belongs in its own issue rather than in this bug fix. The limits section of the guide states both
+   halves.
 4. Align `GraphViewCodec.ts:95` (`html="true"`) too, or leave it?

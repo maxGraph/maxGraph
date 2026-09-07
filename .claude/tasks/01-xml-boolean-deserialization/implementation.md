@@ -317,3 +317,156 @@ own encoder. It is a hand written XML path.
 4. The numeric half of the child element form, if option B is chosen for task 15.
 5. Issue 2 of the original pair, the one this whole branch implements, was never filed as a GitHub issue. The draft is
    in the session scratchpad. Decide whether the pull request needs it for traceability.
+
+## Task 15, the child element form of a style value
+
+Answer: **option B**, booleans only, for the `as` named form.
+
+`packages/core/src/serialization/ObjectCodec.ts`
+
+- `decodeChild` now converts the value read from an `<add as="..." value="..."/>` child to a boolean when the field
+  being written is a boolean one. The attribute predicate `isBooleanValueAttribute` is reused rather than duplicated,
+  so an override of it covers both forms, and it is consulted with the MAPPED field name because that is the name
+  `addObjectValue` writes to here, whereas `decodeAttribute` writes to the raw attribute name. An unrecognized
+  spelling falls back to the string, exactly as on the attribute path.
+- Deliberately not converted: numbers. `<add as="strokeWidth" value="2"/>` still yields the string `"2"`. That is
+  follow-up issue 4.
+- Untouched: array elements. They carry no `as`, so `getFieldName` returns `null` and the new branch is skipped, which
+  is what keeps `<Array as="baseStyleNames"><add value="1"/></Array>` a list of strings.
+- Fixed along the way: the JSDoc of `isBooleanValueAttribute` had been orphaned by the insertion of `booleanFields`
+  between the block and the method, so the hook was undocumented and `booleanFields` carried two blocks. Reordered.
+  The paragraph telling a reader to override the hook for a module augmented property now points at
+  `registerCustomBooleanCellStylePropertiesForCodecs` first, and says why an override cannot cover the mxGraph style
+  string form.
+
+`packages/core/__tests__/serialization/serialization.xml.booleanProperties.test.ts`
+
+- New describe block for the `add` children form: the 4 aggregate cases and the 144 per property rows, the same matrix
+  the attribute form already had, plus three targeted tests: the two forms agree, a property of another type is still
+  a string, and an unrecognized spelling is left untouched. 488 tests in this file, up from 337.
+
+Verification: 64 suites and 1361 tests green, `test-check` clean, `npm run build -w packages/core` clean, eslint clean
+on both changed files. The byte identical round trip test still passes, so the encoder was not touched.
+
+## Task 14, the decision record and the changelog ruling
+
+- `docs/adr/0004-register-custom-boolean-style-properties-for-codecs.md`, status `Accepted`. Four decisions: the
+  properties the library declares stay a plain module-level constant and are never registered (this is the
+  load-bearing half, it is what rules out the footgun), the minimal additive API, the two compile-time checks with the
+  assertion deliberately unexported so the unresolved conditional never reaches the published `.d.ts`, and
+  `booleanFields` plus the overridable predicate as a complement rather than a substitute. All four rejected options
+  are recorded with their costs, including the arguments that supported doing nothing, since those are the ones to
+  revisit if the API is ever reconsidered.
+- `docs/adr/README.md`, the index row and one sentence of prose placing 0004 as the first ADR about the extensibility
+  of the public types rather than about class structure.
+- `CHANGELOG.md`, the ruling: one **Breaking Changes** bullet for the decoded values becoming real booleans, with the
+  `== 1` migration spelled out, the note that the XML format itself does not change, and the `isNumericAttribute`
+  override bypass folded in; one **Other Changes** bullet for `StylesheetCodec` writing `value="1"` instead of
+  `value="true"`, following the precedent of the existing bullet about the child element order. Nothing for the
+  registration functions, which are additive.
+
+## Task 13, the Extending guide
+
+`packages/website/docs/usage/extending.md` (new), titled `Extending maxGraph`. The page is deliberately not scoped to
+styles, since other extension subjects will be added to it, so its structure separates the two levels:
+
+- `## Introduction` maps the extension points that already have a page of their own, `edge-styles.md`,
+  `perimeters.md`, `cell-handlers.md`, `plugins.md`, `codecs.md`, `image-bundles.md`, plus
+  `global-configuration.md` and `tree-shaking.md` for the registries they write to, with one plain line for custom
+  shapes, which have no page and go to the `ShapeRegistry`. It then states what this page is for: what those pages do
+  not cover, the extension points that need something declared beyond a single registry call.
+- `## Extending the Cell style` holds everything style specific, as `###` subsections, so a future `## Extending ...`
+  sits beside it rather than inside it.
+
+The subsections, in the order a reader needs them:
+
+1. `When custom style properties are useful`, prose and bullets only, each case tied to the API that actually receives
+   the style: a custom shape reads `this.style`, a custom perimeter and a custom edge style read `state.style` from
+   the `CellState` they are handed, a custom marker reads `shape.style`, and application data survives an XML round
+   trip because the codecs encode the whole style object. It closes on the alternatives a declaration replaces:
+   hardcoding the value, abusing an unrelated built-in property, or casting.
+2. `Adding custom properties to the style types`, the `declare module` mechanics, `CellStyle extends CellStateStyle`,
+   when to augment `CellStyle` directly, optional properties, and the TypeScript 3.9 minimum.
+3. `A shape configured by its own style property`, a `BadgedRectangleShape` extending `RectangleShape`, reading
+   `this.style?.badgeColor` and drawing with `setFillColor`, `ellipse` and `fillAndStroke`, registered with
+   `ShapeRegistry.add`. It overrides `paintVertexShape` like the shipped `packages/ts-example/src/custom-shapes.ts`
+   does, and every call in it was checked against the real signatures rather than written from memory: an earlier
+   draft used a `c.text(...)` call whose argument list did not exist.
+4. `Only boolean properties must be declared to the codecs`, opening with an admonition that the whole section applies
+   from 0.25.0, since until then every boolean style property decoded as `1` or `0`, maxGraph's own included, with no
+   way to change it.
+5. `Declaring custom boolean properties to the codecs`, the registration, the four serialized shapes it covers, decode
+   only, global state, the `unregisterAll` companion and the `BooleanCellStyleKeys` typing.
+6. `Scoping the decoding to a custom Codec`, the `isBooleanValueAttribute` override and `booleanFields`, with the
+   honest scope limit: it covers the attribute and child element forms of that codec only, and cannot reach the
+   mxGraph style string form.
+7. `Limits`, the two measured facts about the child element form.
+
+The example was moved out of section 1 into its own section 3 on the maintainer's instruction: it used
+`declare module` a section before the augmentation was explained. Three other orderings were proposed and rejected,
+the one kept being motivation prose, then mechanics, then the worked example.
+
+`packages/website/docs/usage/codecs.md`, the sentence that presented numeric booleans as intended behaviour is
+qualified rather than deleted: it stays true of encoding, and decoding produces real booleans since 0.25.0. Two links
+to the guide, one in the custom codec section and one beside the corrected sentence.
+
+`packages/website/docs/usage/global-configuration.md`, the register and unregister pair documented in the
+`## Codecs and Serialization` section, NOT in `## Styles` where it first landed: the declaration is only needed by an
+application that decodes XML, so placing it among the style registries suggested it was mandatory for anyone
+extending a style.
+
+Every name used in the guide was checked against the exports: `Codec`, `ObjectCodec`, `booleanFields`,
+`registerCoreCodecs`, `RectangleShape`, `ShapeRegistry`, `AbstractCanvas2D`, the two registration functions and
+`BooleanCellStyleKeys` are all reachable from the package entry point. `npm run build -w packages/website` was run
+after each change, and reports no broken link or anchor.
+
+## Corrections made while finishing
+
+- **"Module augmentation shipped one release ago" is false**, in `plan.md` and in `raw/06-registration-api.md`. The
+  commits that unlocked it (`632341982` and `67bdd9c9e`) are still under `## Unreleased`, so it ships in the same
+  0.25.0 release as this fix. The ADR and the guide say so correctly, the two planning notes keep the wrong claim as
+  written at the time.
+- **"Three shapes" became four** once task 15 landed. Updated in the `registerCustomBooleanCellStylePropertiesForCodecs`
+  JSDoc, in the ADR consequence and in the changelog bullet, naming the child element form distinctly from the
+  stylesheet entry form.
+- **The JSDoc of `isBooleanValueAttribute` was orphaned** by the insertion of `booleanFields`. Fixed with task 15.
+
+## Bundle size budgets
+
+The examples script had never actually run on this branch: `packages/ts-example` was missing the
+`vite-bundle-analyzer` dev dependency added by `95689c7dc`, so it aborted on the first example until `npm install`
+was run. The lock file was already correct and did not change.
+
+With the examples actually building, two of the six exceeded their size budget, and they are exactly the two that
+import `ModelXmlSerializer`, `js-example` and `js-example-selected-features`. The other four contain no codec
+reference at all and are unchanged. The growth is the serialization code this fix adds, chiefly the 36 name list and
+the predicates, and it is between 1.6 and 2.6 kB minified.
+
+Both budgets updated to the measured size rounded up to the next kB, per
+`.claude/rules/tooling/bundle-size-budgets.md`:
+
+- `packages/js-example/webpack.config.js`: asset 467 000 to 469 000 (measured 468 576), entrypoint 473 000 to
+  475 000 (measured 474 085)
+- `packages/js-example-selected-features/webpack.config.js`: asset 385 000 to 387 000 (measured 386 635), entrypoint
+  391 000 to 393 000 (measured 392 144)
+
+The three vite examples and `js-example-without-defaults` still pass with their recorded values, which are already
+the next kB above their current sizes, so nothing was padded there.
+
+## Full CI, the list in CLAUDE.md, all green
+
+| Check | Result |
+|---|---|
+| `npm run build -w packages/core` | pass |
+| `npm run test-check -w packages/core` | pass |
+| `npm test -w packages/core -- --coverage` | pass, 64 suites, 1361 tests |
+| `npm test -w packages/ts-support` | pass, TypeScript 3.9.10 |
+| `./scripts/build-all-examples.bash` | pass, after the two budget updates |
+| `npm run build -w packages/html` | pass |
+| `npm run check:circular-dependencies -w packages/core` | pass |
+| `npm run lint` | pass |
+| `npm run check:npm-package -w packages/core` | pass |
+| `npm run build -w packages/website` | pass, no broken link |
+
+All 15 tasks are done. Nothing committed yet at the time of writing: tasks 13, 14 and 15 plus the budget updates are
+in the working tree.
