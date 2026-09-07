@@ -976,7 +976,18 @@ export interface CellStateStyle {
   whiteSpace?: WhiteSpaceValue;
 }
 
-/** @category Style */
+/**
+ * The properties of {@link CellStateStyle} declared as `number`.
+ *
+ * Restricts the functions that manipulate a style property as a numeric bit mask, {@link setStyleFlag} and
+ * {@link setCellStyleFlags}, to the properties where that actually makes sense, {@link CellStateStyle.fontStyle} for
+ * instance. Passing any other property name is then a compile error instead of a value silently corrupted by a
+ * bitwise operation.
+ *
+ * See {@link BooleanCellStyleKeys} for the boolean counterpart.
+ *
+ * @category Style
+ */
 export type NumericCellStateStyleKeys = NonNullable<
   {
     [k in keyof CellStateStyle]: CellStateStyle[k] extends number | undefined ? k : never;
