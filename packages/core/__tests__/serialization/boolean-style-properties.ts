@@ -44,40 +44,25 @@ export const allBooleanCellStyleCases: readonly BooleanCellStyleCase[] =
   );
 
 /**
- * Marks a property that the decoder does not store at all, as opposed to storing a wrong value.
- */
-export const absentProperty = Symbol('absent property');
-
-/**
- * The value a numeric looking string is coerced to today, which is what makes a boolean property decode wrongly.
+ * The value a serialized boolean decodes to, whichever of the three decode paths it travelled.
  *
- * Shared because the mxGraph style string parser and the XML attribute decoder genuinely apply the same rule, each
- * through its own implementation of "if the value looks numeric, parse it as a number, otherwise keep the string".
- * Each decode path declares its own expected value, in its own test file, in terms of this rule.
+ * Shared by all of them on purpose. Before the fix each path had to declare its own expectation, because they
+ * disagreed: two produced a number and the third dropped a property written as `0` altogether. Having a single
+ * function here is what the fix bought, and a path drifting from the others would now show up as a failure.
  */
-export const coerceNumericLookingValue = (
-  serializedValue: SerializedBooleanValue
-): unknown =>
-  serializedValue === '1' ? 1 : serializedValue === '0' ? 0 : serializedValue;
+export const decodedBooleanValue = (serializedValue: SerializedBooleanValue): boolean =>
+  serializedValue === '1' || serializedValue === 'true';
 
 /**
  * The decoded style expected for the given cases, as an untyped record.
  *
- * Untyped on purpose: `toEqual` accepts `unknown`, so an expectation that is not declared as a `CellStyle` needs no
- * type suppression even while it holds numbers where the interface declares booleans.
- *
- * Cases whose expected value is {@link absentProperty} are left out of the record entirely.
+ * Untyped rather than a `CellStyle` so that a caller may assert an unexpected type without a type suppression, which
+ * is what let the characterization tests assert the numbers this fix replaced.
  */
 export const buildExpectedStyle = (
   cases: readonly BooleanCellStyleCase[],
-  decodedValue: (serializedValue: SerializedBooleanValue) => unknown
-): Record<string, unknown> => {
-  const expected: Record<string, unknown> = {};
-  for (const { key, serializedValue } of cases) {
-    const value = decodedValue(serializedValue);
-    if (value !== absentProperty) {
-      expected[key] = value;
-    }
-  }
-  return expected;
-};
+  decodedValue: (serializedValue: SerializedBooleanValue) => unknown = decodedBooleanValue
+): Record<string, unknown> =>
+  Object.fromEntries(
+    cases.map(({ key, serializedValue }) => [key, decodedValue(serializedValue)])
+  );

@@ -101,14 +101,12 @@ describe('import mxGraph model', () => {
     modelChecker.checkCellsCount(4);
     modelChecker.expectIsVertex(model.getCell('2'), 'Vertex with style', {
       style: {
-        // @ts-ignore FIX should be true
-        dashed: 1,
+        dashed: true,
         fillColor: '#E6E6E6',
         html: 1,
         // @ts-ignore mxGraph compatibility, getPortConstraints is able to support such a string even if it doesn't match the function signature
         portConstraint: 'northsouth',
-        // @ts-ignore FIX should be false
-        rounded: 0,
+        rounded: false,
         whiteSpace: 'wrap',
       },
     });
@@ -152,8 +150,7 @@ describe('import model from draw.io', () => {
         fontSize: 27,
         fontStyle: 1,
         html: 1,
-        // @ts-ignore FIX should be false
-        rounded: 0,
+        rounded: false,
         strokeColor: '#6c8ebf',
         whiteSpace: 'wrap',
       },

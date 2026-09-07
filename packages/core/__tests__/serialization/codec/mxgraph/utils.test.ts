@@ -21,21 +21,10 @@ import {
   allBooleanCellStyleCases,
   booleanCellStyleCasesFor,
   buildExpectedStyle,
-  coerceNumericLookingValue,
+  decodedBooleanValue,
   serializedBooleanValues,
   type BooleanCellStyleCase,
-  type SerializedBooleanValue,
 } from '../../boolean-style-properties';
-
-/**
- * Expected value when a boolean property is decoded from an mxGraph style string.
- *
- * Characterizes the CURRENT WRONG behavior of {@link convertStyleFromString}: a numeric looking value becomes a
- * number and anything else stays a string, so a property declared as `boolean` never decodes to a boolean. Flipping
- * this function is how the fix turns these tests green again.
- */
-const decodedFromStyleString = (serializedValue: SerializedBooleanValue): unknown =>
-  coerceNumericLookingValue(serializedValue);
 
 const buildStyleString = (cases: readonly BooleanCellStyleCase[]): string =>
   cases.map(({ key, serializedValue }) => `${key}=${serializedValue}`).join(';');
@@ -48,7 +37,7 @@ describe('convertStyleFromString', () => {
         'rounded=0;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=27'
       )
     ).toEqual({
-      rounded: 0, // FIX should be true
+      rounded: false,
       whiteSpace: 'wrap',
       fillColor: '#dae8fc',
       strokeColor: '#6c8ebf',
@@ -72,11 +61,11 @@ describe('convertStyleFromString', () => {
         'rounded=0;whiteSpace=wrap;html=1;fillColor=#E6E6E6;dashed=1;'
       )
     ).toEqual({
-      rounded: 0, // FIX should be true
+      rounded: false,
       whiteSpace: 'wrap',
       html: 1, // custom draw.io
       fillColor: '#E6E6E6',
-      dashed: 1,
+      dashed: true,
     });
   });
 
@@ -96,7 +85,7 @@ describe('convertStyleFromString', () => {
   // renamed properties (see migration guide)
   test('With renamed properties', () => {
     expect(convertStyleFromString('autosize=1')).toEqual({
-      autoSize: 1, // FIX should be true
+      autoSize: true,
     });
   });
 
@@ -112,7 +101,7 @@ describe('convertStyleFromString', () => {
       const cases = booleanCellStyleCasesFor(serializedValue);
 
       expect(convertStyleFromString(buildStyleString(cases))).toEqual(
-        buildExpectedStyle(cases, decodedFromStyleString)
+        buildExpectedStyle(cases)
       );
     });
 
@@ -123,7 +112,7 @@ describe('convertStyleFromString', () => {
       )
     )('%s', (_description, styleCase) => {
       expect(convertStyleFromString(buildStyleString([styleCase]))).toEqual(
-        buildExpectedStyle([styleCase], decodedFromStyleString)
+        buildExpectedStyle([styleCase])
       );
     });
 
@@ -138,7 +127,7 @@ describe('convertStyleFromString', () => {
       '%s is decoded as the renamed autoSize property',
       (_description, serializedValue) => {
         expect(convertStyleFromString(`autosize=${serializedValue}`)).toEqual({
-          autoSize: decodedFromStyleString(serializedValue),
+          autoSize: decodedBooleanValue(serializedValue),
         });
       }
     );

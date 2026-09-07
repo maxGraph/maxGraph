@@ -133,11 +133,9 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
     vertexGeometry.offset = new Point(30, 40);
     modelChecker.expectIsVertex(model.getCell('v2'), 'vertex 2', {
       style: {
-        // @ts-ignore FIX should be false
-        bendable: 0,
+        bendable: false,
         fontColor: 'yellow',
-        // @ts-ignore FIX should be true
-        rounded: 1,
+        rounded: true,
       },
       geometry: vertexGeometry,
     });
@@ -344,7 +342,6 @@ describe('export', () => {
       new Point(40, 40),
     ];
 
-    // FIX boolean values should be set to true/false instead of 1/0
     expect(new ModelXmlSerializer(model).export()).toEqual(
       `<GraphDataModel>
   <root>
@@ -406,7 +403,6 @@ describe('export', () => {
     model.setTerminal(edge2, vertex1, false);
     model.setTerminal(edge2, vertex2, true);
 
-    // FIX boolean values should be set to true/false instead of 1/0
     expect(new ModelXmlSerializer(model).export()).toEqual(
       `<GraphDataModel>
   <root>
@@ -532,10 +528,8 @@ describe('import after export', () => {
     modelChecker.expectIsVertex(model.getCell('cell-1'), null, {
       style: {
         baseStyleNames: ['style1'],
-        // @ts-ignore FIX should be true
-        entryPerimeter: 1,
-        // @ts-ignore FIX should be true
-        shadow: 1,
+        entryPerimeter: true,
+        shadow: true,
       },
     });
   });

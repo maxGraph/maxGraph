@@ -36,21 +36,11 @@ import {
   allBooleanCellStyleCases,
   booleanCellStyleCasesFor,
   buildExpectedStyle,
-  coerceNumericLookingValue,
+  decodedBooleanValue,
   serializedBooleanValues,
   type BooleanCellStyleCase,
   type SerializedBooleanValue,
 } from './boolean-style-properties';
-
-/**
- * Expected value of a boolean property decoded from an XML attribute.
- *
- * Characterizes the current, WRONG behavior of `ObjectCodec.convertAttributeFromXml`, which decides from the shape of
- * the value and never from the type of the target property, so `rounded="1"` becomes the number 1 rather than `true`.
- * The fix flips this function, which is what turns the whole matrix below back to green.
- */
-const decodedFromXmlAttribute = (serializedValue: SerializedBooleanValue): unknown =>
-  coerceNumericLookingValue(serializedValue);
 
 const buildStyleXmlAttributes = (cases: readonly BooleanCellStyleCase[]): string =>
   cases.map(({ key, serializedValue }) => `${key}="${serializedValue}"`).join(' ');
@@ -85,15 +75,11 @@ describe('decode boolean style properties from an Object element', () => {
 
   test.each(serializedBooleanValues)('all properties serialized as %s', (value) => {
     const cases = booleanCellStyleCasesFor(value);
-    expect(decodeStyle(cases)).toEqual(
-      buildExpectedStyle(cases, decodedFromXmlAttribute)
-    );
+    expect(decodeStyle(cases)).toEqual(buildExpectedStyle(cases));
   });
 
   test.each(namedCases(allBooleanCellStyleCases))('%s', (_name, booleanCase) => {
-    expect(decodeStyle([booleanCase])).toEqual(
-      buildExpectedStyle([booleanCase], decodedFromXmlAttribute)
-    );
+    expect(decodeStyle([booleanCase])).toEqual(buildExpectedStyle([booleanCase]));
   });
 });
 
@@ -126,7 +112,7 @@ describe('decode boolean style properties from the style of a Cell', () => {
     modelChecker.checkRootCells();
     modelChecker.checkCellsCount(3);
     modelChecker.expectIsVertex(model.getCell('cell-1'), null, {
-      style: buildExpectedStyle(cases, decodedFromXmlAttribute),
+      style: buildExpectedStyle(cases),
     });
   };
 
@@ -226,7 +212,7 @@ const expectedFields = (
   serializedValue: SerializedBooleanValue
 ): Record<string, unknown> =>
   Object.fromEntries(
-    fields.map((field) => [field, decodedFromXmlAttribute(serializedValue)])
+    fields.map((field) => [field, decodedBooleanValue(serializedValue)])
   );
 
 describe('decode the boolean fields of the codec registered classes', () => {

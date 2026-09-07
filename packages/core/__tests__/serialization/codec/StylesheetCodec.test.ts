@@ -23,12 +23,10 @@ import {
 import { describe, expect, test } from '@jest/globals';
 import { exportObject, importToObject } from './shared';
 import {
-  absentProperty,
   allBooleanCellStyleCases,
   type BooleanCellStyleCase,
   booleanCellStyleCasesFor,
   buildExpectedStyle,
-  coerceNumericLookingValue,
   type SerializedBooleanValue,
   serializedBooleanValues,
 } from '../boolean-style-properties';
@@ -60,7 +58,7 @@ test('import', () => {
   const style = stylesheet.styles.get('custom');
   expect(style).toEqual({
     fillColor: 'red',
-    rounded: 'true',
+    rounded: true,
     strokeColor: 'blue',
   });
 });
@@ -103,16 +101,6 @@ test('export', () => {
   );
 });
 
-/**
- * Expected value when decoding a stylesheet entry, `<add as="rounded" value="1"/>`.
- *
- * Characterizes the CURRENT WRONG behavior of `StylesheetCodec.decode`, which coerces a numeric looking value to a
- * number and then stores it only when it is truthy: a boolean property never decodes to a boolean, and one of the
- * four spellings does not decode at all. The fix flips this function, and the whole matrix below with it.
- */
-const decodedFromStylesheetEntry = (serializedValue: SerializedBooleanValue): unknown =>
-  serializedValue === '0' ? absentProperty : coerceNumericLookingValue(serializedValue);
-
 const styleName = 'booleanProperties';
 
 const decodeStyleEntries = (
@@ -151,29 +139,28 @@ const singlePropertyCases: [string, BooleanCellStyleCase][] =
 describe('import boolean properties, characterization of the current wrong behavior', () => {
   test.each(aggregateCases)('%s', (_title, serializedValue) => {
     const cases = booleanCellStyleCasesFor(serializedValue);
-    expect(decodeStyleEntries(cases)).toEqual(
-      buildExpectedStyle(cases, decodedFromStylesheetEntry)
-    );
+    expect(decodeStyleEntries(cases)).toEqual(buildExpectedStyle(cases));
   });
 
   test.each(singlePropertyCases)('%s', (_title, booleanCase) => {
-    expect(decodeStyleEntries([booleanCase])).toEqual(
-      buildExpectedStyle([booleanCase], decodedFromStylesheetEntry)
-    );
+    expect(decodeStyleEntries([booleanCase])).toEqual(buildExpectedStyle([booleanCase]));
   });
 
-  // Defect, and the one this path does not share with the other two: the numeric coercion turns value="0" into the
-  // number 0, which the truthiness guard of StylesheetCodec.decode then discards, so the property is not stored at
-  // all rather than being stored as false. Emitting false instead of 0 does not fix it, false is falsy too.
-  test('value="0" makes the property vanish instead of storing false', () => {
-    expect(decodeStyleEntries([{ key: 'rounded', serializedValue: '0' }])).toEqual({});
+  // Regression guard, for the defect this path did not share with the other two: the decoded value used to be stored
+  // only when it was truthy, so value="0" was coerced to the number 0 and then discarded, leaving the property out of
+  // the style entirely. Storing false rather than 0 was not enough to fix it, false being falsy too.
+  test('value="0" is stored as false rather than dropped', () => {
+    expect(decodeStyleEntries([{ key: 'rounded', serializedValue: '0' }])).toEqual({
+      rounded: false,
+    });
   });
 
-  // Defect in the opposite direction: 'false' is not numeric, so it is stored as the string 'false', which is truthy
-  // at every use site. Stylesheets exported by released versions of maxGraph contain that spelling.
-  test('value="false" is stored as the truthy string false', () => {
+  // Regression guard for the opposite direction, and for the stylesheets exported by released versions of maxGraph,
+  // which carry that spelling: 'false' is not numeric, so it used to be stored as the string 'false', truthy at every
+  // use site.
+  test('value="false" is stored as false rather than as a truthy string', () => {
     expect(decodeStyleEntries([{ key: 'rounded', serializedValue: 'false' }])).toEqual({
-      rounded: 'false',
+      rounded: false,
     });
   });
 });

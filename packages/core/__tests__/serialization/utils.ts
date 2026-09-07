@@ -76,7 +76,7 @@ export class ModelChecker {
     assertCellIsDefined(cell);
     expect(cell.edge).toEqual(false);
     expect(cell.isEdge()).toBeFalsy();
-    expect(cell.vertex).toEqual(1); // FIX should be set to true
+    expect(cell.vertex).toEqual(true);
     expect(cell.isVertex()).toBeTruthy();
   }
 
@@ -87,7 +87,7 @@ export class ModelChecker {
   ) {
     this.checkCellBaseProperties(cell, value, properties);
     assertCellIsDefined(cell);
-    expect(cell.edge).toEqual(1); // FIX should be set to true
+    expect(cell.edge).toEqual(true);
     expect(cell.isEdge()).toBeTruthy();
     expect(cell.vertex).toEqual(false);
     expect(cell.isVertex()).toBeFalsy();
