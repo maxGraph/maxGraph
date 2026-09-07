@@ -16,12 +16,21 @@ limitations under the License.
 
 import { afterEach, beforeAll, beforeEach, describe, expect, test } from '@jest/globals';
 import {
+  Cell,
+  CollapseChange,
+  Geometry,
   GraphDataModel,
+  GraphView,
   ModelXmlSerializer,
+  registerAllCodecs,
   registerCoreCodecs,
+  TerminalChange,
   unregisterAllCodecs,
+  VisibleChange,
 } from '../../src';
+import { Editor } from '../../src/editor/Editor';
 import { ModelChecker } from './utils';
+import { createGraphWithoutContainer } from '../utils';
 import { importToObject } from './codec/shared';
 import {
   allBooleanCellStyleCases,
@@ -127,5 +136,186 @@ describe('decode boolean style properties from the style of a Cell', () => {
 
   test.each(namedCases(allBooleanCellStyleCases))('%s', (_name, booleanCase) => {
     expectDecodedStyle([booleanCase]);
+  });
+});
+
+/**
+ * The boolean fields of the classes that have a registered codec, with the XML element they decode from.
+ *
+ * The defect is not limited to styles: the attribute decoder is shared, so every one of these fields decodes as a
+ * number too. `previous` is left out of the change classes because their codecs exclude it from decoding.
+ */
+const classesWithBooleanFields: readonly [
+  string,
+  string,
+  () => object,
+  readonly string[],
+][] = [
+  [
+    'Cell',
+    'Cell',
+    () => new Cell(),
+    ['vertex', 'edge', 'connectable', 'visible', 'collapsed', 'invalidating'],
+  ],
+  [
+    'Geometry',
+    'Geometry',
+    () => new Geometry(),
+    ['relative', 'TRANSLATE_CONTROL_POINTS'],
+  ],
+  [
+    'GraphDataModel',
+    'GraphDataModel',
+    () => new GraphDataModel(),
+    ['maintainEdgeParent', 'ignoreRelativeEdgeParent', 'createIds', 'endingUpdate'],
+  ],
+  [
+    'GraphView',
+    'GraphView',
+    () => new GraphView(createGraphWithoutContainer()),
+    ['allowEval', 'captureDocumentGesture', 'rendering', 'updateStyle'],
+  ],
+  [
+    'CollapseChange',
+    'CollapseChange',
+    () => new CollapseChange(undefined!, undefined!, undefined!),
+    ['collapsed'],
+  ],
+  [
+    'VisibleChange',
+    'VisibleChange',
+    () => new VisibleChange(undefined!, undefined!, undefined!),
+    ['visible'],
+  ],
+  [
+    'TerminalChange',
+    'TerminalChange',
+    () => new TerminalChange(undefined!, undefined!, undefined!, undefined!),
+    ['source'],
+  ],
+  [
+    'Editor',
+    'Editor',
+    () => new Editor(undefined!),
+    [
+      'swimlaneRequired',
+      'disableContextMenu',
+      'forcedInserting',
+      'escapePostData',
+      'horizontalFlow',
+      'layoutDiagram',
+      'maintainSwimlanes',
+      'layoutSwimlanes',
+      'movePropertiesDialog',
+      'validating',
+      'destroyed',
+    ],
+  ],
+];
+
+const buildFieldAttributes = (
+  fields: readonly string[],
+  serializedValue: SerializedBooleanValue
+): string => fields.map((field) => `${field}="${serializedValue}"`).join(' ');
+
+const readFields = (target: object, fields: readonly string[]): Record<string, unknown> =>
+  Object.fromEntries(fields.map((field) => [field, (target as never)[field]]));
+
+const expectedFields = (
+  fields: readonly string[],
+  serializedValue: SerializedBooleanValue
+): Record<string, unknown> =>
+  Object.fromEntries(
+    fields.map((field) => [field, decodedFromXmlAttribute(serializedValue)])
+  );
+
+describe('decode the boolean fields of the codec registered classes', () => {
+  beforeEach(() => {
+    registerAllCodecs();
+  });
+
+  describe.each(classesWithBooleanFields)(
+    '%s',
+    (_name, nodeName, createTarget, fields) => {
+      test.each(serializedBooleanValues)('serialized as %s', (serializedValue) => {
+        const target = createTarget();
+        importToObject(
+          target,
+          `<${nodeName} ${buildFieldAttributes(fields, serializedValue)} />`
+        );
+        expect(readFields(target, fields)).toEqual(
+          expectedFields(fields, serializedValue)
+        );
+      });
+    }
+  );
+
+  const graphOwnBooleanFields = [
+    'destroyed',
+    'isConstrainedMoving',
+    'pageVisible',
+    'pageBreaksVisible',
+    'pageBreakDashed',
+    'preferPageSize',
+    'enabled',
+    'exportEnabled',
+    'importEnabled',
+    'ignoreScrollbars',
+    'translateToScrollPosition',
+    'resizeContainer',
+    'keepEdgesInForeground',
+    'keepEdgesInBackground',
+    'recursiveResize',
+    'resetViewOnRootChange',
+    'allowLoops',
+    'multigraph',
+  ];
+
+  test.each(serializedBooleanValues)(
+    'AbstractGraph own fields serialized as %s',
+    (serializedValue) => {
+      const graph = createGraphWithoutContainer();
+      importToObject(
+        graph,
+        `<Graph ${buildFieldAttributes(graphOwnBooleanFields, serializedValue)} />`
+      );
+      expect(readFields(graph, graphOwnBooleanFields)).toEqual(
+        expectedFields(graphOwnBooleanFields, serializedValue)
+      );
+    }
+  );
+
+  // The folding options are a plain object, not a class instance, but unlike a style object they are reached through
+  // the field of a graph, so the object being decoded into already holds real booleans.
+  const foldingOptionsBooleanFields = ['foldingEnabled', 'collapseToPreferredSize'];
+
+  test.each(serializedBooleanValues)(
+    'graph folding options serialized as %s',
+    (serializedValue) => {
+      const graph = createGraphWithoutContainer();
+      expect(typeof graph.options.foldingEnabled).toBe('boolean');
+
+      importToObject(
+        graph,
+        `<Graph><Object ${buildFieldAttributes(foldingOptionsBooleanFields, serializedValue)} as="options" /></Graph>`
+      );
+
+      expect(readFields(graph.options, foldingOptionsBooleanFields)).toEqual(
+        expectedFields(foldingOptionsBooleanFields, serializedValue)
+      );
+    }
+  );
+
+  // Not a wrong type but a lost value: unlike every other class above, the attributes of a Multiplicity are not
+  // decoded at all, so its boolean field keeps no trace of what the XML said. Tracked separately from this work.
+  test('Multiplicity source is not decoded at all', () => {
+    const graph = createGraphWithoutContainer();
+    importToObject(
+      graph,
+      `<Graph><Array as="multiplicities"><Multiplicity type="rectangle" source="1" /></Array></Graph>`
+    );
+
+    expect(graph.multiplicities).toHaveLength(1);
+    expect(graph.multiplicities[0].source).toBeUndefined();
   });
 });
