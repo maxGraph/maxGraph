@@ -68,11 +68,29 @@ export const booleanCellStyleProperties = [
   'swimlaneLine',
 ] as const satisfies readonly BooleanCellStyleKeys[];
 
+/**
+ * The boolean properties of {@link CellStyle} that {@link booleanCellStyleProperties} does not list, `never` when the
+ * list is complete.
+ *
+ * Only meaningful because the list is declared `as const`: with a widened element type this would always be `never`.
+ */
 type UnlistedBooleanCellStyleKey = Exclude<
   BooleanCellStyleKeys,
   (typeof booleanCellStyleProperties)[number]
 >;
 
+/**
+ * Fails to compile when {@link booleanCellStyleProperties} is missing a boolean property of {@link CellStyle}, naming
+ * the problem in the error message rather than reporting a type mismatch.
+ *
+ * The declaration is the check: assigning `true` is only valid while {@link UnlistedBooleanCellStyleKey} is `never`.
+ * It runs wherever this source is compiled, so `npm run build` fails, and that is a step the CI already performs on
+ * every push. A boolean property added to the interface therefore cannot be released without being listed here, which
+ * is the whole point: an unlisted property would silently keep decoding as a number.
+ *
+ * The `void` below is what keeps the constant from being reported as unused. The check lives in the type, so the value
+ * itself is never read.
+ */
 const noBooleanPropertyIsUnlisted: [UnlistedBooleanCellStyleKey] extends [never]
   ? true
   : 'booleanCellStyleProperties is missing at least one boolean property of CellStyle' =
