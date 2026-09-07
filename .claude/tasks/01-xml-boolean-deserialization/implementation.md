@@ -309,10 +309,18 @@ own encoder. It is a hand written XML path.
 
 ### Follow-up issues to file, none of them filed yet
 
-1. `Multiplicity` attributes are not decoded at all, so a `source="1"` is LOST rather than mistyped. A test documents
-   the behavior.
-2. `StylesheetCodec.ts:145` indexes `Stylesheet.styles`, a `Map`, as an object, so `extend=` never resolves and its
-   warning always fires. No test covers it.
+1. `Multiplicity`: RESOLVED, nothing to do, and the characterization test was REMOVED. No codec is registered for the
+   class, so `Codec.decode` keeps a clone of the XML element: the values are preserved and simply never turned into a
+   `Multiplicity`. The earlier claim in these notes that a `source="1"` was LOST was wrong, measured: the element
+   keeps `source="1"` and `type="rectangle"`. The maintainer's ruling is that a `Multiplicity` is **not intended to be
+   serialized at all**, since it will only be used by a new plugin extracted from `ValidationMixin`. A test asserting
+   how an unsupported input decodes would pin an accident and would obstruct that extraction, so it was dropped rather
+   than kept.
+
+2. `StylesheetCodec` read the style to extend with `obj.styles[extend]` while `Stylesheet.styles` is a `Map`, so
+   `extend=` never resolved and the warning always fired: FIXED on the dedicated branch
+   `fix/stylesheet-codec-extend`, off `origin/main`, one commit with four tests. Not pushed yet. It touches the same
+   `decode` function as this branch, so expect a small conflict whichever lands second.
 3. `CellsMixin.ts:1175-1185`, exhaustive branches treating an unset property like `false`.
 4. The numeric half of the child element form, if option B is chosen for task 15.
 5. Issue 2 of the original pair, the one this whole branch implements, was never filed as a GitHub issue. The draft is

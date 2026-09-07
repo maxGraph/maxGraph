@@ -344,17 +344,4 @@ describe('decode the boolean fields of the codec registered classes', () => {
       );
     }
   );
-
-  // Not a wrong type but a lost value: unlike every other class above, the attributes of a Multiplicity are not
-  // decoded at all, so its boolean field keeps no trace of what the XML said. Tracked separately from this work.
-  test('Multiplicity source is not decoded at all', () => {
-    const graph = createGraphWithoutContainer();
-    importToObject(
-      graph,
-      `<Graph><Array as="multiplicities"><Multiplicity type="rectangle" source="1" /></Array></Graph>`
-    );
-
-    expect(graph.multiplicities).toHaveLength(1);
-    expect(graph.multiplicities[0].source).toBeUndefined();
-  });
 });
