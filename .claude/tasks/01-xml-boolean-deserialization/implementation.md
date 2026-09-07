@@ -259,3 +259,61 @@ So the two halves are checked in the two places that can each carry one:
 Verified that the private assertion is absent from the emitted declarations, so a consumer's augmentation cannot make
 the library's own `.d.ts` fail to compile. And verified with a red check that a misspelled property name is a compile
 error: `error TS2345: Argument of type '"myCustomFlg"' is not assignable to parameter of type 'BooleanCellStyleKeys'`.
+
+## State at 2026-09-07, before a context compaction
+
+Branch `fix/xml-boolean-deserialization`, 26 commits ahead of `origin/main`, NOTHING PUSHED, working tree clean.
+Suite 64 suites and 1210 tests, and every CI check green: build, `test-check`, tests, ts-support, circular
+dependencies, lint.
+
+Tasks 01 to 12 are done and ticked in `tasks/index.md`. Remaining:
+
+- **Task 13**, the Extending guide plus the links from the codec and global configuration pages. Blocked only on the
+  task 15 decision, which its limits section must state.
+- **Task 14**, ADR 0004 and the changelog ruling. Ready, independent of 15.
+- **Task 15**, the child element form of a style value, BLOCKED on the maintainer choosing among the options below.
+
+### Task 15, the options as presented, with the measurements behind them
+
+Measured, not assumed: in the child form EVERY value stays a string today, not only booleans.
+`<Object><add as="rounded" value="1"/><add as="strokeWidth" value="2"/></Object>` yields `"1"` and `"2"`, and an array
+element `<Array><add value="1"/></Array>` yields `"1"` as well. The only in-repo uses of the shape are
+`<Stylesheet><add as="defaultVertex">`, which `StylesheetCodec` handles through its own `decode` override rather than
+through `ObjectCodec.decodeChild`, so that map entry form is effectively untested and is never produced by maxGraph's
+own encoder. It is a hand written XML path.
+
+- **A. Leave and document.** Zero cost and zero risk. The inconsistency stays: attribute form gives `true`, child form
+  gives `"1"`. The guide gains a paragraph saying registration does not cover that shape.
+- **B. Boolean only, for the `as` named form.** About three lines, gated on the field name being a declared boolean
+  property or the target field already holding a boolean. Closes exactly the inconsistency this work made visible,
+  changes nothing about numbers, so arrays and every existing test are untouched. The numeric half becomes its own
+  issue. RECOMMENDED.
+- **C. Boolean and numeric, for the `as` named form.** Makes the child form equivalent to the attribute form, so
+  `strokeWidth` becomes a number too. Changes a dimension nobody reported, and a hand written entry meant as text but
+  looking numeric would change type. The attribute path already has that looseness, so it is defensible, just wider.
+- **D. C plus array elements.** Rejected: `<Array as="baseStyleNames"><add value="1"/></Array>` would turn a style
+  name into a number.
+
+### Decisions already taken, for the pull request description
+
+- The XML format does not change: the encoder writes 1 and 0 everywhere, which is the only form mxGraph and draw.io
+  read back. The two `FIX boolean values should be set to true/false` comments were deleted rather than implemented.
+- `GraphViewCodec`'s hardcoded `html="true"` stays, mirroring `mxGraphViewCodec.js:96`. Not a style property, and that
+  export format has no decoder.
+- Two side effects of the nullish guard on the stylesheet path, both correct, both worth a line in the pull request:
+  an explicitly empty `value=""` is now stored rather than dropped, and an evaluated-text result of `0`, `false` or
+  `''` is no longer discarded.
+- Changelog candidates for task 14 to rule on: a user override of `isNumericAttribute` is now bypassed for boolean
+  properties, and `StylesheetCodec` export changes `value="true"` to `value="1"`. The new registration functions are
+  additive, so they get no entry under the project policy.
+
+### Follow-up issues to file, none of them filed yet
+
+1. `Multiplicity` attributes are not decoded at all, so a `source="1"` is LOST rather than mistyped. A test documents
+   the behavior.
+2. `StylesheetCodec.ts:145` indexes `Stylesheet.styles`, a `Map`, as an object, so `extend=` never resolves and its
+   warning always fires. No test covers it.
+3. `CellsMixin.ts:1175-1185`, exhaustive branches treating an unset property like `false`.
+4. The numeric half of the child element form, if option B is chosen for task 15.
+5. Issue 2 of the original pair, the one this whole branch implements, was never filed as a GitHub issue. The draft is
+   in the session scratchpad. Decide whether the pull request needs it for traceability.
