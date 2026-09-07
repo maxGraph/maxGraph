@@ -32,14 +32,14 @@ type NullableStringOrObject = string | object | null;
 /**
  * Narrows the cell to a non nullish value, and fails loudly if it is not.
  *
- * `checkCellBaseProperties` has already asserted that the cell exists, so reaching the error means the assertion
- * above it stopped working. Throwing rather than returning matters: an early return would skip every assertion that
- * follows and let the test pass while checking nothing.
+ * Every call site has already asserted that the cell exists, so reaching the error means that assertion stopped
+ * working. Throwing rather than returning matters: an early return would skip every assertion that follows and let
+ * the test pass while checking nothing.
  */
 function assertCellIsDefined(cell: Cell | null): asserts cell is Cell {
   if (!cell) {
     throw new Error(
-      'The cell must be defined here, checkCellBaseProperties is expected to have failed before this point'
+      'The cell must be defined at this point, the assertions above it are expected to have failed first'
     );
   }
 }
@@ -100,7 +100,7 @@ export class ModelChecker {
   ) {
     expect(cell).toBeDefined();
     expect(cell).not.toBeNull();
-    if (!cell) return; // cannot occur, see above
+    assertCellIsDefined(cell);
 
     expect(cell.value).toEqual(value);
     expect(cell.getParent()?.id).toEqual('1'); // default parent id
