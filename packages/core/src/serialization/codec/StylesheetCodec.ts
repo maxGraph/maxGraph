@@ -142,7 +142,9 @@ export class StylesheetCodec extends ObjectCodec {
 
         if (as) {
           const extend = (<Element>node).getAttribute('extend');
-          let style = extend ? clone(obj.styles[extend]) : null;
+          // Read with Map.get: Stylesheet.styles is a Map, and indexing it as an object always returned undefined, so
+          // the extend attribute never resolved and the warning below always fired
+          let style = extend ? clone(obj.styles.get(extend)) : null;
 
           if (!style) {
             if (extend) {
