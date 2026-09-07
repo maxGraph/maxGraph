@@ -23,6 +23,10 @@ offending property. Assert today's wrong values, so the suite is green before an
   comment is wrong and the correct value is `false` (`utils.test.ts:29` and `:53`).
 - Removing the type cast at `:77` removes the only reason for the suppression at `:76`.
 - `test.each` with the tuple form and a `'%s'` title is required by `.claude/rules/testing/conventions.md`.
+- The shared fixture `packages/core/__tests__/serialization/boolean-style-properties.ts` keeps only what more than one
+  path needs: the property list with its two compile-time checks, the case generators, the absent-property sentinel,
+  the numeric coercion rule and the expected-object builder. This task OWNS the expected value function for the style string
+  path and the style string builder, because each has a single consumer and belongs next to it.
 
 ## Success Criteria
 - Every one of the 36 properties is covered on this path, in all four spellings.

@@ -26,6 +26,10 @@ checker so expectations no longer need suppressions.
   still type checks.
 - Keep the whole-object comparison at `utils.ts:89`: it catches a wrong value and a missing or extra key, which
   matters for the next task.
+- The shared fixture `packages/core/__tests__/serialization/boolean-style-properties.ts` keeps only what more than one
+  path needs: the property list with its two compile-time checks, the case generators, the absent-property sentinel,
+  the numeric coercion rule and the expected-object builder. This task OWNS the expected value function for the attribute
+  path and the attribute builder, because each has a single consumer and belongs next to it.
 
 ## Success Criteria
 - Every one of the 36 properties is covered on this path, in all four spellings, in both the isolated and the

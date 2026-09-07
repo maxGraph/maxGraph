@@ -23,6 +23,11 @@ released versions have been exporting it.
 - The unmarked wrong expectation is at `:48`, and the input to keep is at `:39`.
 - The per-path expected values, including which case yields an absent property, are tabulated in
   `raw/08-test-matrix.md`.
+- The shared fixture `packages/core/__tests__/serialization/boolean-style-properties.ts` keeps only what more than one
+  path needs: the property list with its two compile-time checks, the case generators, the absent-property sentinel,
+  the numeric coercion rule and the expected-object builder. This task OWNS the expected value function for the stylesheet
+  path and the stylesheet document builder, which is also why the dropped-property quirk is documented here, beside
+  the test that proves it, rather than in the shared fixture.
 
 ## Success Criteria
 - Every one of the 36 properties is covered on this path, in all four spellings.

@@ -56,9 +56,10 @@ Neither blocks a task, both change how one is done:
 
 ## Commit boundaries
 
-Four commits, not fifteen:
+Four groups, not fifteen commits, except that the characterization group is committed task by task since each of its
+tasks leaves the suite green on its own:
 
-1. characterization, tasks 01 to 05
+1. characterization, tasks 01 to 05, one commit per task
 2. the decode fix, tasks 06 to 10, plus 15 if it is routed
 3. the encoder alignment, task 11
 4. the registration API with its documentation and the decision record, tasks 12 to 14
