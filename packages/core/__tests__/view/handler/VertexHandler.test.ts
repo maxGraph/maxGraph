@@ -26,6 +26,7 @@ import {
   VertexHandler,
   VertexHandlerConfig,
 } from '../../../src';
+import { createContainer } from '../../utils';
 
 const createMouseEvent = (type: string, x: number, y: number): InternalMouseEvent => {
   // Alt disables the grid, so that the angle is not snapped to the rotation raster
@@ -39,9 +40,7 @@ const createMouseEvent = (type: string, x: number, y: number): InternalMouseEven
 const createdGraphs: Graph[] = [];
 
 const createGraph = (scale: number): Graph => {
-  const container = document.createElement('div');
-  Object.defineProperty(container, 'offsetWidth', { value: 1200 });
-  Object.defineProperty(container, 'offsetHeight', { value: 900 });
+  const container = createContainer({ offsetWidth: 1200, offsetHeight: 900 });
   document.body.appendChild(container);
 
   const graph = new Graph(container);

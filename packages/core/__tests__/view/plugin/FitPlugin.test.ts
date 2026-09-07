@@ -16,19 +16,7 @@ limitations under the License.
 
 import { expect, test } from '@jest/globals';
 import { BaseGraph, FitPlugin, Rectangle } from '../../../src';
-
-const createContainer = (dimensions: {
-  offsetWidth?: number;
-  offsetHeight?: number;
-  clientWidth?: number;
-  clientHeight?: number;
-}) => {
-  const container = document.createElement('div');
-  for (const [name, value] of Object.entries(dimensions)) {
-    value && Object.defineProperty(container, name, { value, configurable: true });
-  }
-  return container;
-};
+import { createContainer } from '../../utils';
 
 describe('fitCenter', () => {
   test('graph has dimensions set to zero', () => {

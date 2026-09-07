@@ -18,6 +18,28 @@ import { expect } from '@jest/globals';
 import { Cell, type CellStateStyle, Graph } from '../src';
 
 /**
+ * Creates a `div` to be used as the container of a {@link Graph}, with the given dimensions faked.
+ *
+ * jsdom computes no layout, so the dimensions a `Graph` reads from its container are always zero unless they are
+ * defined as own properties of the element. Dimensions set to `0` are left out, as that is the value jsdom returns
+ * anyway.
+ *
+ * The element is not attached to the document. Append it when the test needs the container to be in the DOM.
+ */
+export const createContainer = (dimensions: {
+  offsetWidth?: number;
+  offsetHeight?: number;
+  clientWidth?: number;
+  clientHeight?: number;
+}): HTMLDivElement => {
+  const container = document.createElement('div');
+  for (const [name, value] of Object.entries(dimensions)) {
+    value && Object.defineProperty(container, name, { value, configurable: true });
+  }
+  return container;
+};
+
+/**
  * Creates a new {@link Graph} without `container` (use the default value of the parameters).
  *
  * This is useful when tests don't check the view.
