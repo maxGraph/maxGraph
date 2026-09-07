@@ -19,7 +19,12 @@ import type { Cell, CellStyle, Geometry, GraphDataModel } from '../../src';
 
 interface ExpectCellProperties {
   geometry?: Geometry;
-  style?: CellStyle;
+  /**
+   * `Record<string, unknown>` is accepted in addition to {@link CellStyle} so that a test can state a decoded value
+   * whose type contradicts the declared one, which is currently the case for every boolean property, without needing
+   * a type suppression on each of them.
+   */
+  style?: CellStyle | Record<string, unknown>;
 }
 
 type NullableStringOrObject = string | object | null;
