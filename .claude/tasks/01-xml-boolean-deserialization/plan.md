@@ -19,7 +19,8 @@ The strategy has four parts, in this order:
    for style objects, which no oracle can serve.
 3. **Encoder alignment.** The XML keeps 1/0 everywhere. `ObjectCodec` already emits 1/0 and does not change; the two
    codecs that emit the words `true`/`false` are aligned onto 1/0.
-4. **Docs and decision record.** No public registration API, recorded as an ADR.
+4. **A minimal additive registration API**, so an application that extends `CellStateStyle` by module augmentation
+   can declare its own boolean properties, plus the docs and an ADR recording what was rejected.
 
 Two invariants the whole plan rests on:
 
@@ -159,11 +160,48 @@ Two invariants the whole plan rests on:
 - Export two predicates: one for a style key, one for a field of a target object.
 - The precedent for this artifact is `geometryNumericAttributes` / `pointNumericAttributes`
   (`ObjectCodec.ts:28-34`), a module-level typed array consulted by `isNumericAttribute`. Same shape, one level up.
-- Keep it a plain module imported directly by the three codecs, NOT a registry. If the built-in keys sat behind a
-  registration call, an application that forgot the call would silently lose correct decoding, reproducing the
-  `Graph` versus `BaseGraph` footgun documented in `website/docs/usage/global-configuration.md:64-67` and
-  `tree-shaking.md:189-202`. A plain module also keeps the fix tree-shakeable: an app that never decodes XML pays
-  nothing.
+- Hold TWO sets, and keep them separate: the 36 built-in keys as a plain module-level `const`, and a second,
+  initially empty set for keys registered by the application. The key predicate consults both.
+  The separation is the whole safety argument: if the built-in keys sat behind a registration call, an application
+  that forgot the call would silently lose correct decoding, reproducing the `Graph` versus `BaseGraph` footgun
+  documented in `website/docs/usage/global-configuration.md:64-67` and `tree-shaking.md:189-202`. An additive-only
+  second set cannot break anyone who never calls it, and the module stays tree-shakeable: an app that never decodes
+  XML pays nothing.
+- Export the additive API as `registerCustomBooleanCellStylePropertiesForCodecs(...properties)` and
+  `unregisterAllCustomBooleanCellStylePropertiesForCodecs()`, following the `register*` / `unregisterAll*` naming of
+  `view/style/register.ts`. The second clears ONLY the custom set, leaving the built-ins intact; it is not garnish,
+  every `reset*` / `unregisterAll*` in this codebase exists because global mutable state leaks between tests.
+  The name is deliberately long, in the range the repo already uses (`unregisterAllEdgeStylesAndPerimeters`,
+  `registerEntityRelationEdgeStyle`). Each part earns its place: `Custom` says the call ADDS to a built-in set rather
+  than declaring the complete one, so omitting a built-in property does not disable it, and `ForCodecs` says the
+  declaration is consumed by the codecs, not by the styling engine, so it changes decoding and not rendering or
+  `getCellStyle`. `Properties` rather than `Keys` matches the repo vocabulary (`stylePropertyName` in
+  `StylesheetCodec`, "style properties" throughout the `types.ts` JSDoc).
+- Do NOT put `Global` in the name. Every `register*` in maxGraph is global and the project documents that as a
+  property of its registries (`website/docs/tree-shaking.md:199-202`), so naming it in one function would imply the
+  others are not. State the global scope in the JSDoc instead.
+- Naming inconsistency to accept knowingly: the augmented interface is `CellStateStyle` and the derived type is
+  `BooleanCellStateStyleKeys`, so the function says `CellStyle` while its own parameter type says `CellStateStyle`.
+  `CellStyle` is the term users know and set on a cell, so keep the shorter word in the function name.
+- Type the registration function's parameters as `BooleanCellStateStyleKeys`. Because that type is derived from
+  `CellStateStyle` and a consumer's `declare module` block adds their property to that interface, their key is
+  accepted in their own compilation unit while a typo is a compile error. The type-level and runtime halves of the
+  module-augmentation feature then line up instead of being two disconnected mechanisms.
+- CRITICAL: the compile-time exhaustiveness assertion must stay MODULE-PRIVATE, never exported. TypeScript emits
+  declarations only for exported symbols, so keeping it private ensures the unresolved conditional type never reaches
+  the published `.d.ts`, where a consumer's augmentation combined with `skipLibCheck: false` could otherwise make the
+  library's own declarations fail to compile.
+- Registration is DECODE-ONLY by construction, and the docs must say so: the encode side needs nothing because
+  `isBooleanAttribute` (`ObjectCodec.ts:564`) tests `value == true || value == false`, a question about the value's
+  type rather than its key, so a custom boolean property already exports as 1/0 today.
+
+#### `packages/core/src/index.ts`
+
+- Export the two registration functions from the new `serialization/boolean-attributes.ts`. The existing serialization
+  exports sit at `:90-97`; add the module there rather than to a `codec/_*-codecs.ts` barrel, which carries codec
+  classes only.
+- Do NOT export the key predicates or the built-in list: they are implementation detail, and exporting them would
+  freeze the two-set structure as public API.
 
 #### `packages/core/src/serialization/ObjectCodec.ts`
 
@@ -251,22 +289,44 @@ Two invariants the whole plan rests on:
 - `:212` currently states "Note that the codecs will turn booleans into numeric values" as intended behavior. It stays
   true for the ENCODE side and must be qualified: the XML keeps 1/0, while decoding now yields real booleans.
 - The page's "Using custom object and custom Codec" section (`:162-177`) is where the new
-  `isBooleanValueAttribute` hook belongs, and where a user with a module-augmented boolean style property is told to
-  override it.
+  `isBooleanValueAttribute` hook belongs, for a consumer who needs per-codec control rather than a global key.
+- Add the module-augmentation example: the `declare module` block declaring the boolean property, the single
+  `registerCustomBooleanCellStylePropertiesForCodecs(...)` call at setup, and a note that one registration covers all
+  three decode shapes
+  (`style="myFlag=1"`, `<Object myFlag="1" as="style"/>` and `<add as="myFlag" value="1"/>`), that it is decode-only,
+  and that the teardown function exists for tests.
+
+#### `packages/website/docs/usage/global-configuration.md`
+
+- Its `## Styles` section (`:53-105`) already lists the five style registries and their unregister functions. Add the
+  new register and unregister pair there for discoverability, pointing at the codecs page for the full example. The
+  sidebar is autogenerated (`packages/website/sidebars.ts:14`), so no wiring is needed.
 
 #### `docs/adr/0004-*.md` (NEW)
 
-- Record the decision NOT to ship a runtime registration API for custom boolean style keys, following the conventions
-  in `docs/adr/README.md` (Status field, one decision per file, record what was rejected and why). The rejected
-  options and their costs are in `raw/06-registration-api.md`: the built-in list must stay a plain module under every
-  option, and adding the API later is 8 to 9 files of which 3 are already touched here, so nothing is locked in.
+- Record the decision to ship a MINIMAL ADDITIVE registration API and what was rejected alongside it, following the
+  conventions in `docs/adr/README.md` (Status field, one decision per file, record what was rejected and why).
+  Rejected, with the reasons in `raw/06-registration-api.md`:
+  - putting the 36 BUILT-IN keys behind the same registration call, because correctness of decoding would then depend
+    on an application remembering to call it;
+  - a full metadata registry mapping every style key to a type, about 15 files and 5 or more public names for a
+    problem whose entire content is 36 known strings plus a few user ones;
+  - a per-codec static option in the spirit of `ObjectCodec.allowEval`, which cannot reach `convertStyleFromString`
+    at all since that is a free function rather than a codec class, and which revives a pattern the configuration
+    objects replaced;
+  - doing nothing and documenting the limitation, which was the original recommendation. It was dropped because the
+    mxGraph style-string path has NO usable hook: `convertStyleFromString` is not re-exported
+    (`codec/_model-codecs.ts` carries only `mxCellCodec` and `mxGeometryCodec`), so the only workaround there is
+    subclassing `mxCellCodec`, overriding `decodeAttribute`, calling `super` and coercing one's own keys afterwards.
+    Documenting three different per-path workarounds, one of which replaces a codec, reads badly for a feature the
+    CHANGELOG advertises as an extension point, and the additive API costs three marginal files over this plan.
 
 #### `CHANGELOG.md`
 
-- Per the project policy, only breaking changes are listed. Two candidates, both for the maintainer to rule on:
-  a user override of `isNumericAttribute` is now bypassed for boolean keys (someone who broadened it to return
-  `false` for `rounded` used to receive the string `'1'` and now receives `true`), and `StylesheetCodec` export
-  changes `value="true"` to `value="1"`.
+- Per the project policy, only breaking changes are listed, so the new registration functions get NO entry: they are
+  additive. Two candidates remain, both for the maintainer to rule on: a user override of `isNumericAttribute` is now
+  bypassed for boolean keys (someone who broadened it to return `false` for `rounded` used to receive the string
+  `'1'` and now receives `true`), and `StylesheetCodec` export changes `value="true"` to `value="1"`.
 
 ## Testing strategy
 
@@ -274,6 +334,10 @@ Two invariants the whole plan rests on:
   before any source change. Run `npm test -w packages/core`, then `npm run test-check -w packages/core`, which is what
   actually type checks the tests (`tsc --noEmit -p tsconfig.test.json`, every file under `__tests__`, `strict: true`),
   and is a separate CI gate on three OSes (`.github/workflows/build.yml:55-56`). `@swc/jest` type checks NOTHING.
+- Registration API: one small test file under `__tests__/serialization/`, modeled on `__tests__/util/config.test.ts`
+  (62 lines) or `__tests__/internal/BaseRegistry.test.ts` (72 lines). Cover a registered custom key decoding to a
+  real boolean on all three paths, the built-in keys surviving the teardown function, and the teardown clearing only
+  the custom set. Add the teardown call to the lifecycle of any test that registers.
 - Fix commit: edit the three expectation functions in the fixture, then the 14 existing assertions, then delete the 7
   now-unnecessary `@ts-ignore` and the two misleading encode comments. The list of 14, with the two the `FIX should be`
   markers missed, is in `raw/08-test-matrix.md`.
@@ -305,7 +369,11 @@ Two invariants the whole plan rests on:
    suppressions only, if any remain after the `Record<string, unknown>` design.
 2. 144 rows per path, or trim to the `"1"` / `"0"` variants per key (72) plus aggregate cases for the word spellings?
    Recommended: keep all 144, they are cheap and the word spellings are where path C misbehaves worst.
-3. `ObjectCodec.decodeChild` (`:811-834`), a fourth decode site that converts NOTHING: `<add as="rounded" value="1"/>`
-   under a generic `<Object>` yields the string `'1'`. Only the array-element shape is exercised today. Route it
-   through the same conversion, or leave and document? Recommended: leave it, and name it in the PR description.
+3. `ObjectCodec.decodeChild` (`:811-834`), a fourth decode site that converts NOTHING: `:819` is a bare
+   `child.getAttribute('value')`, so `<Object as="style"><add as="rounded" value="1"/></Object>` yields the string
+   `'1'`, for built-in and registered keys alike. maxGraph's own encoder never emits that shape for styles, it always
+   writes attributes, so it only affects hand-written XML. RECOMMENDATION REVISED to routing it through the same
+   conversion: after the fix, `<Object rounded="1" as="style"/>` gives `true` while the `<add>` form gives `'1'`,
+   an inconsistency inside a single format, and it would make the answer to "does registration cover the native
+   format" conditional. One extra call site in a function the fix already touches nearby.
 4. Align `GraphViewCodec.ts:95` (`html="true"`) too, or leave it?
