@@ -717,9 +717,10 @@ class VertexHandler implements MouseListenerSet {
 
       if (index === InternalEvent.ROTATION_HANDLE) {
         // With the rotation handle in a corner, need the angle and distance.
-        // The handle position derives from the bounds, whose coordinates are rounded, so the centre must be taken from
-        // the same bounds. Comparing it with the unrounded centre of the state made dx a sub-pixel rounding artifact
-        // whose sign flipped the angle by 180 degrees at some scales.
+        // The handle position derives from the bounds, whose coordinates getSelectionBounds rounds, and the centre is
+        // taken from those same bounds on purpose, so that the angle is exactly 0 for the default handle and dragging
+        // commits the bearing the pointer sits at rather than the angular travel of the handle. rotateVertex and
+        // redrawHandles keep measuring from the unrounded centre of the state, at most half a pixel away on each axis.
         const pos = this.getRotationHandlePosition();
 
         const dx = pos.x - this.bounds.getCenterX();

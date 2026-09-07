@@ -110,6 +110,8 @@ const rotateWithHandleTo = (graph: Graph, cell: Cell, targetAngle: number): void
     );
   };
 
+  // Sweep the angle instead of jumping to it: every mouseMove recomputes the angle from scratch, so only the last one
+  // decides the committed value, but a real drag does cross the intermediate angles
   const stepCount = 8;
   for (let step = 1; step <= stepCount; step++) {
     const point = pointAt(startAngle + ((targetAngle - startAngle) * step) / stepCount);
