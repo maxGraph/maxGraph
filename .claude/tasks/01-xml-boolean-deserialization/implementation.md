@@ -126,3 +126,37 @@ asserts that precondition explicitly before decoding, so task 07 cannot regress 
   offending field, and it avoids constructing an `Editor`, which builds a whole graph under jsdom, once per field.
 - The Apache header of task 03's file was briefly duplicated: the rtk proxy strips comment blocks from `cat` output,
   so the file looked headerless. Verify headers with `python3` or `grep`, never with `cat`.
+
+## Task 06, the foundations
+
+Done, commit `cca2dfeca`, the first source change of this work. No behavior change: nothing consults the new code yet,
+so the suite stays at 63 suites and 1200 tests.
+
+### What landed
+
+- `BooleanCellStyleKeys` in `types.ts`, next to `NumericCellStateStyleKeys`, tagged `@since 0.25.0` like the other
+  recent additions. Derived from `CellStyle` rather than `CellStateStyle` so `ignoreDefaultStyle` is included, which
+  task 02 proved a style string really can set, and with `NonNullable` applied so `orthogonal` is not dropped.
+- `parseBoolean` in `internal/utils.ts`, next to `isNullish`, accepting both spellings and returning `undefined` for
+  anything else. Tagged `@private not part of the public API` like its neighbours.
+- New `src/serialization/boolean-attributes.ts` holding the 36-name list with its two compile-time checks, plus
+  `isBooleanCellStyleProperty` for style objects and `isBooleanFieldOfTarget`, which reads the target field and so
+  serves every class instance and every plain object reached through a field.
+
+### Verification
+
+- RED CHECK on the production list: removing a name fails `npm run build -w packages/core` with
+  `error TS2322: Type 'true' is not assignable to type 'booleanCellStyleProperties is missing at least one boolean
+  property of CellStyle'`. The guard therefore protects the shipped code, not only the tests, and it fires in a step
+  CI already runs.
+- Build, `test-check`, full suite, repo-wide lint and the circular dependency check all green.
+
+### Deviations from the plan
+
+- The custom property set and the registration functions were NOT added here, although task 06 mentions splitting the
+  list in two. A set with no way to add to it is dead code, so the second set arrives with its API in task 12.
+- The test fixture now imports the production list instead of keeping its own copy, and its local derived type and
+  duplicate guards are gone. The 36 names exist in exactly one place, and the tests iterate what production uses. The
+  fixture shrank from 200 lines to 83.
+- `booleanCellStyleProperties` is exported so the fixture can iterate it, but it is not re-exported from `index.ts`
+  and is marked `@internal`, as is `isBooleanCellStyleProperty`.
