@@ -90,6 +90,11 @@ export { default as SwimlaneOrdering } from './view/layout/hierarchical/Swimlane
 export { default as Codec } from './serialization/Codec.js';
 export { default as CodecRegistry } from './serialization/CodecRegistry.js';
 export { default as ObjectCodec } from './serialization/ObjectCodec.js';
+// Named exports on purpose: the boolean property list and its predicates are implementation detail
+export {
+  registerCustomBooleanCellStylePropertiesForCodecs,
+  unregisterAllCustomBooleanCellStylePropertiesForCodecs,
+} from './serialization/boolean-attributes.js';
 export * from './serialization/ModelXmlSerializer.js';
 export * from './serialization/codec/_model-codecs.js';
 export * from './serialization/codec/_other-codecs.js';

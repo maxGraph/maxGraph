@@ -102,13 +102,70 @@ const booleanCellStylePropertyNames: ReadonlySet<string> = new Set(
   booleanCellStyleProperties
 );
 
+const customBooleanCellStylePropertyNames = new Set<string>();
+
 /**
- * Returns `true` when the given name is a boolean property of {@link CellStyle}.
+ * Declares custom boolean properties of {@link CellStyle} to the codecs, so that they are decoded as booleans
+ * instead of as the number `1` or `0`.
+ *
+ * Only needed for a property added by module augmentation of {@link CellStateStyle}, and only for a `boolean` one: a
+ * property of any other type needs nothing, because the codecs decide from the shape of the serialized value, and
+ * only a boolean is indistinguishable from a number once written as `1`.
+ *
+ * One call covers the three shapes a style can be serialized in: the mxGraph string form `style="myFlag=1"`, the
+ * attribute form `<Object myFlag="1" as="style"/>` and the stylesheet form `<add as="myFlag" value="1"/>`.
+ *
+ * Decoding only. Encoding needs no declaration, since it decides from the type of the value rather than from the name
+ * of the property, so a custom boolean is already written as `1` or `0`.
+ *
+ * Adds to the properties the library declares, it never replaces them, so omitting a built-in property here does not
+ * disable it. The registration is global, like every other `register` function of maxGraph, and
+ * {@link unregisterAllCustomBooleanCellStylePropertiesForCodecs} clears what was registered here without touching the
+ * built-in properties.
+ *
+ * ```typescript
+ * declare module '@maxgraph/core' {
+ *   interface CellStateStyle {
+ *     myCustomFlag?: boolean;
+ *   }
+ * }
+ *
+ * registerCustomBooleanCellStylePropertiesForCodecs('myCustomFlag');
+ * ```
+ *
+ * @param properties the names of the properties to declare. Typed against {@link BooleanCellStyleKeys}, so a property
+ * declared by module augmentation is accepted while a misspelled one does not compile.
+ * @category Serialization with Codecs
+ * @since 0.25.0
+ */
+export const registerCustomBooleanCellStylePropertiesForCodecs = (
+  ...properties: BooleanCellStyleKeys[]
+): void => {
+  properties.forEach((property) => customBooleanCellStylePropertyNames.add(property));
+};
+
+/**
+ * Clears the properties declared with {@link registerCustomBooleanCellStylePropertiesForCodecs}, leaving the
+ * properties the library declares untouched.
+ *
+ * Mainly useful to keep tests independent, as the registration is global.
+ *
+ * @category Serialization with Codecs
+ * @since 0.25.0
+ */
+export const unregisterAllCustomBooleanCellStylePropertiesForCodecs = (): void => {
+  customBooleanCellStylePropertyNames.clear();
+};
+
+/**
+ * Returns `true` when the given name is a boolean property of {@link CellStyle}, declared by the library or by the
+ * application through {@link registerCustomBooleanCellStylePropertiesForCodecs}.
  *
  * @internal
  */
 export const isBooleanCellStyleProperty = (name: string): boolean =>
-  booleanCellStylePropertyNames.has(name);
+  booleanCellStylePropertyNames.has(name) ||
+  customBooleanCellStylePropertyNames.has(name);
 
 /**
  * Returns `true` when the given target already holds a boolean in the given field.
