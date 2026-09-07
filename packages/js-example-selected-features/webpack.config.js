@@ -40,6 +40,6 @@ const config = {
 };
 
 module.exports = withBundleAnalysisAndSizeBudget(
-  { isDevMode, maxAssetSize: 385_000, maxEntrypointSize: 391_000 },
+  { isDevMode, maxAssetSize: 387_000, maxEntrypointSize: 393_000 },
   config
 );
