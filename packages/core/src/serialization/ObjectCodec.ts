@@ -603,6 +603,18 @@ class ObjectCodec {
   }
 
   /**
+   * Fields that hold a boolean but that the target cannot be asked about, because they are assigned from a
+   * constructor argument rather than initialized by their declaration, so the object being decoded into holds
+   * `undefined` for them.
+   *
+   * Declarative counterpart of {@link exclude} and {@link idrefs} for {@link isBooleanValueAttribute}. Prefer it to
+   * overriding the predicate: a subclass names its own exceptions without having to know how the predicate decides.
+   *
+   * @since 0.25.0
+   */
+  booleanFields: readonly string[] = [];
+
+  /**
    * Returns true if the given XML attribute is or should be a boolean value.
    *
    * Hook for subclassers. Consulted by {@link convertAttributeFromXml} BEFORE {@link isNumericAttribute}, so
@@ -622,30 +634,21 @@ class ObjectCodec {
    * with style semantics too, so an attribute of a plain object that happens to be named after a boolean style
    * property becomes a boolean.
    *
-   * The lookup is keyed by the ATTRIBUTE name, not by the mapped field name, because that is the name the value is
-   * assigned to in {@link decodeAttribute}. Reading a mapped name here would test a different field from the one
-   * being written.
+   * The lookup is keyed by the name the value is ASSIGNED TO, which is not the same name in both callers:
+   * {@link decodeAttribute} writes to the raw attribute name and passes it, while {@link decodeChild} writes to the
+   * mapped field name and passes that one. Reading the other name would test a different field from the one being
+   * written.
    *
-   * Override this to declare a boolean style property added through module augmentation of {@link CellStateStyle},
-   * which the built-in list cannot know about.
+   * Override this to scope the behaviour to a single codec, for a boolean style property added through module
+   * augmentation of {@link CellStateStyle}. Prefer `registerCustomBooleanCellStylePropertiesForCodecs` when the
+   * property should be recognized everywhere, since an override here cannot reach the mxGraph `style` string form,
+   * which is parsed outside of any codec.
    *
    * @param dec {@link Codec} that controls the decoding process.
    * @param attr XML attribute to be converted.
    * @param obj Object to convert the attribute for.
    * @since 0.25.0
    */
-  /**
-   * Fields that hold a boolean but that the target cannot be asked about, because they are assigned from a
-   * constructor argument rather than initialized by their declaration, so the object being decoded into holds
-   * `undefined` for them.
-   *
-   * Declarative counterpart of {@link exclude} and {@link idrefs} for {@link isBooleanValueAttribute}. Prefer it to
-   * overriding the predicate: a subclass names its own exceptions without having to know how the predicate decides.
-   *
-   * @since 0.25.0
-   */
-  booleanFields: readonly string[] = [];
-
   isBooleanValueAttribute(dec: Codec, attr: any, obj: any): boolean {
     const name = attr.nodeName;
     return (
@@ -886,6 +889,22 @@ class ObjectCodec {
 
         if (value == null && ObjectCodec.allowEval) {
           value = doEval(getTextContent(<Text>(<unknown>child)));
+        } else if (fieldname != null && value != null) {
+          // This form carries no type information of its own, so it used to convert nothing at all: an
+          // `<add as="rounded" value="1"/>` child stored the string '1' while the equivalent `rounded="1"` attribute
+          // decoded to true, an inconsistency inside a single format. The attribute predicate is reused, so that an
+          // override of it covers both forms, and it is asked with the MAPPED field name because that is the name
+          // addObjectValue writes to here. Only booleans are converted, so a numeric looking value is still stored as
+          // a string, unlike on the attribute path.
+          if (
+            this.isBooleanValueAttribute(
+              dec,
+              { nodeName: fieldname, name: fieldname, value },
+              obj
+            )
+          ) {
+            value = parseBoolean(value) ?? value;
+          }
         }
       } else {
         value = dec.decode(child, template);

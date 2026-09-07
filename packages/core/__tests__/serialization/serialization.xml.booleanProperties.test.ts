@@ -83,6 +83,59 @@ describe('decode boolean style properties from an Object element', () => {
   });
 });
 
+describe('decode boolean style properties from the add children of an Object element', () => {
+  // ModelXmlSerializer is not involved here, so the codecs must be registered explicitly
+  beforeEach(() => {
+    registerCoreCodecs();
+  });
+
+  const decodeStyle = (children: string): object => {
+    const style = {};
+    importToObject(style, `<Object>${children}</Object>`);
+    return style;
+  };
+
+  const decodeStyleCases = (cases: readonly BooleanCellStyleCase[]): object =>
+    decodeStyle(
+      cases
+        .map(
+          ({ key, serializedValue }) => `<add as="${key}" value="${serializedValue}" />`
+        )
+        .join('')
+    );
+
+  test.each(serializedBooleanValues)('all properties serialized as %s', (value) => {
+    const cases = booleanCellStyleCasesFor(value);
+    expect(decodeStyleCases(cases)).toEqual(buildExpectedStyle(cases));
+  });
+
+  test.each(namedCases(allBooleanCellStyleCases))('%s', (_name, booleanCase) => {
+    expect(decodeStyleCases([booleanCase])).toEqual(buildExpectedStyle([booleanCase]));
+  });
+
+  test('agrees with the attribute form', () => {
+    const cases = booleanCellStyleCasesFor('1');
+    const fromAttributes = {};
+    importToObject(fromAttributes, `<Object ${buildStyleXmlAttributes(cases)} />`);
+    expect(decodeStyleCases(cases)).toEqual(fromAttributes);
+  });
+
+  test('a property of another type is still stored as a string, unlike on the attribute form', () => {
+    expect(decodeStyle('<add as="strokeWidth" value="2" />')).toEqual({
+      strokeWidth: '2',
+    });
+    expect(decodeStyle('<add as="fillColor" value="red" />')).toEqual({
+      fillColor: 'red',
+    });
+  });
+
+  test('an unrecognized spelling of a boolean property is left untouched', () => {
+    expect(decodeStyle('<add as="rounded" value="yes" />')).toEqual({
+      rounded: 'yes',
+    });
+  });
+});
+
 describe('decode boolean style properties from the style of a Cell', () => {
   const decodeStyleOfVertex = (
     cases: readonly BooleanCellStyleCase[]

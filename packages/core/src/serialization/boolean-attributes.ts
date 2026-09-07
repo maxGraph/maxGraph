@@ -112,8 +112,10 @@ const customBooleanCellStylePropertyNames = new Set<string>();
  * property of any other type needs nothing, because the codecs decide from the shape of the serialized value, and
  * only a boolean is indistinguishable from a number once written as `1`.
  *
- * One call covers the three shapes a style can be serialized in: the mxGraph string form `style="myFlag=1"`, the
- * attribute form `<Object myFlag="1" as="style"/>` and the stylesheet form `<add as="myFlag" value="1"/>`.
+ * One call covers the four shapes a style can be serialized in: the mxGraph string form `style="myFlag=1"`, the
+ * attribute form `<Object myFlag="1" as="style"/>`, the child element form
+ * `<Object as="style"><add as="myFlag" value="1"/></Object>` and the stylesheet entry form
+ * `<add as="myFlag" value="1"/>` inside a `<Stylesheet>`.
  *
  * Decoding only. Encoding needs no declaration, since it decides from the type of the value rather than from the name
  * of the property, so a custom boolean is already written as `1` or `0`.
