@@ -33,11 +33,18 @@ _**Note:** Yet to be released breaking changes appear here._
   ```
 - The dispatch methods `createHandler` and `createEdgeHandler` are now defined on `SelectionCellsHandler`. If you were overriding them to change the dispatch logic itself (and not only the instantiated class), extend `SelectionCellsHandler` and pass your subclass in the `plugins` option.
 - `SelectionCellsHandler.createHandler` returns a non-nullable `CellHandler` (the new `EdgeHandler | VertexHandler` union type exported from the package), whereas `AbstractGraph.createHandler` was typed as nullable. TypeScript users can drop the now-useless null checks on the returned value.
+- XML decoding now produces real booleans where the types declare them, instead of the numbers `1` and `0`. This applies to the boolean properties of `CellStateStyle` and `CellStyle`, and to the boolean fields of every class registered with a codec, `Cell.vertex` and `Cell.edge` in particular. All four decode shapes are concerned: the mxGraph style string form `style="rounded=1"`, the attribute form `<Object rounded="1" as="style"/>`, the child element form `<Object as="style"><add as="rounded" value="1"/></Object>` and the stylesheet entry form `<add as="rounded" value="1"/>`.
+  Code comparing a decoded value against `1` or `'1'` must now compare against `true`, so `style.rounded == 1` becomes `style.rounded == true` (or simply `style.rounded`) and `cell.vertex === 1` becomes `cell.vertex === true`. Loose comparisons such as `cell.vertex == 1` keep working, strict ones do not.
+  The XML format itself does not change: the encoder still writes `1` and `0`, which is the only form mxGraph and draw.io read back. Existing documents therefore need no migration and interoperability is unaffected.
+  An application that overrode `ObjectCodec.isNumericAttribute` no longer controls boolean properties: the new `isBooleanValueAttribute` is consulted first and wins, so a property decoded as a boolean never reaches the numeric conversion.
 - The minimum supported TypeScript version is now **3.9**, up from 3.8. Applications still on TypeScript 3.8 must upgrade to use this release.
   Module augmentation of the types exposed by the package silently does not work on TypeScript 3.8. TypeScript 3.9 fixes it.
   TypeScript 3.8 was released in February 2020, 3.9 in May 2020 and 4.0 in August 2020. Both 3.8 and 3.9 are more than six years old, and 3.9 was superseded three months after its release, so most applications already use a newer version and the impact of this change should be limited.
 
 **Other Changes**:
+- The XML produced by `StylesheetCodec` now writes `value="1"` and `value="0"` where it used to write `value="true"` and `value="false"`, which aligns it with every other encoder of the library.
+  This is not a breaking change, decoding accepts both spellings, so previously exported documents keep decoding identically.
+  It is mentioned here only for consumers comparing exported XML as text, for instance in golden-file tests.
 - The order of the child elements produced by the XML serialization of `<Graph>` and `<BaseGraph>` has changed: `pageFormat` and `warningImage` are now emitted right after `options`, instead of last.
   This is not a breaking change, decoding matches elements by their `as` attribute and is order-independent, so existing documents keep decoding identically and previously exported documents are still valid.
   It is mentioned here only for consumers comparing exported XML as text, for instance in golden-file tests.

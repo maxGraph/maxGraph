@@ -22,9 +22,12 @@ lives, why an obvious refactoring was set aside, which constraint blocks a move.
 | [0001](0001-use-mixins-to-split-the-graph-class.md) | Use mixins to split the Graph class | Accepted |
 | [0002](0002-use-plugins-for-optional-and-new-features.md) | Use plugins for optional behaviour and new features | Accepted |
 | [0003](0003-move-members-out-of-abstract-graph.md) | Move members out of `AbstractGraph` | Accepted |
+| [0004](0004-register-custom-boolean-style-properties-for-codecs.md) | Register custom boolean style properties for the codecs | Accepted |
 
 0001 and 0002 record the two structural approaches and why the second replaces the first. 0003 applies them to the
-members still sitting in `AbstractGraph`.
+members still sitting in `AbstractGraph`. 0004 steps outside class structure altogether: it is the first decision
+about the extensibility of the public types, and about what the serialization layer needs at runtime to honour a type
+an application declares itself.
 
 0001 stays `Accepted` rather than superseded: plugins replace mixins for new code, but the mixin design still explains
 a large part of the current codebase, and its recorded costs are what justify the shift.

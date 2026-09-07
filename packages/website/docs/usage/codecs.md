@@ -176,6 +176,10 @@ The default encoding scheme maps all non-object fields to string attributes and 
 name of the object as the node name and the field name for the as-attribute value.
 This default encoding scheme may be overridden by custom codecs, which are registered in the `CodecRegistry`.
 
+:::tip
+To add your own properties to the Cell styles and have them decoded with the right type, see the [Extending](./extending.md) page.
+:::
+
 For example, consider the following JavaScript object definition:
 ```typescript
 const object = {
@@ -213,9 +217,13 @@ And here is the XML structure that represents the object:
 </Object>
 ```
 
-Note that the codecs will turn booleans into numeric values, no array indices are stored if they are numeric and non-object
-array members are stored inside the value-attribute.
+Note that the codecs will turn booleans into the numeric values `1` and `0` when encoding, so the XML always stores `1` and `0`, while decoding turns them back into real booleans (since version 0.25.0).
+Also, no array indices are stored if they are numeric and non-object array members are stored inside the value-attribute.
 Furthermore, one may include other XML files by use of the `include` directive in the XML structures.
+
+:::note
+Decoding a value as a boolean requires knowing that the property holds a boolean. `maxGraph` knows its own style properties, but a custom style property must be declared to the codecs, see the [Extending](./extending.md) page.
+:::
 
 
 ## Examples and Demos

@@ -109,4 +109,13 @@ unregisterAllStencilShapes();
 `CodecRegistry` is used for serialization and deserialization of objects in XML objects.
 By default, no codec is registered. Some functions are provided to register codecs for specific objects.
 
+An application that adds its own **boolean** properties to the Cell styles declares them to the codecs, so that a serialized `1` is decoded as `true` instead of as the number `1`. This is another global registration, with its own unregister function (both since 0.25.0):
+
+```javascript
+registerCustomBooleanCellStylePropertiesForCodecs('myCustomBooleanStyleProperty');
+unregisterAllCustomBooleanCellStylePropertiesForCodecs();
+```
+
+Only **boolean** properties need it, and only when the application decodes XML: an application that does not use the codecs has nothing to declare. See the [Extending](./extending.md) page for the complete example and the reasons.
+
 For more details about the codecs, see the Codec [documentation page](./codecs.md).
