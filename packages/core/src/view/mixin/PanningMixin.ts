@@ -25,7 +25,7 @@ import type SelectionCellsHandler from '../plugin/SelectionCellsHandler.js';
 
 type PartialGraph = Pick<
   AbstractGraph,
-  'getContainer' | 'getView' | 'getPlugin' | 'fireEvent'
+  'getContainer' | 'getView' | 'getPlugin' | 'fireEvent' | 'getBorder' | 'getGraphBounds'
 >;
 type PartialPanning = Pick<
   AbstractGraph,
@@ -34,17 +34,23 @@ type PartialPanning = Pick<
   | 'useScrollbarsForPanning'
   | 'timerAutoScroll'
   | 'allowAutoPanning'
+  | 'ignoreScrollbars'
+  | 'translateToScrollPosition'
   | 'panDx'
   | 'panDy'
   | 'isUseScrollbarsForPanning'
   | 'isTimerAutoScroll'
   | 'isAllowAutoPanning'
+  | 'isIgnoreScrollbars'
+  | 'isTranslateToScrollPosition'
   | 'getPanDx'
   | 'setPanDx'
   | 'getPanDy'
   | 'setPanDy'
   | 'panGraph'
+  | 'center'
   | 'scrollCellToVisible'
+  | 'scrollPointToVisible'
   | 'scrollRectToVisible'
   | 'setPanning'
 >;
@@ -71,6 +77,18 @@ export const PanningMixin: PartialType = {
 
   isAllowAutoPanning() {
     return this.allowAutoPanning;
+  },
+
+  ignoreScrollbars: false,
+
+  isIgnoreScrollbars() {
+    return this.ignoreScrollbars;
+  },
+
+  translateToScrollPosition: false,
+
+  isTranslateToScrollPosition() {
+    return this.translateToScrollPosition;
   },
 
   panDx: 0,
@@ -190,6 +208,129 @@ export const PanningMixin: PartialType = {
       this.panDy = dy;
 
       this.fireEvent(new EventObject(InternalEvent.PAN));
+    }
+  },
+
+  scrollPointToVisible(x, y, extend = false, border = 20) {
+    const panningHandler = this.getPlugin<PanningHandler>('PanningHandler');
+    const container = this.getContainer();
+
+    if (
+      !this.isTimerAutoScroll() &&
+      (this.ignoreScrollbars || hasScrollbars(container))
+    ) {
+      const c = container;
+
+      if (
+        x >= c.scrollLeft &&
+        y >= c.scrollTop &&
+        x <= c.scrollLeft + c.clientWidth &&
+        y <= c.scrollTop + c.clientHeight
+      ) {
+        let dx = c.scrollLeft + c.clientWidth - x;
+
+        if (dx < border) {
+          const old = c.scrollLeft;
+          c.scrollLeft += border - dx;
+
+          // Automatically extends the canvas size to the bottom, right
+          // if the event is outside of the canvas and the edge of the
+          // canvas has been reached. Notes: Needs fix for IE.
+          if (extend && old === c.scrollLeft) {
+            // @ts-ignore
+            const root = this.getView().getDrawPane().ownerSVGElement;
+            const width = c.scrollWidth + border - dx;
+
+            // Updates the clipping region. This is an expensive
+            // operation that should not be executed too often.
+            // @ts-ignore
+            root.style.width = `${width}px`;
+
+            c.scrollLeft += border - dx;
+          }
+        } else {
+          dx = x - c.scrollLeft;
+
+          if (dx < border) {
+            c.scrollLeft -= border - dx;
+          }
+        }
+
+        let dy = c.scrollTop + c.clientHeight - y;
+
+        if (dy < border) {
+          const old = c.scrollTop;
+          c.scrollTop += border - dy;
+
+          if (old == c.scrollTop && extend) {
+            // @ts-ignore
+            const root = this.getView().getDrawPane().ownerSVGElement;
+            const height = c.scrollHeight + border - dy;
+
+            // Updates the clipping region. This is an expensive
+            // operation that should not be executed too often.
+            // @ts-ignore
+            root.style.height = `${height}px`;
+
+            c.scrollTop += border - dy;
+          }
+        } else {
+          dy = y - c.scrollTop;
+
+          if (dy < border) {
+            c.scrollTop -= border - dy;
+          }
+        }
+      }
+    } else if (
+      this.isAllowAutoPanning() &&
+      panningHandler &&
+      !panningHandler.isActive()
+    ) {
+      panningHandler.getPanningManager().panTo(x + this.getPanDx(), y + this.getPanDy());
+    }
+  },
+
+  center(horizontal = true, vertical = true, cx = 0.5, cy = 0.5) {
+    const container = this.getContainer();
+    const _hasScrollbars = hasScrollbars(container);
+    const padding = 2 * this.getBorder();
+    const cw = container.clientWidth - padding;
+    const ch = container.clientHeight - padding;
+    const bounds = this.getGraphBounds();
+
+    const t = this.getView().translate;
+    const s = this.getView().scale;
+
+    let dx = horizontal ? cw - bounds.width : 0;
+    let dy = vertical ? ch - bounds.height : 0;
+
+    if (!_hasScrollbars) {
+      this.getView().setTranslate(
+        horizontal ? Math.floor(t.x - bounds.x / s + (dx * cx) / s) : t.x,
+        vertical ? Math.floor(t.y - bounds.y / s + (dy * cy) / s) : t.y
+      );
+    } else {
+      bounds.x -= t.x;
+      bounds.y -= t.y;
+
+      const sw = container.scrollWidth;
+      const sh = container.scrollHeight;
+
+      if (sw > cw) {
+        dx = 0;
+      }
+
+      if (sh > ch) {
+        dy = 0;
+      }
+
+      this.getView().setTranslate(
+        Math.floor(dx / 2 - bounds.x),
+        Math.floor(dy / 2 - bounds.y)
+      );
+      container.scrollLeft = (sw - cw) / 2;
+      container.scrollTop = (sh - ch) / 2;
     }
   },
 
