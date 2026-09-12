@@ -15,10 +15,81 @@ limitations under the License.
 */
 
 import type Cell from '../cell/Cell.js';
+import type Point from '../geometry/Point.js';
 import type Rectangle from '../geometry/Rectangle.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {
+    /**
+     * Specifies if the scale and translate should be reset if the root changes in
+     * the model.
+     * @default true
+     */
+    resetViewOnRootChange: boolean;
+
+    /**
+     * Returns the current root of the displayed cell hierarchy. This is a
+     * shortcut to {@link GraphView.currentRoot} in {@link GraphView}.
+     */
+    getCurrentRoot: () => Cell | null;
+
+    /**
+     * Returns the translation to be used if the given cell is the root cell as
+     * an {@link Point}. This implementation returns null.
+     *
+     * To keep the children at their absolute position while stepping into groups,
+     * this function can be overridden as follows.
+     *
+     * @example
+     * ```javascript
+     * var offset = new mxPoint(0, 0);
+     *
+     * while (cell != null)
+     * {
+     *   var geo = this.model.getGeometry(cell);
+     *
+     *   if (geo != null)
+     *   {
+     *     offset.x -= geo.x;
+     *     offset.y -= geo.y;
+     *   }
+     *
+     *   cell = this.model.getParent(cell);
+     * }
+     *
+     * return offset;
+     * ```
+     *
+     * @param cell {@link Cell} that represents the root.
+     */
+    getTranslateForRoot: (cell: Cell | null) => Point | null;
+
+    /**
+     * Returns the offset to be used for the cells inside the given cell. The
+     * root and layer cells may be identified using {@link GraphDataModel.isRoot} and
+     * {@link GraphDataModel.isLayer}. For all other current roots, the
+     * {@link GraphView.currentRoot} field points to the respective cell, so that
+     * the following holds: cell == this.view.currentRoot. This implementation
+     * returns null.
+     *
+     * @param cell {@link Cell} whose offset should be returned.
+     */
+    getChildOffsetForCell: (cell: Cell) => Point | null;
+
+    /**
+     * Uses the root of the model as the root of the displayed cell hierarchy
+     * and selects the previous root.
+     */
+    home: () => void;
+
+    /**
+     * Returns true if the given cell is a valid root for the cell display
+     * hierarchy. This implementation returns true for all non-null values.
+     *
+     * @param cell {@link Cell} which should be checked as a possible root.
+     */
+    isValidRoot: (cell: Cell) => boolean;
+
     /**
      * Adds the cells into the given group.
      * The change is carried out using {@link cellsAdded}, {@link cellsMoved} and {@link cellsResized}.
