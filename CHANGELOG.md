@@ -36,6 +36,10 @@ _**Note:** Yet to be released breaking changes appear here._
 - The minimum supported TypeScript version is now **3.9**, up from 3.8. Applications still on TypeScript 3.8 must upgrade to use this release.
   Module augmentation of the types exposed by the package silently does not work on TypeScript 3.8. TypeScript 3.9 fixes it.
   TypeScript 3.8 was released in February 2020, 3.9 in May 2020 and 4.0 in August 2020. Both 3.8 and 3.9 are more than six years old, and 3.9 was superseded three months after its release, so most applications already use a newer version and the impact of this change should be limited.
+- The `entryPerimeter` and `exitPerimeter` style properties now default to `true` instead of `false`, which restores the `mxGraph` behavior already documented by their JSDoc.
+  The default only applies when a fixed connection point is set, that is when both `entryX` and `entryY` (respectively `exitX` and `exitY`) are defined. In that case, the connection point is now projected onto the perimeter of the terminal, as in `mxGraph`, instead of being placed at the exact relative position inside the shape.
+  Diagrams imported from `mxGraph` or draw.io are the main beneficiaries. These tools only write `entryPerimeter=0` or `exitPerimeter=0` when the perimeter is disabled and rely on the default otherwise, so edges using fixed connection points were rendered differently by maxGraph.
+  To keep the previous maxGraph behavior, set `entryPerimeter: false` or `exitPerimeter: false` explicitly in the edge style.
 
 **Other Changes**:
 - The order of the child elements produced by the XML serialization of `<Graph>` and `<BaseGraph>` has changed: `pageFormat` and `warningImage` are now emitted right after `options`, instead of last.
