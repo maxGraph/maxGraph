@@ -33,7 +33,7 @@ if (index != null) { ... }          // Bad, correct but easy to misread as a typ
 ```
 
 For **object, array and function references**, plain truthiness says exactly the same thing, since such a value is never
-falsy. Keep the short form, and do not rewrite the existing `isNullish` calls on references just to apply this rule.
+falsy. Keep the short form.
 
 ```typescript
 if (!handler) return;               // Good, a CellHandler is either absent or truthy

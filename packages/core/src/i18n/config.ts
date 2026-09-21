@@ -119,7 +119,7 @@ export const TranslationsConfig = {
    * @default empty array
    */
   setLanguages(value: string[] | null | undefined): void {
-    if (!isNullish(value)) {
+    if (value) {
       values.languages = value;
     }
   },

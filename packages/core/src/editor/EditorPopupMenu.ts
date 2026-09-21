@@ -157,7 +157,7 @@ export class EditorPopupMenu {
     cell: Cell | null = null,
     evt: MouseEvent | null = null
   ) {
-    if (!isNullish(this.config)) {
+    if (this.config) {
       const conditions = this.createConditions(editor, cell, evt);
       const item = <Element>this.config.firstChild;
       this.addItems(editor, menu, cell, evt, conditions, item, null);

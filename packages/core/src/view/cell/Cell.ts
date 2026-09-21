@@ -616,7 +616,7 @@ export class Cell implements IdentityObject {
    */
   cloneValue(): any {
     let value: UserObject = this.getValue();
-    if (!isNullish(value)) {
+    if (value) {
       if (typeof value.clone === 'function') {
         value = value.clone();
       } else if (!isNullish(value.nodeType) && value.cloneNode) {
