@@ -55,29 +55,59 @@ import { StyleDefaultsConfig } from '../../util/config.js';
  * of the graph.
  *
  * ### Custom Shapes
- * To extend from this class, the basic code looks as follows.
- * In the special case where the custom shape consists only of one filled region
- * or one filled region and an additional stroke the mxActor and mxCylinder
- * should be subclassed, respectively.
- * ```javascript
- * function CustomShape() { }
  *
- * CustomShape.prototype = new mxShape();
- * CustomShape.prototype.constructor = CustomShape;
- * ```
- * To register a custom shape in an existing graph instance, one must register the
- * shape under a new name in the graph’s cell renderer as follows:
- * ```javascript
+ * A custom shape is a class extending one of the exported shape classes, registered in {@link ShapeRegistry} under a
+ * name, then referenced by that name as the `shape` property of a cell style.
+ *
+ * Choose the base class according to what is painted:
+ * - {@link Shape} itself for a vertex made of a single filled and stroked path: override
+ *   `paintVertexShape(c, x, y, w, h)` and call `c.translate(x, y)`, `c.begin()`, the path drawing operations, then
+ *   `c.fillAndStroke()`.
+ * - {@link CylinderShape} for a filled area plus a stroke only overlay path: override
+ *   `redrawPath(c, x, y, w, h, isForeground)`.
+ * - {@link RectangleShape} (override `paintBackground` or `paintForeground`) or {@link EllipseShape} (override
+ *   `paintVertexShape`) to decorate an existing shape.
+ * - For edges, {@link ConnectorShape}, {@link PolylineShape}, {@link ArrowShape} or {@link ArrowConnectorShape}:
+ *   override `paintEdgeShape(c, pts)`.
+ *
+ * **The constructor must take no argument.** {@link CellRenderer.createShape} instantiates the registered class with
+ * `new shapeConstructor()`, for vertices and edges alike, so the legacy `(bounds, fill, stroke, strokeWidth)`
+ * parameters still declared by several built-in shapes are never passed on that path. The renderer populates the
+ * instance afterwards: {@link Shape.apply} sets {@link Shape.state}, {@link Shape.style} and the fields derived from
+ * the style, then {@link CellRenderer.redrawShape} sets {@link Shape.bounds} for a vertex, {@link Shape.points} for an
+ * edge, and {@link Shape.scale}.
+ *
+ * Consequently, the cell style is only available at paint time, through {@link Shape.style}, which is
+ * `CellStateStyle | null` and must be guarded.
+ *
+ * ```typescript
+ * class CustomShape extends Shape {
+ *   override paintVertexShape(
+ *     c: AbstractCanvas2D,
+ *     x: number,
+ *     y: number,
+ *     w: number,
+ *     h: number
+ *   ): void {
+ *     const notch = this.style?.arcSize ?? 10;
+ *     c.translate(x, y);
+ *     c.begin();
+ *     c.moveTo(0, 0);
+ *     c.lineTo(w - notch, 0);
+ *     c.lineTo(w, notch);
+ *     c.lineTo(w, h);
+ *     c.lineTo(0, h);
+ *     c.close();
+ *     c.fillAndStroke();
+ *   }
+ * }
+ *
  * ShapeRegistry.add('customShape', CustomShape);
+ *
+ * graph.insertVertex({ value: 'custom', position: [10, 10], size: [100, 60], style: { shape: 'customShape' } });
  * ```
- * The second argument is the name of the constructor.
- * In order to use the shape you can refer to the given name above in a stylesheet.
- * For example, to change the shape for the default vertex style, the following code
- * is used:
- * ```javascript
- * const style = graph.getStylesheet().getDefaultVertexStyle();
- * style.shape = 'customShape';
- * ```
+ *
+ * See the Extending maxGraph page of the documentation for a complete walkthrough.
  *
  * @category Shape
  */

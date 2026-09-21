@@ -54,11 +54,44 @@ import { StyleDefaultsConfig } from '../../../util/config.js';
  * Extends {@link Shape} to implement a text shape.
  *
  * This shape is **NOT** registered in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * It is the label shape: it is created by {@link CellRenderer.createLabel} and stored in {@link CellState.text}, next to
+ * the shape of the cell itself. It is not usable as a value of the `shape` style, because shapes coming from
+ * {@link ShapeRegistry} are constructed without any argument whereas this one requires a value and bounds, and because
+ * {@link getTextRotation} would then recurse endlessly on its own state.
  *
- * To change vertical text from "bottom to top" to "top to bottom", the following code can be used:
- * ```javascript
- * TextShape.prototype.verticalTextRotation = 90;
+ * ### Rotation of vertical labels
+ *
+ * The rotation applied to a vertical label (a cell whose `horizontal` style is `false`) does not come from this shape.
+ * {@link getTextRotation} delegates to the shape of the cell, {@link CellState.shape}, so the
+ * {@link verticalTextRotation} declared here is never read while the label belongs to a cell state. To change vertical
+ * text from "bottom to top" (the -90 degrees default) to "top to bottom", set {@link Shape.verticalTextRotation} on the
+ * shape of the cell. No global configuration object covers it, so the change goes through a {@link CellRenderer}
+ * subclass:
+ *
+ * ```typescript
+ * import { CellRenderer, Graph } from '@maxgraph/core';
+ * import type { CellState, Shape } from '@maxgraph/core';
+ *
+ * class TopToBottomCellRenderer extends CellRenderer {
+ *   override createShape(state: CellState): Shape {
+ *     const shape = super.createShape(state);
+ *     shape.verticalTextRotation = 90;
+ *     return shape;
+ *   }
+ * }
+ *
+ * class TopToBottomGraph extends Graph {
+ *   override createCellRenderer(): CellRenderer {
+ *     return new TopToBottomCellRenderer();
+ *   }
+ * }
  * ```
+ *
+ * {@link BaseGraph} takes the renderer as a collaborator instead of a factory method:
+ * `new BaseGraph({ container, cellRenderer: new TopToBottomCellRenderer() })`.
+ *
+ * Beware that `0` does not mean "no extra rotation": {@link Shape.getTextRotation} computes
+ * `this.verticalTextRotation || -90`, so a value of `0` falls back to -90 degrees.
  *
  * @category Vertex Shapes
  */
@@ -170,6 +203,10 @@ class TextShape extends Shape {
 
   /**
    * Rotation for vertical text. Default is -90 (bottom to top).
+   *
+   * This value is **not** used to rotate the label of a cell: {@link getTextRotation} delegates to
+   * {@link CellState.shape}, so the value that applies is the {@link Shape.verticalTextRotation} of the shape of the
+   * cell. See the documentation of this class for the way to change it.
    */
   override verticalTextRotation = -90;
 
