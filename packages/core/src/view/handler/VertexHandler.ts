@@ -1342,13 +1342,16 @@ class VertexHandler implements MouseListenerSet {
 
         let geo = cell.getGeometry();
 
-        if (geo && parent) {
-          const pgeo = parent.getGeometry();
+        if (!isNullish(geo)) {
+          // Only a cell rotated as part of its parent moves, the top level cell rotates in place
+          if (!isNullish(parent) && !parent.isEdge()) {
+            const pgeo = parent.getGeometry();
 
-          if (pgeo != null && !parent.isEdge()) {
-            geo = geo.clone();
-            geo.rotate(angle, new Point(pgeo.width / 2, pgeo.height / 2));
-            model.setGeometry(cell, geo);
+            if (!isNullish(pgeo)) {
+              geo = geo.clone();
+              geo.rotate(angle, new Point(pgeo.width / 2, pgeo.height / 2));
+              model.setGeometry(cell, geo);
+            }
           }
 
           if ((cell.isVertex() && !geo.relative) || cell.isEdge()) {
