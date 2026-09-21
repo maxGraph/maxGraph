@@ -50,6 +50,81 @@ test('import', () => {
   });
 });
 
+test('import a style extending another one', () => {
+  const stylesheet = new Stylesheet();
+  importToObject(
+    stylesheet,
+    `<Stylesheet>
+  <add as="base">
+    <add value="red" as="fillColor" />
+    <add value="blue" as="strokeColor" />
+  </add>
+  <add as="derived" extend="base">
+    <add value="green" as="strokeColor" />
+    <add value="12" as="fontSize" />
+  </add>
+</Stylesheet>`
+  );
+
+  // The properties of the extended style are inherited, and the ones declared here win over them
+  expect(stylesheet.styles.get('derived')).toEqual({
+    fillColor: 'red',
+    strokeColor: 'green',
+    fontSize: 12,
+  });
+});
+
+test('import a style extending another one leaves the extended style untouched', () => {
+  const stylesheet = new Stylesheet();
+  importToObject(
+    stylesheet,
+    `<Stylesheet>
+  <add as="base">
+    <add value="red" as="fillColor" />
+  </add>
+  <add as="derived" extend="base">
+    <add value="green" as="fillColor" />
+  </add>
+</Stylesheet>`
+  );
+
+  // The extended style is copied and not shared, so overriding a property in the derived style cannot leak back
+  expect(stylesheet.styles.get('base')).toEqual({ fillColor: 'red' });
+});
+
+test('import a style removing a property of the style it extends', () => {
+  const stylesheet = new Stylesheet();
+  importToObject(
+    stylesheet,
+    `<Stylesheet>
+  <add as="base">
+    <add value="red" as="fillColor" />
+    <add value="blue" as="strokeColor" />
+  </add>
+  <add as="derived" extend="base">
+    <remove as="fillColor" />
+  </add>
+</Stylesheet>`
+  );
+
+  expect(stylesheet.styles.get('derived')).toEqual({ strokeColor: 'blue' });
+});
+
+test('import a style extending a style that does not exist', () => {
+  const stylesheet = new Stylesheet();
+  importToObject(
+    stylesheet,
+    `<Stylesheet>
+  <add as="derived" extend="unknown">
+    <add value="red" as="fillColor" />
+  </add>
+</Stylesheet>`
+  );
+
+  // Nothing to inherit, so the style holds its own properties only. A warning is logged.
+  expect(stylesheet.styles.get('derived')).toEqual({ fillColor: 'red' });
+});
+
 test('export', () => {
   const stylesheet = new Stylesheet();
   stylesheet.putCellStyle('custom', {
