@@ -48,7 +48,7 @@ It is taken from the Storybook demo.
 
 :::note
 The image above has been produced using the Storybook demo:
-- live demo: [PerimeterVariousImplementations](https://maxgraph.github.io/maxGraph/?path=/story/perimeters--perimeter-various-implementations)
+- live demo: [PerimeterVariousImplementations](https://maxgraph.github.io/maxGraph/demo/?path=/story/styles-perimetervariousimplementations--default)
 - source code: [PerimeterVariousImplementations.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/PerimeterVariousImplementations.stories.ts)
   :::
 
