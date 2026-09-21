@@ -1235,7 +1235,11 @@ export abstract class AbstractGraph extends EventSource {
   }
 }
 
-// This introduces a side effect, but it is necessary to ensure the Graph is enriched with all properties and methods defined in mixins.
-// It is only called when Graph is imported, so the Graph definition is always consistent.
-// And this doesn't impact the tree-shaking.
+// Applying the mixins at module scope is a deliberate side effect: their members are copied onto the AbstractGraph
+// prototype, which has to happen before any graph is instantiated. Running it here guarantees that every importer of
+// AbstractGraph, Graph or BaseGraph gets a complete class, whatever the import order.
+// It does not prevent the unused modules of the package from being dropped, but it does pull every mixin into the
+// bundle as soon as a graph class is imported: their members all land on the same prototype, so a bundler cannot tell
+// which of them the application actually calls. Converting the mixins to plugins, which are opt-in, is tracked by
+// https://github.com/maxGraph/maxGraph/issues/762.
 applyGraphMixins(AbstractGraph);

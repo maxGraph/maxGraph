@@ -38,6 +38,7 @@ import { NONE } from '../../../util/Constants.js';
  * }
  * ```
  *
+ * @since 0.22.0
  * @category Vertex Shapes
  */
 export abstract class AbstractPathShape extends Shape {
