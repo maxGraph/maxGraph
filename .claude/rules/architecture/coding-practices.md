@@ -14,35 +14,57 @@ The core package has zero third-party runtime dependencies. NEVER add new runtim
 
 ## Null/Undefined Checks
 
-ALWAYS use `isNullish` from `internal/utils.js` to test whether a value is `null` or `undefined`. Prefer it over every
-direct form: `!variable`, `variable === null`, `variable !== undefined`, `variable == null`.
+Use `isNullish` from `internal/utils.js` when the value can be **falsy without being absent**, that is when its type
+includes `number` or `string`, and when it includes `boolean` and `false` must be distinguished from absence (see the
+boolean case below). There, truthiness silently merges `0`, `''` and `false` into "not set".
 
 ```typescript
 import { isNullish } from '../internal/utils.js';
 
-if (isNullish(index)) { ... }       // Good
-if (!isNullish(index)) { ... }      // Good — narrows to the non-nullish type
+// VertexHandler.index is `number | null`, and 0 is a valid handle index
+const index: number | null = handler.index;
 
-if (!index) { ... }                 // Bad — treats 0, "" and false as absent
-if (index === null) { ... }         // Bad — misses undefined
-if (index != null) { ... }          // Bad — correct but inconsistent, and easy to misread as a typo for !==
+if (isNullish(index)) { ... }       // Good
+if (!isNullish(index)) { ... }      // Good, narrows `index` to `number`
+
+if (!index) { ... }                 // Bad, treats the handle at index 0 as absent
+if (index === null) { ... }         // Bad, misses undefined
+if (index != null) { ... }          // Bad, correct but easy to misread as a typo for `!==`
 ```
 
-Why a helper rather than the built-in operators:
+For **object, array and function references**, plain truthiness says exactly the same thing, since such a value is never
+falsy. Keep the short form.
 
-- `!variable` is a bug for any type whose value can be falsy but present (`0`, `""`, `false`). This is the common case
-  for indexes, sizes, coordinates and scales, which are pervasive in this codebase.
+```typescript
+if (!handler) return;               // Good, a CellHandler is either absent or truthy
+if (isNullish(handler)) return;     // Not wrong, just longer for no added safety
+```
+
+For a **boolean**, it depends on what absent means. Use `isNullish` when `undefined` must not behave like `false`, for
+instance when an unset style falls back to a computed default; use truthiness when absent simply means `false`.
+
+```typescript
+// Good, `orthogonal` unset means "ask the EdgeStyleRegistry", not "not orthogonal"
+const orthogonal = edge.style.orthogonal;
+if (!isNullish(orthogonal)) {
+  return orthogonal;
+}
+return EdgeStyleRegistry.isOrthogonal(this.view.getEdgeStyle(edge));
+```
+
+Why the helper rather than the built-in operators, once a nullish check is needed:
+
 - `=== null` and `=== undefined` each cover only half of nullish, so they silently drift when a signature later widens
   from `T | null` to `T | null | undefined`.
 - `isNullish` is a type guard (`v is null | undefined`), so `!isNullish(x)` narrows `x` for the compiler. Hand-written
   comparisons narrow too, but only when written exactly right.
-- One spelling everywhere makes the intent greppable and removes the "is this `!=` deliberate or a typo?" question.
+- One spelling removes the "is this `!=` deliberate or a typo?" question.
 
 Exception: keep `?.` and `??` where they apply. They already have nullish semantics and are clearer than an explicit
 check.
 
 ```typescript
-const points = geo?.points ?? undefined;   // Good — no isNullish needed
+const points = geo?.points ?? undefined;   // Good, no isNullish needed
 ```
 
 ## Logging

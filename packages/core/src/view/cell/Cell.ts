@@ -616,6 +616,9 @@ export class Cell implements IdentityObject {
    */
   cloneValue(): any {
     let value: UserObject = this.getValue();
+    // The declared `UserObject` type hides that `getValue()` returns `any`: at runtime
+    // the user object is most often a string, so truthiness would treat an empty string
+    // as an absent value.
     if (!isNullish(value)) {
       if (typeof value.clone === 'function') {
         value = value.clone();

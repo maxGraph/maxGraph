@@ -361,7 +361,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
     const handler = this.handlers.get(state.cell);
     this.handlers.delete(state.cell);
 
-    if (isNullish(handler)) {
+    if (!handler) {
       return;
     }
 
