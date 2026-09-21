@@ -26,9 +26,9 @@ const style: CellStateStyle = { image: 'myKey' };
 
 When the graph renders the cell, the key is replaced with the underlying URL or data URI from the bundle. This is useful for:
 
-- **Keeping cell styles compact** — reference `'server'` instead of a long data URI in every style.
-- **Swapping assets centrally** — change the bundle, all cells that reference its keys update.
-- **Embedding SVGs inline** — avoid an extra HTTP request per icon.
+- **Keeping cell styles compact**: reference `'server'` instead of a long data URI in every style.
+- **Swapping assets centrally**: change the bundle, all cells that reference its keys update.
+- **Embedding SVGs inline**: avoid an extra HTTP request per icon.
 
 
 ## Registering the Plugin
@@ -104,7 +104,7 @@ graph.batchUpdate(() => {
 });
 ```
 
-`maxGraph` resolves `'server'` to `'images/icons48/server.png'` when the cell is rendered. No change to the style API is required — the same `image` property accepts both direct paths/data URIs and bundle keys.
+`maxGraph` resolves `'server'` to `'images/icons48/server.png'` when the cell is rendered. No change to the style API is required: the same `image` property accepts both direct paths/data URIs and bundle keys.
 
 
 ## Resolution Rules
@@ -147,5 +147,5 @@ const url = graph.getPlugin<ImageBundlePlugin>('image-bundle')?.getImageFromBund
 
 A Storybook demo illustrates a `BaseGraph` with `ImageBundlePlugin`, several cells referencing inline SVG keys, and one cell referencing a PNG served at a URL:
 
-- **Live demo**: [ImageBundle](https://maxgraph.github.io/maxGraph/demo/?path=/story/icon_images-imagebundle--default)
+- **Live demo**: [ImageBundle](https://maxgraph.github.io/maxGraph/demo/?path=/story/icon-images-imagebundle--default)
 - **Source code**: [ImageBundle.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/ImageBundle.stories.ts)
