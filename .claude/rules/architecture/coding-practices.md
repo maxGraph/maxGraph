@@ -15,7 +15,8 @@ The core package has zero third-party runtime dependencies. NEVER add new runtim
 ## Null/Undefined Checks
 
 Use `isNullish` from `internal/utils.js` when the value can be **falsy without being absent**, that is when its type
-includes `number`, `string` or `boolean`. There, truthiness silently merges `0`, `''` and `false` into "not set".
+includes `number` or `string`, and when it includes `boolean` and `false` must be distinguished from absence (see the
+boolean case below). There, truthiness silently merges `0`, `''` and `false` into "not set".
 
 ```typescript
 import { isNullish } from '../internal/utils.js';
