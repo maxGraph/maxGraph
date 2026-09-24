@@ -23,6 +23,7 @@ export { Graph } from './view/Graph.js';
 export * from './view/plugin/index.js';
 
 export { GraphDataModel } from './view/GraphDataModel.js';
+export { default as GraphSelectionModel } from './view/GraphSelectionModel.js';
 export { GraphView } from './view/GraphView.js';
 export { default as LayoutManager } from './view/layout/LayoutManager.js';
 export { default as Outline } from './view/other/Outline.js';
