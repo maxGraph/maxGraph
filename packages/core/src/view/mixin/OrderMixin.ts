@@ -24,11 +24,18 @@ type PartialGraph = Pick<
   AbstractGraph,
   'fireEvent' | 'batchUpdate' | 'getDataModel' | 'getSelectionCells'
 >;
-type PartialOrder = Pick<AbstractGraph, 'orderCells' | 'cellsOrdered'>;
+type PartialOrder = Pick<
+  AbstractGraph,
+  'keepEdgesInForeground' | 'keepEdgesInBackground' | 'orderCells' | 'cellsOrdered'
+>;
 type PartialType = PartialGraph & PartialOrder;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 export const OrderMixin: PartialType = {
+  keepEdgesInForeground: false,
+
+  keepEdgesInBackground: false,
+
   orderCells(back = false, cells) {
     if (!cells) cells = this.getSelectionCells();
     if (!cells) {
