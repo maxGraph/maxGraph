@@ -53,6 +53,24 @@ declare module '../AbstractGraph' {
     allowAutoPanning: boolean;
 
     /**
+     * Specifies if the graph should automatically scroll regardless of the
+     * scrollbars. This will scroll the container using positive values for
+     * scroll positions (ie usually only rightwards and downwards). To avoid
+     * possible conflicts with panning, set {@link translateToScrollPosition} to `true`.
+     * @default false
+     */
+    ignoreScrollbars: boolean;
+
+    /**
+     * Specifies if the graph should automatically convert the current scroll
+     * position to a translate in the graph view when a mouseUp event is received.
+     * This can be used to avoid conflicts when using {@link autoScroll} and
+     * {@link ignoreScrollbars} with no scrollbars in the container.
+     * @default false
+     */
+    translateToScrollPosition: boolean;
+
+    /**
      * Current horizontal panning value.
      * @default 0
      */
@@ -67,6 +85,8 @@ declare module '../AbstractGraph' {
     isUseScrollbarsForPanning: () => boolean;
     isTimerAutoScroll: () => boolean;
     isAllowAutoPanning: () => boolean;
+    isIgnoreScrollbars: () => boolean;
+    isTranslateToScrollPosition: () => boolean;
     getPanDx: () => number;
     setPanDx: (dx: number) => void;
     getPanDy: () => number;
@@ -82,6 +102,39 @@ declare module '../AbstractGraph' {
      * @param dy Amount to shift the graph along the y-axis.
      */
     panGraph: (dx: number, dy: number) => void;
+
+    /**
+     * Scrolls the graph to the given point, extending the graph container if specified.
+     *
+     * If the container has no scrollbars and {@link isAllowAutoPanning} returns `true`, the graph is panned through the
+     * {@link PanningHandler} plugin instead of being scrolled.
+     *
+     * @param x horizontal coordinate to make visible.
+     * @param y vertical coordinate to make visible.
+     * @param extend Optional boolean that specifies if the graph container should be extended. Default is `false`.
+     * @param border Optional distance in pixels to keep between the point and the container edge. Default is `20`.
+     */
+    scrollPointToVisible: (
+      x: number,
+      y: number,
+      extend?: boolean,
+      border?: number
+    ) => void;
+
+    /**
+     * Centers the graph in the container.
+     *
+     * The scale is left unchanged, only the translation and the scroll position are updated. To fit the graph in the
+     * container, changing the scale, use the `fit` plugin instead.
+     *
+     * @param horizontal Optional boolean that specifies if the graph should be centered
+     * horizontally. Default is `true`.
+     * @param vertical Optional boolean that specifies if the graph should be centered
+     * vertically. Default is `true`.
+     * @param cx Optional float that specifies the horizontal center. Default is `0.5`.
+     * @param cy Optional float that specifies the vertical center. Default is `0.5`.
+     */
+    center: (horizontal?: boolean, vertical?: boolean, cx?: number, cy?: number) => void;
 
     /**
      * Pans the graph so that it shows the given cell. Optionally the cell may be centered in the container.
