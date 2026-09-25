@@ -11,7 +11,7 @@ This page gives the broad directions for the next versions of maxGraph. It is no
 
 The work in progress and the work coming soon are visible in the [maxGraph GitHub Milestones](https://github.com/maxGraph/maxGraph/milestones). There are generally one or two open milestones at a given time.
 
-The name of a milestone matches a maxGraph version, so the "Milestone" property of an issue also tells in which version it was handled.
+The name of a milestone matches a maxGraph version, so the "Milestone" property of an issue tells in which version it is planned to be handled, or in which version it was handled once the issue is closed.
 
 ## Current Themes
 
