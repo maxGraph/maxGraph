@@ -20,6 +20,9 @@ import type Image from '../image/ImageBox.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {
+    /** Returns the {@link warningImage} used by {@link setCellWarning}. */
+    getWarningImage: () => Image;
+
     /**
      * Adds an {@link CellOverlay} for the specified cell.
      *

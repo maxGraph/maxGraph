@@ -49,12 +49,8 @@ type PartialGraph = Pick<
   | 'fireEvent'
   | 'getDefaultParent'
   | 'getCurrentRoot'
-  | 'getOverlap'
-  | 'isRecursiveResize'
   | 'getCellRenderer'
   | 'getMaximumGraphBounds'
-  | 'isExportEnabled'
-  | 'isImportEnabled'
   | 'getPlugin'
   | 'getSelectionCells'
   | 'getSelectionCell'
@@ -85,6 +81,16 @@ type PartialGraph = Pick<
 
 type PartialCells = Pick<
   AbstractGraph,
+  | 'defaultOverlap'
+  | 'exportEnabled'
+  | 'importEnabled'
+  | 'recursiveResize'
+  | 'getOverlap'
+  | 'isAllowOverlapParent'
+  | 'isExportEnabled'
+  | 'isImportEnabled'
+  | 'isRecursiveResize'
+  | 'setRecursiveResize'
   | 'cellsResizable'
   | 'cellsBendable'
   | 'cellsSelectable'
@@ -190,6 +196,38 @@ type PartialType = PartialGraph & PartialCells;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 export const CellsMixin: PartialType = {
+  defaultOverlap: 0.5,
+
+  getOverlap(cell) {
+    return this.isAllowOverlapParent(cell) ? this.defaultOverlap : 0;
+  },
+
+  isAllowOverlapParent(_cell) {
+    return false;
+  },
+
+  exportEnabled: true,
+
+  isExportEnabled() {
+    return this.exportEnabled;
+  },
+
+  importEnabled: true,
+
+  isImportEnabled() {
+    return this.importEnabled;
+  },
+
+  recursiveResize: false,
+
+  isRecursiveResize(_state = null) {
+    return this.recursiveResize;
+  },
+
+  setRecursiveResize(value) {
+    this.recursiveResize = value;
+  },
+
   cellsResizable: true,
 
   cellsBendable: true,
