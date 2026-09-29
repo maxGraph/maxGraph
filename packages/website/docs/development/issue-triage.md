@@ -53,9 +53,16 @@ Close the issue when:
 - it duplicates another issue,
 - it is already fixed or implemented.
 
-Before closing, add a comment explaining why, so that the author and later readers understand the decision. Add the `invalid` label if the issue is invalid, and the `duplicate` label with a link to the original issue for a duplicate.
+Before closing, add a comment explaining why, so that the author and later readers understand the decision. Add the `invalid` label if the issue is invalid. For a duplicate or an issue already fixed, add the `duplicate` label and link, in the comment, to the original issue, or to the pull request or commit that fixed the problem when there is no such issue.
 
-Always choose the close reason from the dropdown next to the **Close issue** button: `Close as not planned` or `Close as duplicate`. The default reason is `Close as completed`, which tells readers that the issue was fixed or implemented. See [Closing an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/administering-issues/closing-an-issue) in the GitHub documentation.
+Always choose the close reason from the dropdown next to the **Close issue** button:
+
+- `Close as not planned` when the information was not provided or the issue is invalid,
+- `Close as duplicate` for a duplicate or an issue already fixed.
+
+Never keep the default reason, `Close as completed`. It tells readers that the issue was fixed or implemented, and is set when the implementation of an accepted issue is merged, not during triage.
+
+See [Closing an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/administering-issues/closing-an-issue) in the GitHub documentation.
 
 ## Handle a question
 
