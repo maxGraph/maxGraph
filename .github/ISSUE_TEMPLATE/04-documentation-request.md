@@ -1,6 +1,6 @@
 ---
 name: Documentation request
-about: Suggest a refactoring, technical change, ... for this project
+about: Suggest an improvement or addition to the documentation
 title: "[DOC]"
 labels: documentation, triage
 assignees: ''

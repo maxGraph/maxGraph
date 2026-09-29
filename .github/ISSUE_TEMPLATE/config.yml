@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Community Support for usage questions
-    url: https://github.com/maxGraph/maxGraph/discussions/categories/development
+    url: https://github.com/maxGraph/maxGraph/discussions/categories/q-a
     about: Please ask and answer questions about maxGraph usage here.
   - name: Development Support
     url: https://github.com/maxGraph/maxGraph/discussions/categories/development
