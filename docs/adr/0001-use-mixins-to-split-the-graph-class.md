@@ -14,7 +14,7 @@
     [discussion #151](https://github.com/maxGraph/maxGraph/discussions/151),
     [issue #762](https://github.com/maxGraph/maxGraph/issues/762), [ADR 0003](0003-move-members-out-of-abstract-graph.md),
     user documentation: [`plugins.md`](../../packages/website/docs/usage/plugins.md),
-    [`migrate-from-mxgraph.md`](../../packages/website/docs/usage/migrate-from-mxgraph.md)
+    [`migrate-from-mxgraph.md`](../../packages/website/docs/guides/migrate-from-mxgraph.md)
 
 ## Context
 
@@ -93,7 +93,7 @@ API.
 - Each mixin's `PartialGraph` list documents its coupling to the rest of the graph, and the compiler enforces it.
 
 The strongest evidence that the API was preserved is negative: the word "mixin" does not appear once in
-[`migrate-from-mxgraph.md`](../../packages/website/docs/usage/migrate-from-mxgraph.md), the guide that documents every
+[`migrate-from-mxgraph.md`](../../packages/website/docs/guides/migrate-from-mxgraph.md), the guide that documents every
 user-visible difference with `mxGraph`. Splitting the God object into mixins cost users nothing. By contrast the
 same guide devotes a section and a seven-row table to the handler-to-plugin conversion, because that one did break call
 sites. The two approaches sit at opposite ends of the same trade-off, and

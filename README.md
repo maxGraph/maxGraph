@@ -152,11 +152,11 @@ Note that they are based on `maxGraph` features, which require the use of [CSS a
   - A live instance is available on the [maxGraph website](https://maxgraph.github.io/maxGraph/demo).
 - the [ts-example](packages/ts-example) project/application demonstrates how to define and use custom `Shapes` with `maxGraph`. It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 - the [ts-example-jest-commonjs](packages/ts-example-jest-commonjs) project that demonstrates how to run jest tests involving `maxGraph` with ts-jest, using CommonJS.
-- the [ts-example-selected-features](packages/ts-example-selected-features) project/application that demonstrates the same use case as in `ts-example` but which only loads the features and configuration required by the application for efficient [tree-shaking](packages/website/docs/usage/tree-shaking.md). It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
+- the [ts-example-selected-features](packages/ts-example-selected-features) project/application that demonstrates the same use case as in `ts-example` but which only loads the features and configuration required by the application for efficient [tree-shaking](packages/website/docs/usage/tree-shaking.md). It draws the same diagram, but without the custom shape classes: the appearance they painted is reproduced with plain style properties such as `fillColor`, `strokeColor` and `strokeWidth`. It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 - the [ts-example-without-defaults](packages/ts-example-without-defaults) project/application demonstrates how to not use default plugins and style defaults (shapes, perimeters, ...). It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 - the [js-example](packages/js-example) project/application demonstrates how to import and export the `maxGraph` model with XML data. It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
 - the [js-example-nodejs](packages/js-example-nodejs) project that demonstrates how to use `maxGraph` in a headless environment with Node.js.
-- the [js-example-selected-features](packages/js-example-selected-features) project/application that demonstrates the same use case as in `ts-example` but which only loads the features and configuration required by the application for efficient [tree-shaking](packages/website/docs/usage/tree-shaking.md). It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
+- the [js-example-selected-features](packages/js-example-selected-features) project/application that demonstrates the same use case as in `js-example` but which only loads the features and configuration required by the application for efficient [tree-shaking](packages/website/docs/usage/tree-shaking.md). It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
 - the [js-example-without-defaults](packages/js-example-without-defaults) project/application demonstrates how to not use default plugins and style defaults (shapes, perimeters, ...). It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
 - the [maxgraph-integration-examples](https://github.com/maxGraph/maxgraph-integration-examples) repository shows how to integrate `maxGraph` with different frameworks and build tools.
 
@@ -167,7 +167,7 @@ Note that they are based on `maxGraph` features, which require the use of [CSS a
 
 `maxGraph` APIs are not fully compatible with `mxGraph` APIs. The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without issues.
 
-For a complete guide, see the [dedicated migration page](packages/website/docs/usage/migrate-from-mxgraph.md).
+For a complete guide, see the [dedicated migration page](packages/website/docs/guides/migrate-from-mxgraph.md).
 
 
 ## Support

@@ -107,7 +107,7 @@ import { StyleDefaultsConfig } from '../../util/config.js';
  * graph.insertVertex({ value: 'custom', position: [10, 10], size: [100, 60], style: { shape: 'customShape' } });
  * ```
  *
- * See the Extending maxGraph page of the documentation for a complete walkthrough.
+ * See the Extend maxGraph page of the documentation for a complete walkthrough.
  *
  * @category Shape
  */

@@ -212,6 +212,11 @@ const config: Config = {
             to: '/docs/manual/model-and-transactions',
             from: '/docs/manual/model-and-cells',
           },
+          // docs/usage/migrate-from-mxgraph -> /docs/guides/migrate-from-mxgraph
+          {
+            to: '/docs/guides/migrate-from-mxgraph',
+            from: '/docs/usage/migrate-from-mxgraph',
+          },
         ],
       },
     ],

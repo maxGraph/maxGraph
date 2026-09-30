@@ -20,6 +20,12 @@ do to benefit from it. The short version: use [`BaseGraph`](./graph.md#basegraph
 actually use, through the registries and configuration objects listed in the
 [Global Configuration](./global-configuration.md) page.
 
+It is the **reference** for each family of optional features: what the family is, how an element of it is registered,
+and what the traps are. It deliberately does not say in which order to proceed, nor what to check between two changes.
+For an application already built on `Graph`, the
+[Reduce the Bundle Size of an Application](../guides/reduce-bundle-size.md) guide turns this reference into an
+ordered migration.
+
 Tree-shaking is an ongoing effort tracked in
 [issue #665](https://github.com/maxGraph/maxGraph/issues/665). See [Going further](#going-further) for the current
 limitations.
@@ -97,13 +103,13 @@ This is a long-running effort. The main milestones so far:
 | Version | Improvement |
 |---|---|
 | 0.6.0 | Codecs are no longer registered by default |
-| 0.11.0 | `MaxLog` and `MaxWindow` are no longer called from within `maxGraph`, avoiding their transitive inclusion |
+| 0.11.0 | The graph no longer logs through `MaxLog` by default, so `MaxLog` and `MaxWindow` are no longer pulled in transitively, the legacy `Editor` aside |
 | 0.12.0 | The npm package is declared without side effects |
-| 0.14.0 | Graph mixins start being converted into optional plugins |
 | 0.18.0 | `BaseGraph` is introduced, along with the `registerDefault*` functions |
 | 0.20.0 | Dedicated registries replace the monolithic `StyleRegistry` and `CellRenderer` registration |
+| 0.23.0 | Graph mixins start moving into plugins: `TooltipMixin` disappears, its methods becoming those of `TooltipHandler` |
 | 0.24.0 | A dedicated registration helper per built-in `EdgeStyle`, and the image bundle feature moves to a plugin |
-| 0.25.0 | The cell handlers move from `AbstractGraph` to the `SelectionCellsHandler` plugin, so an application that does not register that plugin no longer bundles `VertexHandler`, `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler` |
+| 0.25.0 | The cell handlers move from `AbstractGraph` to the `SelectionCellsHandler` plugin, so an application that does not register that plugin no longer bundles `VertexHandler`, `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler`. `registerDefaultStyleElements()` also appears, grouping the four style `registerDefault*` functions in a single call |
 
 The impact of these changes is measured on the example applications and communicated in the release notes. See for
 instance the [0.18.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.18.0) and
@@ -125,7 +131,7 @@ your bundle size. See the [Graph](./graph.md) page for the full comparison.
 - **`Graph`** is the ready-to-use class. It wires a container, a default model and view, registers all built-in shapes, edge styles, perimeters and markers, and loads the default plugin set. It is the historical implementation, the direct descendant of the original `mxGraph` class, and it is meant for prototyping and evaluation. Because it needs no configuration, it is also what most of this documentation, most [example applications](../demo-and-examples.md) and most Storybook stories use, so that each of them focuses on the feature it illustrates rather than on registration boilerplate. **Do not read that ubiquity as a recommendation for production.**
 - **`BaseGraph`** exposes the minimal, tree-shakeable graph skeleton for production builds, where you opt into specific plugins and style elements yourself.
 
-Instantiating `Graph` pulls the following into your bundle, whether the application uses them or not:
+Importing `Graph` pulls the following into your bundle, whether the application uses them or not, and whether or not a `Graph` is ever constructed:
 
 | Loaded by `Graph` | Content |
 |---|---|
@@ -133,7 +139,7 @@ Instantiating `Graph` pulls the following into your bundle, whether the applicat
 | `registerDefaultEdgeStyles()` | 8 built-in edge styles |
 | `registerDefaultPerimeters()` | 5 built-in perimeters |
 | `registerDefaultEdgeMarkers()` | 9 built-in edge markers |
-| `getDefaultPlugins()` | 9 plugins, and transitively the cell handlers they instantiate |
+| `getDefaultPlugins()` | 9 plugins, and transitively the four cell handlers that `SelectionCellsHandler` imports |
 
 `BaseGraph` registers **none** of them. Nothing is loaded that you did not ask for:
 
@@ -144,7 +150,8 @@ const graph = new BaseGraph({ container });
 ```
 
 Such a graph renders vertices and edges, and nothing else. From there, add back exactly what the application needs, as
-described in the next section.
+described in the next section, and which
+[Set Up an Application on BaseGraph](../guides/configure-basegraph.md) walks through in order for a new application.
 
 ### Where the registration code lives
 
@@ -155,32 +162,21 @@ for tree-shaking, since the registries are global either way.
 class definition, which is convenient when the application already has a graph subclass. This is the approach used by
 the maxGraph example applications.
 
-```typescript
-class CustomGraph extends BaseGraph {
-  protected override registerDefaults(): void {
-    ShapeRegistry.add('ellipse', EllipseShape);
-    registerOrthogonalEdgeStyle();
-    // ... the other elements the application uses
-  }
-}
-```
+:::warning
+`registerDefaults()` is called by the constructor of `AbstractGraph` right after `super()`, before the container, the
+collaborators and the plugins are set up. The method itself is overridden normally, since it lives on the prototype,
+and so are the inherited methods and the members installed by the mixins, which are all callable there. What does not
+exist yet is any field of your subclass, the container, and the five collaborators: reading one of them gives
+`undefined`, and nothing is reported. The compiler does not report it either, since the collaborators are declared with
+a definite assignment assertion, so `this.getStylesheet()` type checks and returns `undefined`, and a `putCellStyle`
+call on it throws when the graph is constructed. Keep the override free of instance state, or register outside the
+class.
+:::
 
 **Outside the class**, at application startup, before any graph instance is created. No subclass is needed, and the
 registration sits at the entry point of the application.
 
-```typescript
-function registerStyleElements(): void {
-  ShapeRegistry.add('ellipse', EllipseShape);
-  registerOrthogonalEdgeStyle();
-  // ... the other elements the application uses
-}
-
-registerStyleElements();
-
-const graph = new BaseGraph({ container, plugins: [/* ... */] });
-```
-
-Both are detailed, with complete imports, in
+Both are written out, with their imports, in
 [Registering style elements with BaseGraph](./graph.md#registering-style-elements-with-basegraph).
 
 
@@ -193,8 +189,11 @@ mechanism: style elements through their registries and the granular `register*` 
 constructor option, codecs through the codec registration functions, i18n and the logger through `GlobalConfig`.
 
 What they share is that each offers a broad shortcut next to the narrow one: `registerDefaultStyleElements()` and the
-`registerDefault*` functions, `getDefaultPlugins()`, `registerAllCodecs()`. These load everything at once and therefore
-cancel the benefit. Always prefer the narrowest option that covers what the application actually uses.
+`registerDefault*` functions, `getDefaultPlugins()`, `registerAllCodecs()`. A broad call loads the whole family at once,
+so it cancels the benefit for an application that uses only a part of it. For an application that genuinely uses all of
+a family, it is the right call: the bundle is the same as the list of individual registrations, and one line is easier
+to write and to keep correct than fifteen. Prefer the narrowest option that covers what the application actually uses,
+which is the broad one when it uses everything.
 
 :::warning
 All the registries are **global**. Registering an element makes it visible to every `Graph` and `BaseGraph` instance of
@@ -212,10 +211,12 @@ import { EllipseShape, ShapeRegistry } from '@maxgraph/core';
 ShapeRegistry.add('ellipse', EllipseShape);
 ```
 
-Two shapes never need to be registered: `RectangleShape` is the fallback for vertices and `ConnectorShape` is the
-fallback for edges, both configurable through `CellRenderer.defaultVertexShape` and `CellRenderer.defaultEdgeShape`.
+Two shapes never need to be registered, `RectangleShape` for vertices and `ConnectorShape` for edges, which
+[Global Configuration, Styles](./global-configuration.md#styles) describes along with the fields that configure them.
 
-Avoid `registerDefaultShapes()` unless the application genuinely draws all sixteen built-in shapes.
+Avoid `registerDefaultShapes()` unless the application genuinely draws all sixteen built-in shapes. The one exception
+is the transitional step of [Reduce the Bundle Size of an Application](../guides/reduce-bundle-size.md), which calls
+it before trimming it away.
 
 Stencil shapes are registered in `StencilShapeRegistry`, and none are registered by default with either graph class.
 
@@ -264,6 +265,9 @@ EdgeMarkerRegistry.add('classic', arrowFunction);
 EdgeMarkerRegistry.add('block', arrowFunction);
 ```
 
+Note that `classic` is declared as `endArrow` in the default edge style, so it must be registered as soon as edges rely
+on that default, exactly as `rectanglePerimeter` must be for vertices.
+
 ### Plugins
 
 `BaseGraph` loads no plugin. Pass the exact list your application needs through the `plugins` option:
@@ -285,12 +289,19 @@ const graph = new BaseGraph({
 
 See the [Plugins](./plugins.md) page for the list of available plugins and which ones `Graph` loads by default. Do not
 call `getDefaultPlugins()` with `BaseGraph`, it defeats the purpose, unless the application genuinely needs all the
-features it provides.
+features it provides. Migrating an existing application is the exception: the
+[Reduce the Bundle Size of an Application](../guides/reduce-bundle-size.md) guide starts from `getDefaultPlugins()`
+on purpose, as a checkpoint where nothing has changed yet, then trims the list from there.
 
 A read-only or visualization-only application typically needs very few of them. In particular, **omitting
 `SelectionCellsHandler` keeps all the cell handler classes out of the bundle**, since it is the plugin that instantiates
 `VertexHandler`, `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler`. See the [Cell Handlers](./cell-handlers.md)
 page.
+
+The reverse is where the granularity stops today: keeping that plugin imports the four classes, whichever edge styles
+the application registered, so an application using only straight edges still ships the elbow and segment handlers.
+Making that registration modular is what
+[issue #890](https://github.com/maxGraph/maxGraph/issues/890) is about.
 
 ### Codecs
 
@@ -334,8 +345,9 @@ logs without the UI.
 ### CSS and images
 
 CSS files are the only part of the package declared as having side effects, so an imported stylesheet is never removed.
-Import `@maxgraph/core/css/common.css` only if you use a feature that needs it, such as `RubberBandHandler`, and
-consider providing your own rules instead. See the [CSS and Images](./css-and-images.md) page.
+Import `@maxgraph/core/css/common.css` only if you use a feature that needs it, and consider providing your own rules
+instead. [CSS and Images](./css-and-images.md#css) names what creates DOM needing those rules, four plugins among
+other classes.
 
 
 ## What Not to Load
@@ -343,9 +355,9 @@ consider providing your own rules instead. See the [CSS and Images](./css-and-im
 A checklist of the patterns that silently inflate the bundle:
 
 - **`new Graph(container)` in production code.** It registers every built-in style element and loads every default plugin. Use [`BaseGraph`](./graph.md#basegraph).
-- **`registerDefaultStyleElements()`, `registerDefaultShapes()` and the other `registerDefault*` functions** called "to be safe". They are convenience helpers for prototyping, not production defaults.
+- **`registerDefaultStyleElements()`, `registerDefaultShapes()` and the other `registerDefault*` functions** called "to be safe", that is without knowing which elements the application uses, which ships the whole family for the sake of a few of its members. Calling one because the application does use the whole family is a deliberate choice and costs nothing extra, and calling one as a transitional step, as [Reduce the Bundle Size of an Application](../guides/reduce-bundle-size.md) does, is a different thing from shipping it.
 - **`registerAllCodecs()`** when the application only imports or exports the data model.
-- **`MaxLogAsLogger`**, and more generally the UI elements of `maxGraph` you do not display: `MaxLog`, `MaxWindow`, `MaxPopupMenu`, `MaxToolbar`, `MaxForm`.
+- **`MaxLogAsLogger`**, and more generally the UI elements of `maxGraph` you do not display: `MaxLog`, `MaxWindow`, `MaxPopupMenu`, `MaxToolbar`, `MaxForm`. `MaxPopupMenu` also arrives through `PopupMenuHandler`, which extends it, so that one leaves the bundle with the plugin rather than with an import.
 - **The `Editor` class and its companions** (`EditorToolbar`, `EditorPopupMenu`, `EditorKeyHandler`). This is a large legacy component inherited from `mxGraph`; do not import it unless you specifically build on it.
 - **Forcing the CommonJS build**, which cannot be tree-shaken. Let your bundler resolve the `import` condition of the package `exports`.
 - **Re-exporting `maxGraph` through a barrel file of your own** that your whole application imports, which can defeat the module-level analysis of some bundlers.
@@ -353,196 +365,26 @@ A checklist of the patterns that silently inflate the bundle:
 
 ## Measuring the Impact
 
-The effect of these choices is visible in the example applications shipped in the repository. Each exists in two
-flavors, so that the two most common bundlers are covered:
+The effect of these choices is visible in the example applications shipped in the repository. Each of the two families
+comes in the same three variants, one per registration strategy, and each family uses one of the two most common
+bundlers. The two families do not demonstrate the same application: the TypeScript one draws a diagram with custom
+shapes, the JavaScript one imports and exports the model as XML.
 
 | Example | Bundler | What it demonstrates |
 |---|---|---|
-| [ts-example](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example) | Vite | A `Graph`-based application, with all defaults |
-| [ts-example-selected-features](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example-selected-features) | Vite | A `BaseGraph` subclass registering only the features it needs |
+| [ts-example](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example) | Vite | A `Graph` with all the defaults, drawing a diagram that uses custom shapes |
+| [ts-example-selected-features](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example-selected-features) | Vite | The same diagram, minus the custom shapes, on a `BaseGraph` subclass registering only the elements it needs |
 | [ts-example-without-defaults](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example-without-defaults) | Vite | A minimal `BaseGraph`, no plugin and no style element at all |
-| [js-example](https://github.com/maxGraph/maxGraph/tree/main/packages/js-example) | Webpack | Same as `ts-example`, in JavaScript |
-| [js-example-selected-features](https://github.com/maxGraph/maxGraph/tree/main/packages/js-example-selected-features) | Webpack | Same as `ts-example-selected-features`, in JavaScript |
+| [js-example](https://github.com/maxGraph/maxGraph/tree/main/packages/js-example) | Webpack | A `Graph` with all the defaults, importing and exporting the model as XML |
+| [js-example-selected-features](https://github.com/maxGraph/maxGraph/tree/main/packages/js-example-selected-features) | Webpack | The same XML application on a `BaseGraph` subclass registering only the elements it needs |
 | [js-example-without-defaults](https://github.com/maxGraph/maxGraph/tree/main/packages/js-example-without-defaults) | Webpack | Same as `ts-example-without-defaults`, in JavaScript |
 
-Comparing the "full", "selected features" and "without defaults" variants of the same application shows what the
-registration choices are worth. From a clone of the repository, `./scripts/build-all-examples.bash` builds them all and
+Comparing the three variants of one family shows what the registration choices are worth. From a clone of the maxGraph repository, `./scripts/build-all-examples.bash` builds them all and
 prints the resulting bundle sizes; `--list-size-only` prints the sizes of an existing build.
 
-For your own application, use the bundle analyzer of your toolchain to check what `@maxgraph/core` actually contributes,
-for instance `rollup-plugin-visualizer` with Vite and Rollup, `webpack-bundle-analyzer` or
-[Rsdoctor](https://rsdoctor.rs/) with Webpack and Rspack, or `source-map-explorer` for any bundler producing source
-maps. Measure before and after the migration described below, in your own environment.
-
-
-## Guide: Improving the Tree-Shaking of an Application Using Graph
-
-[//]: # (this guide should probably live in a page of its own. The documentation has no dedicated "Guides" section)
-[//]: # (yet, this is planned for later. Move it there when the section exists, and keep a link from this page.)
-
-**Goal**: take an existing application built on [`Graph`](./graph.md), and reduce what `maxGraph` contributes to its
-bundle, without changing what the application does for its users.
-
-Despite its name, the work is not only about swapping one graph class for another. It covers two distinct things:
-
-1. **The graph class and what it registers**, in steps 2 to 4. `Graph` is replaced by a `BaseGraph` configured with the
-   exact plugins and style elements the application uses. This is where most of the reduction comes from, and it is the
-   part that only concerns applications still using `Graph`.
-2. **The features that do not depend on the graph class**, in step 5. Codecs, i18n and the logger are global opt-ins
-   that the application registers or configures itself, so they deserve a review whichever graph class you end up with.
-   An application already built on `BaseGraph` can skip straight to that step.
-
-Steps 1, 6 and 7 bracket the work: measure before, check the rendering, measure after.
-
-Both graph classes inherit the same graph API from `AbstractGraph`, so the calls the application makes on the graph do
-not change. What differs is the construction: `Graph` takes positional arguments and loads its defaults on its own,
-`BaseGraph` takes an options object and requires the plugins and style elements to be declared explicitly. Proceed
-incrementally and keep the application running at every step.
-
-The recommended strategy is **not** to start from an empty graph and guess what to add back. Start by loading
-**everything**, exactly as `Graph` does, so that the application behaves as before, then **remove progressively** what
-it turns out not to need. Each removal is a small, verifiable step.
-
-Nothing prevents you from measuring at each of these steps rather than only at the end. Doing so tells you what each
-removal is actually worth, and whether a given family of elements is worth trimming further.
-
-### 1. Measure the starting point
-
-Build the application and record the size contributed by `@maxgraph/core`, using one of the analyzers listed above.
-Without this baseline, you cannot tell whether the migration paid off.
-
-### 2. Switch the constructor, keeping all the defaults
-
-`Graph` takes positional parameters, `BaseGraph` takes a single options object. At the same time, register explicitly
-what `Graph` used to register implicitly: `getDefaultPlugins()` for the plugins, and `registerDefaultStyleElements()`
-for the shapes, edge styles, perimeters and edge markers.
-
-```typescript
-// Before
-const graph = new Graph(container, model, plugins, stylesheet);
-```
-
-```typescript
-// After
-import {
-  BaseGraph,
-  getDefaultPlugins,
-  registerDefaultStyleElements,
-} from '@maxgraph/core';
-
-registerDefaultStyleElements();
-
-const graph = new BaseGraph({
-  container,
-  model,
-  stylesheet,
-  plugins: getDefaultPlugins(),
-});
-```
-
-As explained in [Where the registration code lives](#where-the-registration-code-lives), the call to
-`registerDefaultStyleElements()` can also go into a `registerDefaults()` override in a `BaseGraph` subclass. **Prefer
-the subclass when the application already extends `Graph`**, since the override then replaces the subclass you already
-have, and the later steps are edits to a method you own:
-
-```typescript
-class CustomGraph extends BaseGraph {
-  protected override registerDefaults(): void {
-    registerDefaultStyleElements();
-  }
-}
-```
-
-:::note
-This step alone does not reduce the bundle: the application still pulls every built-in. It is a checkpoint. The
-application must behave exactly as it did with `Graph`, and any difference at this point is a migration bug, not a
-missing registration. Commit here before trimming anything.
-:::
-
-### 3. Trim the plugins
-
-Replace `getDefaultPlugins()` with an explicit list, then remove the plugins the application does not need, one at a
-time, checking the application after each removal. A read-only or visualization-only application may end up with very
-few of them, or none.
-
-```typescript
-const graph = new BaseGraph({
-  container,
-  plugins: [CellEditorHandler, SelectionCellsHandler, SelectionHandler, PanningHandler],
-});
-```
-
-Check the [Available Plugins](./plugins.md#available-plugins) table for what each one provides, and remember that
-dropping `SelectionCellsHandler` also drops all the cell handlers.
-
-### 4. Trim the style elements
-
-Proceed by family of elements, so that a rendering regression points straight at the family you just trimmed.
-
-Start by replacing `registerDefaultStyleElements()` with the four functions it calls. Nothing is removed from the
-bundle yet, but each family can now be trimmed on its own:
-
-```typescript
-// Instead of registerDefaultStyleElements()
-registerDefaultShapes();
-registerDefaultPerimeters();
-registerDefaultEdgeStyles();
-registerDefaultEdgeMarkers();
-```
-
-Then take the families one at a time. Go through the cell styles of the application, including the defaults of the
-`Stylesheet` and the named styles registered with `putCellStyle`, and collect the values used by the family being
-trimmed: `shape`, then `perimeter`, `edgeStyle`, and finally `startArrow` and `endArrow`.
-
-For the shapes, drop `registerDefaultShapes()` and register exactly the shapes collected:
-
-```typescript
-// Instead of registerDefaultShapes()
-ShapeRegistry.add('ellipse', EllipseShape);
-```
-
-Check the application, then iterate over the other families the same way: perimeters, edge styles, and edge markers.
-Use the dedicated helper of each built-in edge style rather than registering it by hand.
-
-At the end of the process, no `registerDefault*` call is left, and what remains is exactly what the application uses:
-
-```typescript
-ShapeRegistry.add('ellipse', EllipseShape);
-PerimeterRegistry.add('ellipsePerimeter', Perimeter.EllipsePerimeter);
-PerimeterRegistry.add('rectanglePerimeter', Perimeter.RectanglePerimeter);
-registerOrthogonalEdgeStyle();
-EdgeMarkerRegistry.add('block', EdgeMarker.createArrow(2));
-```
-
-### 5. Review the codecs, i18n and logger
-
-Unlike the previous steps, this one is independent of the graph class: these features are global opt-ins that the
-application registers or configures itself, and they are worth reviewing even when it already uses `BaseGraph`.
-
-Register codecs only if the application imports or exports XML, and prefer the narrow `registerModelCodecs` to
-`registerAllCodecs`. Set `GlobalConfig.i18n` only if the application displays translated messages. Set
-`GlobalConfig.logger` to `ConsoleLogger` rather than `MaxLogAsLogger`, which pulls the `MaxLog` and `MaxWindow` UI into
-the bundle. The [Register Only What You Use](#register-only-what-you-use) section details each of them.
-
-### 6. Check for over-trimming
-
-Removing one element too many does not throw. It degrades the rendering silently, which is what makes the incremental
-approach of the previous steps worthwhile:
-
-| Missing registration | Symptom |
-|---|---|
-| Shape | The fallback shape is used: `RectangleShape` for a vertex, `ConnectorShape` for an edge |
-| Perimeter | No perimeter point is computed, so the edge connects to the center of the vertex bounding box |
-| EdgeStyle | The routing is not applied, so the edge is drawn as a straight line between its terminals |
-| Edge marker | No marker is drawn, so the arrowhead is missing |
-| `EdgeStyle` metadata | The wrong `EdgeHandler` is instantiated, so the handles do not match the actual routing |
-
-Review the diagrams visually, and pay attention to the styles exercised only by rarely used screens.
-
-### 7. Measure again
-
-Compare with the baseline recorded in step 1, in the same environment and with the same bundler configuration. This
-gives the total gain of the migration, whereas the intermediate measurements only give the gain of a single step.
+Measuring your own application is a different exercise, and the guide owns it: which analyzer to set up for your
+toolchain, when to measure, and what the intermediate measurements buy you over the two that bracket the work. See
+[Reduce the Bundle Size of an Application](../guides/reduce-bundle-size.md).
 
 
 ## Going Further
@@ -560,3 +402,13 @@ for the topic and links all the sub-issues. The main ones still open are:
 
 The main known limitation today is that the mixins of `AbstractGraph` are still loaded as a whole, so part of the graph
 API is included even when unused. Issue #762 tracks the extraction of these behaviors into dedicated plugins.
+
+Mixins are the internal mechanism that groups the features of `AbstractGraph` by subject, `SelectionMixin`,
+`EditingMixin`, `ZoomMixin` and about twenty in all, instead of declaring them all in a single class. Unlike the
+built-in elements described in this page, they are not opt-in: `AbstractGraph` copies their members onto its own
+prototype when its module is imported, so importing any graph class brings every mixin along. A bundler cannot trim
+them, because they all end up on the same prototype and nothing indicates which ones the application actually calls.
+Converting them to plugins, which are opt-in by construction, is what issue #762 is about.
+
+Mixins also surface when you extend the library, since a member coming from one is overridden differently, see
+[Subclassing a graph class](../guides/extend-maxgraph.md#a-graph-class).
