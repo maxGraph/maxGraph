@@ -96,6 +96,7 @@ export * from './serialization/codec/_other-codecs.js';
 export * from './serialization/register-model-codecs.js';
 export * from './serialization/register-other-codecs.js';
 
+export { AbstractPathShape } from './view/shape/node/AbstractPathShape.js';
 export { default as ActorShape } from './view/shape/node/ActorShape.js';
 export { default as LabelShape } from './view/shape/node/LabelShape.js';
 export { default as Shape } from './view/shape/Shape.js';

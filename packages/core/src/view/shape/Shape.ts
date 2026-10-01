@@ -63,6 +63,8 @@ import { StyleDefaultsConfig } from '../../util/config.js';
  * - {@link Shape} itself for a vertex made of a single filled and stroked path: override
  *   `paintVertexShape(c, x, y, w, h)` and call `c.translate(x, y)`, `c.begin()`, the path drawing operations, then
  *   `c.fillAndStroke()`.
+ * - {@link AbstractPathShape} for the same single path vertex, without that boilerplate: override
+ *   `redrawPath(c, x, y, w, h)` with the drawing operations only.
  * - {@link CylinderShape} for a filled area plus a stroke only overlay path: override
  *   `redrawPath(c, x, y, w, h, isForeground)`.
  * - {@link RectangleShape} (override `paintBackground` or `paintForeground`) or {@link EllipseShape} (override
