@@ -38,7 +38,6 @@ import StyleChange from './undoable-change/StyleChange.js';
 import TerminalChange from './undoable-change/TerminalChange.js';
 import ValueChange from './undoable-change/ValueChange.js';
 import CellState from './cell/CellState.js';
-import { isNode } from '../util/domUtils.js';
 import { EdgeStyle } from './style/builtin-style-elements.js';
 import { EdgeStyleRegistry } from './style/edge/EdgeStyleRegistry.js';
 import type {
@@ -207,53 +206,6 @@ export abstract class AbstractGraph extends EventSource {
   backgroundImage: Image | null = null;
 
   /**
-   * Specifies if the background page should be visible.
-   * Not yet implemented.
-   * @default false
-   */
-  pageVisible = false;
-
-  /**
-   * Specifies if a dashed line should be drawn between multiple pages.
-   * If you change this value while a graph is being displayed then you
-   * should call {@link sizeDidChange} to force an update of the display.
-   * @default false
-   */
-  pageBreaksVisible = false;
-
-  /**
-   * Specifies the color for page breaks.
-   * @default gray
-   */
-  pageBreakColor = 'gray';
-
-  /**
-   * Specifies the page breaks should be dashed.
-   * @default true
-   */
-  pageBreakDashed = true;
-
-  /**
-   * Specifies the minimum distance in pixels for page breaks to be visible.
-   * @default 20
-   */
-  minPageBreakDist = 20;
-
-  /**
-   * Specifies if the graph size should be rounded to the next page number in
-   * {@link sizeDidChange}. This is only used if the graph container has scrollbars.
-   * @default false
-   */
-  preferPageSize = false;
-
-  /**
-   * Specifies the scale of the background page.
-   * Not yet implemented.
-   * @default 1.5
-   */
-  pageScale = 1.5;
-
-  /**
    * Specifies the return value for {@link isEnabled}.
    * @default true
    */
@@ -298,22 +250,6 @@ export abstract class AbstractGraph extends EventSource {
    * @default 0
    */
   border = 0;
-
-  /**
-   * Specifies if edges should appear in the foreground regardless of their order
-   * in the model. If {@link keepEdgesInForeground} and {@link keepEdgesInBackground} are
-   * both `true` then the normal order is applied.
-   * @default false
-   */
-  keepEdgesInForeground = false;
-
-  /**
-   * Specifies if edges should appear in the background regardless of their order
-   * in the model. If {@link keepEdgesInForeground} and {@link keepEdgesInBackground} are
-   * both `true` then the normal order is applied.
-   * @default false
-   */
-  keepEdgesInBackground = false;
 
   /**
    * Specifies if the scale and translate should be reset if the root changes in
@@ -389,14 +325,6 @@ export abstract class AbstractGraph extends EventSource {
     this.plugins.get(id) as T;
   getCellRenderer = () => this.cellRenderer;
   getDialect = () => this.dialect;
-  isPageVisible = () => this.pageVisible;
-  isPageBreaksVisible = () => this.pageBreaksVisible;
-  getPageBreakColor = () => this.pageBreakColor;
-  isPageBreakDashed = () => this.pageBreakDashed;
-  getMinPageBreakDist = () => this.minPageBreakDist;
-  isPreferPageSize = () => this.preferPageSize;
-  getPageFormat = () => this.pageFormat;
-  getPageScale = () => this.pageScale;
 
   getMinimumGraphSize = () => this.minimumGraphSize;
   setMinimumGraphSize = (size: Rectangle | null) => (this.minimumGraphSize = size);
@@ -579,31 +507,6 @@ export abstract class AbstractGraph extends EventSource {
   }
 
   /**
-   * Returns the preferred size of the background page if {@link preferPageSize} is true.
-   */
-  getPreferredPageSize(bounds: Rectangle, width: number, height: number) {
-    const tr = this.view.translate;
-    const fmt = this.pageFormat;
-    const ps = this.pageScale;
-    const page = new Rectangle(
-      0,
-      0,
-      Math.ceil(fmt.width * ps),
-      Math.ceil(fmt.height * ps)
-    );
-
-    const hCount = this.pageBreaksVisible ? Math.ceil(width / page.width) : 1;
-    const vCount = this.pageBreaksVisible ? Math.ceil(height / page.height) : 1;
-
-    return new Rectangle(
-      0,
-      0,
-      hCount * page.width + 2 + tr.x,
-      vCount * page.height + 2 + tr.y
-    );
-  }
-
-  /**
    * Resizes the container for the given graph width and height.
    */
   doResizeContainer(width: number, height: number): void {
@@ -777,51 +680,6 @@ export abstract class AbstractGraph extends EventSource {
    */
   setBackgroundImage(image: Image | null): void {
     this.backgroundImage = image;
-  }
-
-  /**
-   * Returns the textual representation for the given cell.
-   *
-   * This implementation returns the node name or string-representation of the user object.
-   *
-   *
-   * The following returns the label attribute from the cells user object if it is an XML node.
-   *
-   * @example
-   * ```javascript
-   * graph.convertValueToString = function(cell)
-   * {
-   * 	return cell.getAttribute('label');
-   * }
-   * ```
-   *
-   * See also: {@link cellLabelChanged}.
-   *
-   * @param cell {@link Cell} whose textual representation should be returned.
-   */
-  convertValueToString(cell: Cell): string {
-    const value = cell.getValue();
-
-    if (value != null) {
-      if (isNode(value)) {
-        return value.nodeName;
-      }
-      if (typeof value.toString === 'function') {
-        return value.toString();
-      }
-    }
-    return '';
-  }
-
-  /**
-   * Returns the string to be used as the link for the given cell.
-   *
-   * This implementation returns null.
-   *
-   * @param cell {@link Cell} whose link should be returned.
-   */
-  getLinkForCell(cell: Cell): string | null {
-    return null;
   }
 
   /**

@@ -19,6 +19,22 @@ import type Cell from '../cell/Cell.js';
 declare module '../AbstractGraph' {
   interface AbstractGraph {
     /**
+     * Specifies if edges should appear in the foreground regardless of their order
+     * in the model. If {@link keepEdgesInForeground} and {@link keepEdgesInBackground} are
+     * both `true` then the normal order is applied.
+     * @default false
+     */
+    keepEdgesInForeground: boolean;
+
+    /**
+     * Specifies if edges should appear in the background regardless of their order
+     * in the model. If {@link keepEdgesInForeground} and {@link keepEdgesInBackground} are
+     * both `true` then the normal order is applied.
+     * @default false
+     */
+    keepEdgesInBackground: boolean;
+
+    /**
      * Moves the given cells to the front or back. The change is carried out using {@link cellsOrdered}.
      *
      * This method fires {@link InternalEvent.ORDER_CELLS} while the transaction is in progress.
