@@ -37,6 +37,11 @@ _**Note:** Yet to be released breaking changes appear here._
   Module augmentation of the types exposed by the package silently does not work on TypeScript 3.8. TypeScript 3.9 fixes it.
   TypeScript 3.8 was released in February 2020, 3.9 in May 2020 and 4.0 in August 2020. Both 3.8 and 3.9 are more than six years old, and 3.9 was superseded three months after its release, so most applications already use a newer version and the impact of this change should be limited.
 
+- `AbstractGraph.isIgnoreScrollbars` and `AbstractGraph.isTranslateToScrollPosition` are now regular methods instead of arrow function properties, following the move of the scrolling members to `PanningMixin`.
+  Calling them on the graph is unaffected: `graph.isIgnoreScrollbars()` keeps working. Only detached references break, because the functions are no longer bound to their instance.
+  If you pass one of them as a callback, for instance `someArray.some(graph.isIgnoreScrollbars)` or `const isIgnored = graph.isIgnoreScrollbars`, bind it explicitly with `graph.isIgnoreScrollbars.bind(graph)` or wrap it in an arrow function.
+  Note that TypeScript does not report this, both forms have the same type, so the failure only appears at runtime.
+
 **Other Changes**:
 - The order of the child elements produced by the XML serialization of `<Graph>` and `<BaseGraph>` has changed: `pageFormat` and `warningImage` are now emitted right after `options`, instead of last.
   This is not a breaking change, decoding matches elements by their `as` attribute and is order-independent, so existing documents keep decoding identically and previously exported documents are still valid.
