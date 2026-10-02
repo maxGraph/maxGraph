@@ -171,19 +171,17 @@ they name something you already register:
 ```typescript
 // Before inserting any cell: a cell already drawn keeps its style until the next graph.refresh()
 const stylesheet = graph.getStylesheet();
-// A full replacement, not a merge: every property you still want has to be restated
-stylesheet.putDefaultVertexStyle({
-  ...stylesheet.getDefaultVertexStyle(),
-  perimeter: 'ellipsePerimeter',
-});
-stylesheet.putDefaultEdgeStyle({
-  ...stylesheet.getDefaultEdgeStyle(),
-  endArrow: 'none', // the one value that names no marker, so nothing has to be registered
-});
+
+const defaultVertexStyle = stylesheet.getDefaultVertexStyle();
+defaultVertexStyle.perimeter = 'ellipsePerimeter';
+
+const defaultEdgeStyle = stylesheet.getDefaultEdgeStyle();
+defaultEdgeStyle.endArrow = 'none'; // the one value that names no marker, so nothing has to be registered
 ```
 
-Replacing the whole object instead of spreading it is how an application loses its perimeter without noticing: with no
-`perimeter` at all, every edge stops at the centre of its terminals, which is the second symptom listed in step 5.
+Each accessor returns the object the `Stylesheet` holds, so assigning to one property changes that default in place and
+leaves the others alone. Keep `perimeter` naming something that is registered: a default style with no perimeter at all
+makes every edge stop at the centre of its terminals, which is the second symptom listed in step 5.
 
 **Two shape names need nothing.** The fallbacks of step 1 mean a diagram made of plain rectangles and plain edges
 registers no shape at all. That fallback is also why a missing registration is silent: the cell is drawn, with the

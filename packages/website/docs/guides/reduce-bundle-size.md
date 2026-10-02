@@ -421,8 +421,8 @@ approach of the previous steps worthwhile:
 |---|---|
 | Shape | The fallback shape is used: `RectangleShape` for a vertex, `ConnectorShape` for an edge |
 | Perimeter | No perimeter point is computed, so the edge connects to the center of the vertex bounding box |
-| EdgeStyle | The routing is not applied, so the edge is drawn as a straight line between its terminals |
-| Edge marker | No marker is drawn, so the arrowhead is missing |
+| EdgeStyle | The routing is not applied, so the edge is drawn as a polyline through the waypoints of its geometry, which is a straight line between its terminals when it has none |
+| Edge marker | Nothing is drawn where the style named a marker, `startArrow` at the source and `endArrow` at the target, whether that symbol was an arrow head or another one |
 | `EdgeStyle` metadata | The wrong `EdgeHandler` is instantiated, so the handles do not match the actual routing |
 
 Review the diagrams visually, and pay attention to the styles exercised only by rarely used screens. The first
@@ -434,6 +434,12 @@ the SVG of the edge.
 
 Compare with the baseline recorded in step 1, in the same environment and with the same bundler configuration. This
 gives the total gain of the migration, whereas the intermediate measurements only give the gain of a single step.
+
+:::info
+The figures below were measured with `maxGraph` 0.25.0, on the production build of each example, webpack for the
+JavaScript pair and Vite for the TypeScript one. They are given as a ratio to expect rather than as a size to reach: a
+later release changes what the library weighs, not the shape of the reduction this procedure produces.
+:::
 
 As an order of magnitude, the maxGraph repository ships both ends of this procedure. `js-example`, an editable graph
 that imports and exports its model as XML and offers rubber band selection and panning, weighs about 467 kB.
@@ -451,8 +457,3 @@ custom shapes, weighs about 429 kB, and `ts-example-selected-features`, its migr
 seven steps are what separates them. The shipped variant also drops the two custom shape classes and reproduces their
 appearance with plain style properties, which is not part of this procedure, but those classes are application code
 and live in another chunk, so the two figures above are unaffected.
-
-These figures were measured with `maxGraph` 0.25.0, on the production build of each example, webpack for the
-JavaScript pair and Vite for the TypeScript one. They are given as a ratio to expect rather than as a size to reach,
-and pinning the version they come from is what keeps them meaningful: a later release changes what the library weighs,
-not the shape of the reduction this procedure produces.

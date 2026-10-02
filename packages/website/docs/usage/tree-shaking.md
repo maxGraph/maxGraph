@@ -109,7 +109,7 @@ This is a long-running effort. The main milestones so far:
 | 0.20.0 | Dedicated registries replace the monolithic `StyleRegistry` and `CellRenderer` registration |
 | 0.23.0 | Graph mixins start moving into plugins: `TooltipMixin` disappears, its methods becoming those of `TooltipHandler` |
 | 0.24.0 | A dedicated registration helper per built-in `EdgeStyle`, and the image bundle feature moves to a plugin |
-| 0.25.0 | The cell handlers move from `AbstractGraph` to the `SelectionCellsHandler` plugin, so an application that does not register that plugin no longer bundles `VertexHandler`, `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler`. `registerDefaultStyleElements()` also appears, grouping the four style `registerDefault*` functions in a single call |
+| 0.25.0 | The cell handlers move from `AbstractGraph` to the `SelectionCellsHandler` plugin, so an application that does not register that plugin no longer bundles `VertexHandler`, `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler` |
 
 The impact of these changes is measured on the example applications and communicated in the release notes. See for
 instance the [0.18.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.18.0) and
