@@ -89,7 +89,7 @@ This new draft release includes a template to guide the writing of the content, 
 changes included in the new version.
 
 The list of the major changes has been [automatically generated](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes). Review and adjust it if necessary:
-  - It is based on the labels of the merged Pull Requests included in this release and the [GitHub release configuration](https://github.com/maxGraph/maxGraph/blob/development/.github/release.yml).
+  - It is based on the labels of the merged Pull Requests included in this release and the [GitHub release configuration](https://github.com/maxGraph/maxGraph/blob/24b0cda11ab1cdb44db38f9ded3a48134d14333e/.github/release.yml).
   - If the list is incorrect (for example, an item is not in the correct category), update the label(s) or the associated
 Pull Request and regenerate the list.
 
