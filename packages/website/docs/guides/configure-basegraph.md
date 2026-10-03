@@ -180,14 +180,18 @@ defaultEdgeStyle.endArrow = 'none'; // the one value that names no marker, so no
 ```
 
 Each accessor returns the object the `Stylesheet` holds, so assigning to one property changes that default in place and
-leaves the others alone. Keep `perimeter` naming something that is registered: a default style with no perimeter at all
-makes every edge stop at the centre of its terminals, which is the second symptom listed in step 5.
+leaves the others alone.
 
-The two lines are not the same kind of saving. `'none'` names no marker, so it removes a registration outright, and
-there is no equivalent value for a perimeter. `'ellipsePerimeter'` is a perimeter like any other and still has to be
-registered, so repointing the default pays off only for an application that registers it anyway, and the name has to
-match the shapes its cells draw: an ellipse perimeter on a rectangular vertex computes the attach point on an ellipse
-that is not there, and the edge visibly meets the vertex in the wrong place.
+Replacing a name is not the only option, and the two lines above do not save the same way. `'none'` names no marker, so
+it removes a registration outright. `'ellipsePerimeter'` is a perimeter like any other and still has to be registered,
+so repointing the default pays off only for an application that registers it anyway, and the name has to match the
+shapes its cells draw: an ellipse perimeter on a rectangular vertex computes the attach point on an ellipse that is not
+there, and the edge visibly meets the vertex in the wrong place.
+
+A perimeter can also be dropped rather than replaced, by setting the property to `null` or `undefined`, which registers
+nothing at all. Every edge then meets its terminals at their centre, see
+[Disabling the Perimeter](../usage/perimeters.md#disabling-the-perimeter). Do it deliberately: that same rendering is
+the second symptom listed in step 5 when it comes from a registration you forgot.
 
 **Two shape names need nothing.** The fallbacks of step 1 mean a diagram made of plain rectangles and plain edges
 registers no shape at all. That fallback is also why a missing registration is silent: the cell is drawn, with the
