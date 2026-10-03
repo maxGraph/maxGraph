@@ -173,7 +173,7 @@ they name something you already register:
 const stylesheet = graph.getStylesheet();
 
 const defaultVertexStyle = stylesheet.getDefaultVertexStyle();
-defaultVertexStyle.perimeter = 'ellipsePerimeter';
+defaultVertexStyle.perimeter = 'ellipsePerimeter'; // assumes the application registers it, and draws ellipses
 
 const defaultEdgeStyle = stylesheet.getDefaultEdgeStyle();
 defaultEdgeStyle.endArrow = 'none'; // the one value that names no marker, so nothing has to be registered
@@ -182,6 +182,12 @@ defaultEdgeStyle.endArrow = 'none'; // the one value that names no marker, so no
 Each accessor returns the object the `Stylesheet` holds, so assigning to one property changes that default in place and
 leaves the others alone. Keep `perimeter` naming something that is registered: a default style with no perimeter at all
 makes every edge stop at the centre of its terminals, which is the second symptom listed in step 5.
+
+The two lines are not the same kind of saving. `'none'` names no marker, so it removes a registration outright, and
+there is no equivalent value for a perimeter. `'ellipsePerimeter'` is a perimeter like any other and still has to be
+registered, so repointing the default pays off only for an application that registers it anyway, and the name has to
+match the shapes its cells draw: an ellipse perimeter on a rectangular vertex computes the attach point on an ellipse
+that is not there, and the edge visibly meets the vertex in the wrong place.
 
 **Two shape names need nothing.** The fallbacks of step 1 mean a diagram made of plain rectangles and plain edges
 registers no shape at all. That fallback is also why a missing registration is silent: the cell is drawn, with the
