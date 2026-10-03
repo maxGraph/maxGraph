@@ -78,6 +78,15 @@ source link, as the existing pages do:
 - source code: [Shape.stories.js](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/Shape.stories.js)
 ```
 
+**The source link points at `main`, never at a commit.** This is a deliberate exception to the habit of pinning a
+repository link to a full commit SHA so that it keeps showing what it showed when it was written. The two links of a
+pair have to agree, and the demo always runs the implementation on `main`, so a source link pinned to a commit would
+send the reader to code the demo no longer runs. Story files are also renamed rarely and moved almost never, so the
+usual reason for pinning, content drifting out from under the link, barely applies here.
+
+The exception covers `packages/html/stories` only. Every other link into the repository from the documentation keeps
+its commit SHA.
+
 Three published links were broken by ignoring this:
 
 | Trap | Wrong | Right |
