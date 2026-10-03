@@ -71,7 +71,8 @@ constructor has run.
 "Installed too late" means installed once `super()` has returned, so a member read during construction still sees the
 base implementation. What works there is overriding the **method**, which lives on the prototype and is therefore in
 place from the first line of the base constructor. On a graph class that rules out the mixin members and the accessors,
-which are declared as properties, but not the five `create*` factories nor `registerDefaults()`, which are methods, see
+which are declared as properties, but not the five `create*` factories of `Graph` nor `registerDefaults()`, which are
+methods, see
 [A graph class](#a-graph-class).
 
 The last case of the table is the most common in practice, and the stories show it: a `ConstraintHandler` subclass is reused by two
@@ -99,7 +100,7 @@ class CustomEdgeHandler extends EdgeHandler {
 }
 ```
 
-That example is taken from a story which also shows the other side of the choice, since it patches
+That example is adapted from a story which also shows the other side of the choice, since it patches
 `graph.getAllConnectionConstraints` and the `isConnectableCell` method of its connection handler on their instances:
 
 - live demo: [PortRefs](https://maxgraph.github.io/maxGraph/demo/?path=/story/connections-portrefs--default)
@@ -215,8 +216,8 @@ The others are `createGraphView`, `createGraphDataModel`, `createSelectionModel`
 
 `registerDefaults()` and these five are all called while the constructor of `AbstractGraph` is executing, the factories
 through `initializeCollaborators`, which `Graph` implements, and two of them conditionally: `createGraphDataModel` and
-`createStylesheet` run only when the constructor received neither a model nor a stylesheet, those arguments taking
-precedence. The override itself works, being a method on the prototype, but no field of the subclass exists at that
+`createStylesheet` each run only when its own argument is absent, a model or a stylesheet passed to the constructor
+taking precedence over the factory. The override itself works, being a method on the prototype, but no field of the subclass exists at that
 point, so a factory reading one reads `undefined` and nothing is reported. Keep them free of instance state, which
 [Where the registration code lives](../usage/tree-shaking.md#where-the-registration-code-lives) details for
 `registerDefaults()`.
@@ -738,7 +739,7 @@ Each cell then chooses its own badge with `style: { shape: 'badgedRectangle', ba
 
 ### Keep your custom properties flat
 
-Give each property a simple type, `number`, `string` or `boolean`, and declare each value as a property of its own rather than gathering several of them in one object. An array is fine as long as it holds those same simple types, which is what `maxGraph` does itself with `baseStyleNames: string[]`, the only array among its own style properties.
+Give each property a simple type, `number`, `string` or `boolean`, and declare each value as a property of its own rather than gathering several of them in one object. An array is fine as long as it holds those same simple types, which is what `maxGraph` does itself: `baseStyleNames: string[]` is the only one of its style properties that is always an array, and `portConstraint`, `sourcePortConstraint` and `targetPortConstraint` accept one or several `DirectionValue`.
 
 ```typescript
 declare module '@maxgraph/core' {
@@ -770,7 +771,7 @@ The type system accepts both. What differs is the API that manipulates a style.
 | A `Date` | The current date |
 | A `Map` or a `Set` | An empty one |
 | An object created with `Object.create(null)` | `null` |
-| An instance of a class whose constructor requires an argument | Nothing, the clone throws, during an ordinary style change |
+| An instance of any other class | Its constructor runs with no argument, so every field it would have set from that argument is `undefined`, and the clone throws outright during an ordinary style change if the constructor reads it |
 
 `CellState.clone()` is the other side of the same coin: it passes the style by reference rather than copying it, so the two states share whatever object it holds.
 
