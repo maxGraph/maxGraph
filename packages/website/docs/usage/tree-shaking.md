@@ -100,16 +100,19 @@ For a detailed comparison of the strategies used by the various bundlers, see th
 
 This is a long-running effort. The main milestones so far:
 
-| Version | Improvement |
-|---|---|
-| 0.6.0 | Codecs are no longer registered by default |
-| 0.11.0 | The graph no longer logs through `MaxLog` by default, so `MaxLog` and `MaxWindow` are no longer pulled in transitively, the legacy `Editor` aside |
-| 0.12.0 | The npm package is declared without side effects |
-| 0.18.0 | `BaseGraph` is introduced, along with the `registerDefault*` functions |
-| 0.20.0 | Dedicated registries replace the monolithic `StyleRegistry` and `CellRenderer` registration |
-| 0.23.0 | Graph mixins start moving into plugins: `TooltipMixin` disappears, its methods becoming those of `TooltipHandler` |
-| 0.24.0 | A dedicated registration helper per built-in `EdgeStyle`, and the image bundle feature moves to a plugin |
-| 0.25.0 | The cell handlers move from `AbstractGraph` to the `SelectionCellsHandler` plugin, so an application that does not register that plugin no longer bundles `VertexHandler`, `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler` |
+| Version | Improvement | What it buys |
+|---|---|---|
+| 0.6.0 | Codecs are no longer registered by default | An application that never serializes a model carries no codec, where they used to be registered whether or not anything encoded or decoded |
+| 0.11.0 | The graph no longer logs through `MaxLog` by default | `MaxLog` and `MaxWindow` stop being pulled in transitively, the legacy `Editor` aside, so the in-page console leaves every application that does not display it |
+| 0.12.0 | The npm package is declared free of side effects, its CSS files excepted | A bundler may drop a whole unused module and its subtree, rather than only the exports it can prove unused |
+| 0.17.0 | i18n becomes configurable through `GlobalConfig.i18n`, whose default provides no translation | The `Translations` machinery and the resources it loads leave every application that does not opt into them |
+| 0.18.0 | `BaseGraph` is introduced, along with the `registerDefault*` functions | A graph can be built that registers nothing: shapes, perimeters, edge styles, markers and plugins become opt-in instead of arriving with the class, so only the plugins an application declares are loaded |
+| 0.19.0 | `EdgeStyle` and `Perimeter` become namespaces, instead of a class holding static members and a value object | Those two shapes defeated the module level analysis of several bundlers, Webpack in particular, which can now drop the implementations an application never registers |
+| 0.20.0 | The library stops naming the built-in `EdgeStyle` implementations in its own code, reading instead the metadata passed to `EdgeStyleRegistry.add()` | An unregistered edge style is no longer reachable from the library, so a bundler can drop it; this is what the per style helpers of 0.24.0 are built on |
+| 0.21.0 | `AbstractGraph.fit`, with the `minFitScale` and `maxFitScale` properties, moves to `FitPlugin` | The fitting logic leaves the graph classes, so an application that does not register that plugin no longer carries it |
+| 0.23.0 | The first graph mixin moves into a plugin: `TooltipMixin` disappears, its methods becoming those of `TooltipHandler` | A mixin is loaded by every graph class, a plugin only by the applications that declare it, so the tooltip code leaves the others |
+| 0.24.0 | A dedicated registration helper per built-in `EdgeStyle`, the image bundle feature moves to a plugin, and `EdgeHandler` stops importing `EdgeStyle` | One edge style is registered instead of all eight, with the metadata the library reads elsewhere; the image bundle code leaves every application that does not add `ImageBundlePlugin`, and `EntityRelation` leaves those that never register it |
+| 0.25.0 | The cell handlers move from `AbstractGraph` to the `SelectionCellsHandler` plugin | An application that does not register that plugin no longer bundles `VertexHandler`, `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler` |
 
 The impact of these changes is measured on the example applications and communicated in the release notes. See for
 instance the [0.18.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.18.0) and
