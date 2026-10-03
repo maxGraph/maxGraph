@@ -12,7 +12,7 @@
   **[discussion #51](https://github.com/maxGraph/maxGraph/discussions/51): first mention of the plugin system**,
   [discussion #151](https://github.com/maxGraph/maxGraph/discussions/151#discussioncomment-4376164),
   user documentation: [`plugins.md`](../../packages/website/docs/usage/plugins.md),
-  [`migrate-from-mxgraph.md`](../../packages/website/docs/usage/migrate-from-mxgraph.md)
+  [`migrate-from-mxgraph.md`](../../packages/website/docs/guides/migrate-from-mxgraph.md)
 
 ## Context
 
@@ -35,7 +35,7 @@ tree-shaking possible.
 Meanwhile the codebase already had a working answer for part of this. The `mxGraph` handlers were per-instance
 collaborators created by the `Graph` constructor, and they were gradually turned into registered plugins. Seven
 properties and their factory methods were removed in the process, documented in
-[`migrate-from-mxgraph.md`](../../packages/website/docs/usage/migrate-from-mxgraph.md): `cellEditor`,
+[`migrate-from-mxgraph.md`](../../packages/website/docs/guides/migrate-from-mxgraph.md): `cellEditor`,
 `connectionHandler`, `graphHandler`, `panningHandler`, `popupMenuHandler`, `selectionCellsHandler` and `tooltipHandler`,
 each replaced by a `getPlugin` call. That conversion is the precedent this ADR generalises, and its migration table is
 also the honest measure of what a plugin migration costs users.

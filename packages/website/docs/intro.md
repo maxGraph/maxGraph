@@ -31,7 +31,7 @@ Active development ensures continuous bug fixes and new capabilities.
 - Built-in shapes: rectangles, ellipses, rhombuses, cylinders, clouds, triangles, hexagons, actors, swimlanes, and more
 - Edge types: connectors, arrows, polylines with several marker styles (classic, block, open, oval, diamond, and variants)
 - Various edge routing algorithms: orthogonal, Manhattan, elbow, entity-relation, segment, loop, and more
-- Custom shapes through the stencil system (XML-defined shapes)
+- Custom shapes, written as classes or defined in XML through the stencil system (see [Extend maxGraph](./guides/extend-maxgraph.md#adding-a-new-custom-shape))
 - Labels, tooltips, overlays (badges/icons on cells), and image support
 - SVG rendering
 
@@ -77,7 +77,7 @@ Active development ensures continuous bug fixes and new capabilities.
 ### 🛠️ Developer Experience
 - Written in TypeScript with complete type definitions. TypeScript integration requires **TypeScript 3.9** or higher (**TypeScript 3.8** for version 0.24.0 and earlier)
 - Zero third-party dependencies
-- [Tree-shakable](./usage/tree-shaking.md): use [`BaseGraph`](./usage/graph.md#basegraph) to import only what you need and reduce bundle size
+- [Tree-shakable](./usage/tree-shaking.md): use [`BaseGraph`](./usage/graph.md#basegraph) to import only what you need and reduce bundle size, starting a new application with [Set Up an Application on BaseGraph](./guides/configure-basegraph.md) or moving an existing one with [Reduce the Bundle Size of an Application](./guides/reduce-bundle-size.md)
 - Available as both ES Module and CommonJS. The JavaScript code conforms to the `ES2020` standard
 - Plugin architecture: add only the interaction handlers you need
 - Style system with 100+ configurable properties per cell
@@ -107,6 +107,7 @@ To visualize the documentation for a specific version (and the corresponding dem
 This documentation is organized into several sections:
 - **[Manual](./manual/index.md)**: Describes the core concepts and architecture of `maxGraph`
 - **[Tutorials](./category/tutorials)**: Provides step-by-step guides to help you learn the basics of `maxGraph`
+- **[Guides](./category/guides)**: Walks through a complete task, such as migrating an existing application, or gathers the recipes of one subject, such as extending `maxGraph`
 - **[Usage](./category/usage)**: Contains detailed documentation and examples for implementing specific features
 - **[Development](./category/development)**: Explains how to build and contribute to `maxGraph` (for contributors and maintainers)
 

@@ -73,7 +73,7 @@ When maxGraph forked from mxGraph 4.2.2 in 2020, the `mxGraph` class was renamed
 - **Shapes, edge styles, perimeters, and edge markers** were moved from monolithic registries (`StyleRegistry`, `CellRenderer`) into dedicated per-type registries (`ShapeRegistry`, `EdgeStyleRegistry`, `PerimeterRegistry`, `EdgeMarkerRegistry`) that can be populated selectively.
 - In version 0.18.0, the `Graph` class was split into `AbstractGraph`, `Graph`, and `BaseGraph` to enable [tree-shaking](./tree-shaking.md) at the class level.
 
-If you are migrating from mxGraph, `Graph` is the closest equivalent to the original `mxGraph` class. See the [migration guide](./migrate-from-mxgraph.md) for details.
+If you are migrating from mxGraph, `Graph` is the closest equivalent to the original `mxGraph` class. See the [migration guide](../guides/migrate-from-mxgraph.md) for details.
 
 ## AbstractGraph
 
@@ -117,6 +117,8 @@ When instantiated, `Graph` automatically:
 
 3. **Exposes factory methods** (`createCellRenderer()`, `createGraphDataModel()`, etc.) that subclasses can override to customize collaborators.
 
+Subclassing a graph class, and the rule that decides whether an override is written as a method or as a property, are covered by [Extend maxGraph](../guides/extend-maxgraph.md#a-graph-class).
+
 :::warning
 Step 1 always happens. Step 2 only instantiates the default plugins when the `plugins` argument is omitted, but `Graph` imports them either way, so their code is bundled even when you pass your own list. The built-in style elements and the default plugins therefore set a floor on the size of your bundle, whether the application uses them or not. This is the reason `Graph` is not recommended for production. See the [Tree-Shaking](./tree-shaking.md) page.
 :::
@@ -149,11 +151,11 @@ const graph = new Graph(container, undefined, [
 
 1. **No `registerDefaults()` override**: the inherited no-op from `AbstractGraph` is used, so no built-in shapes, edge styles, perimeters, or markers are registered.
 2. **No default plugins**: you must pass the exact list of plugins you need via the `options.plugins` constructor parameter.
-3. **Collaborators via options**: instead of factory methods, `BaseGraph` accepts all five collaborators directly through the constructor options object (`cellRenderer`, `model`, `selectionModel`, `stylesheet`, `view`). `Graph` only lets you override `model` and `stylesheet` (via positional parameters); customizing `cellRenderer`, `selectionModel`, or `view` with `Graph` requires subclassing and overriding the corresponding factory method. `BaseGraph` is therefore more flexible for dependency injection, while `Graph` is more convenient for subclass-based customization.
+3. **Collaborators via options**: instead of factory methods, `BaseGraph` accepts all five collaborators through the constructor options object, `cellRenderer`, `model` and `stylesheet` as instances, `selectionModel` and `view` as functions receiving the graph, since those two need it at construction time. `Graph` only lets you override `model` and `stylesheet` (via positional parameters); customizing `cellRenderer`, `selectionModel`, or `view` with `Graph` requires subclassing and overriding the corresponding factory method. `BaseGraph` is therefore more flexible for dependency injection, while `Graph` is more convenient for subclass-based customization.
 
 ### Registering style elements with BaseGraph
 
-Since `BaseGraph` does not register any built-in style elements, you need to register them yourself. The following approaches are available.
+Since `BaseGraph` does not register any built-in style elements, you need to register them yourself. The following approaches are available. For the order in which to decide what to register in a new application, see [Set Up an Application on BaseGraph](../guides/configure-basegraph.md).
 
 :::info
 Style registries (`ShapeRegistry`, `EdgeStyleRegistry`, `PerimeterRegistry`, `EdgeMarkerRegistry`) are **global** in both approaches: every `Graph` or `BaseGraph` instance in your application sees the same registrations. The choice between the two approaches is about where the registration code lives, not about scoping it to a specific instance.
@@ -164,6 +166,10 @@ Style registries (`ShapeRegistry`, `EdgeStyleRegistry`, `PerimeterRegistry`, `Ed
 Subclass `BaseGraph` and override `registerDefaults()`. This keeps the registration code **co-located with the class that depends on it**, so the configuration travels with the class definition.
 
 This is the approach used in the maxGraph example applications.
+
+:::warning
+`registerDefaults()` runs from the constructor of `AbstractGraph`, before any field of your subclass and any collaborator exists, so keep the override to registry calls. See [Where the registration code lives](./tree-shaking.md#where-the-registration-code-lives).
+:::
 
 ```typescript
 import '@maxgraph/core/css/common.css';
@@ -329,7 +335,7 @@ With `Graph`, you often need `undefined` placeholders to reach a later parameter
 - **Applications using a limited set of features**: no need to ship code for shapes and plugins you never use
 - **Embedding maxGraph in a larger application**: control exactly what is included in your bundle
 
-If the application already runs on `Graph`, the switch is described step by step in the [tree-shaking guide](./tree-shaking.md#guide-improving-the-tree-shaking-of-an-application-using-graph).
+If the application already runs on `Graph`, the switch is described step by step in the [Reduce the Bundle Size of an Application](../guides/reduce-bundle-size.md) guide.
 
 ## Examples and Demos
 
@@ -350,4 +356,4 @@ For the full list of examples and integration demos, see the [Demos and Examples
 - Use **`BaseGraph`** for production: register only what you need and let the bundler eliminate the rest.
 - Both classes share the **same API** via `AbstractGraph`: switching from `Graph` to `BaseGraph` is primarily a configuration change, not an API change.
 
-To move an existing `Graph`-based application to `BaseGraph`, follow the step-by-step [guide](./tree-shaking.md#guide-improving-the-tree-shaking-of-an-application-using-graph) on the Tree-Shaking page. It also covers the features that are registered on demand independently of the graph class: codecs, i18n and the logger.
+To move an existing `Graph`-based application to `BaseGraph`, follow the step-by-step [Reduce the Bundle Size of an Application](../guides/reduce-bundle-size.md) guide. It also covers the features that are registered on demand independently of the graph class: codecs, i18n and the logger.

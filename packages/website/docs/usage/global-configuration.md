@@ -67,9 +67,11 @@ The behavior depends on which Graph class you use (see the [Graph documentation 
 
 There are no default stencil shapes registered by default with either class.
 
+Writing a shape class of your own and registering it in `ShapeRegistry` is covered by [Adding a new custom `Shape`](../guides/extend-maxgraph.md#adding-a-new-custom-shape).
+
 If a style references a shape that is not registered, the fallback shape is used:
-- **Vertices**: `RectangleShape` by default (configurable via `CellRenderer.defaultVertexShape`). No need to register it.
-- **Edges**: `ConnectorShape` by default (configurable via `CellRenderer.defaultEdgeShape`). No need to register it.
+- **Vertices**: `RectangleShape` by default (configurable via the `defaultVertexShape` field of the `CellRenderer` instance of the graph, reachable with `graph.getCellRenderer()`). No need to register it.
+- **Edges**: `ConnectorShape` by default (configurable via the `defaultEdgeShape` field of that same instance). No need to register it.
 
 Missing edge styles, perimeters, or markers produce no rendering for the corresponding feature.
 
