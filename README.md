@@ -223,6 +223,12 @@ Structural decisions that cannot be inferred from the code alone are recorded in
 
 Start there before proposing a change to the `Graph` class hierarchy, the mixins or the plugins.
 
+### Analyses
+
+Analyses made before a decision are recorded in [`docs/analyses`](./docs/analyses/README.md): whether a change is feasible, what it would gain, for instance in bundle size, what it would cost, and what it would break.
+
+Check there whether a change you are considering has already been evaluated.
+
 ### Quick Command Reference
 
 ```bash
