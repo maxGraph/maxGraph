@@ -9,7 +9,9 @@ description: Integrate CSS and Images assets required by maxGraph.
 
 Some features of `maxGraph` create elements in the DOM to let interact with the [`Graph`](./graph.md).
 
-For example, it happens when using _Editor_, _MaxPopupMenu_, _MaxWindow_, _Rubberband_, _Toolbar_ or _Tooltip_.
+Four [plugins](./plugins.md) are concerned, `CellEditorHandler` (`.mxCellEditor`), `PopupMenuHandler` (`.mxPopupMenu`,
+through `MaxPopupMenu`), `RubberBandHandler` (`.mxRubberband`) and `TooltipHandler` (`.mxTooltip`), as well as the
+`Editor`, `MaxWindow` and `MaxToolbar` classes when the application uses them directly.
 
 These elements require the application to provide CSS rules for correct display.
 

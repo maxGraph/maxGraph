@@ -55,6 +55,8 @@ Key patterns:
 - See `.claude/rules/architecture/graph-api-usage.md` for calling the maxGraph API (applies to sources, tests, stories and examples)
 - See `.claude/rules/testing/conventions.md` for test patterns
 - See `.claude/rules/tooling/bundle-size-budgets.md` for the size budgets of the example packages (webpack and Vite)
+- See `.claude/rules/documentation/website.md` for any change under packages/website/docs (build check, redirects, page naming, Storybook links)
+- See `.claude/rules/documentation/guides-structure.md` for the structure of the website guides (prerequisites, titles)
 - See `.claude/rules/git/commit-conventions.md` for commit message style
 
 ## References

@@ -161,7 +161,8 @@ you.
 ## Configuring the handler factories
 
 The handler classes instantiated by `SelectionCellsHandler` can be replaced per graph instance, which is how a custom
-`VertexHandler` or `EdgeHandler` subclass is plugged in.
+`VertexHandler` or `EdgeHandler` subclass is plugged in. Writing that subclass is covered by
+[A cell handler](../guides/extend-maxgraph.md#a-cell-handler).
 
 Both methods are set on the plugin instance:
 

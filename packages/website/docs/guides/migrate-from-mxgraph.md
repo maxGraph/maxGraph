@@ -1,5 +1,5 @@
 ---
-sidebar_position: 20
+sidebar_position: 40
 description: How-to easily migrate from mxGraph to maxGraph
 ---
 
@@ -34,6 +34,26 @@ The concepts are the same, so experienced `mxGraph` users should be able to swit
 The main changes are the removal of support for Internet Explorer (including VML support) and Legacy Edge.
 
 The initial description of the changes has been described in [Pull Request #70](https://github.com/maxGraph/maxGraph/pull/70).
+
+:::info
+This guide migrates to `Graph`, which registers every built-in plugin and style element on its own, so it is the
+closest equivalent to `mxGraph` and the easiest target. For a production application, prefer
+[`BaseGraph`](../usage/graph.md#basegraph) instead: it registers nothing by default, so the bundle carries only what the
+application declares, which is what makes [tree-shaking](../usage/tree-shaking.md) effective. Once this migration is
+done, [Reduce the Bundle Size of an Application](./reduce-bundle-size.md) takes you there step by step.
+:::
+
+## Before you start
+
+- **An `mxGraph` application that builds and runs**, since every section below changes it in place and you check it as
+  you go.
+- **Node.js and npm**, the first step replacing the dependency.
+- **An inventory of the `mx` prefixed names your code uses**, classes, constants and style keys, which the sections
+  below rename family by family.
+- **The maxGraph version you are migrating to**, the notice above listing what changed after 0.18.0.
+
+This guide assumes you know `mxGraph` itself: it states what changed, not how a diagram works. It migrates to `Graph`,
+see [Graph vs BaseGraph](../usage/graph.md#graph-vs-basegraph).
 
 ## Application setup
 
@@ -115,7 +135,19 @@ Here are some general guidelines to keep in mind when migrating from `mxGraph` t
 
 - The names of `mxGraph` objects were all prefixed with `mx`. This prefix has been dropped in `maxGraph`.
 - Most names remain the same, but some utility functions whose implementation is natively available in modern versions of ECMAScript have been removed.
-- `Graph` is the direct equivalent of the former `mxGraph` class: it registers all built-in style elements and loads the default plugins, which makes it the natural landing point for a migration. Once the application runs, consider moving to `BaseGraph` and registering only the features you use: unlike `mxGraph`, `maxGraph` lets the bundler drop everything else. The [Graph](./graph.md#graph-vs-basegraph) page compares the two classes, and the [Tree-Shaking](./tree-shaking.md) page describes the migration step by step.
+- `Graph` is the direct equivalent of the former `mxGraph` class: it registers all built-in style elements and loads the default plugins, which makes it the natural landing point for a migration. Once the application runs, consider moving to `BaseGraph` and registering only the features you use: unlike `mxGraph`, `maxGraph` lets the bundler drop everything else. The [Graph](../usage/graph.md#graph-vs-basegraph) page compares the two classes, the [Tree-Shaking](../usage/tree-shaking.md) page explains the concept, and the [Reduce the Bundle Size of an Application](./reduce-bundle-size.md) guide describes the migration step by step.
+
+:::warning[Prototype patching does not carry over]
+`mxGraph` examples and documentation very often changed a default by assigning to a prototype, as in
+`mxEdgeHandler.prototype.snapToTerminals = true`. Ported as is, that line silently does nothing whenever the member is
+a **property**: `maxGraph` is written with ES class fields, which the constructor assigns on each instance, so every
+instance shadows whatever the prototype carries, and nothing is reported. It still works on a **method**, which does
+live on the prototype, but it is not the recommended practice either, since it changes every graph of the page at once.
+
+Use instead a [global configuration](../usage/global-configuration.md) object when one covers the value, a patch on the
+instance you own, or a subclass installed through the matching factory.
+[Patching a prototype](./extend-maxgraph.md#patching-a-prototype) compares the three and shows what each one replaces.
+:::
 
 ## Specific code changes
 
@@ -269,10 +301,10 @@ format:(value: number) => number
 
 ### `mxGraph`
 
-The `mxGraph` class has been renamed to [`Graph`](./graph.md) in `maxGraph`.
+The `mxGraph` class has been renamed to [`Graph`](../usage/graph.md) in `maxGraph`.
 There have also been some changes related to properties and methods.
 
-Some properties have been removed in favor of the usage of [Plugins](./plugins.md). Plugins are registered at the `Graph` initialization by passing
+Some properties have been removed in favor of the usage of [Plugins](../usage/plugins.md). Plugins are registered at the `Graph` initialization by passing
 an array of plugins to the constructor.
 
 | property removed        | method removed                | new plugin              |
@@ -409,7 +441,7 @@ In `mxGraph`, the constants were used everywhere in the code and changing them w
 In `maxGraph`, it is no longer possible to update the value of the properties in the `constants` namespace.
 There are global configuration objects that allow to set the default values previously defined in `mxConstants` and these configurations are used everywhere in the code.
 
-But it is possible to configure their values globally. See the [Global Configuration](./global-configuration.md#general) documentation for more details.
+But it is possible to configure their values globally. See the [Global Configuration](../usage/global-configuration.md#general) documentation for more details.
 
 :::
 
@@ -419,7 +451,7 @@ But it is possible to configure their values globally. See the [Global Configura
 The `mxEdgeStyle` value object has been replaced by the `EdgeStyle` class in `maxGraph`.
 
 As of version `0.16.0`, `EdgeStyle` only includes the properties referencing connectors. The other properties and methods are no longer available. \
-The connectors can be configured using dedicated global configuration objects. For more details, see the [Global Configuration](./global-configuration.md) documentation.
+The connectors can be configured using dedicated global configuration objects. For more details, see the [Global Configuration](../usage/global-configuration.md) documentation.
 
 
 ### Cell manipulation
@@ -478,7 +510,7 @@ The following Cell handler classes have been renamed in `maxGraph`:
 - `mxVertexHandler` to `VertexHandler`
 
 In `mxGraph`, the handlers were configured by updating their properties on the prototype.
-In `maxGraph`, the handlers are configured with a global configuration object. For more details, see the [Global Configuration](./global-configuration.md#general) documentation.
+In `maxGraph`, the handlers are configured with a global configuration object. For more details, see the [Global Configuration](../usage/global-configuration.md#general) documentation.
 
 For example, the `mxVertexHandler` class had a `rotationEnabled` property. 
 This property has been removed in `maxGraph`. Use the `VertexHandlerConfig.rotationEnabled` property instead (since `0.12.0`).
@@ -705,7 +737,7 @@ For example:
 
 :::
 
-For more details, see the [Codecs](codecs.md) documentation. 
+For more details, see the [Codecs](../usage/codecs.md) documentation. 
 This documentation covers topics such as codec registration, serialization processes, and configuration options.
 
 ## Conclusion

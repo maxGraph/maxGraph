@@ -38,7 +38,7 @@ The screenshots in this section show the legacy `mxGraph` style mechanism. In `m
 - Properties are accessed directly through object notation
 - The visual representation will be updated in future documentation
 
-See the [Migrate from mxGraph](../usage/migrate-from-mxgraph.md#styling) guide for detailed migration instructions.
+See the [Migrate from mxGraph](../guides/migrate-from-mxgraph.md#styling) guide for detailed migration instructions.
 :::
 
 The concept of styles and stylesheets in conceptually similar to CSS stylesheets, though note that CSS are actually used in `maxGraph`, but only to affect global styles in the DOM of the HTML page.
