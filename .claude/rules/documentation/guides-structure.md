@@ -16,6 +16,16 @@ A guide that is a **linear task**, such as
 - at most **two** links;
 - then **one sentence** naming the knowledge the guide assumes, with a link to the page that covers it.
 
+Two things may stand between the goal and that block, and nothing else. The sentence naming the version the guide was
+written with, see below. And a single paragraph redirecting a reader to a sibling guide when another one fits their
+case better, as `configure-basegraph.md` and `reduce-bundle-size.md` each do towards the other. That redirect goes
+**before** the block on purpose: a reader who is on the wrong page should leave before working through prerequisites
+that do not apply to them.
+
+`migrate-from-mxgraph.md` is the one exception. Its `:::danger` notice, saying the guide stopped being updated at
+0.18.0, comes before the block, because a reader targeting a newer version needs that warning before anything else,
+and the last bullet of the block points back at it.
+
 A guide that is a **collection of independent recipes**, such as
 [`extend-maxgraph.md`](../../../packages/website/docs/guides/extend-maxgraph.md), gets no such block. Its readers land in the
 middle of it from a search rather than reading it top to bottom, so a checklist would be noise. State the audience in

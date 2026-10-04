@@ -13,7 +13,7 @@ The examples in this page use `TypeScript`; adapt them if you write `JavaScript`
 to its bundle, without changing what the application does for its users.
 
 This guide was written and verified with `maxGraph` 0.25.0, which step 2 requires since it uses
-`registerDefaultStyleElements`. Earlier versions are not documented here.
+`registerDefaultStyleElements`. Earlier versions are not covered.
 
 A new application does not need this procedure, since it has nothing to remove:
 [Set Up an Application on BaseGraph](./configure-basegraph.md) builds the same configuration from the other end.

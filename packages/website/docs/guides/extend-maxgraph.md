@@ -15,6 +15,9 @@ This page is a collection of independent recipes, written for a developer who al
 and now needs to change something the API does not expose as an option. Read the section that matches your case, each
 one links the concepts it uses.
 
+This page was written and verified with `maxGraph` 0.25.0. Earlier versions are not covered, and the three recipes that
+need that version in particular say so where they use it.
+
 `maxGraph` is meant to be extended, and most of its extension points have a page of their own:
 
 - [EdgeStyles](../usage/edge-styles.md), to use the built-in ones and register your own connectors
