@@ -312,6 +312,14 @@ separate section.
 - Start with a short explanation of the size changes, per repository: which change of the release causes them
   (link the PRs found in [step 5](#5-bundle-sizes-of-the-examples)), and which part comes from a bundler upgrade.
   If the sizes grew, say so in the title and the explanation.
+  Three reading rules apply to this explanation:
+  - **Never attribute a size change without evidence.** Sizes alone establish that something moved, never why.
+    Attribute a change to a PR only when that PR measured it, or when the diff between the measurements was
+    inspected. Otherwise describe the change without naming a cause.
+  - **Lead with the largest changes in kB, not in %.** A large percentage on a small bundle is usually noise.
+  - **Compare measurements made with the same toolchain** (Node version, bundler and dependencies). Nothing in the
+    sizes records it, so a tooling change between two measurements makes their difference meaningless: compare with
+    the tooling row instead (see [step 5](#5-bundle-sizes-of-the-examples)).
 - Then copy **verbatim** the following block, replacing only `<target>`. It is mandatory in every release notes,
   so that each one can be read on its own:
 
