@@ -38,3 +38,8 @@ debug-storybook.log
 .vercel
 src/.next/
 out/
+
+# Local release notes files (prepare-release-notes skill)
+RELEASE_NOTES_DRAFT.md
+RELEASE_BODY_CURRENT.md
+RELEASE_BODY_NEW.md
