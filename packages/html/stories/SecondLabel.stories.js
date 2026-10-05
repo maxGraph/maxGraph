@@ -23,6 +23,7 @@ import {
   Point,
   Rectangle,
   constants,
+  ShapeRegistry,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -52,15 +53,14 @@ const Template = ({ label, ...args }) => {
 
   div.appendChild(container);
 
-  // Simple solution to add additional text to the rectangle shape definition:
-  (function () {
-    const mxRectangleShapeIsHtmlAllowed = RectangleShape.prototype.isHtmlAllowed;
-    RectangleShape.prototype.isHtmlAllowed = function () {
-      return mxRectangleShapeIsHtmlAllowed.apply(this, arguments) && this.state == null;
-    };
+  // Adds additional text to the rectangle shape definition.
+  // A subclass is used instead of patching RectangleShape.prototype, so other stories are not impacted.
+  class SecondLabelRectangleShape extends RectangleShape {
+    isHtmlAllowed() {
+      return super.isHtmlAllowed() && this.state == null;
+    }
 
-    const mxRectangleShapePaintForeground = RectangleShape.prototype.paintForeground;
-    RectangleShape.prototype.paintForeground = function (c, x, y, w, h) {
+    paintForeground(c, x, y, w, h) {
       if (
         this.state != null &&
         this.state.cell.geometry != null &&
@@ -70,12 +70,15 @@ const Template = ({ label, ...args }) => {
         c.text(x + 2, y, 0, 0, this.state.cell.id, 'left', 'top');
       }
 
-      mxRectangleShapePaintForeground.apply(this, arguments);
-    };
-  })();
+      super.paintForeground(c, x, y, w, h);
+    }
+  }
+  ShapeRegistry.add('secondLabelRectangle', SecondLabelRectangleShape);
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
+  // The stylesheet is specific to this graph instance, so this change does not leak to other stories
+  graph.getStylesheet().getDefaultVertexStyle().shape = 'secondLabelRectangle';
 
   // Disables the folding icon
   graph.isCellFoldable = function (cell) {
