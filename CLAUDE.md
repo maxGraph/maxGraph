@@ -58,6 +58,7 @@ Key patterns:
 - See `.claude/rules/documentation/website.md` for any change under packages/website/docs (build check, redirects, page naming, Storybook links)
 - See `.claude/rules/documentation/guides-structure.md` for the structure of the website guides (prerequisites, titles)
 - See `.claude/rules/git/commit-conventions.md` for commit message style
+- See `.claude/rules/git/pull-requests.md` for updating a pull request description (keep the blocks added by bots)
 
 ## References
 
