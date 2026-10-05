@@ -68,7 +68,8 @@ of `packages/website/docs/development/release.md`).
 
 - **Release branch**: releases are done from `main`, and the skill may run from another branch (the one carrying
   a change to the skill, for instance). Always work on `origin/main`, never on `HEAD`: run
-  `git fetch --tags origin main` first. All the commands of this skill use `origin/main`.
+  `git fetch --tags origin main` first. All the commands of this skill use `origin/main`. Writing the files
+  requires being on `main` itself, see [phase 2](#phase-2-write-the-release-content).
 - **Previous version**: the latest tag reachable from `origin/main`: `git describe --tags --abbrev=0 origin/main`.
   - **Finalize phase**: if the GitHub release of that tag is still a draft
     (`gh release view <tag> --json isDraft -q .isDraft` returns `true`), the tag is the version being
@@ -125,8 +126,10 @@ the `## Resources` section of the draft release asks to validate it.
 - Read the linked PR of each one for the full rationale and impact, not just the commit message (see Core rules).
 - Classify each breaking change: every user, or TypeScript users only (see Core rules).
 - Cross-check `CHANGELOG.md` (the `## Unreleased` section, plus the target version section if already
-  added): verify every breaking change **and** every deprecation notice from the commits has a
-  matching CHANGELOG entry. List the missing ones: they are added in [step 10](#10-changelog-entry).
+  added): verify every breaking change from the commits has a matching CHANGELOG entry. List the missing ones:
+  they are added in [step 10](#10-changelog-entry).
+- Deprecations are not recorded in `CHANGELOG.md`, which only lists breaking changes. They go to the "Deprecated
+  APIs" section of the release notes only (see [step 7](#7-release-notes-body)).
 
 ### 3. Features (validate with the user first)
 
@@ -281,6 +284,12 @@ hesitated on, and let the user validate it **before** writing the paragraph, as 
 ## Phase 2: write the release content
 
 Write the release notes first (steps 7 to 9), then derive the `CHANGELOG.md` entry from them (step 10).
+
+**Write on an up-to-date `main`.** Phase 1 only reads, so it can run from any branch. Phase 2 writes `CHANGELOG.md`
+and the bundle size history, which belong to the release commit made on `main`: written from another branch, they
+would start from that branch's version of these files. Before step 7, check that the current branch is `main`, that
+it matches `origin/main` (`git status -sb` shows neither ahead nor behind) and that the working tree is clean. If
+not, stop and ask the user to switch (`git switch main && git pull`), and never switch or stash yourself.
 
 ### 7. Release notes body
 
@@ -452,8 +461,8 @@ to `RELEASE_NOTES_DRAFT.md` at the repo root. This file is already ignored by `.
 - No unhandled `TODO`/placeholder left except the intentional manual fields (screenshots).
 - The one-line summary is drafted, approved by the user, and identical in the release notes and `CHANGELOG.md`.
 - Each documented feature links to a real `#PR`.
-- Every breaking change and deprecation of the range has a `CHANGELOG.md` entry, split by audience, or the entry
-  states `**Breaking Changes**: none.`
+- Every breaking change of the range has a `CHANGELOG.md` entry, split by audience, or the entry states
+  `**Breaking Changes**: none.`
 - The bundle size paragraph contains the mandatory note block verbatim, and both tables match the CSV files.
 - Both CSV files have a `<target>` row, and every value needing an explanation has a note in the README.
 - The Documentation paragraph, when present, only holds changes the user validated, each linking to its
