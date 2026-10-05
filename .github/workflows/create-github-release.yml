@@ -91,7 +91,7 @@ jobs:
             _Version ${{ env.VERSION }} released on ${{ env.RELEASE_DATE }}._
             
             **Adapt this one liner summary**
-            ⚡ This new version improves ... ⚡
+            ⚡ **This new version improves ...** ⚡
 
             _If appropriate, briefly explain the contents of the new version._
 
@@ -133,31 +133,35 @@ jobs:
 
             ### Other changes.... adapt and create more paragraphs
 
-            ### Bundle size reduction
-            
-            **TODO: explain the positive and negative effects of the changes introduced in this new version. If negative, change the title of the paragraph**
+            ### Bundle size
 
-            ### Examples in the `maxGraph` repository
+            **TODO: explain the size changes in both repositories (causes, related PRs, effect of bundler upgrades), then add the mandatory note block described in the `prepare-release` skill. If the sizes grew, change the title of the paragraph**
+
+            #### Examples in the `maxGraph` repository
 
             | Example                      | 0.xx.0   | 0.xx.0   |
             | ---------------------------- | -------- | -------- |
             | js-example                   |  kB |  kB |
             | js-example-selected-features |  kB |  kB |
-            | js-example-without-default   |  kB |  kB |
+            | js-example-without-defaults  |  kB |  kB |
             | ts-example                   |  kB |  kB |
             | ts-example-selected-features |  kB |  kB |
-            | ts-example-without-default   |  kB |  kB |
+            | ts-example-without-defaults  |  kB |  kB |
 
-            ### Examples in the `maxgraph-integration-examples` repository
-            
-            | Example    | 0.xx.0               | 0.xx.0               |
-            | ---------- | -------------------- | -------------------- |
-            | farm       |  kB ( chunks)  |  kB ( chunks)  |
-            | lit (vite) |  kB            |  kB            |
-            | parcel     |  kB            |  kB            |
-            | rollup     |  kB            |  kB            |
-            | rsbuild    |  kB            |  kB            |
-            | vite       |  kB            |  kB            |
+            #### Projects in the `maxgraph-integration-examples` repository
+
+            | Example    | 0.xx.0   | 0.xx.0   |
+            | ---------- | -------- | -------- |
+            | farm-ts    |  kB |  kB |
+            | lit-ts     |  kB |  kB |
+            | parcel-ts  |  kB |  kB |
+            | rollup-ts  |  kB |  kB |
+            | rsbuild-ts |  kB |  kB |
+            | vitejs-ts  |  kB |  kB |
+
+            ### Documentation
+
+            **TODO: list the significant documentation additions and changes, or remove this paragraph**
 
             ## Resources
 

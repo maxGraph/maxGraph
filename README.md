@@ -217,17 +217,12 @@ We welcome contributions! Please see the [contributing guide](./CONTRIBUTING.md)
 - Code quality standards
 - Pull request process
 
-### Architecture Decision Records
+### Repository documentation
 
-Structural decisions that cannot be inferred from the code alone are recorded in [`docs/adr`](./docs/adr/README.md): why a member lives where it lives, why an obvious refactoring was set aside, and which constraint blocks a given change.
-
-Start there before proposing a change to the `Graph` class hierarchy, the mixins or the plugins.
-
-### Analyses
-
-Analyses made before a decision are recorded in [`docs/analyses`](./docs/analyses/README.md): whether a change is feasible, what it would gain, for instance in bundle size, what it would cost, and what it would break.
-
-Check there whether a change you are considering has already been evaluated.
+The [`docs`](./docs/README.md) directory holds the documentation intended for the maintainers and contributors:
+- architecture decision records
+- analyses
+- bundle size history of the examples
 
 ### Quick Command Reference
 

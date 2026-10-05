@@ -16,6 +16,10 @@ The release process is partially automated with GitHub Actions, but initializati
 
 ## Preparation
 
+The preparation is done with the `prepare-release` Claude Code skill (`.claude/skills/prepare-release`). Invoke it with `/prepare-release`. It follows the steps below in this order: it starts with the version, then pauses so that the milestone is managed once the version is known, and resumes with the release notes.
+
+### Version
+
 Decide on the new version depending on the type of changes:
 - Follow [semver](https://semver.org/)
 - Check the new commits since the latest release to determine the types of changes included in the new version. This can be done by:
@@ -26,6 +30,8 @@ Decide on the new version depending on the type of changes:
       ```
     - going to the [latest GitHub release page](https://github.com/maxGraph/maxGraph/releases/latest) and checking the commits since this release (a link is available just above the release title).
 - Until we release the first major version, bump the minor version if the release contains new features or breaking changes.
+
+The skill applies these rules: it computes the version from the conventional commits since the latest release, proposes it, and waits for your confirmation.
 
 ### Milestone management
 
@@ -38,18 +44,26 @@ released. Rename it if necessary.
 - Clean up this open milestone if some issues are still open (move them to a new milestone or discard the milestone from them).
 - Close the milestone.
 
+Once the version is confirmed, the skill pauses and reports what it finds, without changing anything: whether a milestone matches the version, the issues still open in it, and the issues closed since the previous release that have no milestone. Do the changes yourself, then tell the skill to resume.
+
 ### Release notes preparation
 
 Prepare the release notes **before** running the tag and npm publish operations, so you can publish them quickly once the release resources (npm package, examples and website assets) are available.
 
-Release notes are documented in two places: the `CHANGELOG.md` file in the repository and the GitHub release page (the latter is initialized from a template by a GitHub Actions workflow). The minimum you must determine at this stage is the **one-line summary** that broadly describes the changes in the release: it is reused both in the `CHANGELOG.md` entry and on the GitHub release page.
+Release notes are documented in two places: the `CHANGELOG.md` file in the repository and the GitHub release page (the latter is initialized from a template by a GitHub Actions workflow). The detailed release notes are written first: the **one-line summary** of the `CHANGELOG.md` entry, which broadly describes the changes in the release, is derived from them, and is reused on the GitHub release page.
 
-The detailed release notes published on the GitHub release can be prepared with the `prepare-release-notes` Claude Code skill (`.claude/skills/prepare-release-notes`). Invoke it with `/prepare-release-notes`.
+The skill analyzes the commits since the previous release and their linked pull requests to:
+- draft the breaking changes, split between those concerning every user and those concerning TypeScript users only, the deprecation notices and the feature highlights,
+- select the significant documentation additions and changes to mention,
+- collect the bundle size of the examples of both repositories (`maxGraph` and `maxgraph-integration-examples`) from the CI logs, and compare them with the previous version recorded in the bundle size history of the `docs/examples-bundle-size` directory,
+- write the release notes body and the one-line summary,
+- write the `CHANGELOG.md` entry of the new version, adding the breaking changes and deprecation notices missing from the `## Unreleased` section,
+- append the sizes of the new version to the bundle size history.
 
-It analyzes the commits since the previous release (and their linked pull requests) to draft the breaking changes, deprecation notices and feature highlights, cross-checks that every breaking change and deprecation is recorded in the `CHANGELOG.md`, drafts the one-line summary, and computes the example bundle size table (current version, plus the previous version for comparison). It can also update the GitHub draft release while preserving the auto-generated `Resources` section and the entries below it.
+The `CHANGELOG.md` and bundle size history changes are left uncommitted: they are part of the release commit (see [Apply changes in the source code](#apply-changes-in-the-source-code)).
 
 The skill is used in two phases:
-- **Now, to prepare the content**: run it during this preparation step to draft the release notes body and the one-line summary. Reuse that summary for the `CHANGELOG.md` entry (see [Apply changes in the source code](#apply-changes-in-the-source-code)). At this stage the GitHub draft release does not exist yet, so let the skill write the draft to a local file.
+- **Now, to prepare the content**: run it during this preparation step. At this stage the GitHub draft release does not exist yet, so the skill writes the release notes to a local file.
 - **Later, to finalize the GitHub release**: once the tag is pushed and the npm package is published, the draft GitHub release exists, so the skill can update it in place while preserving the auto-generated `Resources` section (see [Finalize the GitHub release](#finalize-the-github-release)).
 
 ### Apply changes in the source code
@@ -59,13 +73,15 @@ The skill is used in two phases:
   - These changes are going to be done locally and then pushed to the repository.
   - Make sure that the code is up to date with the `main` branch. Run `git pull` to get the latest changes.
 - Update the version in various files by running, from the repository root: `node scripts/update-versions.mjs <version>` (replace `<version>` with the new version).
-- Update the `CHANGELOG.md` file to document the changes in the new version:
-  - Add a short sentence describing the main changes. Reuse the one-line summary drafted during [Release notes preparation](#release-notes-preparation).
-  - Include all breaking changes (if any). These are typically listed under a "Breaking Changes" section when PRs were merged. The `prepare-release-notes` skill cross-checks that every breaking change and deprecation notice is present here, so use its output to spot missing entries. Review and reorganize as needed.
+- Check the `CHANGELOG.md` entry of the new version written by the `prepare-release` skill during [Release notes preparation](#release-notes-preparation). If you write it yourself, follow the format of the previous entries:
+  - Add the version heading right after the note of the `## Unreleased` section, followed by the release date.
   - Add a link to the future GitHub release, as shown below:
 ```
 For more details, see the [0.1.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.1.0) on the GitHub release page.
 ```
+  - Add the one-line summary of the release notes.
+  - Include all breaking changes, at the summary level, or state `**Breaking Changes**: none.` when there are none.
+- Check the new rows of the bundle size history (`docs/examples-bundle-size`), also written by the skill.
 
 - Make a single commit that includes the changes described above
   - Use the following template for the commit message: `chore(release): prepare version 0.2.0`
@@ -113,10 +129,10 @@ Pull Request and regenerate the list.
 The GitHub workflow automatically attaches the examples and website zip files to the release as assets, so check that they are present.
 
 The draft release already exists at this point, so it is time to update its content with what you prepared during the [Release notes preparation](#release-notes-preparation) phase.
-Replace everything above the `Resources` section (summary, breaking changes, highlights and the bundle size tables), and keep `Resources` and the automatically generated list below it.
+Replace everything above the `Resources` section (summary, breaking changes, highlights, the bundle size tables and the documentation changes), and keep `Resources` and the automatically generated list below it.
 Also, keep the release date already present on the first line of the draft, which the workflow set to the actual release date.
 
-If you used the `prepare-release-notes` skill, run `/prepare-release-notes` to apply this update automatically.
+If you used the `prepare-release` skill, run `/prepare-release` to apply this update automatically.
 
 Before you publish the release, make sure that a discussion will be created in the `Announces` category when the release
 is published, by ticking the corresponding checkbox.

@@ -39,7 +39,7 @@ debug-storybook.log
 src/.next/
 out/
 
-# Local release notes files (prepare-release-notes skill)
+# Local release notes files (prepare-release skill)
 RELEASE_NOTES_DRAFT.md
 RELEASE_BODY_CURRENT.md
 RELEASE_BODY_NEW.md
