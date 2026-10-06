@@ -84,6 +84,9 @@ of `packages/website/docs/development/release.md`).
   a change to the skill, for instance). Always work on `origin/main`, never on `HEAD`: run
   `git fetch --tags origin main` first. All the commands of this skill use `origin/main`. Writing the files
   requires being on `main` itself, see [phase 2](#phase-2-write-the-release-content).
+- **Release snapshot**: record the SHA phase 1 works on, `git rev-parse origin/main`, and report it. The pauses of
+  phase 1 can last long enough for a pull request to be merged, so phase 2 checks that `origin/main` is still at that
+  SHA.
 - **Previous version**: the latest tag reachable from `origin/main`: `git describe --tags --abbrev=0 origin/main`.
   - **Finalize phase**: if the GitHub release of that tag is still a draft
     (`gh release view <tag> --json isDraft -q .isDraft` returns `true`), the tag is the version being
@@ -337,9 +340,17 @@ Write the release notes first (steps 7 to 9), then derive the `CHANGELOG.md` ent
 
 **Write on an up-to-date `main`.** Phase 1 only reads, so it can run from any branch. Phase 2 writes `CHANGELOG.md`
 and the bundle size history, which belong to the release commit made on `main`: written from another branch, they
-would start from that branch's version of these files. Before step 7, check that the current branch is `main`, that
-it matches `origin/main` (`git status -sb` shows neither ahead nor behind) and that the working tree is clean. If
-not, stop and ask the user to switch (`git switch main && git pull`), and never switch or stash yourself.
+would start from that branch's version of these files. Before step 7:
+
+1. Refresh the remote ref, since the local `origin/main` dates from step 1: `git fetch --tags origin main`.
+2. Check that `origin/main` is still at the release snapshot recorded in [step 1](#1-determine-the-versions). If it
+   moved, stop and list the new commits (`git log --oneline <snapshot>..origin/main`): they would be missing from the
+   version, the content and the sizes. Restart phase 1 on the new range, offering the answers already given as the
+   default choices so that the user only reviews what the new commits change.
+3. Check that the current branch is `main`, that `git rev-parse HEAD` equals `git rev-parse origin/main`, and that
+   the working tree is clean. Compare the SHAs directly rather than reading `git status -sb`, which compares with the
+   configured upstream, not necessarily `origin/main`. If a check fails, stop and ask the user to switch and update
+   (`git switch main && git pull`), and never switch, pull or stash yourself.
 
 ### 7. Release notes body
 
