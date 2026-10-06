@@ -72,6 +72,16 @@ entry is derived from them.
     cannot turn that warning off. This leaves 3 candidates per question. A question submitted empty all the same
     means "none": take it as is, without asking again.
   - Fall back to a numbered text list only when the tool is not available.
+- **Run the independent collection tasks in parallel.** Most of phase 1 reads data that no other read depends on:
+  issue several tool calls in the same message, or run shell commands as background jobs ending with `wait`, instead
+  of one after the other. For instance:
+  - the commit lookups of steps 2, 3, 4 and 6 (breaking changes, `@deprecated` tags, features, fixes, documentation);
+  - the `gh pr view` of every candidate PR;
+  - the CI logs of the two repositories in step 5, and within the integration run, its three jobs;
+  - the media of every PR and closed issue in step 4b.
+
+  Keep sequential what depends on a previous result (the job ids before their logs, the closed issues before their
+  media) and every question to the user: a validation can change what the next step collects.
 - **Leave the repository changes uncommitted.** The `CHANGELOG.md` entry and the new rows of the bundle size
   history go into the `chore(release): prepare version <version>` commit of the release procedure, together with
   the version updates. Do not commit or push them.
