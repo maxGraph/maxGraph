@@ -217,14 +217,22 @@ the screenshot of the behavior before the fix:
 ```bash
 # issues closed by the PR
 gh pr view <NNNN> -R maxGraph/maxGraph --json closingIssuesReferences -q '.closingIssuesReferences[].number'
-# media of the PR, then of each closed issue (same filter, replace "pr" with "issue")
-gh pr view <NNNN> -R maxGraph/maxGraph --json body,comments -q '[(.body | gsub("(?s)<!-- This is an auto-generated comment.*?<!-- end of auto-generated comment[^>]*-->"; "")), (.comments[] | select(.author.login | test("coderabbitai|sonarqubecloud|github-actions|dependabot|\\[bot\\]$") | not) | .body)] | join("\n")' | grep -oE '!\[[^]]*\]\([^)]+\)|<img[^>]*>|<video[^>]*>|https://github\.com/user-attachments/assets/[A-Za-z0-9-]+|https://github\.com/[^ )"]+/assets/[0-9]+/[A-Za-z0-9-]+|https://user-images\.githubusercontent\.com/[^ )"]+' | sort -u
+# media of the PR, then of each closed issue, with their context
+.claude/skills/prepare-release/collect-media.sh pr <NNNN>
+.claude/skills/prepare-release/collect-media.sh issue <issue number>
 ```
 
-- The comments of the bots are excluded: their badges (SonarQube, CodeRabbit) would otherwise match in every PR.
-- An `<img>` tag also matches its `src` URL: count them as one media.
-- Read the lines around each media: they usually say what it shows ("before", "after", "current behavior"). That
-  text is its caption.
+The script ignores the comments and the badges of the bots (SonarQube, CodeRabbit, Dependabot), and prints one line
+per media: its source (description, comment or review, and its author), the media, then its context: the Markdown
+heading above it, its `alt` text, the text on the same line, and the last line of text above it.
+
+**Name each media from its context**, in this order: the `alt` text when it says something (not a file name such as
+`image.png` or `Screenshot 2024-...`), the text on its line, the line above it (often "Before:", "Current behavior:"),
+then the heading. The PR was reviewed, so a media posted without explanation usually got one later in the discussion:
+when the context says nothing, read the comments and reviews of that source, including the inline review comments
+(`gh api repos/maxGraph/maxGraph/pulls/<NNNN>/comments`), for the explanation. Never invent what a media shows. If
+nothing explains it, name it by its position, `#1025: media 2 of 2`, say "no explanation found" in the option
+description, and list it in the final report.
 
 **Choose.** Ask one multi-select question per highlight or fix that has media, with the [menu rules](#core-rules):
 
@@ -530,7 +538,8 @@ Also list the existing `CHANGELOG.md` entries left unchanged although detailed (
 
 Then give the media assessment of the highlights, one line per highlight and per selected fix: the media found in
 the PR and in each closed issue, those chosen and inserted, or "no media found in #NNNN, nor in the issues it closes"
-so that the maintainer can decide whether to add a screenshot or a video by hand.
+so that the maintainer can decide whether to add a screenshot or a video by hand. Flag the media named by their
+position because nothing explained them.
 
 ## Phase 3: finalize the GitHub release
 
