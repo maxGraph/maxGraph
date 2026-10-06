@@ -40,11 +40,11 @@ name matches the version.
 - Make sure that the name of the milestone used for the new release version matches the name of the version being
 released. Rename it if necessary.
 - Verify that all issues related to the upcoming release are attached to the milestone. In particular, check the issues that
-[do not have a milestone](https://github.com/maxGraph/maxGraph/issues?q=is%3Aissue+is%3Aclosed+no%3Amilestone).
-- Clean up this open milestone if some issues are still open (move them to a new milestone or discard the milestone from them).
+[were closed as completed without a milestone](https://github.com/maxGraph/maxGraph/issues?q=is%3Aissue+is%3Aclosed+reason%3Acompleted+no%3Amilestone+-label%3Aquestion+sort%3Aupdated-desc), ignoring the issues labelled `question`.
+- Clean up this open milestone if some issues are still open: move them to the milestone of the next minor version, or discard the milestone from them. If the milestone of the next minor version does not exist, create it.
 - Close the milestone.
 
-Once the version is confirmed, the skill pauses and reports what it finds, without changing anything: whether a milestone matches the version, the issues still open in it, and the issues closed since the previous release that have no milestone. Do the changes yourself, then tell the skill to resume.
+Once the version is confirmed, the skill pauses and reports what it finds, without changing anything: whether a milestone matches the version, whether the milestone of the next minor version exists, the issues still open in it, and the issues closed since the previous release that have no milestone. Do the changes yourself, then tell the skill to resume.
 
 ### Release notes preparation
 

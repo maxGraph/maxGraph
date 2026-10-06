@@ -100,21 +100,28 @@ release with the version known (see the "Milestone management" section of the re
 checks, and never change a milestone or an issue yourself:
 
 ```bash
-# milestones still open: is there one named after <target>, or one to rename?
+# milestones still open: is there one named after <target>, or one to rename? one named after the next minor?
 gh api 'repos/maxGraph/maxGraph/milestones?state=open' -q '.[] | "\(.title)\topen=\(.open_issues)\tclosed=\(.closed_issues)\t\(.html_url)"'
 # issues still open in the milestone of the release
 gh issue list -R maxGraph/maxGraph --milestone "<target>" --state open --json number,title
-# issues closed as completed since the previous release, without milestone
-gh issue list -R maxGraph/maxGraph --search "is:issue is:closed reason:completed no:milestone closed:>=<date of the previous release>" --json number,title,closedAt
+# issues closed as completed since the previous release, without milestone, questions excluded: count and 3 latest
+gh issue list -R maxGraph/maxGraph --search "is:issue is:closed reason:completed no:milestone -label:question closed:>=<date of the previous release>" --limit 1000 --json number,title,closedAt -q 'sort_by(.closedAt) | reverse | length as $n | "count=\($n)", (.[:3][] | "#\(.number)\t\(.closedAt[:10])\t\(.title)")'
 ```
 
-The date of the previous release is `gh release view v<previous> --json publishedAt -q '.publishedAt[:10]'`. An
-empty list is a valid outcome.
+The date of the previous release is `gh release view v<previous> --json publishedAt -q '.publishedAt[:10]'`. Issues
+labelled `question` are excluded: they are answered rather than implemented, so they never belong to a milestone.
+Report the number of issues found and list the 3 most recently closed, saying how many others there are when there are
+more. An empty list is a valid outcome, and the expected one when the milestones were kept up to date.
 
-Report the findings: the milestone to rename or create, the open issues to move, the issues that may belong to the
-release, and remind the maintainer to close the milestone. Then wait until the maintainer says the milestone is done,
-or chooses to skip it, before going on with [step 2](#2-breaking-changes-and-deprecations). Keep the milestone URL:
-the `## Resources` section of the draft release asks to validate it.
+The open issues of the release move to the milestone of the next minor version: `0.27.0` for a target `0.26.0`, and
+`0.26.0` for a target `0.25.1`. That milestone must exist so the issues can move to it, and so the work planned after
+the release has somewhere to go.
+
+Report the findings: the milestone to rename or create, whether the milestone of the next minor version is missing and
+must be created, the open issues to move, the issues that may belong to the release, and remind the maintainer to close
+the milestone. Then wait until the maintainer says the milestone is done, or chooses to skip it, before going on with
+[step 2](#2-breaking-changes-and-deprecations). Keep the milestone URL: the `## Resources` section of the draft release
+asks to validate it.
 
 ### 2. Breaking changes and deprecations
 
