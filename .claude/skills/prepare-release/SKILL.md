@@ -143,6 +143,9 @@ of the draft release asks to validate it.
 - Cross-check `CHANGELOG.md` (the `## Unreleased` section, plus the target version section if already
   added): verify every breaking change from the commits has a matching CHANGELOG entry. List the missing ones:
   they are added in [step 10](#10-changelog-entry).
+- List the deprecations: the `@deprecated` tags added to the sources, which commit messages rarely mention:
+  `git diff v<previous> origin/main -- packages/core/src | grep -E '^\+.*@deprecated'`. Find the commit of each one
+  with `git log -S'@deprecated' v<previous>..origin/main -- <file>`.
 - Deprecations are not recorded in `CHANGELOG.md`, which only lists breaking changes. They go to the "Deprecated
   APIs" section of the release notes only (see [step 7](#7-release-notes-body)).
 
@@ -370,6 +373,16 @@ One list item per page or group of related pages: what the reader finds there, a
 (`https://maxgraph.github.io/maxGraph/docs/<path>`, the path of the file under `packages/website/docs` without its
 extension, unless its front matter sets a `slug`), and the PR (`see #<PR_NUMBER>`). Link to files outside the
 website, such as ADRs, with a permalink pinned to a commit SHA.
+
+- **A section has no file of its own.** When its `_category_.json` declares a `generated-index` link, Docusaurus
+  publishes its index at `https://maxgraph.github.io/maxGraph/docs/category/<slug of the label>`, for instance
+  `/docs/category/guides` for the `Guides` label. Check that the path exists after
+  `npm run build -w packages/website`, under `packages/website/build/docs/category/`, rather than deriving it.
+- **Check every claim made about a group of pages on each page of the group.** A statement true for the new pages
+  may be false for an older one moved into the same section. For instance, the guides added in 0.25.0 state the
+  version they were verified with, while the mxGraph migration guide moved next to them stopped being updated at
+  0.18.0, so "each guide is verified with this version" was wrong. Read the version statement, the scope and the
+  prerequisites of each page instead of generalizing from the first ones.
 
 ### 10. CHANGELOG entry
 
