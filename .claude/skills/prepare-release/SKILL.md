@@ -114,6 +114,21 @@ labelled `question` are excluded: they are answered rather than implemented, so 
 Report the number of issues found and list the 3 most recently closed, saying how many others there are when there are
 more. An empty list is a valid outcome, and the expected one when the milestones were kept up to date.
 
+**Closed issues in the milestone of a later version.** An issue closed in the milestone of a version after
+`<target>`, such as `0.26.0` for a target `0.25.0`, was most likely done for this release, and its milestone not
+updated. List the milestones of later versions holding closed issues, closed milestones included, then their closed
+issues:
+
+```bash
+gh api 'repos/maxGraph/maxGraph/milestones?state=all&per_page=100' -q '.[] | select(.title | test("^[0-9]+\\.[0-9]+\\.[0-9]+$")) | select((.title | split(".") | map(tonumber)) > ("<target>" | split(".") | map(tonumber))) | select(.closed_issues > 0) | "\(.title)\t\(.state)\tclosed=\(.closed_issues)\t\(.html_url)"'
+# for each milestone listed; --milestone only finds the open milestones, the search finds all of them
+gh issue list -R maxGraph/maxGraph --search 'milestone:"<later version>" is:closed' --limit 1000 --json number,title,closedAt,stateReason -q '.[] | "#\(.number)\t\(.closedAt[:10])\t\(.stateReason)\t\(.title)"'
+```
+
+When issues are found, list them all with their close reason and **ask the maintainer what to do** with each one:
+move it to the milestone of `<target>`, keep it where it is, or remove its milestone. Never move it yourself. Nothing
+listed is the expected outcome.
+
 The open issues of the release move to the milestone of the next minor version: `0.27.0` for a target `0.26.0`, and
 `0.26.0` for a target `0.25.1`. That milestone must exist so the issues can move to it, and so the work planned after
 the release has somewhere to go. Look it up among all the milestones, closed ones included, since a title can only be
@@ -126,7 +141,8 @@ gh api -X POST repos/maxGraph/maxGraph/milestones -f title='<next minor>' -q '.h
 ```
 
 Report the findings: the milestone to rename or create, the milestone of the next minor version (already there, or
-just created with its URL), the open issues to move, the issues that may belong to the release, and remind the
+just created with its URL), the open issues to move, the issues that may belong to the release, the closed issues
+found in the milestone of a later version and the question about them, and remind the
 maintainer to close the milestone. Then wait until the maintainer says the milestone is done, or chooses to skip it,
 before going on with [step 2](#2-breaking-changes-and-deprecations). Keep the milestone URL: the `## Resources` section
 of the draft release asks to validate it.
