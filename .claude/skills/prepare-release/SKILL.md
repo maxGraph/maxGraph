@@ -54,6 +54,16 @@ entry is derived from them.
   break, so a wrapped paragraph shows mid-sentence breaks in the published notes. Keep each paragraph and each
   list item on a single line, however long. (Code fences and Markdown tables are naturally multi-line and
   unaffected.) This applies to the release notes only, not to `CHANGELOG.md`.
+- **Ask every decision through menus, with the `AskUserQuestion` tool**, never as a list the user has to answer in
+  free text. It renders as a menu in every terminal, not only in an IDE.
+  - Selections (highlights, fixes, documentation candidates, issues of a later milestone) use `multiSelect: true`,
+    one option per candidate: the PR or issue number and a short title in the label, what it would bring to the
+    release notes in the description. A question holds at most 4 options and a call at most 4 questions, so split a
+    longer list into several questions grouped by theme, and into several calls when needed.
+  - Single choices (the version, the one-line summary, the release date) are single-select questions, with the
+    proposal first and marked `(Recommended)`.
+  - An empty selection is a valid answer meaning "none": take it as is, without a warning and without asking again.
+  - Fall back to a numbered text list only when the tool is not available.
 - **Leave the repository changes uncommitted.** The `CHANGELOG.md` entry and the new rows of the bundle size
   history go into the `chore(release): prepare version <version>` commit of the release procedure, together with
   the version updates. Do not commit or push them.
@@ -181,6 +191,8 @@ of the draft release asks to validate it.
 - Do **not** document bug fixes by default.
 - Still present the list of `fix` commits to the user so they can decide, case by case, which (if any)
   deserve a mention: `git log v<previous>..origin/main --oneline | grep -E '^[a-f0-9]+ fix(\([^)]+\))?!?:'`
+- Ask it as a multi-select menu with nothing preselected, and say in the question that leaving it empty documents no
+  fix. No selection is the default answer: never warn about it.
 
 ### 5. Bundle sizes of the examples
 
