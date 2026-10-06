@@ -16,6 +16,10 @@ The release process is partially automated with GitHub Actions, but initializati
 
 ## Preparation
 
+The preparation is done with the `prepare-release` Claude Code skill (`.claude/skills/prepare-release`). Invoke it with `/prepare-release`. It follows the steps below in this order: it starts with the version, then pauses so that the milestone is managed once the version is known, and resumes with the release notes.
+
+### Version
+
 Decide on the new version depending on the type of changes:
 - Follow [semver](https://semver.org/)
 - Check the new commits since the latest release to determine the types of changes included in the new version. This can be done by:
@@ -27,28 +31,62 @@ Decide on the new version depending on the type of changes:
     - going to the [latest GitHub release page](https://github.com/maxGraph/maxGraph/releases/latest) and checking the commits since this release (a link is available just above the release title).
 - Until we release the first major version, bump the minor version if the release contains new features or breaking changes.
 
+The skill applies these rules: it computes the version from the conventional commits since the latest release, proposes it, and waits for your confirmation.
+
+### Milestone management
+
 Check the milestone associated with the new release. **Note:** We always put issues related to a version into a Milestone whose
 name matches the version.
 - Make sure that the name of the milestone used for the new release version matches the name of the version being
 released. Rename it if necessary.
 - Verify that all issues related to the upcoming release are attached to the milestone. In particular, check the issues that
-[do not have a milestone](https://github.com/maxGraph/maxGraph/issues?q=is%3Aissue+is%3Aclosed+no%3Amilestone).
-- Clean up this open milestone if some issues are still open (move them to a new milestone or discard the milestone from them).
+[were closed as completed without a milestone](https://github.com/maxGraph/maxGraph/issues?q=is%3Aissue+is%3Aclosed+reason%3Acompleted+no%3Amilestone+-label%3Aquestion+sort%3Aupdated-desc), ignoring the issues labelled `question`.
+- Check the closed issues of the milestones of the later versions, if any (see the warning below).
+- Clean up this open milestone if some issues are still open: move them to the milestone of the next minor version, or discard the milestone from them. If the milestone of the next minor version does not exist, create it.
 - Close the milestone.
 
-Apply changes in the source code
+:::warning
+An issue closed in the milestone of a later version, such as `0.26.0` when releasing `0.25.0`, was most likely done for the version being released, and its milestone was not updated. Decide for each one whether to move it to the milestone of the release, keep it where it is, or remove its milestone.
+:::
+
+Once the version is confirmed, the skill pauses. It creates the milestone of the next minor version if it does not exist, and reports what it finds without changing anything else: whether a milestone matches the version, the issues still open in it, the issues closed since the previous release that have no milestone, and the closed issues found in the milestone of a later version, for which it asks you what to do. Do the other changes yourself, then tell the skill to resume.
+
+### Release notes preparation
+
+Prepare the release notes **before** running the tag and npm publish operations, so you can publish them quickly once the release resources (npm package, examples and website assets) are available.
+
+Release notes are documented in two places: the `CHANGELOG.md` file in the repository and the GitHub release page (the latter is initialized from a template by a GitHub Actions workflow). The detailed release notes are written first: the **one-line summary** of the `CHANGELOG.md` entry, which broadly describes the changes in the release, is derived from them, and is reused on the GitHub release page.
+
+The skill analyzes the commits since the previous release and their linked pull requests to:
+- draft the breaking changes, split between those concerning every user and those concerning TypeScript users only, the deprecation notices and the feature highlights,
+- select the significant documentation additions and changes to mention,
+- collect the bundle size of the examples of both repositories (`maxGraph` and `maxgraph-integration-examples`) from the CI logs, and compare them with the previous version recorded in the bundle size history of the `docs/examples-bundle-size` directory,
+- write the release notes body and the one-line summary,
+- write the `CHANGELOG.md` entry of the new version, adding the breaking changes missing from the `## Unreleased` section (the `CHANGELOG.md` only lists breaking changes, the deprecation notices are in the release notes),
+- append the sizes of the new version to the bundle size history.
+
+The `CHANGELOG.md` and bundle size history changes are left uncommitted: they are part of the release commit (see [Apply changes in the source code](#apply-changes-in-the-source-code)). So the skill writes them on an up-to-date `main` branch, and asks you to switch to it if needed.
+
+The skill is used in two phases:
+- **Now, to prepare the content**: run it during this preparation step. At this stage the GitHub draft release does not exist yet, so the skill writes the release notes to a local file.
+- **Later, to finalize the GitHub release**: once the tag is pushed and the npm package is published, the draft GitHub release exists, so the skill can update it in place while preserving the auto-generated `Resources` section (see [Finalize the GitHub release](#finalize-the-github-release)).
+
+### Apply changes in the source code
+
 - Prerequisites:
   - Releases are done from the default branch, so all changes are done in the `main` branch.
   - These changes are going to be done locally and then pushed to the repository.
   - Make sure that the code is up to date with the `main` branch. Run `git pull` to get the latest changes.
 - Update the version in various files by running, from the repository root: `node scripts/update-versions.mjs <version>` (replace `<version>` with the new version).
-- Update the `CHANGELOG.md` file to document the changes in the new version:
-  - Add a short sentence describing the main changes. Use the same sentence as the one used in the detailed release notes that will be [created later](#create-the-github-release).
-  - Include all breaking changes (if any). These are typically listed under a "Breaking Changes" section when PRs were merged. Review and reorganize as needed.
+- Check the `CHANGELOG.md` entry of the new version written by the `prepare-release` skill during [Release notes preparation](#release-notes-preparation). If you write it yourself, follow the format of the previous entries:
+  - Add the version heading right after the note of the `## Unreleased` section, followed by the release date.
   - Add a link to the future GitHub release, as shown below:
 ```
 For more details, see the [0.1.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.1.0) on the GitHub release page.
 ```
+  - Add the one-line summary of the release notes.
+  - Include all breaking changes, at the summary level, or state `**Breaking Changes**: none.` when there are none.
+- Check the new rows of the bundle size history (`docs/examples-bundle-size`), also written by the skill.
 
 - Make a single commit that includes the changes described above
   - Use the following template for the commit message: `chore(release): prepare version 0.2.0`
@@ -80,7 +118,7 @@ If its execution fails, and you want to publish the package manually:
   - run `npm publish`
 
 
-## Create the GitHub release
+## Finalize the GitHub release
 
 The release workflow has initiated a new draft GitHub release, which needs to be updated and published.
 For more details about GitHub release, follow the [GitHub help](https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository#creating-a-release)
@@ -93,10 +131,16 @@ The list of the major changes has been [automatically generated](https://docs.gi
   - If the list is incorrect (for example, an item is not in the correct category), update the label(s) or the associated
 Pull Request and regenerate the list.
 
-The GitHub workflow automatically attaches the examples and website zip files to the release as assets.
+The GitHub workflow automatically attaches the examples and website zip files to the release as assets, so check that they are present.
+
+The draft release already exists at this point, so it is time to update its content with what you prepared during the [Release notes preparation](#release-notes-preparation) phase.
+Replace everything above the `Resources` section (summary, breaking changes, highlights, the bundle size tables and the documentation changes), and keep `Resources` and the automatically generated list below it.
+Also, keep the release date already present on the first line of the draft, which the workflow set to the actual release date.
+
+If you used the `prepare-release` skill, run `/prepare-release` to apply this update automatically.
 
 Before you publish the release, make sure that a discussion will be created in the `Announces` category when the release
-is published.
+is published, by ticking the corresponding checkbox.
 
 Publish the release.
 
