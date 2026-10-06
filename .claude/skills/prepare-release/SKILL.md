@@ -43,8 +43,11 @@ entry is derived from them.
 - **Never pass template placeholder prose through to the output.** The template lines
   `⚡ **This new version improves ...** ⚡`, `_If appropriate, briefly explain the contents..._` and the
   `**TODO: ...**` lines are prompts, not content: replace them with real content or drop the paragraph.
-- **Truly manual fields**: only screenshots/animations are left for the user, as clearly marked
-  placeholders. The one-line summary is drafted by the skill, not left blank.
+- **Drop the template prompts about screenshots and examples**: the
+  `**Add screenshots, animations or videos to make your description more user-friendly!**` line and the `_Note_: use
+  release 0.5.0 and release 0.6.0 as examples` line of the Highlights are removed, not kept as a TODO. Reuse the
+  images and videos of the PRs when there are some (see below), and leave none as a placeholder. The one-line summary
+  is drafted by the skill, not left blank.
 - **Never delete `## Resources` or anything after it** in the draft (see [step 12](#12-update-the-draft)).
   That content is auto-generated (`generateReleaseNotes: true`) and cannot be regenerated.
 - **An empty commit filter result is a valid outcome.** The `git log ... | grep` lookups of phase 1 exit with
@@ -529,7 +532,7 @@ to `RELEASE_NOTES_DRAFT.md` at the repo root. This file is already ignored by `.
 
 ## Success criteria
 
-- No unhandled `TODO`/placeholder left except the intentional manual fields (screenshots).
+- No `TODO` or template placeholder left, including the prompts about screenshots and examples.
 - The one-line summary is drafted, approved by the user, and identical in the release notes and `CHANGELOG.md`.
 - Each documented feature links to a real `#PR`.
 - Every breaking change of the range has a `CHANGELOG.md` entry, split by audience, or the entry states
