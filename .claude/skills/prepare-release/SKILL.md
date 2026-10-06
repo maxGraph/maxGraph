@@ -46,7 +46,8 @@ entry is derived from them.
 - **Drop the template prompts about screenshots and examples**: the
   `**Add screenshots, animations or videos to make your description more user-friendly!**` line and the `_Note_: use
   release 0.5.0 and release 0.6.0 as examples` line of the Highlights are removed, not kept as a TODO. Reuse the
-  images and videos of the PRs when there are some (see below), and leave none as a placeholder. The one-line summary
+  images and videos of the PRs when there are some (see [step 4b](#4b-media-of-the-highlights)), and leave none as a
+  placeholder. The one-line summary
   is drafted by the skill, not left blank.
 - **Never delete `## Resources` or anything after it** in the draft (see [step 12](#12-update-the-draft)).
   That content is auto-generated (`generateReleaseNotes: true`) and cannot be regenerated.
@@ -203,6 +204,24 @@ of the draft release asks to validate it.
   deserve a mention: `git log v<previous>..origin/main --oneline | grep -E '^[a-f0-9]+ fix(\([^)]+\))?!?:'`
 - Ask it as a multi-select menu whose first option is `None`, the default answer, documenting no fix. Never question
   that answer.
+
+### 4b. Media of the highlights
+
+Once the highlights and the fixes are selected, collect the images and videos of the PR of each one: a screenshot or
+a short video shows a change better than a paragraph, and the PRs often have some. Look in the PR description and in
+the comments written by people, not in those of the bots, whose badges (SonarQube, CodeRabbit) are not content:
+
+```bash
+gh pr view <NNNN> -R maxGraph/maxGraph --json body,comments -q '[(.body | gsub("(?s)<!-- This is an auto-generated comment.*?<!-- end of auto-generated comment[^>]*-->"; "")), (.comments[] | select(.author.login | test("coderabbitai|sonarqubecloud|github-actions|dependabot|\\[bot\\]$") | not) | .body)] | join("\n")' | grep -oE '!\[[^]]*\]\([^)]+\)|<img[^>]*>|<video[^>]*>|https://github\.com/user-attachments/assets/[A-Za-z0-9-]+|https://github\.com/[^ )"]+/assets/[0-9]+/[A-Za-z0-9-]+|https://user-images\.githubusercontent\.com/[^ )"]+' | sort -u
+```
+
+- An `<img>` tag also matches its `src` URL: count them as one media.
+- A bare `https://github.com/user-attachments/assets/...` URL on its own line is usually a video, which GitHub renders
+  as a player. Keep it on its own line in the release notes.
+- Read the lines around each media in the PR: they usually say what it shows ("before", "after", "current
+  behavior"). Reuse that caption, and keep a before/after pair together.
+- When a PR has many media, keep the ones that show the change to a user, and say which ones were left out in the
+  final report.
 
 ### 5. Bundle sizes of the examples
 
@@ -368,6 +387,8 @@ and Documentation paragraphs).
 - **Highlights**: from the pre-list validated in [step 3](#3-features-validate-with-the-user-first), and the fixes
   the user chose in [step 4](#4-bug-fixes-excluded-by-default). For API-facing highlights (new helper, new
   option), include a before/after code example (see Core rules).
+  Include the media found in [step 4b](#4b-media-of-the-highlights), with their caption, after the explanation and
+  before the code example. Leave no placeholder when a highlight has none: the final report says it.
 - **One-line summary**: draft it from the breaking changes and highlights, in bold between two `⚡`, as in the
   template (e.g. "⚡ **This new version improves modularity and fixes important memory leaks.** ⚡").
   Present it to the user for approval like the feature list. It is reused, without the emoji and the bold, in the
@@ -490,6 +511,10 @@ reuse them later in the release procedure:
 Also list the existing `CHANGELOG.md` entries left unchanged although detailed (see
 [step 10](#10-changelog-entry)).
 
+Then give the media assessment of the highlights, one line per highlight and per selected fix: the PR, the number of
+media found and included, the ones left out if any, or "no media found in #NNNN" so the maintainer can decide whether
+to add a screenshot or a video by hand.
+
 ## Phase 3: finalize the GitHub release
 
 ### 12. Update the draft
@@ -535,6 +560,8 @@ to `RELEASE_NOTES_DRAFT.md` at the repo root. This file is already ignored by `.
 - No `TODO` or template placeholder left, including the prompts about screenshots and examples.
 - The one-line summary is drafted, approved by the user, and identical in the release notes and `CHANGELOG.md`.
 - Each documented feature links to a real `#PR`.
+- The media of the PR of each highlight and selected fix are included, and the final report gives the media
+  assessment of every highlight, including those without any.
 - Every breaking change of the range has a `CHANGELOG.md` entry, split by audience, or the entry states
   `**Breaking Changes**: none.`
 - The bundle size paragraph contains the mandatory note block verbatim, and both tables match the CSV files.
