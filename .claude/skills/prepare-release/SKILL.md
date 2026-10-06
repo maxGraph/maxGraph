@@ -97,10 +97,11 @@ of `packages/website/docs/development/release.md`).
 
 Once the version is confirmed, **stop** before collecting anything else: the maintainer manages the milestone of the
 release with the version known (see the "Milestone management" section of the release how-to). Help with read-only
-checks, and never change a milestone or an issue yourself:
+checks, and never change a milestone or an issue yourself, with one exception: create the milestone of the next minor
+version when it is missing (see below).
 
 ```bash
-# milestones still open: is there one named after <target>, or one to rename? one named after the next minor?
+# milestones still open: is there one named after <target>, or one to rename?
 gh api 'repos/maxGraph/maxGraph/milestones?state=open' -q '.[] | "\(.title)\topen=\(.open_issues)\tclosed=\(.closed_issues)\t\(.html_url)"'
 # issues still open in the milestone of the release
 gh issue list -R maxGraph/maxGraph --milestone "<target>" --state open --json number,title
@@ -115,13 +116,20 @@ more. An empty list is a valid outcome, and the expected one when the milestones
 
 The open issues of the release move to the milestone of the next minor version: `0.27.0` for a target `0.26.0`, and
 `0.26.0` for a target `0.25.1`. That milestone must exist so the issues can move to it, and so the work planned after
-the release has somewhere to go.
+the release has somewhere to go. Look it up among all the milestones, closed ones included, since a title can only be
+used once, and create it when it is missing:
 
-Report the findings: the milestone to rename or create, whether the milestone of the next minor version is missing and
-must be created, the open issues to move, the issues that may belong to the release, and remind the maintainer to close
-the milestone. Then wait until the maintainer says the milestone is done, or chooses to skip it, before going on with
-[step 2](#2-breaking-changes-and-deprecations). Keep the milestone URL: the `## Resources` section of the draft release
-asks to validate it.
+```bash
+gh api 'repos/maxGraph/maxGraph/milestones?state=all&per_page=100' -q '.[] | select(.title == "<next minor>") | "\(.title)\t\(.state)\t\(.html_url)"'
+# only when the lookup prints nothing, after running gh-sync-with-git from the repository if available
+gh api -X POST repos/maxGraph/maxGraph/milestones -f title='<next minor>' -q '.html_url'
+```
+
+Report the findings: the milestone to rename or create, the milestone of the next minor version (already there, or
+just created with its URL), the open issues to move, the issues that may belong to the release, and remind the
+maintainer to close the milestone. Then wait until the maintainer says the milestone is done, or chooses to skip it,
+before going on with [step 2](#2-breaking-changes-and-deprecations). Keep the milestone URL: the `## Resources` section
+of the draft release asks to validate it.
 
 ### 2. Breaking changes and deprecations
 
