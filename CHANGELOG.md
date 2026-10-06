@@ -9,6 +9,15 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+## 0.25.0
+
+Release date: `2026-10-06`
+
+For more details, see the [0.25.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.25.0) on the GitHub release page.
+
+This new version improves tree-shaking for applications that do not select cells, lets TypeScript applications declare
+their own style properties, and adds task oriented guides.
+
 **Breaking Changes**:
 - The cell handler factory methods have been moved from `AbstractGraph` to the `SelectionCellsHandler` plugin. The following methods no longer exist on `AbstractGraph`, `Graph`, or `BaseGraph`: `createHandler`, `createEdgeHandler`, `createEdgeHandlerInstance`, `createElbowEdgeHandler`, `createEdgeSegmentHandler` and `createVertexHandler`.
   This keeps `AbstractGraph` free of any reference to `VertexHandler`, `EdgeHandler`, `ElbowEdgeHandler` and `EdgeSegmentHandler`, so `BaseGraph` consumers that do not register `SelectionCellsHandler` no longer bundle these classes. See [issue #762](https://github.com/maxGraph/maxGraph/issues/762).
@@ -32,6 +41,8 @@ _**Note:** Yet to be released breaking changes appear here._
   selectionCellsHandler.setVertexHandlerFactory((state) => new MyVertexHandler(state));
   ```
 - The dispatch methods `createHandler` and `createEdgeHandler` are now defined on `SelectionCellsHandler`. If you were overriding them to change the dispatch logic itself (and not only the instantiated class), extend `SelectionCellsHandler` and pass your subclass in the `plugins` option.
+
+**Breaking Changes for TypeScript users**:
 - `SelectionCellsHandler.createHandler` returns a non-nullable `CellHandler` (the new `EdgeHandler | VertexHandler` union type exported from the package), whereas `AbstractGraph.createHandler` was typed as nullable. TypeScript users can drop the now-useless null checks on the returned value.
 - The minimum supported TypeScript version is now **3.9**, up from 3.8. Applications still on TypeScript 3.8 must upgrade to use this release.
   Module augmentation of the types exposed by the package silently does not work on TypeScript 3.8. TypeScript 3.9 fixes it.
