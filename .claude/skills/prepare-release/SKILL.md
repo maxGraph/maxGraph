@@ -62,7 +62,11 @@ entry is derived from them.
     longer list into several questions grouped by theme, and into several calls when needed.
   - Single choices (the version, the one-line summary, the release date) are single-select questions, with the
     proposal first and marked `(Recommended)`.
-  - An empty selection is a valid answer meaning "none": take it as is, without a warning and without asking again.
+  - When "none" is a valid answer (the bug fixes, the documentation candidates, the issues of a later milestone), make
+    `None` the **first option** of each question, so that the user has something to tick. The menu itself warns
+    that not every question was answered when a multi-select question is submitted empty, and the skill cannot turn
+    that warning off. This leaves 3 candidates per question. A question submitted empty all the same means "none":
+    take it as is, without asking again.
   - Fall back to a numbered text list only when the tool is not available.
 - **Leave the repository changes uncommitted.** The `CHANGELOG.md` entry and the new rows of the bundle size
   history go into the `chore(release): prepare version <version>` commit of the release procedure, together with
@@ -191,8 +195,8 @@ of the draft release asks to validate it.
 - Do **not** document bug fixes by default.
 - Still present the list of `fix` commits to the user so they can decide, case by case, which (if any)
   deserve a mention: `git log v<previous>..origin/main --oneline | grep -E '^[a-f0-9]+ fix(\([^)]+\))?!?:'`
-- Ask it as a multi-select menu with nothing preselected, and say in the question that leaving it empty documents no
-  fix. No selection is the default answer: never warn about it.
+- Ask it as a multi-select menu whose first option is `None`, the default answer, documenting no fix. Never question
+  that answer.
 
 ### 5. Bundle sizes of the examples
 
