@@ -33,7 +33,7 @@ case "$kind" in
   *) echo "unknown kind '$kind', expected pr or issue" >&2; exit 1 ;;
 esac
 
-human='select(.author.login | test("coderabbitai|sonarqubecloud|github-actions|dependabot|\\[bot\\]$") | not)'
+human='select((.author.login // "") | test("coderabbitai|sonarqubecloud|github-actions|dependabot|\\[bot\\]$") | not)'
 
 gh "$kind" view "$number" -R maxGraph/maxGraph --json "$fields" -q "
   \"$source\" as \$src
