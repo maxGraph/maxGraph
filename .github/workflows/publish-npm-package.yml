@@ -10,7 +10,7 @@ jobs:
       id-token: write  # Required for OIDC: trusted publisher and "npm provenance"
       contents: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Build Setup
         uses: ./.github/actions/build-setup
         with:
