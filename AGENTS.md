@@ -43,7 +43,7 @@ This document provides essential knowledge for AI coding agents to be productive
 - **Mixins/Plugins**: Add new features via mixins or plugins, not by modifying core classes directly.
 - **Registries**: Register only required shapes/styles for tree-shaking (see `ts-example-selected-features`).
 - **Testing**: Use Jest. Test patterns in `.claude/rules/testing/conventions.md`.
-- **Commits/PRs**: Follow `.claude/rules/git/commit-conventions.md` for commit messages and `.claude/rules/git/pull-requests.md` when updating a PR description. PRs should run full CI.
+- **Commits/PRs**: Follow `.claude/rules/git/commit-conventions.md` for commit messages, `.claude/rules/git/pull-requests.md` when updating a PR description, and `.claude/rules/git/milestones.md` before setting a milestone (issues only, never PRs). PRs should run full CI.
 - **Documentation**: Update `README.md` and `CLAUDE.md` for major changes. Use concise, accurate docs.
 
 ### 4. Examples & Integration
