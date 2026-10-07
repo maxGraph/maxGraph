@@ -22,6 +22,7 @@ import {
   KeyHandler,
   eventUtils,
   InternalEvent,
+  EventNames,
   xmlUtils,
   EdgeStyle,
   domUtils,
@@ -227,7 +228,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   });
 
   // Implements a properties panel that uses CellAttributeChange to change properties
-  graph.getSelectionModel().addListener(InternalEvent.CHANGE, () => {
+  graph.getSelectionModel().addListener(EventNames.CHANGE, () => {
     selectionChanged(graph);
   });
   selectionChanged(graph);

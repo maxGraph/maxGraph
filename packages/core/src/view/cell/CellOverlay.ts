@@ -27,7 +27,7 @@ import { AlignValue, VAlignValue } from '../../types.js';
 /**
  * Extends {@link EventSource} to implement a graph overlay, represented by an icon and a tooltip.
  *
- * Overlays can handle and fire {@link InternalEvent.CLICK} events and are added to the graph using {@link AbstractGraph.addCellOverlay}, and removed using
+ * Overlays can handle and fire {@link EventNames.CLICK} events and are added to the graph using {@link AbstractGraph.addCellOverlay}, and removed using
  * {@link AbstractGraph.removeCellOverlay}, or {@link AbstractGraph.removeCellOverlays} to remove all overlays.
  * The {@link AbstractGraph.getCellOverlays} function returns the array of overlays for a given cell in a graph.
  * If multiple overlays exist for the same cell, then {@link getBounds} should be overridden in at least one of the overlays.
@@ -44,7 +44,7 @@ import { AlignValue, VAlignValue } from '../../types.js';
  * ```javascript
  * const overlay = new CellOverlay(img, html);
  * graph.addCellOverlay(vertex, overlay);
- * overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
+ * overlay.addListener(EventNames.CLICK, (sender, evt) => {
  *   const cell = evt.getProperty('cell');
  *   graph.setSelectionCell(cell);
  * });
@@ -52,7 +52,7 @@ import { AlignValue, VAlignValue } from '../../types.js';
  *
  * ### Events
  *
- * **{@link InternalEvent.CLICK}**
+ * **{@link EventNames.CLICK}**
  *
  * Fires when the user clicks on the overlay.
  * In the {@link EventObject} parameter of the listener function:

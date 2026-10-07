@@ -22,6 +22,7 @@ import {
   HIGHLIGHT_STROKEWIDTH,
 } from '../../util/Constants.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import Rectangle from '../geometry/Rectangle.js';
 import type CellState from './CellState.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
@@ -107,20 +108,18 @@ class CellHighlight {
       }
     };
 
-    this.graph.getView().addListener(InternalEvent.SCALE, this.repaintHandler);
-    this.graph.getView().addListener(InternalEvent.TRANSLATE, this.repaintHandler);
-    this.graph
-      .getView()
-      .addListener(InternalEvent.SCALE_AND_TRANSLATE, this.repaintHandler);
-    this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.repaintHandler);
+    this.graph.getView().addListener(EventNames.SCALE, this.repaintHandler);
+    this.graph.getView().addListener(EventNames.TRANSLATE, this.repaintHandler);
+    this.graph.getView().addListener(EventNames.SCALE_AND_TRANSLATE, this.repaintHandler);
+    this.graph.getDataModel().addListener(EventNames.CHANGE, this.repaintHandler);
 
     // Hides the marker if the current root changes
     this.resetHandler = () => {
       this.hide();
     };
 
-    this.graph.getView().addListener(InternalEvent.DOWN, this.resetHandler);
-    this.graph.getView().addListener(InternalEvent.UP, this.resetHandler);
+    this.graph.getView().addListener(EventNames.DOWN, this.resetHandler);
+    this.graph.getView().addListener(EventNames.UP, this.resetHandler);
   }
 
   /**
@@ -228,7 +227,7 @@ class CellHighlight {
   }
 
   /**
-   * Marks the {@link CellState} and fires a {@link InternalEvent.MARK} event.
+   * Marks the {@link CellState} and fires a {@link EventNames.MARK} event.
    */
   highlight(state: CellState | null = null): void {
     if (this.state !== state) {

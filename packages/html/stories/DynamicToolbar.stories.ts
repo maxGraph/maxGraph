@@ -30,6 +30,7 @@ import {
   type HTMLImageElementWithProps,
   ImageBox,
   InternalEvent,
+  EventNames,
   MaxToolbar,
   RubberBandHandler,
   styleUtils,
@@ -131,7 +132,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     );
     img.enabled = true;
 
-    graph.getSelectionModel().addListener(InternalEvent.CHANGE, () => {
+    graph.getSelectionModel().addListener(EventNames.CHANGE, () => {
       const tmp = graph.isSelectionEmpty();
       styleUtils.setOpacity(img, tmp ? 100 : 20);
       img.enabled = tmp;

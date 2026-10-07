@@ -23,7 +23,7 @@ declare module '../AbstractGraph' {
      * Adds the cells into the given group.
      * The change is carried out using {@link cellsAdded}, {@link cellsMoved} and {@link cellsResized}.
      *
-     * This method fires {@link InternalEvent.GROUP_CELLS} while the transaction is in progress.
+     * This method fires {@link EventNames.GROUP_CELLS} while the transaction is in progress.
      *
      * @param group {@link Cell} that represents the target group. If `null` is specified then a new group is created using {@link createGroupCell}.
      * @param border Optional integer that specifies the border between the child area and the group bounds. Default is `0`.

@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import EventSource from '../event/EventSource.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import Rectangle from '../geometry/Rectangle.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import EventObject from '../event/EventObject.js';
@@ -179,8 +179,8 @@ class SwimlaneManager extends EventSource {
     this.graph = graph;
 
     if (this.graph) {
-      this.graph.addListener(InternalEvent.ADD_CELLS, this.addHandler);
-      this.graph.addListener(InternalEvent.CELLS_RESIZED, this.resizeHandler);
+      this.graph.addListener(EventNames.ADD_CELLS, this.addHandler);
+      this.graph.addListener(EventNames.CELLS_RESIZED, this.resizeHandler);
     }
   }
 

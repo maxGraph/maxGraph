@@ -16,7 +16,7 @@ limitations under the License.
 
 import { hasScrollbars } from '../../util/styleUtils.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import type PanningHandler from '../plugin/PanningHandler.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import Rectangle from '../geometry/Rectangle.js';
@@ -189,7 +189,7 @@ export const PanningMixin: PartialType = {
       this.panDx = dx;
       this.panDy = dy;
 
-      this.fireEvent(new EventObject(InternalEvent.PAN));
+      this.fireEvent(new EventObject(EventNames.PAN));
     }
   },
 

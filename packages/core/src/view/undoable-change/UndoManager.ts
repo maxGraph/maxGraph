@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import EventObject from '../event/EventObject.js';
 import EventSource from '../event/EventSource.js';
 import UndoableEdit from './UndoableEdit.js';
@@ -53,8 +53,8 @@ import UndoableEdit from './UndoableEdit.js';
  * function listener(sender, evt) {
  *   undoManager.undoableEditHappened(evt.getProperty('edit'));
  * };
- * graph.getDataModel().addListener(InternalEvent.UNDO, listener);
- * graph.getView().addListener(InternalEvent.UNDO, listener);
+ * graph.getDataModel().addListener(EventNames.UNDO, listener);
+ * graph.getView().addListener(EventNames.UNDO, listener);
  * ```
  *
  * The code creates a function that informs the undoManager
@@ -62,21 +62,21 @@ import UndoableEdit from './UndoableEdit.js';
  * {@link GraphDataModel} and {@link GraphView} using
  * {@link EventSource.addListener}.
  *
- * ### Event: InternalEvent.CLEAR
+ * ### Event: EventNames.CLEAR
  *
  * Fires after {@link clear} was invoked. This event has no properties.
  *
- * ### Event: InternalEvent.UNDO
+ * ### Event: EventNames.UNDO
  *
  * Fires afer a significant edit was undone in {@link undo}. The `edit`
  * property contains the {@link UndoableEdit} that was undone.
  *
- * ### Event: InternalEvent.REDO
+ * ### Event: EventNames.REDO
  *
  * Fires afer a significant edit was redone in {@link redo}. The `edit`
  * property contains the {@link UndoableEdit} that was redone.
  *
- * ### Event: InternalEvent.ADD
+ * ### Event: EventNames.ADD
  *
  * Fires after an undoable edit was added to the history. The `edit`
  * property contains the {@link UndoableEdit} that was added.
@@ -118,7 +118,7 @@ class UndoManager extends EventSource {
   clear(): void {
     this.history = [];
     this.indexOfNextAdd = 0;
-    this.fireEvent(new EventObject(InternalEvent.CLEAR));
+    this.fireEvent(new EventObject(EventNames.CLEAR));
   }
 
   /**
@@ -137,7 +137,7 @@ class UndoManager extends EventSource {
       edit.undo();
 
       if (edit.isSignificant()) {
-        this.fireEvent(new EventObject(InternalEvent.UNDO, { edit }));
+        this.fireEvent(new EventObject(EventNames.UNDO, { edit }));
         break;
       }
     }
@@ -161,7 +161,7 @@ class UndoManager extends EventSource {
       edit.redo();
 
       if (edit.isSignificant()) {
-        this.fireEvent(new EventObject(InternalEvent.REDO, { edit }));
+        this.fireEvent(new EventObject(EventNames.REDO, { edit }));
         break;
       }
     }
@@ -179,7 +179,7 @@ class UndoManager extends EventSource {
 
     this.history.push(undoableEdit);
     this.indexOfNextAdd = this.history.length;
-    this.fireEvent(new EventObject(InternalEvent.ADD, { edit: undoableEdit }));
+    this.fireEvent(new EventObject(EventNames.ADD, { edit: undoableEdit }));
   }
 
   /**

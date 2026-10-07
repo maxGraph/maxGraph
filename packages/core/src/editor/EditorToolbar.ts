@@ -21,6 +21,7 @@ import MaxToolbar from '../gui/MaxToolbar.js';
 import Geometry from '../view/geometry/Geometry.js';
 import { convertPoint } from '../util/styleUtils.js';
 import InternalEvent from '../view/event/InternalEvent.js';
+import { EventNames } from '../view/event/EventNames.js';
 import { getClientX, getClientY } from '../util/EventUtils.js';
 import { makeDraggable } from '../util/gestureUtils.js';
 import Editor from './Editor.js';
@@ -103,21 +104,18 @@ export class EditorToolbar {
 
       // Installs the insert function in the editor if an item is
       // selected in the toolbar
-      this.toolbar.addListener(
-        InternalEvent.SELECT,
-        (sender: Element, evt: EventObject) => {
-          const funct = evt.getProperty('function');
+      this.toolbar.addListener(EventNames.SELECT, (sender: Element, evt: EventObject) => {
+        const funct = evt.getProperty('function');
 
-          if (funct != null) {
-            (<Editor>this.editor).insertFunction = () => {
-              funct.apply(this, [container]);
-              (<MaxToolbar>this.toolbar).resetMode();
-            };
-          } else {
-            (<Editor>this.editor).insertFunction = null;
-          }
+        if (funct != null) {
+          (<Editor>this.editor).insertFunction = () => {
+            funct.apply(this, [container]);
+            (<MaxToolbar>this.toolbar).resetMode();
+          };
+        } else {
+          (<Editor>this.editor).insertFunction = null;
         }
-      );
+      });
 
       // Resets the selected tool after a double click or escape keystroke
       this.resetHandler = () => {
@@ -126,11 +124,8 @@ export class EditorToolbar {
         }
       };
 
-      (<Editor>this.editor).graph.addListener(
-        InternalEvent.DOUBLE_CLICK,
-        this.resetHandler
-      );
-      (<Editor>this.editor).addListener(InternalEvent.ESCAPE, this.resetHandler);
+      (<Editor>this.editor).graph.addListener(EventNames.DOUBLE_CLICK, this.resetHandler);
+      (<Editor>this.editor).addListener(EventNames.ESCAPE, this.resetHandler);
     }
   }
 
@@ -445,7 +440,7 @@ export class EditorToolbar {
     sprite.setAttribute('src', <string>img.getAttribute('src'));
 
     // Handles delayed loading of the images
-    const loader = (evt: InternalEvent) => {
+    const loader = (evt: Event) => {
       // Preview uses the image node with double size. Later this can be
       // changed to use a separate preview and guides, but for this the
       // dropHandler must use the additional x- and y-arguments and the

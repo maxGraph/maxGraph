@@ -19,6 +19,7 @@ limitations under the License.
 import { getAlignmentAsPoint, setPrefixedStyle } from '../../util/styleUtils.js';
 import Rectangle from '../geometry/Rectangle.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import Client from '../../Client.js';
 import {
   ABSOLUTE_LINE_HEIGHT,
@@ -138,7 +139,7 @@ import { StyleDefaultsConfig } from '../../util/config.js';
  * ```javascript
  * const graphFireMouseEvent = graph.fireMouseEvent;
  * graph.fireMouseEvent = (evtName, me, sender) => {
- *   if (evtName == mxEvent.MOUSE_DOWN) {
+ *   if (evtName == EventNames.MOUSE_DOWN) {
  *     this.container.focus();
  *   }
  *
@@ -168,9 +169,9 @@ class CellEditorHandler implements GraphPlugin {
       }
     };
 
-    this.graph.getView().addListener(InternalEvent.SCALE, this.zoomHandler);
-    this.graph.getView().addListener(InternalEvent.SCALE_AND_TRANSLATE, this.zoomHandler);
-    this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.changeHandler);
+    this.graph.getView().addListener(EventNames.SCALE, this.zoomHandler);
+    this.graph.getView().addListener(EventNames.SCALE_AND_TRANSLATE, this.zoomHandler);
+    this.graph.getDataModel().addListener(EventNames.CHANGE, this.changeHandler);
   }
 
   // TODO: Document me!

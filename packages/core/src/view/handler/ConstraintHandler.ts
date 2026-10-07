@@ -25,6 +25,7 @@ import {
   HIGHLIGHT_STROKEWIDTH,
 } from '../../util/Constants.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import { intersects } from '../../util/mathUtils.js';
 import Rectangle from '../geometry/Rectangle.js';
 import ImageShape from '../shape/node/ImageShape.js';
@@ -96,11 +97,11 @@ class ConstraintHandler {
       }
     };
 
-    this.graph.model.addListener(InternalEvent.CHANGE, this.resetHandler);
-    this.graph.view.addListener(InternalEvent.SCALE_AND_TRANSLATE, this.resetHandler);
-    this.graph.view.addListener(InternalEvent.TRANSLATE, this.resetHandler);
-    this.graph.view.addListener(InternalEvent.SCALE, this.resetHandler);
-    this.graph.addListener(InternalEvent.ROOT, this.resetHandler);
+    this.graph.model.addListener(EventNames.CHANGE, this.resetHandler);
+    this.graph.view.addListener(EventNames.SCALE_AND_TRANSLATE, this.resetHandler);
+    this.graph.view.addListener(EventNames.TRANSLATE, this.resetHandler);
+    this.graph.view.addListener(EventNames.SCALE, this.resetHandler);
+    this.graph.addListener(EventNames.ROOT, this.resetHandler);
   }
 
   /**

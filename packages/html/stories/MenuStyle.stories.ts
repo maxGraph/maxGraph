@@ -30,6 +30,7 @@ import {
   EventObject,
   ImageBox,
   InternalEvent,
+  EventNames,
   InternalMouseEvent,
   RubberBandHandler,
   Graph,
@@ -86,16 +87,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       InternalEvent.addGestureListeners(
         shape.node,
         function (evt) {
-          graph.fireMouseEvent(
-            InternalEvent.MOUSE_DOWN,
-            new InternalMouseEvent(evt, state)
-          );
+          graph.fireMouseEvent(EventNames.MOUSE_DOWN, new InternalMouseEvent(evt, state));
         },
         function (evt) {
-          graph.fireMouseEvent(
-            InternalEvent.MOUSE_MOVE,
-            new InternalMouseEvent(evt, state)
-          );
+          graph.fireMouseEvent(EventNames.MOUSE_MOVE, new InternalMouseEvent(evt, state));
         },
         function (_evt) {}
       );
@@ -103,7 +98,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       if (!Client.IS_TOUCH) {
         InternalEvent.addListener(shape.node, 'mouseup', function (evt: MouseEvent) {
           overlay.fireEvent(
-            new EventObject(InternalEvent.CLICK, 'event', evt, 'cell', state.cell)
+            new EventObject(EventNames.CLICK, 'event', evt, 'cell', state.cell)
           );
         });
       }

@@ -31,6 +31,7 @@ import type { AbstractGraph } from '../AbstractGraph.js';
 import { BaseGraph } from '../BaseGraph.js';
 import ImageShape from '../shape/node/ImageShape.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import Image from '../image/ImageBox.js';
 import EventObject from '../event/EventObject.js';
 import { getSource, isMouseEvent } from '../../util/EventUtils.js';
@@ -108,16 +109,16 @@ class Outline implements MouseListenerSet {
     };
 
     // Updates the scale of the outline after a change of the main graph
-    this.source.getDataModel().addListener(InternalEvent.CHANGE, this.updateHandler);
+    this.source.getDataModel().addListener(EventNames.CHANGE, this.updateHandler);
     this.outline.addMouseListener(this);
 
     // Adds listeners to keep the outline in sync with the source graph
     const view = this.source.getView();
-    view.addListener(InternalEvent.SCALE, this.updateHandler);
-    view.addListener(InternalEvent.TRANSLATE, this.updateHandler);
-    view.addListener(InternalEvent.SCALE_AND_TRANSLATE, this.updateHandler);
-    view.addListener(InternalEvent.DOWN, this.updateHandler);
-    view.addListener(InternalEvent.UP, this.updateHandler);
+    view.addListener(EventNames.SCALE, this.updateHandler);
+    view.addListener(EventNames.TRANSLATE, this.updateHandler);
+    view.addListener(EventNames.SCALE_AND_TRANSLATE, this.updateHandler);
+    view.addListener(EventNames.DOWN, this.updateHandler);
+    view.addListener(EventNames.UP, this.updateHandler);
 
     // Updates blue rectangle on scroll
     // @ts-ignore because sender and evt don't seem used
@@ -128,7 +129,7 @@ class Outline implements MouseListenerSet {
         (<Function>this.updateHandler)(sender, evt);
       }
     };
-    this.source.addListener(InternalEvent.PAN, this.panHandler);
+    this.source.addListener(EventNames.PAN, this.panHandler);
 
     // Refreshes the graph in the outline after a refresh of the main graph
     this.refreshHandler = (sender: any) => {
@@ -136,7 +137,7 @@ class Outline implements MouseListenerSet {
       outline?.setStylesheet(this.source.getStylesheet());
       outline?.refresh();
     };
-    this.source.addListener(InternalEvent.REFRESH, this.refreshHandler);
+    this.source.addListener(EventNames.REFRESH, this.refreshHandler);
 
     // Creates the blue rectangle for the viewport
     this.bounds = new Rectangle(0, 0, 0, 0);
@@ -159,18 +160,18 @@ class Outline implements MouseListenerSet {
 
       const redirect = (evt: MouseEvent) => {
         const outline = this.outline;
-        outline?.fireMouseEvent(InternalEvent.MOUSE_MOVE, new InternalMouseEvent(evt));
+        outline?.fireMouseEvent(EventNames.MOUSE_MOVE, new InternalMouseEvent(evt));
       };
 
       const redirect2 = (evt: MouseEvent) => {
         const outline = this.outline;
         InternalEvent.removeGestureListeners(<Listenable>t, null, redirect, redirect2);
-        outline?.fireMouseEvent(InternalEvent.MOUSE_UP, new InternalMouseEvent(evt));
+        outline?.fireMouseEvent(EventNames.MOUSE_UP, new InternalMouseEvent(evt));
       };
 
       const outline = this.outline;
       InternalEvent.addGestureListeners(<Listenable>t, null, redirect, redirect2);
-      outline?.fireMouseEvent(InternalEvent.MOUSE_DOWN, new InternalMouseEvent(evt));
+      outline?.fireMouseEvent(EventNames.MOUSE_DOWN, new InternalMouseEvent(evt));
     };
 
     InternalEvent.addGestureListeners(this.selectionBorder.node, handler);
@@ -268,7 +269,7 @@ class Outline implements MouseListenerSet {
   labelsVisible = false;
 
   /**
-   * Specifies if {@link update} should be called for {@link InternalEvent.PAN} in the source
+   * Specifies if {@link update} should be called for {@link EventNames.PAN} in the source
    * graph.
    * @default false
    */

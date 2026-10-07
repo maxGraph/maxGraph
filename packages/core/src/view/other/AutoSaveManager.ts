@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import EventSource from '../event/EventSource.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 
 /**
@@ -123,7 +123,7 @@ class AutoSaveManager extends EventSource {
     this.graph = graph;
 
     if (this.graph != null) {
-      this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.changeHandler);
+      this.graph.getDataModel().addListener(EventNames.CHANGE, this.changeHandler);
     }
   }
 

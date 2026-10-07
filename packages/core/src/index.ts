@@ -216,6 +216,8 @@ export { default as DragSource } from './view/other/DragSource.js';
 export { default as PanningManager } from './view/other/PanningManager.js';
 
 export { default as InternalEvent } from './view/event/InternalEvent.js';
+export { EventNames } from './view/event/EventNames.js';
+export type { EventName, EventNamesMap } from './view/event/EventNames.js';
 export { default as EventObject } from './view/event/EventObject.js';
 export { default as EventSource } from './view/event/EventSource.js';
 export { default as InternalMouseEvent } from './view/event/InternalMouseEvent.js';

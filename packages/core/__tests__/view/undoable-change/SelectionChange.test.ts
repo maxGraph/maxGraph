@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { Cell, EventObject, InternalEvent, SelectionChange } from '../../../src';
+import { Cell, EventObject, EventNames, SelectionChange } from '../../../src';
 import type { AbstractGraph } from '../../../src';
 
 interface CallLog {
@@ -126,7 +126,7 @@ describe('execute', () => {
 
     expect(events).toHaveLength(1);
     const evt = events[0];
-    expect(evt.getName()).toBe(InternalEvent.CHANGE);
+    expect(evt.getName()).toBe(EventNames.CHANGE);
     expect(evt.getProperty('added')).toEqual([removedCell]);
     expect(evt.getProperty('removed')).toEqual([addedCell]);
   });
@@ -139,7 +139,7 @@ describe('execute', () => {
 
     expect(calls).toEqual([]);
     expect(events).toHaveLength(1);
-    expect(events[0].getName()).toBe(InternalEvent.CHANGE);
+    expect(events[0].getName()).toBe(EventNames.CHANGE);
     expect(events[0].getProperty('added')).toEqual([]);
     expect(events[0].getProperty('removed')).toEqual([]);
   });

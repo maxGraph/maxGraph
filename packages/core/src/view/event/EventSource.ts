@@ -17,10 +17,11 @@ limitations under the License.
 */
 
 import EventObject from './EventObject.js';
+import type { EventName } from './EventNames.js';
 
 interface EventListenerObject {
   funct: Function;
-  name: string;
+  name: EventName | (string & Record<never, never>);
 }
 
 /**
@@ -100,9 +101,12 @@ class EventSource {
    * Binds the specified function to the given event name. If no event name
    * is given, then the listener is registered for all events.
    *
+   * The names of the events fired by maxGraph are listed in {@link EventNames}. Any other name is accepted as well,
+   * for instance the name of an event fired by the application.
+   *
    * The parameters of the listener are the sender and an {@link EventObject}.
    */
-  addListener(name: string, funct: Function) {
+  addListener(name: EventName | (string & Record<never, never>), funct: Function): void {
     this.eventListeners.push({ name, funct });
   }
 

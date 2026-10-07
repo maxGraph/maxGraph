@@ -19,6 +19,7 @@ import {
   xmlUtils,
   domUtils,
   InternalEvent,
+  EventNames,
   RubberBandHandler,
   UndoManager,
   CodecRegistry,
@@ -183,8 +184,8 @@ It also shows the usage of the undo/redo manager (<code>UndoManager</code>).`
   let listener = function (sender, evt) {
     undoManager.undoableEditHappened(evt.getProperty('edit'));
   };
-  graph.getDataModel().addListener(InternalEvent.UNDO, listener);
-  graph.getView().addListener(InternalEvent.UNDO, listener);
+  graph.getDataModel().addListener(EventNames.UNDO, listener);
+  graph.getView().addListener(EventNames.UNDO, listener);
 
   const buttons = document.createElement('div');
   buttons.style.marginTop = '.75rem';

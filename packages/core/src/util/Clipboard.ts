@@ -95,7 +95,7 @@ class Clipboard {
   static cells: Cell[];
 
   /**
-   * Sets the cells in the clipboard. Fires a {@link InternalEvent.CHANGE} event.
+   * Sets the cells in the clipboard. Fires a {@link EventNames.CHANGE} event.
    */
   static setCells(cells: Cell[]): void {
     Clipboard.cells = cells;

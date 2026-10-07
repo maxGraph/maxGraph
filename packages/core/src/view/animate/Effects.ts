@@ -38,7 +38,7 @@ class Effects {
    *
    * @example
    * ```javascript
-   * graph.model.addListener(mxEvent.CHANGE, function(sender, evt)
+   * graph.model.addListener(EventNames.CHANGE, function(sender, evt)
    * {
    *   var changes = evt.getProperty('edit').changes;
    *

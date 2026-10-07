@@ -41,7 +41,7 @@ import { isNullish } from '../../internal/utils.js';
  * ```javascript
  * const layout = new ParallelEdgeLayout(graph);
  *
- * graph.addListener(InternalEvent.CELL_CONNECTED, (sender, evt) => {
+ * graph.addListener(EventNames.CELL_CONNECTED, (sender, evt) => {
  *   const model = graph.getDataModel();
  *   const edge = evt.getProperty('edge');
  *   const src = model.getTerminal(edge, true);

@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalEvent from '../view/event/InternalEvent.js';
+import { EventNames } from '../view/event/EventNames.js';
 import EventObject from '../view/event/EventObject.js';
 import KeyHandler from '../view/handler/KeyHandler.js';
 import Editor from './Editor.js';
@@ -25,7 +25,7 @@ import Editor from './Editor.js';
  * Binds keycodes to action names in an editor.
  *
  * This aggregates an internal {@link handler} and extends the implementation of {@link KeyHandler.escape} to not only cancel the editing,
- * but also hide the properties dialog and fire an {@link InternalEvent.ESCAPE} event via {@link editor}.
+ * but also hide the properties dialog and fire an {@link EventNames.ESCAPE} event via {@link editor}.
  *
  * An instance of this class is created by {@link Editor} and stored in {@link Editor.keyHandler}.
  *
@@ -41,7 +41,7 @@ import Editor from './Editor.js';
  *
  * ### Keycodes
  * See {@link KeyHandler}.
- * An {@link InternalEvent.ESCAPE} event is fired via the editor if the escape key is pressed.
+ * An {@link EventNames.ESCAPE} event is fired via the editor if the escape key is pressed.
  *
  * @category Editor
  */
@@ -59,7 +59,7 @@ export class EditorKeyHandler {
       this.handler.escape = (evt) => {
         old.apply(handler, [evt]);
         editor.hideProperties();
-        editor.fireEvent(new EventObject(InternalEvent.ESCAPE, { event: evt }));
+        editor.fireEvent(new EventObject(EventNames.ESCAPE, { event: evt }));
       };
     }
   }

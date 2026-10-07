@@ -21,6 +21,7 @@ import EventObject from '../view/event/EventObject.js';
 import EventSource from '../view/event/EventSource.js';
 import { fit, getCurrentStyle } from '../util/styleUtils.js';
 import InternalEvent from '../view/event/InternalEvent.js';
+import { EventNames } from '../view/event/EventNames.js';
 import Client from '../Client.js';
 import { NODE_TYPE } from '../util/Constants.js';
 import { write } from '../util/domUtils.js';
@@ -71,7 +72,7 @@ let activeWindow: MaxWindow | null = null;
  * Or the following event handler can be used:
  *
  * ```javascript
- * wnd.addListener(mxEvent.MOVE, function(e)
+ * wnd.addListener(EventNames.MOVE, function(e)
  * {
  *   wnd.setLocation(Math.max(0, wnd.getX()), Math.max(0, wnd.getY()));
  * });
@@ -105,71 +106,71 @@ let activeWindow: MaxWindow | null = null;
  * }));
  * ```
  *
- * ### Event: mxEvent.MOVE_START
+ * ### Event: EventNames.MOVE_START
  *
  * Fires before the window is moved. The <code>event</code> property contains
  * the corresponding mouse event.
  *
- * ### Event: mxEvent.MOVE
+ * ### Event: EventNames.MOVE
  *
  * Fires while the window is being moved. The <code>event</code> property
  * contains the corresponding mouse event.
  *
- * ### Event: mxEvent.MOVE_END
+ * ### Event: EventNames.MOVE_END
  *
  * Fires after the window is moved. The <code>event</code> property contains
  * the corresponding mouse event.
  *
- * ### Event: mxEvent.RESIZE_START
+ * ### Event: EventNames.RESIZE_START
  *
  * Fires before the window is resized. The <code>event</code> property contains
  * the corresponding mouse event.
  *
- * ### Event: mxEvent.RESIZE
+ * ### Event: EventNames.RESIZE
  *
  * Fires while the window is being resized. The <code>event</code> property
  * contains the corresponding mouse event.
  *
- * ### Event: mxEvent.RESIZE_END
+ * ### Event: EventNames.RESIZE_END
  *
  * Fires after the window is resized. The <code>event</code> property contains
  * the corresponding mouse event.
  *
- * ### Event: mxEvent.MAXIMIZE
+ * ### Event: EventNames.MAXIMIZE
  *
  * Fires after the window is maximized. The <code>event</code> property
  * contains the corresponding mouse event.
  *
- * ### Event: mxEvent.MINIMIZE
+ * ### Event: EventNames.MINIMIZE
  *
  * Fires after the window is minimized. The <code>event</code> property
  * contains the corresponding mouse event.
  *
- * ### Event: mxEvent.NORMALIZE
+ * ### Event: EventNames.NORMALIZE
  *
  * Fires after the window is normalized, that is, it returned from
  * maximized or minimized state. The <code>event</code> property contains the
  * corresponding mouse event.
  *
- * ### Event: mxEvent.ACTIVATE
+ * ### Event: EventNames.ACTIVATE
  *
  * Fires after a window is activated. The <code>previousWindow</code> property
  * contains the previous window. The event sender is the active window.
  *
- * ### Event: mxEvent.SHOW
+ * ### Event: EventNames.SHOW
  *
  * Fires after the window is shown. This event has no properties.
  *
- * ### Event: mxEvent.HIDE
+ * ### Event: EventNames.HIDE
  *
  * Fires after the window is hidden. This event has no properties.
  *
- * ### Event: mxEvent.CLOSE
+ * ### Event: EventNames.CLOSE
  *
  * Fires before the window is closed. The <code>event</code> property contains
  * the corresponding mouse event.
  *
- * ### Event: mxEvent.DESTROY
+ * ### Event: EventNames.DESTROY
  *
  * Fires before the window is destroyed. This event has no properties.
  *
@@ -417,7 +418,7 @@ export default class MaxWindow extends EventSource {
       // eslint-disable-next-line @typescript-eslint/no-this-alias -- we need to maintain the reference to the current window
       activeWindow = this;
 
-      this.fireEvent(new EventObject(InternalEvent.ACTIVATE, { previousWindow }));
+      this.fireEvent(new EventObject(EventNames.ACTIVATE, { previousWindow }));
     }
   }
 
@@ -485,7 +486,7 @@ export default class MaxWindow extends EventSource {
           height = this.div.offsetHeight;
 
           InternalEvent.addGestureListeners(document, null, dragHandler, dropHandler);
-          this.fireEvent(new EventObject(InternalEvent.RESIZE_START, { event: evt }));
+          this.fireEvent(new EventObject(EventNames.RESIZE_START, { event: evt }));
           InternalEvent.consume(evt);
         };
 
@@ -500,7 +501,7 @@ export default class MaxWindow extends EventSource {
               this.setSize(width + dx, height + dy);
             }
 
-            this.fireEvent(new EventObject(InternalEvent.RESIZE, { event: evt }));
+            this.fireEvent(new EventObject(EventNames.RESIZE, { event: evt }));
             InternalEvent.consume(evt);
           }
         };
@@ -515,7 +516,7 @@ export default class MaxWindow extends EventSource {
               dragHandler,
               dropHandler
             );
-            this.fireEvent(new EventObject(InternalEvent.RESIZE_END, { event: evt }));
+            this.fireEvent(new EventObject(EventNames.RESIZE_END, { event: evt }));
             InternalEvent.consume(evt);
           }
         };
@@ -613,7 +614,7 @@ export default class MaxWindow extends EventSource {
           this.resize.style.visibility = 'hidden';
         }
 
-        this.fireEvent(new EventObject(InternalEvent.MINIMIZE, { event: evt }));
+        this.fireEvent(new EventObject(EventNames.MINIMIZE, { event: evt }));
       } else {
         minimized = false;
 
@@ -631,7 +632,7 @@ export default class MaxWindow extends EventSource {
           this.resize.style.visibility = '';
         }
 
-        this.fireEvent(new EventObject(InternalEvent.NORMALIZE, { event: evt }));
+        this.fireEvent(new EventObject(EventNames.NORMALIZE, { event: evt }));
       }
 
       InternalEvent.consume(evt);
@@ -713,7 +714,7 @@ export default class MaxWindow extends EventSource {
             }px`;
           }
 
-          this.fireEvent(new EventObject(InternalEvent.MAXIMIZE, { event: evt }));
+          this.fireEvent(new EventObject(EventNames.MAXIMIZE, { event: evt }));
         } else {
           maximized = false;
 
@@ -750,7 +751,7 @@ export default class MaxWindow extends EventSource {
             this.resize.style.visibility = '';
           }
 
-          this.fireEvent(new EventObject(InternalEvent.NORMALIZE, { event: evt }));
+          this.fireEvent(new EventObject(EventNames.NORMALIZE, { event: evt }));
         }
 
         InternalEvent.consume(evt);
@@ -779,18 +780,18 @@ export default class MaxWindow extends EventSource {
         const dx = getClientX(evt) - startX;
         const dy = getClientY(evt) - startY;
         this.setLocation(x + dx, y + dy);
-        this.fireEvent(new EventObject(InternalEvent.MOVE, { event: evt }));
+        this.fireEvent(new EventObject(EventNames.MOVE, { event: evt }));
         InternalEvent.consume(evt);
       };
 
       const dropHandler = (evt: MouseEvent) => {
         InternalEvent.removeGestureListeners(document, null, dragHandler, dropHandler);
-        this.fireEvent(new EventObject(InternalEvent.MOVE_END, { event: evt }));
+        this.fireEvent(new EventObject(EventNames.MOVE_END, { event: evt }));
         InternalEvent.consume(evt);
       };
 
       InternalEvent.addGestureListeners(document, null, dragHandler, dropHandler);
-      this.fireEvent(new EventObject(InternalEvent.MOVE_START, { event: evt }));
+      this.fireEvent(new EventObject(EventNames.MOVE_START, { event: evt }));
       InternalEvent.consume(evt);
     });
 
@@ -838,7 +839,7 @@ export default class MaxWindow extends EventSource {
     this.buttons.appendChild(this.closeImg);
 
     InternalEvent.addGestureListeners(this.closeImg, (evt: MouseEvent) => {
-      this.fireEvent(new EventObject(InternalEvent.CLOSE, { event: evt }));
+      this.fireEvent(new EventObject(EventNames.CLOSE, { event: evt }));
 
       if (this.destroyOnClose) {
         this.destroy();
@@ -921,7 +922,7 @@ export default class MaxWindow extends EventSource {
       }px`;
     }
 
-    this.fireEvent(new EventObject(InternalEvent.SHOW));
+    this.fireEvent(new EventObject(EventNames.SHOW));
   }
 
   /**
@@ -929,7 +930,7 @@ export default class MaxWindow extends EventSource {
    */
   hide(): void {
     this.div.style.display = 'none';
-    this.fireEvent(new EventObject(InternalEvent.HIDE));
+    this.fireEvent(new EventObject(EventNames.HIDE));
   }
 
   /**
@@ -937,7 +938,7 @@ export default class MaxWindow extends EventSource {
    * <destroy> event prior to destroying the window.
    */
   override destroy(): void {
-    this.fireEvent(new EventObject(InternalEvent.DESTROY));
+    this.fireEvent(new EventObject(EventNames.DESTROY));
 
     if (this.div != null) {
       InternalEvent.release(this.div);

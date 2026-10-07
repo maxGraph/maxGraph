@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, CellTracker, constants, InternalEvent } from '@maxgraph/core';
+import { Graph, CellTracker, constants, EventNames } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
 
@@ -53,7 +53,7 @@ const Template = ({ label, ...args }) => {
 
   // Handles clicks on offpage connectors and
   // executes function in user object
-  graph.addListener(InternalEvent.CLICK, function (source, evt) {
+  graph.addListener(EventNames.CLICK, function (source, evt) {
     const cell = evt.getProperty('cell');
 
     if (cell != null && cell.value != null && typeof cell.value.create === 'function') {

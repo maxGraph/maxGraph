@@ -28,6 +28,7 @@ import Rectangle from '../geometry/Rectangle.js';
 import { ShapeRegistry } from '../shape/ShapeRegistry.js';
 import { StencilShapeRegistry } from '../shape/stencil/StencilShapeRegistry.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import Client from '../../Client.js';
 import InternalMouseEvent from '../event/InternalMouseEvent.js';
 import EventObject from '../event/EventObject.js';
@@ -360,7 +361,7 @@ class CellRenderer {
         (evt: MouseEvent) => {
           if (this.isLabelEvent(state, evt)) {
             graph.fireMouseEvent(
-              InternalEvent.MOUSE_DOWN,
+              EventNames.MOUSE_DOWN,
               new InternalMouseEvent(evt, state)
             );
 
@@ -374,7 +375,7 @@ class CellRenderer {
         (evt: MouseEvent) => {
           if (this.isLabelEvent(state, evt)) {
             graph.fireMouseEvent(
-              InternalEvent.MOUSE_MOVE,
+              EventNames.MOUSE_MOVE,
               new InternalMouseEvent(evt, getState(evt))
             );
           }
@@ -382,7 +383,7 @@ class CellRenderer {
         (evt: MouseEvent) => {
           if (this.isLabelEvent(state, evt)) {
             graph.fireMouseEvent(
-              InternalEvent.MOUSE_UP,
+              EventNames.MOUSE_UP,
               new InternalMouseEvent(evt, getState(evt))
             );
             forceGetCell = false;
@@ -492,7 +493,7 @@ class CellRenderer {
       }
 
       overlay.fireEvent(
-        new EventObject(InternalEvent.CLICK, { event: evt, cell: state.cell })
+        new EventObject(EventNames.CLICK, { event: evt, cell: state.cell })
       );
     });
 
@@ -503,7 +504,7 @@ class CellRenderer {
       },
       (evt: Event) => {
         graph.fireMouseEvent(
-          InternalEvent.MOUSE_MOVE,
+          EventNames.MOUSE_MOVE,
           new InternalMouseEvent(evt as MouseEvent, state)
         );
       }
@@ -512,7 +513,7 @@ class CellRenderer {
     if (Client.IS_TOUCH) {
       InternalEvent.addListener(shape.node, 'touchend', (evt: Event) => {
         overlay.fireEvent(
-          new EventObject(InternalEvent.CLICK, { event: evt, cell: state.cell })
+          new EventObject(EventNames.CLICK, { event: evt, cell: state.cell })
         );
       });
     }
@@ -632,23 +633,14 @@ class CellRenderer {
         node,
         (evt: MouseEvent) => {
           first = new Point(getClientX(evt), getClientY(evt));
-          graph.fireMouseEvent(
-            InternalEvent.MOUSE_DOWN,
-            new InternalMouseEvent(evt, state)
-          );
+          graph.fireMouseEvent(EventNames.MOUSE_DOWN, new InternalMouseEvent(evt, state));
           InternalEvent.consume(evt);
         },
         (evt: MouseEvent) => {
-          graph.fireMouseEvent(
-            InternalEvent.MOUSE_MOVE,
-            new InternalMouseEvent(evt, state)
-          );
+          graph.fireMouseEvent(EventNames.MOUSE_MOVE, new InternalMouseEvent(evt, state));
         },
         (evt: MouseEvent) => {
-          graph.fireMouseEvent(
-            InternalEvent.MOUSE_UP,
-            new InternalMouseEvent(evt, state)
-          );
+          graph.fireMouseEvent(EventNames.MOUSE_UP, new InternalMouseEvent(evt, state));
           InternalEvent.consume(evt);
         }
       );
@@ -744,7 +736,7 @@ class CellRenderer {
         (evt: MouseEvent) => {
           if (this.isShapeEvent(state, evt)) {
             graph.fireMouseEvent(
-              InternalEvent.MOUSE_DOWN,
+              EventNames.MOUSE_DOWN,
               new InternalMouseEvent(evt, state)
             );
           }
@@ -752,7 +744,7 @@ class CellRenderer {
         (evt: MouseEvent) => {
           if (this.isShapeEvent(state, evt)) {
             graph.fireMouseEvent(
-              InternalEvent.MOUSE_MOVE,
+              EventNames.MOUSE_MOVE,
               new InternalMouseEvent(evt, getState(evt))
             );
           }
@@ -760,7 +752,7 @@ class CellRenderer {
         (evt: MouseEvent) => {
           if (this.isShapeEvent(state, evt)) {
             graph.fireMouseEvent(
-              InternalEvent.MOUSE_UP,
+              EventNames.MOUSE_UP,
               new InternalMouseEvent(evt, getState(evt))
             );
           }
