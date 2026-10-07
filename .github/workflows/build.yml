@@ -41,7 +41,7 @@ jobs:
       # we want to run the full build on all runners: don't cancel running jobs even if one fails
       fail-fast: false
       matrix:
-        runner: [ 'ubuntu-24.04', 'macos-14', 'windows-2022']
+        runner: [ 'ubuntu-24.04', 'macos-15', 'windows-2022']
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -95,7 +95,7 @@ jobs:
       # we want to run the full build on all runners: don't cancel running jobs even if one fails
       fail-fast: false
       matrix:
-        runner: ['ubuntu-24.04', 'macos-14', 'windows-2022']
+        runner: ['ubuntu-24.04', 'macos-15', 'windows-2022']
     with:
      artifact-name: examples-${{ matrix.runner }}-${{ github.sha }}
      runner: ${{ matrix.runner }}

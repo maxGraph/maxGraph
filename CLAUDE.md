@@ -33,7 +33,7 @@ npm run lint
 npm run check:npm-package -w packages/core
 ```
 
-CI runs on ubuntu-24.04, macos-14, windows-2022.
+CI runs on ubuntu-24.04, macos-15, windows-2022.
 
 ## Architecture
 
