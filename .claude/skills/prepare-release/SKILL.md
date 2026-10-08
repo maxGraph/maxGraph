@@ -260,7 +260,9 @@ line of its own: keep it that way, with its caption above it.
 ### 5. Bundle sizes of the examples
 
 Do not build anything: the sizes are read from the bundle size history and from the CI logs. Build locally only
-as a [fallback](#fallback-build-locally).
+as a [fallback](#fallback-build-locally). Read [`.claude/shared/bundle-sizes/README.md`](../../shared/bundle-sizes/README.md)
+first: it explains how the CI prints the sizes and the traps of reading them, and the commands below use its script,
+`S=.claude/shared/bundle-sizes/ci-bundle-sizes.sh`.
 
 The history is stored in `docs/examples-bundle-size/`, read its `README.md` first: one CSV per repository
 (`maxgraph-examples.csv`, `maxgraph-integration-examples.csv`), one row per version, sizes in kB, columns named
@@ -270,26 +272,18 @@ after the examples as printed by the CI.
 `<previous> (...)`, which give the sizes of the previous version after a change of the build tooling, and the notes
 of `docs/examples-bundle-size/README.md` about these versions.
 
-**maxGraph repository, current version.** The `build_examples (ubuntu-24.04) / build` job of the `build.yml`
-workflow prints the sizes (the macOS and Windows jobs print the same values).
+**maxGraph repository, current version.**
 
 ```bash
-gh run list -R maxGraph/maxGraph --workflow build.yml --limit 20 --json databaseId,headBranch,headSha,conclusion,createdAt,event -q '[.[] | select(.headBranch=="main" and .event=="push" and .conclusion=="success")][0]'
-gh run view <run> -R maxGraph/maxGraph --json jobs -q '.jobs[] | select(.name=="build_examples (ubuntu-24.04) / build") | .databaseId'
-gh run view <run> -R maxGraph/maxGraph --job <job> --log | grep -A4 'CSV of bundle sizes' | sed -E 's/^[^\t]*\t[^\t]*\t[0-9TZ:.-]+ //'
+git fetch origin main
+$S main-run origin/main   # <run> <run sha>
+$S csv <run>
 ```
 
-Filter on `headBranch` with `jq`, never pass `--branch main`: in both repositories, it returned old runs whose logs had
-expired (`HTTP 410` when reading them). The log lines are `<job>\t<step>\t<timestamp> <content>` and the step column is
-`UNKNOWN STEP`, so filter on the section title, not on the step. The CSV is the header line followed by the values line.
-
-- `build.yml` only runs when the paths listed in its `paths` filter change, so the latest successful run is often
-  not on the last commit of `main`. Compare its `headSha` with it: `git diff --name-only <headSha> origin/main`. If
-  none of the changed files matches the `paths` filter of `build.yml`, the sizes are valid for `origin/main`.
-  Otherwise wait for a run
-  on a more recent commit, or ask the user.
-- If the run failed because an example exceeds its size budget, do not use the sizes: report it to the user, since
-  the growth must be checked and the limit updated on `main` before the release.
+- `main-run` only takes successful runs, and fails when commits changing a file that triggers `build.yml` landed
+  after the latest one. Look at the latest run of `main` then: if it failed because an example exceeds its size
+  budget, do not use the sizes and report it to the user, since the growth must be checked and the limit updated on
+  `main` before the release. Otherwise wait for a run on a more recent commit, or ask the user.
 
 **maxgraph-integration-examples repository, current version.** The `build_projects (development)` job of the
 `check-typescript-projects.yml` workflow builds the projects against an `npm pack` of the `main` branch of
@@ -297,9 +291,10 @@ expired (`HTTP 410` when reading them). The log lines are `<job>\t<step>\t<times
 
 ```bash
 gh run list -R maxGraph/maxgraph-integration-examples --workflow check-typescript-projects.yml --limit 10 --json databaseId,headBranch,headSha,conclusion,createdAt,event -q '[.[] | select(.headBranch=="main")]'
-gh run view <run> -R maxGraph/maxgraph-integration-examples --json jobs -q '.jobs[] | "\(.databaseId)\t\(.name)"'
-gh run view <run> -R maxGraph/maxgraph-integration-examples --job <build_projects (development) job> --log | grep -A4 'CSV of bundle sizes' | sed -E 's/^[^\t]*\t[^\t]*\t[0-9TZ:.-]+ //'
+$S csv <run> maxGraph/maxgraph-integration-examples "build_projects (development)"
 ```
+
+The `csv` command is not tied to the `maxGraph` repository: pass the repository and the job name.
 
 - **Check which `maxGraph` commit was built.** The `build_maxgraph_dev_package` job prints it:
   `gh run view <run> -R maxGraph/maxgraph-integration-examples --job <build_maxgraph_dev_package job> --log | sed -E 's/^[^\t]*\t[^\t]*\t[0-9TZ:.-]+ //' | grep -A1 'git log -1 --format=%H'`.
@@ -310,10 +305,10 @@ gh run view <run> -R maxGraph/maxgraph-integration-examples --job <build_project
 - **Baseline with the current tooling.** The `build_projects (release)` job of the same run builds the projects
   with the released `<previous>` from npm and the current tooling of the repository. Read its CSV the same way: it
   gives the sizes of `<previous>` with today's tooling, so comparing it with the `development` job isolates the
-  effect of `maxGraph`. When these values differ from the last `<previous>` row of the CSV (plain or
-  `<previous> (...)`), the tooling of the repository changed since that row was recorded: look for the dependency
-  upgrades merged in the meantime (`git log` of the integration repository, `chore(deps` PRs), and add a tooling
-  row named after them in [step 11](#11-bundle-size-history), with a note in the README.
+  effect of `maxGraph`: `$S csv <run> maxGraph/maxgraph-integration-examples "build_projects (release)"`. When these
+  values differ from the last `<previous>` row of the CSV (plain or `<previous> (...)`), the tooling of the repository
+  changed since that row was recorded: look for the dependency upgrades merged in the meantime (`git log` of the
+  integration repository, `chore(deps` PRs), and add a tooling row named after them in [step 11](#11-bundle-size-history), with a note in the README.
 - **A breaking change can break the build of the integration projects.** The `development` job then fails and
   prints no usable size. The fix is done in advance through a PR on the integration repository. Ask the user for
   that PR, and read the `build_projects (development)` job of its latest run instead (the workflow also runs on
@@ -324,7 +319,8 @@ table (before/after, or against the previous version). Look at the PRs of the ra
 `refactor`, or whose title starts with `feat`, `refactor` or `perf`, and at the bundler upgrades
 (`chore(deps-dev): bump` of `vite` or `webpack`):
 
-- `gh pr view <NNNN> --json body,comments,reviews` and look for size tables.
+- `gh pr view <NNNN> --json body,comments,reviews` and look for size tables. When a PR has none, the
+  [`pr-bundle-size`](../pr-bundle-size/SKILL.md) skill builds it from the CI logs.
 - Keep the intermediate values: they explain where a size change comes from, and the release notes can show them
   as extra columns (see [step 8](#8-bundle-size-paragraph)). For example, the v0.20.0 release notes had the columns
   `v0.19.0 | enums removal | EdgeStyles tree-shaking | v0.20.0`.
@@ -441,14 +437,9 @@ separate section.
 - Start with a short explanation of the size changes, per repository: which change of the release causes them
   (link the PRs found in [step 5](#5-bundle-sizes-of-the-examples)), and which part comes from a bundler upgrade.
   If the sizes grew, say so in the title and the explanation.
-  Three reading rules apply to this explanation:
-  - **Never attribute a size change without evidence.** Sizes alone establish that something moved, never why.
-    Attribute a change to a PR only when that PR measured it, or when the diff between the measurements was
-    inspected. Otherwise describe the change without naming a cause.
-  - **Lead with the largest changes in kB, not in %.** A large percentage on a small bundle is usually noise.
-  - **Compare measurements made with the same toolchain** (Node version, bundler and dependencies). Nothing in the
-    sizes records it, so a tooling change between two measurements makes their difference meaningless: compare with
-    the tooling row instead (see [step 5](#5-bundle-sizes-of-the-examples)).
+  The reading rules of [`.claude/shared/bundle-sizes/README.md`](../../shared/bundle-sizes/README.md) apply to this
+  explanation. For the toolchain rule, compare with the tooling row when there is one (see
+  [step 5](#5-bundle-sizes-of-the-examples)).
 - Then copy **verbatim** the following block, replacing only `<target>`. It is mandatory in every release notes,
   so that each one can be read on its own:
 
