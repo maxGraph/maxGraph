@@ -35,10 +35,9 @@ const config: Config = {
   },
 
   future: {
-    // v3.8: `future.faster.ssgWorkerThreads` (named `experimental_faster` before 3.10) requires the future flag `future.v4.removeLegacyPostBuildHeadAttribute` to be turned on.
+    // Since 3.10, it also enables all `future.faster` flags (rspack, SWC, eager git VCS, ...), which requires the `@docusaurus/faster` dependency.
+    // It also namespaces the localStorage keys, see https://docusaurus.io/blog/releases/3.10
     v4: true,
-    // Enable rspack build introduce in 3.6.0, see https://docusaurus.io/blog/releases/3.6#adoption-strategy
-    faster: true,
   },
 
   // Even if you don't use internationalization, you can use this field to set
