@@ -10,7 +10,7 @@ tags: [Roadmap]
 Let's dive into what's been accomplished and what to expect next! 🎯
 
 
-<!-- truncate -->
+{/* truncate */}
 
 
 ## Documentation and Examples: Making maxGraph Easier to Use
