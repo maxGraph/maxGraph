@@ -79,7 +79,7 @@ When the issue is valid:
 2. Set the Issue Type, see [Adding or changing the issue type](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/editing-an-issue#adding-or-changing-the-issue-type) in the GitHub documentation.
 3. Optionally, add `good first issue` if the issue suits a newcomer, or `help wanted` if contributions are welcome.
 
-:::info Rule
+:::info[Rule]
 An issue that has passed triage is characterized by its **Issue Type**, not by a label. Set it when the issue is accepted, not before.
 :::
 
