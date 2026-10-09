@@ -990,11 +990,7 @@ export type ColorValue = string;
  * @category Style
  */
 export type SpecialStyleColorValue =
-  | 'indicated'
-  | 'inherit'
-  | 'none'
-  | 'swimlane'
-  | (string & Record<never, never>);
+  'indicated' | 'inherit' | 'none' | 'swimlane' | (string & Record<never, never>);
 
 /** @category Style */
 export type DirectionValue = 'north' | 'south' | 'east' | 'west';
@@ -1408,10 +1404,7 @@ export type EdgeStyleValue =
  * @category EdgeStyle
  */
 export type StyleEdgeStyleValue =
-  | EdgeStyleFunction
-  | EdgeStyleValue
-  | (string & Record<never, never>)
-  | null;
+  EdgeStyleFunction | EdgeStyleValue | (string & Record<never, never>) | null;
 
 /**
  * @since 0.11.0
@@ -1625,10 +1618,7 @@ export interface Registry<V> {
  * @category Configuration
  */
 export type EdgeStyleHandlerKind =
-  | 'default'
-  | 'elbow'
-  | 'segment'
-  | (string & Record<never, never>); // any other string value
+  'default' | 'elbow' | 'segment' | (string & Record<never, never>); // any other string value
 
 /**
  * Metadata used to configure the edge style when adding it to {@link EdgeStyleRegistry}.
