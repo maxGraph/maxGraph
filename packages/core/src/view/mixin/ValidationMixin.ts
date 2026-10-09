@@ -17,18 +17,14 @@ limitations under the License.
 import type Cell from '../cell/Cell.js';
 import { isNode } from '../../util/domUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
-import { translate } from '../../internal/i18n-utils.js';
+import { isI18nEnabled, translate } from '../../internal/i18n-utils.js';
 import { isNullish } from '../../internal/utils.js';
 
 type PartialGraph = Pick<
   AbstractGraph,
   | 'getDataModel'
-  | 'isAllowLoops'
-  | 'isMultigraph'
   | 'getView'
   | 'isValidRoot'
-  | 'getContainsValidationErrorsResource'
-  | 'getAlreadyConnectedResource'
   | 'isAllowDanglingEdges'
   | 'isValidConnection'
   | 'setCellWarning'
@@ -36,6 +32,16 @@ type PartialGraph = Pick<
 type PartialValidation = Pick<
   AbstractGraph,
   | 'multiplicities'
+  | 'multigraph'
+  | 'allowLoops'
+  | 'alreadyConnectedResource'
+  | 'containsValidationErrorsResource'
+  | 'isMultigraph'
+  | 'setMultigraph'
+  | 'isAllowLoops'
+  | 'setAllowLoops'
+  | 'getAlreadyConnectedResource'
+  | 'getContainsValidationErrorsResource'
   | 'validationAlert'
   | 'isEdgeValid'
   | 'getEdgeValidationError'
@@ -48,6 +54,38 @@ type PartialType = PartialGraph & PartialValidation;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 export const ValidationMixin: PartialType = {
+  multigraph: true,
+
+  isMultigraph() {
+    return this.multigraph;
+  },
+
+  setMultigraph(value) {
+    this.multigraph = value;
+  },
+
+  allowLoops: false,
+
+  isAllowLoops() {
+    return this.allowLoops;
+  },
+
+  setAllowLoops(value) {
+    this.allowLoops = value;
+  },
+
+  alreadyConnectedResource: isI18nEnabled() ? 'alreadyConnected' : '',
+
+  getAlreadyConnectedResource() {
+    return this.alreadyConnectedResource;
+  },
+
+  containsValidationErrorsResource: isI18nEnabled() ? 'containsValidationErrors' : '',
+
+  getContainsValidationErrorsResource() {
+    return this.containsValidationErrorsResource;
+  },
+
   validationAlert(message: string) {
     alert(message);
   },

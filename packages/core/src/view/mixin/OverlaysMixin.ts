@@ -26,7 +26,7 @@ type PartialGraph = Pick<
   | 'fireEvent'
   | 'getDataModel'
   | 'isEnabled'
-  | 'getWarningImage'
+  | 'warningImage'
   | 'getCellRenderer'
   | 'setSelectionCell'
 >;
@@ -38,11 +38,16 @@ type PartialOverlays = Pick<
   | 'removeCellOverlays'
   | 'clearCellOverlays'
   | 'setCellWarning'
+  | 'getWarningImage'
 >;
 type PartialType = PartialGraph & PartialOverlays;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 export const OverlaysMixin: PartialType = {
+  getWarningImage() {
+    return this.warningImage;
+  },
+
   addCellOverlay(cell, overlay) {
     cell.overlays.push(overlay);
 

@@ -54,7 +54,6 @@ import type {
 import Multiplicity from './other/Multiplicity.js';
 import { applyGraphMixins } from './mixin/_graph-mixins-apply.js';
 import { isNullish } from '../internal/utils.js';
-import { isI18nEnabled } from '../internal/i18n-utils.js';
 import type TooltipHandler from './plugin/TooltipHandler.js';
 
 /**
@@ -188,14 +187,6 @@ export abstract class AbstractGraph extends EventSource {
   dialect: DialectValue = 'svg';
 
   /**
-   * Value returned by {@link getOverlap} if {@link isAllowOverlapParent} returns
-   * `true` for the given cell. {@link getOverlap} is used in {@link constrainChild} if
-   * {@link isConstrainChild} returns `true`. The value specifies the
-   * portion of the child which is allowed to overlap the parent.
-   */
-  defaultOverlap = 0.5;
-
-  /**
    * Specifies the default parent to be used to insert new cells.
    * This is used in {@link getDefaultParent}.
    * @default null
@@ -269,18 +260,6 @@ export abstract class AbstractGraph extends EventSource {
   enabled = true;
 
   /**
-   * Specifies the return value for {@link canExportCell}.
-   * @default true
-   */
-  exportEnabled = true;
-
-  /**
-   * Specifies the return value for {@link canImportCell}.
-   * @default true
-   */
-  importEnabled = true;
-
-  /**
    * {@link Rectangle} that specifies the area in which all cells in the diagram
    * should be placed. Uses in {@link getMaximumGraphBounds}. Use a width or height of
    * `0` if you only want to give a upper, left corner.
@@ -337,23 +316,11 @@ export abstract class AbstractGraph extends EventSource {
   keepEdgesInBackground = false;
 
   /**
-   * Specifies the return value for {@link isRecursiveResize}.
-   * @default false (for backwards compatibility)
-   */
-  recursiveResize = false;
-
-  /**
    * Specifies if the scale and translate should be reset if the root changes in
    * the model.
    * @default true
    */
   resetViewOnRootChange = true;
-
-  /**
-   * Specifies if loops (aka self-references) are allowed.
-   * @default false
-   */
-  allowLoops = false;
 
   /**
    * {@link EdgeStyle} to be used for loops.
@@ -362,31 +329,6 @@ export abstract class AbstractGraph extends EventSource {
    * @default {@link EdgeStyle.Loop}
    */
   defaultLoopStyle = EdgeStyle.Loop;
-
-  /**
-   * Specifies if multiple edges in the same direction between the same pair of
-   * vertices are allowed.
-   * @default true
-   */
-  multigraph = true;
-
-  /**
-   * Specifies the resource key for the error message to be displayed in
-   * non-multigraphs when two vertices are already connected. If the resource
-   * for this key does not exist then the value is used as the error message.
-   * @default 'alreadyConnected'
-   */
-  alreadyConnectedResource: string = isI18nEnabled() ? 'alreadyConnected' : '';
-
-  /**
-   * Specifies the resource key for the warning message to be displayed when
-   * a collapsed cell contains validation errors. If the resource for this
-   * key does not exist then the value is used as the warning message.
-   * @default 'containsValidationErrors'
-   */
-  containsValidationErrorsResource: string = isI18nEnabled()
-    ? 'containsValidationErrors'
-    : '';
 
   // ===================================================================================================================
   // Group: Main graph constructor and functions
@@ -455,8 +397,6 @@ export abstract class AbstractGraph extends EventSource {
   isPreferPageSize = () => this.preferPageSize;
   getPageFormat = () => this.pageFormat;
   getPageScale = () => this.pageScale;
-  isExportEnabled = () => this.exportEnabled;
-  isImportEnabled = () => this.importEnabled;
 
   getMinimumGraphSize = () => this.minimumGraphSize;
   setMinimumGraphSize = (size: Rectangle | null) => (this.minimumGraphSize = size);
@@ -464,14 +404,6 @@ export abstract class AbstractGraph extends EventSource {
   getMinimumContainerSize = () => this.minimumContainerSize;
   setMinimumContainerSize = (size: Rectangle | null) =>
     (this.minimumContainerSize = size);
-
-  getWarningImage() {
-    return this.warningImage;
-  }
-
-  getAlreadyConnectedResource = () => this.alreadyConnectedResource;
-
-  getContainsValidationErrorsResource = () => this.containsValidationErrorsResource;
 
   setTooltips(enabled: boolean): void {
     const tooltipHandler = this.getPlugin<TooltipHandler>('TooltipHandler');
@@ -943,82 +875,6 @@ export abstract class AbstractGraph extends EventSource {
    */
   setEnabled(value: boolean) {
     this.enabled = value;
-  }
-
-  /**
-   * Returns {@link multigraph} as a boolean.
-   */
-  isMultigraph() {
-    return this.multigraph;
-  }
-
-  /**
-   * Specifies if the graph should allow multiple connections between the
-   * same pair of vertices.
-   *
-   * @param value Boolean indicating if the graph allows multiple connections
-   * between the same pair of vertices.
-   */
-  setMultigraph(value: boolean) {
-    this.multigraph = value;
-  }
-
-  /**
-   * Returns {@link allowLoops} as a boolean.
-   */
-  isAllowLoops() {
-    return this.allowLoops;
-  }
-
-  /**
-   * Specifies if loops are allowed.
-   *
-   * @param value Boolean indicating if loops are allowed.
-   */
-  setAllowLoops(value: boolean) {
-    this.allowLoops = value;
-  }
-
-  /**
-   * Returns {@link recursiveResize}.
-   *
-   * @param state {@link CellState} that is being resized.
-   */
-  isRecursiveResize(state: CellState | null = null) {
-    return this.recursiveResize;
-  }
-
-  /**
-   * Sets {@link recursiveResize}.
-   *
-   * @param value New boolean value for {@link recursiveResize}.
-   */
-  setRecursiveResize(value: boolean) {
-    this.recursiveResize = value;
-  }
-
-  /**
-   * Returns a decimal number representing the amount of the width and height
-   * of the given cell that is allowed to overlap its parent. A value of 0
-   * means all children must stay inside the parent, 1 means the child is
-   * allowed to be placed outside of the parent such that it touches one of
-   * the parents sides. If {@link isAllowOverlapParent} returns false for the given
-   * cell, then this method returns 0.
-   *
-   * @param cell {@link Cell} for which the overlap ratio should be returned.
-   */
-  getOverlap(cell: Cell) {
-    return this.isAllowOverlapParent(cell) ? this.defaultOverlap : 0;
-  }
-
-  /**
-   * Returns true if the given cell is allowed to be placed outside the
-   * parents area.
-   *
-   * @param cell {@link Cell} that represents the child to be checked.
-   */
-  isAllowOverlapParent(cell: Cell): boolean {
-    return false;
   }
 
   /*****************************************************************************
