@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import eslintJs from '@eslint/js';
-import importPlugin from 'eslint-plugin-import';
+import importPlugin from 'eslint-plugin-import-x';
 import nodePlugin from 'eslint-plugin-n';
 import prettierRecommendedConfig from 'eslint-plugin-prettier/recommended';
 import storybook from 'eslint-plugin-storybook';
@@ -57,13 +57,13 @@ export default tsEslint.config(
   // TODO configure import with more rules by adding "importPlugin.flatConfigs.recommended"
   {
     plugins: {
-      import: importPlugin, // may no longer be needed whe loading recommended config of import plugin
+      'import-x': importPlugin, // may no longer be needed whe loading recommended config of import plugin
     },
     rules: {
       'no-misleading-character-class': 'warn',
       'no-dupe-else-if': 'warn',
       'no-warning-comments': 'off', // we have to many TODO/FIXME and they overwhelm the reports
-      'import/no-absolute-path': 'warn',
+      'import-x/no-absolute-path': 'warn',
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/ban-types': 'off',
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
