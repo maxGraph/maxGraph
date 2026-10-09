@@ -30,8 +30,6 @@ type PartialGraph = Pick<
   | 'getView'
   | 'getDefaultParent'
   | 'batchUpdate'
-  | 'isValidRoot'
-  | 'getCurrentRoot'
   | 'cellsAdded'
   | 'cellsMoved'
   | 'cellsResized'
@@ -50,6 +48,12 @@ type PartialGraph = Pick<
 >;
 type PartialGrouping = Pick<
   AbstractGraph,
+  | 'resetViewOnRootChange'
+  | 'getCurrentRoot'
+  | 'getTranslateForRoot'
+  | 'getChildOffsetForCell'
+  | 'home'
+  | 'isValidRoot'
   | 'groupCells'
   | 'getCellsForGroup'
   | 'getBoundsForGroup'
@@ -66,6 +70,37 @@ type PartialType = PartialGraph & PartialGrouping;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 export const GroupingMixin: PartialType = {
+  resetViewOnRootChange: true,
+
+  getCurrentRoot() {
+    return this.getView().currentRoot;
+  },
+
+  getTranslateForRoot(_cell) {
+    return null;
+  },
+
+  getChildOffsetForCell(_cell) {
+    return null;
+  },
+
+  home() {
+    const current = this.getCurrentRoot();
+
+    if (current != null) {
+      this.getView().setCurrentRoot(null);
+      const state = this.getView().getState(current);
+
+      if (state != null) {
+        this.setSelectionCell(current);
+      }
+    }
+  },
+
+  isValidRoot(cell) {
+    return !!cell;
+  },
+
   groupCells(group, border = 0, cells) {
     if (!cells) cells = sortCells(this.getSelectionCells(), true);
     if (!cells) cells = this.getCellsForGroup(cells);
