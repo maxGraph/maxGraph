@@ -96,8 +96,7 @@ export const makeDraggable = (
   scalePreview = false,
   highlightDropTargets = true,
   getDropTarget:
-    | ((graph: AbstractGraph, x: number, y: number, evt: MouseEvent) => Cell)
-    | null = null
+    ((graph: AbstractGraph, x: number, y: number, evt: MouseEvent) => Cell) | null = null
 ) => {
   const dragSource = new DragSource(element, funct);
   dragSource.dragOffset = new Point(

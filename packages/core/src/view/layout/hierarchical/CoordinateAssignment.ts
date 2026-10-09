@@ -532,7 +532,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       let leftBuffer = 0.0;
       let leftLimit = -100000000.0;
 
-      for (let j = <number>weightedValues[i].rankIndex - 1; j >= 0; ) {
+      for (let j = <number>weightedValues[i].rankIndex - 1; j >= 0;) {
         const weightedValue = cellMap[<string>rank[j].id];
 
         if (weightedValue != null) {
@@ -559,7 +559,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       let rightBuffer = 0.0;
       let rightLimit = 100000000.0;
 
-      for (let j = <number>weightedValues[i].rankIndex + 1; j < weightedValues.length; ) {
+      for (let j = <number>weightedValues[i].rankIndex + 1; j < weightedValues.length;) {
         const weightedValue = cellMap[<string>rank[j].id];
 
         if (weightedValue != null) {

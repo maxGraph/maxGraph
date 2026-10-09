@@ -107,8 +107,7 @@ class MaxToolbar extends EventSource {
     pressedIcon: string | null = null,
     style: string | null = null,
     factoryMethod:
-      | ((handler: MaxPopupMenu, cell: Cell | null, me: MouseEvent) => void)
-      | null = null
+      ((handler: MaxPopupMenu, cell: Cell | null, me: MouseEvent) => void) | null = null
   ) {
     const img = document.createElement(icon != null ? 'img' : 'button');
     const initialClassName = style || (factoryMethod ? 'mxToolbarMode' : 'mxToolbarItem');

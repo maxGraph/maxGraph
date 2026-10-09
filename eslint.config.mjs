@@ -63,6 +63,7 @@ export default tsEslint.config(
       'no-misleading-character-class': 'warn',
       'no-dupe-else-if': 'warn',
       'no-warning-comments': 'off', // we have to many TODO/FIXME and they overwhelm the reports
+      'no-useless-assignment': 'off', // TODO new in eslint:recommended v10, fix the existing violations then enable it
       'import-x/no-absolute-path': 'warn',
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/ban-types': 'off',

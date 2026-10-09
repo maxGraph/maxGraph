@@ -828,6 +828,8 @@ class ObjectCodec {
       try {
         this.addObjectValue(obj, fieldname, value, template);
       } catch (e: any) {
+        // the 'cause' option of the Error constructor requires ES2022, but we target ES2020
+        // eslint-disable-next-line preserve-caught-error
         throw new Error(`${e.message} for ${child.nodeName}`);
       }
     }
