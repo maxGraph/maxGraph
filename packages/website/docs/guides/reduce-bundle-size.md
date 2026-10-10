@@ -315,6 +315,11 @@ handles. Moving a cell is `SelectionHandler`, not a handle, so it survives. Keep
 which the [Plugins](../usage/tree-shaking.md#plugins) section states.
 :::
 
+The alignment guides do not decide whether `SelectionHandler` stays. They are disabled by default, and enabled by
+setting `guidesEnabled` on the plugin instance, so pass 1 finds that line when the application uses them. Either way,
+`SelectionHandler` imports the `Guide` class, so keeping the plugin ships it even when the guides stay disabled, and
+nothing in the application can remove it today. See [Alignment Guide](../usage/alignment-guide.md#bundle-size).
+
 :::tip
 `noUnusedLocals` in `tsconfig.json` is what turns each removal here and in step 4 into a compiler message. A plugin
 dropped from the list leaves its import behind, and the build stays green without that option. The bundler does remove

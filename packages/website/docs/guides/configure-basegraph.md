@@ -114,6 +114,11 @@ One limit is worth knowing at this point, since this guide is about shipping not
 imports the four cell handler classes whichever edge styles you register, as the
 [Plugins](../usage/tree-shaking.md#plugins) section explains.
 
+The same goes for the alignment guides, which `SelectionHandler` displays while cells are moved. They are disabled by
+default, with `BaseGraph` as with `Graph`, and enabled with `guidesEnabled` on the plugin instance. `SelectionHandler`
+imports the `Guide` class whether they are enabled or not, so registering the plugin ships it anyway. See
+[Alignment Guide](../usage/alignment-guide.md) to enable and customize them.
+
 Writing your own plugin, rather than adding a behavior around the graph, is covered by
 [When a plugin is the right tool](../usage/plugins.md#when-a-plugin-is-the-right-tool).
 

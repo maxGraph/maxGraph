@@ -26,10 +26,6 @@ import type { AbstractGraph } from '../AbstractGraph.js';
 
 /**
  * Implements the alignment of selection cells to other cells in the graph.
- *
- * Constructor: mxGuide
- *
- * Constructs a new guide object.
  */
 class Guide {
   constructor(graph: AbstractGraph, states: CellState[]) {
@@ -48,12 +44,14 @@ class Guide {
   states: CellState[] = [];
 
   /**
-   * Specifies if horizontal guides are enabled. Default is true.
+   * Specifies if horizontal guides are enabled.
+   * @default true
    */
   horizontal = true;
 
   /**
-   * Specifies if vertical guides are enabled. Default is true.
+   * Specifies if vertical guides are enabled.
+   * @default true
    */
   vertical = true;
 
