@@ -8,16 +8,16 @@
     "preview": "http-server -c-1 dist"
   },
   "devDependencies": {
-    "@rsdoctor/webpack-plugin": "~1.6.1",
+    "@rsdoctor/webpack-plugin": "~1.6.4",
     "copy-webpack-plugin": "~14.0.0",
     "cross-env": "~10.1.0",
-    "css-loader": "~7.1.4",
+    "css-loader": "~7.1.5",
     "http-server": "~14.1.1",
     "html-webpack-plugin": "~5.6.8",
     "mini-css-extract-plugin": "~2.10.2",
     "style-loader": "~4.0.0",
-    "webpack": "~5.109.2",
-    "webpack-cli": "~7.2.2",
+    "webpack": "~5.111.1",
+    "webpack-cli": "~7.2.3",
     "webpack-dev-server": "~6.0.0"
   }
 }
