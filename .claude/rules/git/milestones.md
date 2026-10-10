@@ -9,7 +9,8 @@ A milestone is named after the version it ships in, such as `0.26.0`, and tracks
 the work item, so it belongs to the issue. The pull request implementing it is only the change, and the issue it closes
 already carries the release.
 
-- When creating or editing an issue, propose a milestone along with the labels and the issue type.
+- When a user with write access creates or edits an issue, propose a milestone along with the issue type, and no
+  label, see [`issue-labels.md`](./issue-labels.md).
 - When creating or editing a pull request, set labels only, and do not offer a milestone, even when the branch clearly
   targets a given release or adds a `@since` tag naming its version.
 - An issue fixed by a pull request gets the milestone of the first release containing that pull request, also when the
