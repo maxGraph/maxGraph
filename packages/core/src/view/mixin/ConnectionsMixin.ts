@@ -172,7 +172,7 @@ export const ConnectionsMixin: PartialType = {
     let dy = 0;
 
     if (point) {
-      perimeter = edge.style[source ? 'exitPerimeter' : 'entryPerimeter'] || false;
+      perimeter = edge.style[source ? 'exitPerimeter' : 'entryPerimeter'] ?? true;
 
       // Add entry/exit offset
       dx = <number>edge.style[source ? 'exitDx' : 'entryDx'];
