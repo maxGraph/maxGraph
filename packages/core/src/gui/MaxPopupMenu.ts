@@ -21,6 +21,7 @@ import { fit, getDocumentScrollOrigin } from '../util/styleUtils.js';
 import EventObject from '../view/event/EventObject.js';
 import Client from '../Client.js';
 import InternalEvent from '../view/event/InternalEvent.js';
+import { EventNames } from '../view/event/EventNames.js';
 import { write } from '../util/domUtils.js';
 import { isLeftMouseButton } from '../util/EventUtils.js';
 import Cell from '../view/cell/Cell.js';
@@ -46,7 +47,7 @@ import type { PopupMenuItem } from '../types.js';
  *
  * ### Events
  *
- * **{@link InternalEvent.SHOW}**
+ * **{@link EventNames.SHOW}**
  *
  * Fires after the menu has been shown in {@link popup}.
  *
@@ -449,7 +450,7 @@ class MaxPopupMenu extends EventSource {
 
       if (this.itemCount > 0) {
         this.showMenu();
-        this.fireEvent(new EventObject(InternalEvent.SHOW));
+        this.fireEvent(new EventObject(EventNames.SHOW));
       }
     }
   }
@@ -479,7 +480,7 @@ class MaxPopupMenu extends EventSource {
 
       this.hideSubmenu(<PopupMenuItem>(<unknown>this));
       this.containsItems = false;
-      this.fireEvent(new EventObject(InternalEvent.HIDE));
+      this.fireEvent(new EventObject(EventNames.HIDE));
     }
   }
 

@@ -20,6 +20,7 @@ import {
   DomHelpers,
   Morphing,
   InternalEvent,
+  EventNames,
   RubberBandHandler,
 } from '@maxgraph/core';
 import {
@@ -98,7 +99,7 @@ const Template = ({ label, ...args }) => {
       } finally {
         // Arguments are number of steps, ease and delay
         const morph = new Morphing(graph, 20, 1.2, 20);
-        morph.addListener(InternalEvent.DONE, function () {
+        morph.addListener(EventNames.DONE, function () {
           graph.getDataModel().endUpdate();
         });
         morph.startAnimation();

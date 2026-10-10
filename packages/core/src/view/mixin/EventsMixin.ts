@@ -17,6 +17,7 @@ limitations under the License.
 import InternalMouseEvent from '../event/InternalMouseEvent.js';
 import EventObject from '../event/EventObject.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import {
   getClientX,
   getClientY,
@@ -232,13 +233,13 @@ export const EventsMixin: PartialType = {
   },
 
   escape(evt) {
-    this.fireEvent(new EventObject(InternalEvent.ESCAPE, { event: evt }));
+    this.fireEvent(new EventObject(EventNames.ESCAPE, { event: evt }));
   },
 
   click(me) {
     const evt = me.getEvent();
     let cell = me.getCell();
-    const mxe = new EventObject(InternalEvent.CLICK, { event: evt, cell });
+    const mxe = new EventObject(EventNames.CLICK, { event: evt, cell });
 
     if (me.isConsumed()) {
       mxe.consume();
@@ -314,7 +315,7 @@ export const EventsMixin: PartialType = {
   },
 
   dblClick(evt, cell = null) {
-    const mxe = new EventObject(InternalEvent.DOUBLE_CLICK, { event: evt, cell });
+    const mxe = new EventObject(EventNames.DOUBLE_CLICK, { event: evt, cell });
     this.fireEvent(mxe);
 
     // Handles the event if it has not been consumed
@@ -333,7 +334,7 @@ export const EventsMixin: PartialType = {
 
   tapAndHold(me) {
     const evt = me.getEvent();
-    const mxe = new EventObject(InternalEvent.TAP_AND_HOLD, {
+    const mxe = new EventObject(EventNames.TAP_AND_HOLD, {
       event: evt,
       cell: me.getCell(),
     });
@@ -371,7 +372,7 @@ export const EventsMixin: PartialType = {
           connectionHandler.edgeState = connectionHandler.createEdgeState(me);
           connectionHandler.previous = state;
           connectionHandler.fireEvent(
-            new EventObject(InternalEvent.START, { state: connectionHandler.previous })
+            new EventObject(EventNames.START, { state: connectionHandler.previous })
           );
         }
       }
@@ -398,7 +399,7 @@ export const EventsMixin: PartialType = {
     me.graphY = pt.y - this.getPanDy();
 
     // Searches for rectangles using method if native hit detection is disabled on shape
-    if (!me.getCell() && this.isMouseDown && evtName === InternalEvent.MOUSE_MOVE) {
+    if (!me.getCell() && this.isMouseDown && evtName === EventNames.MOUSE_MOVE) {
       const cell = this.getCellAt(pt.x, pt.y, null, true, true, (state: CellState) => {
         return (
           !state.shape ||
@@ -442,7 +443,7 @@ export const EventsMixin: PartialType = {
     // fired from the event source even if that was removed from the DOM.
     const eventSource = this.getEventSource();
 
-    if (eventSource && evtName !== InternalEvent.MOUSE_MOVE) {
+    if (eventSource && evtName !== EventNames.MOUSE_MOVE) {
       InternalEvent.removeGestureListeners(
         eventSource,
         null,
@@ -457,7 +458,7 @@ export const EventsMixin: PartialType = {
     } else if (
       eventSource &&
       Client.IS_TOUCH &&
-      evtName === InternalEvent.MOUSE_DOWN &&
+      evtName === EventNames.MOUSE_DOWN &&
       !mouseEvent &&
       !isPenEvent(me.getEvent())
     ) {
@@ -465,13 +466,13 @@ export const EventsMixin: PartialType = {
 
       this.mouseMoveRedirect = (evt: MouseEvent) => {
         this.fireMouseEvent(
-          InternalEvent.MOUSE_MOVE,
+          EventNames.MOUSE_MOVE,
           new InternalMouseEvent(evt, this.getStateForTouchEvent(evt))
         );
       };
       this.mouseUpRedirect = (evt: MouseEvent) => {
         this.fireMouseEvent(
-          InternalEvent.MOUSE_UP,
+          EventNames.MOUSE_UP,
           new InternalMouseEvent(evt, this.getStateForTouchEvent(evt))
         );
       };
@@ -492,16 +493,16 @@ export const EventsMixin: PartialType = {
     // Never fires mouseUp/-Down for double clicks
     if (
       !isPopupTrigger(this.lastEvent) &&
-      evtName !== InternalEvent.MOUSE_MOVE &&
+      evtName !== EventNames.MOUSE_MOVE &&
       this.lastEvent.detail === 2
     ) {
       return true;
     }
 
     // Filters out of sequence events or mixed event types during a gesture
-    if (evtName === InternalEvent.MOUSE_UP && this.isMouseDown) {
+    if (evtName === EventNames.MOUSE_UP && this.isMouseDown) {
       this.isMouseDown = false;
-    } else if (evtName === InternalEvent.MOUSE_DOWN && !this.isMouseDown) {
+    } else if (evtName === EventNames.MOUSE_DOWN && !this.isMouseDown) {
       this.isMouseDown = true;
       this.isMouseTrigger = mouseEvent;
     }
@@ -509,16 +510,16 @@ export const EventsMixin: PartialType = {
     // and mouse events that are not in sync with the current internal button state
     else if (
       !result &&
-      (((!Client.IS_FF || evtName !== InternalEvent.MOUSE_MOVE) &&
+      (((!Client.IS_FF || evtName !== EventNames.MOUSE_MOVE) &&
         this.isMouseDown &&
         this.isMouseTrigger !== mouseEvent) ||
-        (evtName === InternalEvent.MOUSE_DOWN && this.isMouseDown) ||
-        (evtName === InternalEvent.MOUSE_UP && !this.isMouseDown))
+        (evtName === EventNames.MOUSE_DOWN && this.isMouseDown) ||
+        (evtName === EventNames.MOUSE_UP && !this.isMouseDown))
     ) {
       result = true;
     }
 
-    if (!result && evtName === InternalEvent.MOUSE_DOWN) {
+    if (!result && evtName === EventNames.MOUSE_DOWN) {
       this.lastMouseX = me.getX();
       this.lastMouseY = me.getY();
     }
@@ -531,10 +532,10 @@ export const EventsMixin: PartialType = {
     const mouseEvent = isMouseEvent(me.getEvent());
 
     // LATER: This does not cover all possible cases that can go wrong in FF
-    if (this.ignoreMouseEvents && mouseEvent && evtName !== InternalEvent.MOUSE_MOVE) {
-      this.ignoreMouseEvents = evtName !== InternalEvent.MOUSE_UP;
+    if (this.ignoreMouseEvents && mouseEvent && evtName !== EventNames.MOUSE_MOVE) {
+      this.ignoreMouseEvents = evtName !== EventNames.MOUSE_UP;
       result = true;
-    } else if (Client.IS_FF && !mouseEvent && evtName === InternalEvent.MOUSE_UP) {
+    } else if (Client.IS_FF && !mouseEvent && evtName === EventNames.MOUSE_UP) {
       this.ignoreMouseEvents = true;
     }
     return result;
@@ -550,7 +551,7 @@ export const EventsMixin: PartialType = {
     const candidate = !isMouseEvent(me.getEvent()) || isLeftMouseButton(me.getEvent());
 
     return (
-      evtName === InternalEvent.MOUSE_DOWN &&
+      evtName === EventNames.MOUSE_DOWN &&
       candidate &&
       (name === 'select' ||
         name === 'option' ||
@@ -599,7 +600,7 @@ export const EventsMixin: PartialType = {
     ) {
       const currentTime = new Date().getTime();
 
-      if (evtName === InternalEvent.MOUSE_DOWN) {
+      if (evtName === EventNames.MOUSE_DOWN) {
         if (
           this.lastTouchEvent &&
           this.lastTouchEvent !== me.getEvent() &&
@@ -611,7 +612,8 @@ export const EventsMixin: PartialType = {
           this.doubleClickCounter += 1;
           let doubleClickFired = false;
 
-          if (evtName === InternalEvent.MOUSE_UP) {
+          // Can never be true inside the MOUSE_DOWN branch, see https://github.com/maxGraph/maxGraph/issues/1228
+          if ((evtName as string) === EventNames.MOUSE_UP) {
             if (me.getCell() === this.lastTouchCell && this.lastTouchCell) {
               this.lastTouchTime = 0;
               const cell = this.lastTouchCell;
@@ -638,7 +640,7 @@ export const EventsMixin: PartialType = {
           this.doubleClickCounter = 0;
         }
       } else if (
-        (this.isMouseDown || evtName === InternalEvent.MOUSE_UP) &&
+        (this.isMouseDown || evtName === EventNames.MOUSE_UP) &&
         this.fireDoubleClick
       ) {
         this.fireDoubleClick = false;
@@ -671,21 +673,21 @@ export const EventsMixin: PartialType = {
       // Updates the event state via getEventState
       me.state = state ? this.getEventState(state) : null;
       this.fireEvent(
-        new EventObject(InternalEvent.FIRE_MOUSE_EVENT, { eventName: evtName, event: me })
+        new EventObject(EventNames.FIRE_MOUSE_EVENT, { eventName: evtName, event: me })
       );
 
       if (Client.IS_SF || Client.IS_GC || me.getEvent().target !== this.getContainer()) {
         const container = this.getContainer();
 
         if (
-          evtName === InternalEvent.MOUSE_MOVE &&
+          evtName === EventNames.MOUSE_MOVE &&
           this.isMouseDown &&
           this.isAutoScroll() &&
           !isMultiTouchEvent(me.getEvent())
         ) {
           this.scrollPointToVisible(me.getGraphX(), me.getGraphY(), this.isAutoExtend());
         } else if (
-          evtName === InternalEvent.MOUSE_UP &&
+          evtName === EventNames.MOUSE_UP &&
           this.isIgnoreScrollbars() &&
           this.isTranslateToScrollPosition() &&
           (container.scrollLeft !== 0 || container.scrollTop !== 0)
@@ -709,17 +711,17 @@ export const EventsMixin: PartialType = {
 
         for (const l of mouseListeners) {
           switch (evtName) {
-            case InternalEvent.MOUSE_DOWN: {
+            case EventNames.MOUSE_DOWN: {
               l.mouseDown(sender, me);
 
               break;
             }
-            case InternalEvent.MOUSE_MOVE: {
+            case EventNames.MOUSE_MOVE: {
               l.mouseMove(sender, me);
 
               break;
             }
-            case InternalEvent.MOUSE_UP: {
+            case EventNames.MOUSE_UP: {
               l.mouseUp(sender, me);
 
               break;
@@ -729,7 +731,7 @@ export const EventsMixin: PartialType = {
         }
 
         // Invokes the click handler
-        if (evtName === InternalEvent.MOUSE_UP) {
+        if (evtName === EventNames.MOUSE_UP) {
           this.click(me);
         }
       }
@@ -737,7 +739,7 @@ export const EventsMixin: PartialType = {
       // Detects tapAndHold events using a timer
       if (
         (isTouchEvent(me.getEvent()) || isPenEvent(me.getEvent())) &&
-        evtName === InternalEvent.MOUSE_DOWN &&
+        evtName === EventNames.MOUSE_DOWN &&
         this.tapAndHoldEnabled &&
         !this.tapAndHoldInProgress
       ) {
@@ -760,7 +762,7 @@ export const EventsMixin: PartialType = {
 
         this.tapAndHoldThread = window.setTimeout(handler, this.tapAndHoldDelay);
         this.tapAndHoldValid = true;
-      } else if (evtName === InternalEvent.MOUSE_UP) {
+      } else if (evtName === EventNames.MOUSE_UP) {
         this.tapAndHoldInProgress = false;
         this.tapAndHoldValid = false;
       } else if (this.tapAndHoldValid) {
@@ -773,7 +775,7 @@ export const EventsMixin: PartialType = {
 
       // Stops editing for all events other than from cellEditorHandler
       if (
-        evtName === InternalEvent.MOUSE_DOWN &&
+        evtName === EventNames.MOUSE_DOWN &&
         this.isEditing() &&
         !cellEditorHandler?.isEventSource(me.getEvent())
       ) {
@@ -788,7 +790,7 @@ export const EventsMixin: PartialType = {
     sender = sender ?? this;
 
     // Workaround for duplicate click in Windows 8 with Chrome/FF/Opera with touch
-    if (evtName === InternalEvent.MOUSE_DOWN && isTouchEvent(me.getEvent())) {
+    if (evtName === EventNames.MOUSE_DOWN && isTouchEvent(me.getEvent())) {
       me.consume(false);
     }
   },
@@ -796,7 +798,7 @@ export const EventsMixin: PartialType = {
   fireGestureEvent(evt, cell = null) {
     // Resets double tap event handling when gestures take place
     this.lastTouchTime = 0;
-    this.fireEvent(new EventObject(InternalEvent.GESTURE, { event: evt, cell }));
+    this.fireEvent(new EventObject(EventNames.GESTURE, { event: evt, cell }));
   },
 
   sizeDidChange() {
@@ -858,7 +860,7 @@ export const EventsMixin: PartialType = {
 
     this.updatePageBreaks(this.isPageBreaksVisible(), width, height);
 
-    this.fireEvent(new EventObject(InternalEvent.SIZE, { bounds }));
+    this.fireEvent(new EventObject(EventNames.SIZE, { bounds }));
   },
 
   isCloneEvent(evt) {

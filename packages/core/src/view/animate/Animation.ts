@@ -18,7 +18,7 @@ limitations under the License.
 
 import EventSource from '../event/EventSource.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 
 /**
  * Implements a basic animation in JavaScript.
@@ -61,10 +61,10 @@ class Animation extends EventSource {
   /**
    * Hook for subclassers to implement the animation. Invoke stopAnimation
    * when finished, startAnimation to resume. This is called whenever the
-   * timer fires and fires an mxEvent.EXECUTE event with no properties.
+   * timer fires and fires an EventNames.EXECUTE event with no properties.
    */
   updateAnimation(): void {
-    this.fireEvent(new EventObject(InternalEvent.EXECUTE));
+    this.fireEvent(new EventObject(EventNames.EXECUTE));
   }
 
   /**
@@ -74,7 +74,7 @@ class Animation extends EventSource {
     if (this.thread != null) {
       window.clearInterval(this.thread);
       this.thread = null;
-      this.fireEvent(new EventObject(InternalEvent.DONE));
+      this.fireEvent(new EventObject(EventNames.DONE));
     }
   }
 }

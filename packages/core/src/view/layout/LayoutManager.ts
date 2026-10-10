@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import EventSource from '../event/EventSource.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import { convertPoint, sortCells } from '../../util/styleUtils.js';
 import RootChange from '../undoable-change/RootChange.js';
 import ChildChange from '../undoable-change/ChildChange.js';
@@ -47,7 +47,7 @@ import UndoableEdit from '../undoable-change/UndoableEdit.js';
  *
  * See {@link getLayout} for a description of the possible eventNames.
  *
- * #### Event: mxEvent.LAYOUT_CELLS
+ * #### Event: EventNames.LAYOUT_CELLS
  *
  * Fires between begin- and endUpdate after all cells have been layouted in
  * {@link layoutCells}. The `cells` property contains all cells that have
@@ -176,9 +176,9 @@ class LayoutManager extends EventSource {
 
     if (this.graph) {
       const model = this.graph.getDataModel();
-      model.addListener(InternalEvent.BEFORE_UNDO, this.undoHandler);
-      this.graph.addListener(InternalEvent.MOVE_CELLS, this.moveHandler);
-      this.graph.addListener(InternalEvent.RESIZE_CELLS, this.resizeHandler);
+      model.addListener(EventNames.BEFORE_UNDO, this.undoHandler);
+      this.graph.addListener(EventNames.MOVE_CELLS, this.moveHandler);
+      this.graph.addListener(EventNames.RESIZE_CELLS, this.resizeHandler);
     }
   }
 
@@ -190,14 +190,14 @@ class LayoutManager extends EventSource {
    * {@link Event#BEGIN_UPDATE} or {@link Event#END_UPDATE}.
    */
   hasLayout(cell: Cell | null) {
-    return !!this.getLayout(cell, InternalEvent.LAYOUT_CELLS);
+    return !!this.getLayout(cell, EventNames.LAYOUT_CELLS);
   }
 
   /**
    * Returns the layout for the given cell and eventName. Possible
-   * event names are {@link InternalEvent.MOVE_CELLS} and {@link InternalEvent.RESIZE_CELLS}
+   * event names are {@link EventNames.MOVE_CELLS} and {@link EventNames.RESIZE_CELLS}
    * for callbacks on when cells are moved or resized and
-   * {@link InternalEvent.BEGIN_UPDATE} and {@link InternalEvent.END_UPDATE} for the capture
+   * {@link EventNames.BEGIN_UPDATE} and {@link EventNames.END_UPDATE} for the capture
    * and bubble phase of the layout after any changes of the model.
    */
   getLayout(cell: Cell | null, eventName: string): GraphLayout | null {
@@ -231,7 +231,7 @@ class LayoutManager extends EventSource {
       );
 
       for (let i = 0; i < cells.length; i += 1) {
-        const layout = this.getLayout(cells[i].getParent(), InternalEvent.MOVE_CELLS);
+        const layout = this.getLayout(cells[i].getParent(), EventNames.MOVE_CELLS);
 
         if (layout) {
           layout.moveCell(cells[i], point.x, point.y);
@@ -253,7 +253,7 @@ class LayoutManager extends EventSource {
   ) {
     if (cells && bounds) {
       for (let i = 0; i < cells.length; i += 1) {
-        const layout = this.getLayout(cells[i].getParent(), InternalEvent.RESIZE_CELLS);
+        const layout = this.getLayout(cells[i].getParent(), EventNames.RESIZE_CELLS);
         if (layout) {
           layout.resizeCell(cells[i], bounds[i], prev?.[i]);
         }
@@ -369,7 +369,7 @@ class LayoutManager extends EventSource {
           }
         }
 
-        this.fireEvent(new EventObject(InternalEvent.LAYOUT_CELLS, { cells }));
+        this.fireEvent(new EventObject(EventNames.LAYOUT_CELLS, { cells }));
       });
     }
   }
@@ -380,7 +380,7 @@ class LayoutManager extends EventSource {
   executeLayout(cell: Cell, bubble = false) {
     const layout = this.getLayout(
       cell,
-      bubble ? InternalEvent.BEGIN_UPDATE : InternalEvent.END_UPDATE
+      bubble ? EventNames.BEGIN_UPDATE : EventNames.END_UPDATE
     );
     if (layout) {
       layout.execute(cell);

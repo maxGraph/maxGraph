@@ -18,6 +18,7 @@ limitations under the License.
 import {
   Graph,
   InternalEvent,
+  EventNames,
   Client,
   Point,
   Outline,
@@ -313,7 +314,7 @@ const Template = ({ label, ...args }) => {
     let overlay = new CellOverlay(new ImageBox('images/add.png', 24, 24), 'Add child');
     overlay.cursor = 'hand';
     overlay.align = 'center';
-    overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
+    overlay.addListener(EventNames.CLICK, (sender, evt) => {
       addChild(graph, cell);
     });
 
@@ -325,7 +326,7 @@ const Template = ({ label, ...args }) => {
       overlay.offset = new Point(-4, 8);
       overlay.align = 'right';
       overlay.verticalAlign = 'top';
-      overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
+      overlay.addListener(EventNames.CLICK, (sender, evt) => {
         deleteSubtree(graph, cell);
       });
 

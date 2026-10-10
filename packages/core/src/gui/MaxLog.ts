@@ -18,6 +18,7 @@ limitations under the License.
 
 import Client from '../Client.js';
 import InternalEvent from '../view/event/InternalEvent.js';
+import { EventNames } from '../view/event/EventNames.js';
 import { getInnerHtml, write } from '../util/domUtils.js';
 import { toString } from '../util/StringUtils.js';
 import MaxWindow from './MaxWindow.js';
@@ -179,9 +180,9 @@ class MaxLog {
           )}px`;
         };
 
-        MaxLog.window.addListener(InternalEvent.RESIZE_END, resizeHandler);
-        MaxLog.window.addListener(InternalEvent.MAXIMIZE, resizeHandler);
-        MaxLog.window.addListener(InternalEvent.NORMALIZE, resizeHandler);
+        MaxLog.window.addListener(EventNames.RESIZE_END, resizeHandler);
+        MaxLog.window.addListener(EventNames.MAXIMIZE, resizeHandler);
+        MaxLog.window.addListener(EventNames.NORMALIZE, resizeHandler);
 
         MaxLog.textarea.style.height = '92px';
       }

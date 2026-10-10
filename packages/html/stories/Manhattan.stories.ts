@@ -18,7 +18,7 @@ limitations under the License.
 import {
   EventObject,
   Graph,
-  InternalEvent,
+  EventNames,
   ManhattanConnectorConfig,
   type SelectionHandler,
 } from '@maxgraph/core';
@@ -48,7 +48,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.getPlugin<SelectionHandler>('SelectionHandler')!.guidesEnabled = true;
 
   // Hack to rerender edge on any node move
-  graph.model.addListener(InternalEvent.CHANGE, (_sender: unknown, evt: EventObject) => {
+  graph.model.addListener(EventNames.CHANGE, (_sender: unknown, evt: EventObject) => {
     const changes = evt.getProperty('changes');
     const hasMoveEdits = changes?.some(
       // checks for the existence of the geometry and previous properties which are characteristic of GeometryChange in the model

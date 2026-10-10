@@ -24,6 +24,7 @@ import RectangleShape from './shape/node/RectangleShape.js';
 import { NS_SVG } from '../util/Constants.js';
 import Client from '../Client.js';
 import InternalEvent from './event/InternalEvent.js';
+import { EventNames } from './event/EventNames.js';
 import { convertPoint, getCurrentStyle, getOffset } from '../util/styleUtils.js';
 import {
   getRotatedPoint,
@@ -63,31 +64,31 @@ import { isI18nEnabled } from '../internal/i18n-utils.js';
  * whenever the model or the view state (translate, scale) changes. The scale
  * and translate are honoured in the bounds.
  *
- * #### Event: mxEvent.UNDO
+ * #### Event: EventNames.UNDO
  *
  * Fires after the root was changed in {@link setCurrentRoot}. The `edit`
  * property contains the {@link UndoableEdit} which contains the
  * {@link CurrentRootChange}.
  *
- * #### Event: mxEvent.SCALE_AND_TRANSLATE
+ * #### Event: EventNames.SCALE_AND_TRANSLATE
  *
  * Fires after the scale and translate have been changed in {@link scaleAndTranslate}.
  * The `scale`, `previousScale`, `translate`
  * and `previousTranslate` properties contain the new and previous
  * scale and translate, respectively.
  *
- * #### Event: mxEvent.SCALE
+ * #### Event: EventNames.SCALE
  *
  * Fires after the scale was changed in {@link setScale}. The `scale` and
  * `previousScale` properties contain the new and previous scale.
  *
- * #### Event: mxEvent.TRANSLATE
+ * #### Event: EventNames.TRANSLATE
  *
  * Fires after the translate was changed in {@link setTranslate}. The
  * `translate` and `previousTranslate` properties contain
  * the new and previous value for translate.
  *
- * #### Event: mxEvent.DOWN and mxEvent.UP
+ * #### Event: EventNames.DOWN and EventNames.UP
  *
  * Fire if the current root is changed by executing an {@link CurrentRootChange}.
  * The event name depends on the location of the root in the cell hierarchy
@@ -243,7 +244,7 @@ export class GraphView extends EventSource {
         this.viewStateChanged();
       }
     }
-    this.fireEvent(new EventObject(InternalEvent.SCALE, { scale: value, previousScale }));
+    this.fireEvent(new EventObject(EventNames.SCALE, { scale: value, previousScale }));
   }
 
   /**
@@ -282,7 +283,7 @@ export class GraphView extends EventSource {
     }
 
     this.fireEvent(
-      new EventObject(InternalEvent.TRANSLATE, {
+      new EventObject(EventNames.TRANSLATE, {
         translate: this.translate,
         previousTranslate: previousTranslate,
       })
@@ -393,7 +394,7 @@ export class GraphView extends EventSource {
       const edit = new UndoableEdit(this, true);
       edit.add(change);
 
-      this.fireEvent(new EventObject(InternalEvent.UNDO, { edit }));
+      this.fireEvent(new EventObject(EventNames.UNDO, { edit }));
       this.graph.sizeDidChange();
 
       this.currentRoot = root;
@@ -425,7 +426,7 @@ export class GraphView extends EventSource {
     }
 
     this.fireEvent(
-      new EventObject(InternalEvent.SCALE_AND_TRANSLATE, {
+      new EventObject(EventNames.SCALE_AND_TRANSLATE, {
         scale,
         previousScale,
         translate: this.translate,
@@ -691,7 +692,7 @@ export class GraphView extends EventSource {
           InternalEvent.addGestureListeners(
             this.backgroundPageShape.node,
             (evt: MouseEvent) => {
-              graph.fireMouseEvent(InternalEvent.MOUSE_DOWN, new InternalMouseEvent(evt));
+              graph.fireMouseEvent(EventNames.MOUSE_DOWN, new InternalMouseEvent(evt));
             },
             (evt: MouseEvent) => {
               const tooltipHandler = graph.getPlugin<TooltipHandler>('TooltipHandler');
@@ -702,14 +703,11 @@ export class GraphView extends EventSource {
               }
 
               if (graph.isMouseDown && !isConsumed(evt)) {
-                graph.fireMouseEvent(
-                  InternalEvent.MOUSE_MOVE,
-                  new InternalMouseEvent(evt)
-                );
+                graph.fireMouseEvent(EventNames.MOUSE_MOVE, new InternalMouseEvent(evt));
               }
             },
             (evt: MouseEvent) => {
-              graph.fireMouseEvent(InternalEvent.MOUSE_UP, new InternalMouseEvent(evt));
+              graph.fireMouseEvent(EventNames.MOUSE_UP, new InternalMouseEvent(evt));
             }
           );
         }
@@ -2122,7 +2120,7 @@ export class GraphView extends EventSource {
           this.isContainerEvent(evt) &&
           ((!Client.IS_GC && !Client.IS_SF) || !this.isScrollEvent(evt))
         ) {
-          graph.fireMouseEvent(InternalEvent.MOUSE_DOWN, new InternalMouseEvent(evt));
+          graph.fireMouseEvent(EventNames.MOUSE_DOWN, new InternalMouseEvent(evt));
           // @ts-ignore
           pointerId = evt.pointerId;
         }
@@ -2133,12 +2131,12 @@ export class GraphView extends EventSource {
           // @ts-ignore
           (pointerId === null || evt.pointerId === pointerId)
         ) {
-          graph.fireMouseEvent(InternalEvent.MOUSE_MOVE, new InternalMouseEvent(evt));
+          graph.fireMouseEvent(EventNames.MOUSE_MOVE, new InternalMouseEvent(evt));
         }
       },
       (evt: MouseEvent) => {
         if (this.isContainerEvent(evt)) {
-          graph.fireMouseEvent(InternalEvent.MOUSE_UP, new InternalMouseEvent(evt));
+          graph.fireMouseEvent(EventNames.MOUSE_UP, new InternalMouseEvent(evt));
         }
 
         pointerId = null;
@@ -2211,7 +2209,7 @@ export class GraphView extends EventSource {
         !isConsumed(evt)
       ) {
         graph.fireMouseEvent(
-          InternalEvent.MOUSE_MOVE,
+          EventNames.MOUSE_MOVE,
           new InternalMouseEvent(evt, getState(evt))
         );
       }
@@ -2226,7 +2224,7 @@ export class GraphView extends EventSource {
         graph.container.style.display !== 'none' &&
         graph.container.style.visibility !== 'hidden'
       ) {
-        graph.fireMouseEvent(InternalEvent.MOUSE_UP, new InternalMouseEvent(evt));
+        graph.fireMouseEvent(EventNames.MOUSE_UP, new InternalMouseEvent(evt));
       }
     };
 

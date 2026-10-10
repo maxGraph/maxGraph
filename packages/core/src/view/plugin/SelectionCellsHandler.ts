@@ -18,7 +18,7 @@ limitations under the License.
 
 import EventSource from '../event/EventSource.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import { sortCells } from '../../util/styleUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import Cell from '../cell/Cell.js';
@@ -45,12 +45,12 @@ import { isNullish } from '../../internal/utils.js';
  *
  * ### Events
  *
- * #### InternalEvent.ADD
+ * #### EventNames.ADD
  *
  * Fires if a cell has been added to the selection.
  * The `state` property contains the {@link CellState} that has been added.
  *
- * #### InternalEvent.REMOVE
+ * #### EventNames.REMOVE
  *
  * Fires if a cell has been remove from the selection.
  * The `state` property contains the {@link CellState} that has been removed.
@@ -86,15 +86,13 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
       }
     };
 
-    this.graph.getSelectionModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
-    this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
-    this.graph.getView().addListener(InternalEvent.SCALE, this.refreshHandler);
-    this.graph.getView().addListener(InternalEvent.TRANSLATE, this.refreshHandler);
-    this.graph
-      .getView()
-      .addListener(InternalEvent.SCALE_AND_TRANSLATE, this.refreshHandler);
-    this.graph.getView().addListener(InternalEvent.DOWN, this.refreshHandler);
-    this.graph.getView().addListener(InternalEvent.UP, this.refreshHandler);
+    this.graph.getSelectionModel().addListener(EventNames.CHANGE, this.refreshHandler);
+    this.graph.getDataModel().addListener(EventNames.CHANGE, this.refreshHandler);
+    this.graph.getView().addListener(EventNames.SCALE, this.refreshHandler);
+    this.graph.getView().addListener(EventNames.TRANSLATE, this.refreshHandler);
+    this.graph.getView().addListener(EventNames.SCALE_AND_TRANSLATE, this.refreshHandler);
+    this.graph.getView().addListener(EventNames.DOWN, this.refreshHandler);
+    this.graph.getView().addListener(EventNames.UP, this.refreshHandler);
   }
 
   /**
@@ -207,7 +205,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
 
     // Destroys unused handlers
     oldHandlers.forEach((handler) => {
-      this.fireEvent(new EventObject(InternalEvent.REMOVE, { state: handler.state }));
+      this.fireEvent(new EventObject(EventNames.REMOVE, { state: handler.state }));
       handler.onDestroy();
     });
 
@@ -220,7 +218,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
 
         if (!handler) {
           handler = this.createHandler(state);
-          this.fireEvent(new EventObject(InternalEvent.ADD, { state }));
+          this.fireEvent(new EventObject(EventNames.ADD, { state }));
           this.handlers.set(tmp[i], handler);
         } else {
           handler.updateParentHighlight();

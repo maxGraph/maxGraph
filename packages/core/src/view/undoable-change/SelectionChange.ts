@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 
 import type { UndoableChange } from '../../types.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
@@ -43,7 +43,7 @@ class SelectionChange implements UndoableChange {
    * Applies the change to the selection model: calls {@link GraphSelectionModel.cellRemoved} for each cell
    * in {@link removed}, then {@link GraphSelectionModel.cellAdded} for each cell in {@link added}. Swaps
    * {@link added} and {@link removed} so a subsequent call undoes the change, then fires
-   * {@link InternalEvent.CHANGE} on the selection model.
+   * {@link EventNames.CHANGE} on the selection model.
    *
    * **WARN**: because of the swap, the `added` and `removed` properties of the fired event refer to the
    * post-swap arrays — the event's `added` contains the cells just removed from the selection, and
@@ -63,7 +63,7 @@ class SelectionChange implements UndoableChange {
     [this.added, this.removed] = [this.removed, this.added];
 
     selectionModel.fireEvent(
-      new EventObject(InternalEvent.CHANGE, { added: this.added, removed: this.removed })
+      new EventObject(EventNames.CHANGE, { added: this.added, removed: this.removed })
     );
   }
 }

@@ -176,14 +176,14 @@ const vertex01 = graph.insertVertex({
 3. **Handling Events**:
 ```javascript
 // This code adds two listeners, one for click and one when some cell is moved
-graph.addListener(InternalEvent.CLICK, (sender, evt) => {
+graph.addListener(EventNames.CLICK, (sender, evt) => {
   const cell = evt.getProperty('cell');
   if (cell) {
     // Handle cell click
     console.log('Clicked cell:', cell);
   }
 });
-graph.addListener(InternalEvent.CELLS_MOVED, (sender, evt) => {
+graph.addListener(EventNames.CELLS_MOVED, (sender, evt) => {
     const cells = evt.getProperty('cells');
     console.log(`Number of cells moved is: ${cells.length}`);
 })

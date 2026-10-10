@@ -16,7 +16,7 @@ limitations under the License.
 
 import { isMultiTouchEvent } from '../../util/EventUtils.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import type CellEditorHandler from '../plugin/CellEditorHandler.js';
 
@@ -70,16 +70,12 @@ export const EditingMixin: PartialType = {
           cell = null;
         }
       } else {
-        this.fireEvent(
-          new EventObject(InternalEvent.START_EDITING, { cell, event: evt })
-        );
+        this.fireEvent(new EventObject(EventNames.START_EDITING, { cell, event: evt }));
 
         const cellEditorHandler = this.getPlugin<CellEditorHandler>('CellEditorHandler');
         cellEditorHandler?.startEditing(cell, evt);
 
-        this.fireEvent(
-          new EventObject(InternalEvent.EDITING_STARTED, { cell, event: evt })
-        );
+        this.fireEvent(new EventObject(EventNames.EDITING_STARTED, { cell, event: evt }));
       }
     }
   },
@@ -91,7 +87,7 @@ export const EditingMixin: PartialType = {
   stopEditing(cancel = false) {
     const cellEditorHandler = this.getPlugin<CellEditorHandler>('CellEditorHandler');
     cellEditorHandler?.stopEditing(cancel);
-    this.fireEvent(new EventObject(InternalEvent.EDITING_STOPPED, { cancel }));
+    this.fireEvent(new EventObject(EventNames.EDITING_STOPPED, { cancel }));
   },
 
   labelChanged(cell, value, evt) {
@@ -99,7 +95,7 @@ export const EditingMixin: PartialType = {
       const old = cell.value;
       this.cellLabelChanged(cell, value, this.isAutoSizeCell(cell));
       this.fireEvent(
-        new EventObject(InternalEvent.LABEL_CHANGED, {
+        new EventObject(EventNames.LABEL_CHANGED, {
           cell: cell,
           value: value,
           old: old,

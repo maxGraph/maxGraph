@@ -24,6 +24,7 @@ import {
   setPrefixedStyle,
 } from '../../util/styleUtils.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import Point from '../geometry/Point.js';
 import InternalMouseEvent from '../event/InternalMouseEvent.js';
 import Client from '../../Client.js';
@@ -69,7 +70,7 @@ class RubberBandHandler implements GraphPlugin, MouseListenerSet {
       const evtName = evt.getProperty('eventName');
       const me = evt.getProperty('event');
 
-      if (evtName === InternalEvent.MOUSE_DOWN && this.isForceRubberbandEvent(me)) {
+      if (evtName === EventNames.MOUSE_DOWN && this.isForceRubberbandEvent(me)) {
         const offset = getOffset(this.graph.container);
         const origin = getScrollOrigin(this.graph.container);
         origin.x -= offset.x;
@@ -79,14 +80,14 @@ class RubberBandHandler implements GraphPlugin, MouseListenerSet {
       }
     };
 
-    this.graph.addListener(InternalEvent.FIRE_MOUSE_EVENT, this.forceRubberbandHandler);
+    this.graph.addListener(EventNames.FIRE_MOUSE_EVENT, this.forceRubberbandHandler);
 
     // Repaints the marquee after autoscroll
     this.panHandler = () => {
       this.repaint();
     };
 
-    this.graph.addListener(InternalEvent.PAN, this.panHandler);
+    this.graph.addListener(EventNames.PAN, this.panHandler);
 
     // Does not show menu if any touch gestures take place after the trigger
     this.gestureHandler = (sender: EventSource, eo: EventObject) => {
@@ -95,7 +96,7 @@ class RubberBandHandler implements GraphPlugin, MouseListenerSet {
       }
     };
 
-    this.graph.addListener(InternalEvent.GESTURE, this.gestureHandler);
+    this.graph.addListener(EventNames.GESTURE, this.gestureHandler);
   }
 
   forceRubberbandHandler: Function;

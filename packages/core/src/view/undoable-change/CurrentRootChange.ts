@@ -18,7 +18,7 @@ import type GraphView from '../GraphView.js';
 import EventObject from '../event/EventObject.js';
 import Point from '../geometry/Point.js';
 import type Cell from '../cell/Cell.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import type { UndoableChange } from '../../types.js';
 
 /**
@@ -72,7 +72,7 @@ class CurrentRootChange implements UndoableChange {
       this.view.refresh();
     }
 
-    const name = this.isUp ? InternalEvent.UP : InternalEvent.DOWN;
+    const name = this.isUp ? EventNames.UP : EventNames.DOWN;
 
     this.view.fireEvent(
       new EventObject(name, { root: this.view.currentRoot, previous: this.previous })

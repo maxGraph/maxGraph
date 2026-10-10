@@ -21,7 +21,7 @@ import {
   xmlUtils,
   Multiplicity,
   KeyHandler,
-  InternalEvent,
+  EventNames,
   getDefaultPlugins,
 } from '@maxgraph/core';
 import {
@@ -139,7 +139,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const listener = function () {
     graph.validateGraph();
   };
-  graph.getDataModel().addListener(InternalEvent.CHANGE, listener);
+  graph.getDataModel().addListener(EventNames.CHANGE, listener);
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {

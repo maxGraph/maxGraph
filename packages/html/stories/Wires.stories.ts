@@ -44,6 +44,7 @@ import {
   Guide,
   ImageBox,
   InternalEvent,
+  EventNames,
   InternalMouseEvent,
   mathUtils,
   PanningHandler,
@@ -1002,8 +1003,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const listener = function (_sender: any, evt: EventObject) {
     undoManager.undoableEditHappened(evt.getProperty('edit'));
   };
-  graph.getDataModel().addListener(InternalEvent.UNDO, listener);
-  graph.getView().addListener(InternalEvent.UNDO, listener);
+  graph.getDataModel().addListener(EventNames.UNDO, listener);
+  graph.getView().addListener(EventNames.UNDO, listener);
 
   parentContainer.appendChild(
     DomHelpers.button('Undo', function () {

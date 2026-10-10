@@ -20,6 +20,7 @@ import { MouseEventListener, MouseListenerSet } from '../../types.js';
 import { hasScrollbars } from '../../util/styleUtils.js';
 import EventObject from '../event/EventObject.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 
 /**
@@ -81,7 +82,7 @@ class PanningManager {
           graph.panGraph(left, top);
           graph.setPanDx(this.scrollLeft - graph.container.scrollLeft);
           graph.setPanDy(this.scrollTop - graph.container.scrollTop);
-          graph.fireEvent(new EventObject(InternalEvent.PAN));
+          graph.fireEvent(new EventObject(EventNames.PAN));
           // TODO: Implement graph.autoExtend
         } else {
           graph.panGraph(this.getDx(), this.getDy());
@@ -199,7 +200,7 @@ class PanningManager {
         } else {
           graph.setPanDx(0);
           graph.setPanDy(0);
-          graph.fireEvent(new EventObject(InternalEvent.PAN));
+          graph.fireEvent(new EventObject(EventNames.PAN));
         }
       }
     };

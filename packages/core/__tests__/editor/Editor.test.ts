@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { Editor, Geometry, EventObject, InternalEvent } from '../../src';
+import { Editor, Geometry, EventObject, EventNames } from '../../src';
 import { ModelChecker } from '../serialization/utils';
 import { parseXml } from '../../src/util/xmlUtils';
 import Cell from '../../src/view/cell/Cell';
@@ -159,7 +159,7 @@ describe('installDblClickHandler', () => {
     });
 
     // Fire the DOUBLE_CLICK event with proper EventObject
-    const eventObj = new EventObject(InternalEvent.DOUBLE_CLICK, { cell, event: {} });
+    const eventObj = new EventObject(EventNames.DOUBLE_CLICK, { cell, event: {} });
     editor.graph.fireEvent(eventObj);
 
     // Verify that execute was called on the editor instance with the correct action and cell

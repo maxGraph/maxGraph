@@ -22,6 +22,7 @@ import {
   Point,
   cloneUtils,
   InternalEvent,
+  EventNames,
   SwimlaneManager,
   StackLayout,
   LayoutManager,
@@ -243,7 +244,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       }
     };
 
-    graph.addListener(InternalEvent.FOLD_CELLS, foldingHandler);
+    graph.addListener(EventNames.FOLD_CELLS, foldingHandler);
   }
 
   // Changes swimlane orientation while collapsed

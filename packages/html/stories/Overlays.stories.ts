@@ -25,7 +25,7 @@ import {
   type EventObject,
   Graph,
   ImageBox,
-  InternalEvent,
+  EventNames,
   Rectangle,
   RectangleShape,
   type Shape,
@@ -123,7 +123,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   // Installs a handler for click events in the graph that toggles the overlay for the respective cell
-  graph.addListener(InternalEvent.CLICK, (_sender: EventTarget, evt: EventObject) => {
+  graph.addListener(EventNames.CLICK, (_sender: EventTarget, evt: EventObject) => {
     const cell = evt.getProperty('cell');
 
     if (cell) {
@@ -139,7 +139,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
         // Installs a handler for clicks on the overlay
         overlay.addListener(
-          InternalEvent.CLICK,
+          EventNames.CLICK,
           (_sender: EventTarget, _evt: EventObject) => {
             window.alert('Overlay clicked');
           }
@@ -155,14 +155,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Installs a handler for double click events in the graph
   // that shows an alert box
-  graph.addListener(
-    InternalEvent.DOUBLE_CLICK,
-    (_sender: EventTarget, evt: EventObject) => {
-      const cell = evt.getProperty('cell');
-      alert(`Double-click: ${cell != null ? 'Cell' : 'Graph'}`);
-      evt.consume();
-    }
-  );
+  graph.addListener(EventNames.DOUBLE_CLICK, (_sender: EventTarget, evt: EventObject) => {
+    const cell = evt.getProperty('cell');
+    alert(`Double-click: ${cell != null ? 'Cell' : 'Graph'}`);
+    evt.consume();
+  });
 
   // Gets the default parent for inserting new cells. This is normally the first child of the root (i.e. layer 0).
   const parent = graph.getDefaultParent();

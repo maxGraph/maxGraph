@@ -24,7 +24,7 @@ import { maxGraphCodeSplitting } from '../../scripts/vite/maxgraph-chunk.mjs';
 
 // The maximum size of the maxgraph chunk, in kB. Declared once and passed to both the Vite warning and the blocking
 // check, so they cannot drift apart.
-const chunkSizeLimitInKB = 221;
+const chunkSizeLimitInKB = 220;
 
 export default defineConfig(({ mode }) => {
   // The analyzer slows the build down and starts a report server, so only analyze the production bundle when

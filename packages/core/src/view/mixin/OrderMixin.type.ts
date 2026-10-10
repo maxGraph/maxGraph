@@ -21,7 +21,7 @@ declare module '../AbstractGraph' {
     /**
      * Moves the given cells to the front or back. The change is carried out using {@link cellsOrdered}.
      *
-     * This method fires {@link InternalEvent.ORDER_CELLS} while the transaction is in progress.
+     * This method fires {@link EventNames.ORDER_CELLS} while the transaction is in progress.
      *
      * @param back Boolean that specifies if the cells should be moved to back. Default is `false`.
      * @param cells Array of {@link Cell} to move to the background. If not set, then the selection cells are used.
@@ -31,7 +31,7 @@ declare module '../AbstractGraph' {
     /**
      * Moves the given cells to the front or back.
      *
-     * This method fires {@link InternalEvent.CELLS_ORDERED} while the transaction is in progress.
+     * This method fires {@link EventNames.CELLS_ORDERED} while the transaction is in progress.
      *
      * @param cells Array of {@link Cell} whose order should be changed.
      * @param back Boolean that specifies if the cells should be moved to back. Default is `false`.
