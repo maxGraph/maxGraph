@@ -19,17 +19,19 @@ The `Guide` class implements it. It compares the bounds of the cells being moved
 - the **x coordinates** (left side, center, right side) are aligned and drawn as a vertical line;
 - the **y coordinates** (top side, middle, bottom side) are aligned and drawn as a horizontal line.
 
-Guides are used by two components:
+Guides are used by two components, each configured on its own:
 
-- the `SelectionHandler` plugin, when moving cells that are already in the graph;
+- the `SelectionHandler` plugin, when moving cells that are already in the graph, see [Moving Cells in the Graph](#moving-cells-in-the-graph);
 - `DragSource`, when dropping an element from outside the graph, see [Drag and Drop from Outside the Graph](#drag-and-drop-from-outside-the-graph).
 
 
-## Enabling the Guides
+## Moving Cells in the Graph
+
+### Enabling the Guides
 
 Guides are **disabled by default**. They are enabled with the `guidesEnabled` property of the `SelectionHandler` plugin.
 
-### With `Graph`
+#### With `Graph`
 
 `SelectionHandler` is part of the default plugins, so it only has to be enabled:
 
@@ -42,7 +44,7 @@ if (selectionHandler) {
 }
 ```
 
-### With `BaseGraph`
+#### With `BaseGraph`
 
 `BaseGraph` registers no plugin by default, so `SelectionHandler` has to be registered first, then enabled as above:
 
@@ -60,32 +62,30 @@ if (selectionHandler) {
 
 See [Plugins](./plugins.md) for more details about the registration of plugins.
 
+### How the Guides Behave
 
-## How the Guides Behave
-
-### Reference cells
+#### Reference cells
 
 `SelectionHandler.getGuideStates` returns the candidate reference cells: every vertex under the default parent that has a state in the view and a non-relative geometry.
 
 When a move starts, `SelectionHandler` narrows that list down. The cells being moved are ignored, unless they are being cloned, and the alignment is computed against the cells sharing the container of the moved cell (or of the drop target), the container itself, and the cells connected to the moved cell by an edge.
 
-### Tolerance
+#### Tolerance
 
 The tolerance is the maximum distance, in pixels, at which a cell snaps to a reference cell. It is scaled with the view.
 
 - When the grid is enabled, it is half of the grid size.
 - Otherwise, it is `Guide.tolerance`, 2 by default.
 
-### Disabling the guides for one move
+#### Disabling the guides for one move
 
 Holding **Shift** constrains the move to one axis, and the guides are not used during a constrained move. This comes from `SelectionHandler.useGuidesForEvent`, which also asks `Guide.isEnabledForEvent`, so a custom guide can add its own condition, see [Customizing the Guide](#customizing-the-guide).
 
-
-## Customizing the Guide
+### Customizing the Guide
 
 The `Guide` instance is created by `SelectionHandler.createGuide` at the beginning of every move. Customizing the guide therefore means two things: subclassing `Guide`, then overriding `createGuide` to return the subclass.
 
-### Subclassing `Guide`
+#### Subclassing `Guide`
 
 These members are meant to be changed:
 
@@ -119,7 +119,7 @@ class CustomGuide extends Guide {
 
 Using Alt in `isEnabledForEvent` matches the default of `isGridEnabledEvent` on the graph, which disables the grid snapping while Alt is held. The user then has a single key to move a cell freely, without the grid nor the guides.
 
-### Providing the custom guide
+#### Providing the custom guide
 
 Override `createGuide`, either in a subclass of `SelectionHandler` registered in place of the default one, or by patching the plugin instance. [Choosing between a subclass and an instance patch](../guides/extend-maxgraph.md#choosing-between-a-subclass-and-an-instance-patch) explains how to choose.
 
@@ -135,41 +135,46 @@ if (selectionHandler) {
 }
 ```
 
-
-## Drag and Drop from Outside the Graph
-
-`DragSource`, returned by `gestureUtils.makeDraggable`, aligns the dropped element with a guide of its own:
-
-- it is controlled by `DragSource.guidesEnabled`, which is **`true` by default**, independently of `SelectionHandler.guidesEnabled`;
-- it is only used when a preview element is displayed during the drag;
-- its reference cells come from `SelectionHandler.getGuideStates`, or are empty when the plugin is not registered;
-- it always creates a plain `Guide`, so overriding `SelectionHandler.createGuide` does not affect it.
-
-To follow the setting of `SelectionHandler`, override `isGuidesEnabled`:
-
-```typescript
-dragSource.isGuidesEnabled = (): boolean =>
-  graph.getPlugin<SelectionHandler>('SelectionHandler')?.guidesEnabled ?? false;
-```
-
-
-## Bundle Size
-
-`SelectionHandler` and `DragSource` both import `Guide` statically. An application registering `SelectionHandler`, or using `gestureUtils.makeDraggable`, therefore bundles `Guide` even when the guides are never enabled. Making the guide optional is tracked in [issue #1247](https://github.com/maxGraph/maxGraph/issues/1247).
-
-
-## Live Demos
-
-### Guides
+### Live Demo
 
 The guides enabled on a `Graph` by setting `guidesEnabled` on the `SelectionHandler` plugin instance, with a grid displayed. `useGuidesForEvent` is patched on the instance so that holding Alt disables the guides. Move the vertices to see them snap to each other.
 
 - **Live demo**: [Guides](https://maxgraph.github.io/maxGraph/demo/?path=/story/misc-guides--default)
 - **Source code**: [Guides.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/Guides.stories.ts)
 
-### DragSource
 
-The subclass approach: a `Guide` subclass disables the guides when Alt is held, and a `SelectionHandler` subclass enables the guides and returns that `Guide` from `createGuide`. It is registered in place of the default `SelectionHandler`. The story also shows a `DragSource` whose `isGuidesEnabled` follows the setting of `SelectionHandler`: drag the icon at the bottom of the page onto a graph, and the dropped vertex is aligned with the existing ones.
+## Drag and Drop from Outside the Graph
+
+`DragSource`, returned by `gestureUtils.makeDraggable`, aligns the dropped element with a guide of its own.
+
+### Enabling the Guide
+
+The guide of `DragSource` is controlled by `DragSource.guidesEnabled`, which is **`true` by default**, independently of `SelectionHandler.guidesEnabled`. It can be changed with `setGuidesEnabled`.
+
+To follow the setting of `SelectionHandler` instead, override `isGuidesEnabled`:
+
+```typescript
+dragSource.isGuidesEnabled = (): boolean =>
+  graph.getPlugin<SelectionHandler>('SelectionHandler')?.guidesEnabled ?? false;
+```
+
+### How the Guide Behaves
+
+It differs from the guide of `SelectionHandler` on three points:
+
+- it is only used when a preview element is displayed during the drag;
+- its reference cells come from `SelectionHandler.getGuideStates`, or are empty when the plugin is not registered;
+- it always creates a plain `Guide`, so overriding `SelectionHandler.createGuide` does not affect it.
+
+### Live Demo
+
+A `DragSource` whose `isGuidesEnabled` follows the setting of `SelectionHandler`: drag the icon at the bottom of the page onto a graph, and the dropped vertex is aligned with the existing ones. The graphs of the story also illustrate the subclass approach of [Customizing the Guide](#customizing-the-guide): a `Guide` subclass disables the guides when Alt is held, and a `SelectionHandler` subclass, registered in place of the default one, enables the guides and returns that `Guide` from `createGuide`.
 
 - **Live demo**: [DragSource](https://maxgraph.github.io/maxGraph/demo/?path=/story/dnd-copypaste-dragsource--default)
 - **Source code**: [DragSource.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/DragSource.stories.ts)
+
+
+## Bundle Size
+
+`SelectionHandler` and `DragSource` both import `Guide` statically. An application registering `SelectionHandler`, or using `gestureUtils.makeDraggable`, therefore bundles `Guide` even when the guides are never enabled. Making the guide optional is tracked in [issue #1247](https://github.com/maxGraph/maxGraph/issues/1247).
+
