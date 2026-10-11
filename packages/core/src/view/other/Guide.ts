@@ -100,14 +100,15 @@ class Guide {
   }
 
   /**
-   * Returns the mxShape to be used for painting the respective guide. This
-   * implementation returns a new, dashed and crisp {@link PolylineShape} using
+   * Returns the Shape to be used for painting the respective guide.
+   * This is a hook for subclassers to return different shapes for the guides.
+   *
+   * This implementation returns a new, dashed and crisp {@link PolylineShape} using
    * {@link GUIDE_COLOR} and {@link GUIDE_STROKEWIDTH} as the format.
    *
-   * @param horizontal Boolean that specifies which guide should be created.
+   * @param _horizontal Boolean that specifies which guide should be created.
    */
-  createGuideShape(horizontal = false) {
-    // TODO: Should vertical guides be supported here?? ============================
+  createGuideShape(_horizontal = false) {
     const guide = new PolylineShape([], GUIDE_COLOR, GUIDE_STROKEWIDTH);
     guide.isDashed = true;
     return guide;
