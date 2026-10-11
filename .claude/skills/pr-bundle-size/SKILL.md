@@ -1,6 +1,6 @@
 ---
 name: pr-bundle-size
-description: "Build the bundle size comparison table of a maxGraph pull request from the CI logs, or of a local branch with no pull request yet by building the examples locally. Use when the user asks for the bundle size impact of a pull request or of a branch, for instance a bundler upgrade or a change in @maxgraph/core."
+description: "Build the bundle size comparison table of a maxGraph pull request from the CI logs, or of a local branch by building the examples locally, when the branch has no pull request yet or has commits not pushed to it. Use when the user asks for the bundle size impact of a pull request or of a branch, for instance a bundler upgrade or a change in @maxgraph/core."
 disable-model-invocation: true
 argument-hint: "[<pr-number>]"
 ---
@@ -8,8 +8,8 @@ argument-hint: "[<pr-number>]"
 # Bundle size comparison of a pull request
 
 Compare the sizes of the examples built by the CI run of the pull request with those of the `main` commit that run
-was based on. Without a pull request number, or when the branch has no pull request yet, follow
-[No pull request yet](#no-pull-request-yet) instead. Read
+was based on. To measure the local branch instead, when it has no pull request yet or has commits not pushed to its
+pull request, follow [Local branch](#local-branch). Read
 [`.claude/shared/bundle-sizes/README.md`](../../shared/bundle-sizes/README.md) first: it explains where the sizes come
 from and holds the reading rules that apply to the explanation below the table.
 
@@ -86,11 +86,11 @@ follows the reading rules of the shared README:
 Do not edit the pull request yourself. When the user asks to add the table to its description, follow
 `.claude/rules/git/pull-requests.md` to keep the blocks added by bots.
 
-## No pull request yet
+## Local branch
 
-The branch is checked out locally and has no CI run to read, for instance a Dependabot branch reworked before its pull
-request is opened. The reference still comes from the CI of `main`, the other side from a local build. This is the
-local fallback that the shared README allows.
+The branch is checked out locally and no CI run measured its head: it has no pull request yet, or it has commits not
+pushed to its pull request, for instance a Dependabot branch reworked locally. The reference still comes from the CI
+of `main`, the other side from a local build. This is the local fallback that the shared README allows.
 
 1. **Find the reference.** It is the merge base of the branch, which the local build starts from:
    ```bash
@@ -127,11 +127,11 @@ local fallback that the shared README allows.
    ```
    `toolchain` reads the commits from git when they are local, so the unpushed head works.
 5. **Build the table** as in step 4 above, with `<scratchpad>/local.csv` as the second file, and report as in step 5,
-   with the run link of `main` only. The column keeps its `PR` header so the table can be pasted unchanged once the
-   pull request exists.
+   with the run link of `main` only. The column keeps its `PR` header so the table can be pasted unchanged into the
+   description of the pull request.
 
 **Check the local build against the CI.** Examples whose dependencies the branch does not change must give exactly
 the CI size. When they do, the local build reproduces the CI and the other rows can be trusted. When they do not,
 something differs in the environment (Node version, a stale build of core): find it before reporting.
 
-A local build is a forecast. Once the pull request exists, its CI run is the measurement to report.
+A local build is a forecast. Once the head is pushed to a pull request, its CI run is the measurement to report.
