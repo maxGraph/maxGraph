@@ -27,6 +27,7 @@ need that version in particular say so where they use it.
 - [Plugins](../usage/plugins.md), to add your own behavior to a graph instance
 - [Codecs](../usage/codecs.md), to control how your own objects are serialized to and from XML
 - [Image Bundles](../usage/image-bundles.md), to map the short keys used in cell styles to images
+- [Alignment Guide](../usage/alignment-guide.md), to change how moved cells are aligned to the other ones
 - [Global Configuration](../usage/global-configuration.md), for the registries these extension points write to and their global state, and [Tree-Shaking](../usage/tree-shaking.md) to register only what your application actually uses
 - [Reduce the Bundle Size of an Application](./reduce-bundle-size.md), to move an existing application to `BaseGraph` step by step
 
