@@ -51,6 +51,7 @@ import { load, post, submit } from '../util/requestUtils.js';
 import type PopupMenuHandler from '../view/plugin/PopupMenuHandler.js';
 import RubberBandHandler from '../view/plugin/RubberBandHandler.js';
 import InternalEvent from '../view/event/InternalEvent.js';
+import { EventNames } from '../view/event/EventNames.js';
 import InternalMouseEvent from '../view/event/InternalMouseEvent.js';
 import { CellStateStyle, MouseListenerSet } from '../types.js';
 import type ConnectionHandler from '../view/plugin/ConnectionHandler.js';
@@ -328,41 +329,41 @@ import type { FitPlugin } from '../view/plugin/index.js';
  *
  * ### Events
  *
- * #### Event: mxEvent.OPEN
+ * #### Event: EventNames.OPEN
  *
  * Fires after a file was opened in {@link open}. The <code>filename</code> property
  * contains the filename that was used. The same value is also available in
  * {@link filename}.
  *
- * #### Event: mxEvent.SAVE
+ * #### Event: EventNames.SAVE
  *
  * Fires after the current file was saved in {@link save}. The <code>url</code>
  * property contains the URL that was used for saving.
  *
- * #### Event: mxEvent.POST
+ * #### Event: EventNames.POST
  *
  * Fires if a successful response was received in {@link postDiagram}. The
  * <code>request</code> property contains the <MaxXmlRequest>, the
  * <code>url</code> and <code>data</code> properties contain the URL and the
  * data that were used in the post request.
  *
- * #### Event: mxEvent.ROOT
+ * #### Event: EventNames.ROOT
  *
  * Fires when the current root has changed, or when the title of the current
  * root has changed. This event has no properties.
  *
- * #### Event: mxEvent.BEFORE_ADD_VERTEX
+ * #### Event: EventNames.BEFORE_ADD_VERTEX
  *
  * Fires before a vertex is added in {@link addVertex}. The <code>vertex</code>
  * property contains the new vertex and the <code>parent</code> property
  * contains its parent.
  *
- * #### Event: mxEvent.ADD_VERTEX
+ * #### Event: EventNames.ADD_VERTEX
  *
  * Fires between begin- and endUpdate in <addVertex>. The <code>vertex</code>
  * property contains the vertex that is being inserted.
  *
- * #### Event: mxEvent.AFTER_ADD_VERTEX
+ * #### Event: EventNames.AFTER_ADD_VERTEX
  *
  * Fires after a vertex was inserted and selected in <addVertex>. The
  * <code>vertex</code> property contains the new vertex.
@@ -373,7 +374,7 @@ import type { FitPlugin } from '../view/plugin/index.js';
  * graph, the following code can be used.
  *
  * ```javascript
- * editor.addListener(mxEvent.AFTER_ADD_VERTEX, function(sender, evt) {
+ * editor.addListener(EventNames.AFTER_ADD_VERTEX, function(sender, evt) {
  *   const vertex = evt.getProperty('vertex');
  *   if (editor.graph.isCellEditable(vertex)) {
  *   	editor.graph.startEditingAtCell(vertex);
@@ -381,7 +382,7 @@ import type { FitPlugin } from '../view/plugin/index.js';
  * });
  * ```
  *
- * #### Event: mxEvent.ESCAPE
+ * #### Event: EventNames.ESCAPE
  *
  * Fires when the escape key is pressed. The <code>event</code> property
  * contains the key event.
@@ -567,7 +568,7 @@ export class Editor extends EventSource {
    *
    * @example
    * ```javascript
-   * editor.graph.addListener(mxEvent.CLICK, function(sender, evt) {
+   * editor.graph.addListener(EventNames.CLICK, function(sender, evt) {
    *   const e = evt.getProperty('event');
    *   const cell = evt.getProperty('cell');
    *
@@ -1534,7 +1535,7 @@ export class Editor extends EventSource {
    */
   installDblClickHandler(graph: AbstractGraph): void {
     // Installs a listener for double click events
-    graph.addListener(InternalEvent.DOUBLE_CLICK, (_sender: any, evt: EventObject) => {
+    graph.addListener(EventNames.DOUBLE_CLICK, (_sender: any, evt: EventObject) => {
       const cell = evt.getProperty('cell');
 
       if (cell && graph.isEnabled() && this.dblClickAction) {
@@ -1554,8 +1555,8 @@ export class Editor extends EventSource {
       (<UndoManager>this.undoManager).undoableEditHappened(edit);
     };
 
-    graph.getDataModel().addListener(InternalEvent.UNDO, listener);
-    graph.getView().addListener(InternalEvent.UNDO, listener);
+    graph.getDataModel().addListener(EventNames.UNDO, listener);
+    graph.getView().addListener(EventNames.UNDO, listener);
 
     // Keeps the selection state in sync
     const undoHandler = (sender: any, evt: EventObject) => {
@@ -1563,8 +1564,8 @@ export class Editor extends EventSource {
       graph.setSelectionCells(graph.getSelectionCellsForChanges(changes));
     };
 
-    (<UndoManager>this.undoManager).addListener(InternalEvent.UNDO, undoHandler);
-    (<UndoManager>this.undoManager).addListener(InternalEvent.REDO, undoHandler);
+    (<UndoManager>this.undoManager).addListener(EventNames.UNDO, undoHandler);
+    (<UndoManager>this.undoManager).addListener(EventNames.REDO, undoHandler);
   }
 
   /**
@@ -1573,11 +1574,11 @@ export class Editor extends EventSource {
    */
   installDrillHandler(graph: AbstractGraph): void {
     const listener = (sender: any) => {
-      this.fireEvent(new EventObject(InternalEvent.ROOT));
+      this.fireEvent(new EventObject(EventNames.ROOT));
     };
 
-    graph.getView().addListener(InternalEvent.DOWN, listener);
-    graph.getView().addListener(InternalEvent.UP, listener);
+    graph.getView().addListener(EventNames.DOWN, listener);
+    graph.getView().addListener(EventNames.UP, listener);
   }
 
   /**
@@ -1606,13 +1607,13 @@ export class Editor extends EventSource {
           (change instanceof ValueChange && change.cell === this.graph.model.root) ||
           (change instanceof CellAttributeChange && change.cell === this.graph.model.root)
         ) {
-          this.fireEvent(new EventObject(InternalEvent.ROOT));
+          this.fireEvent(new EventObject(EventNames.ROOT));
           break;
         }
       }
     };
 
-    graph.getDataModel().addListener(InternalEvent.CHANGE, listener);
+    graph.getDataModel().addListener(EventNames.CHANGE, listener);
   }
 
   /**
@@ -1709,7 +1710,7 @@ export class Editor extends EventSource {
       this.status = container;
 
       // Prints the last saved time in the status bar when files are saved
-      this.addListener(InternalEvent.SAVE, () => {
+      this.addListener(EventNames.SAVE, () => {
         const timestamp = new Date().toLocaleString();
         this.setStatus(
           `${translate(this.lastSavedResource) || this.lastSavedResource}: ${timestamp}`
@@ -1717,7 +1718,7 @@ export class Editor extends EventSource {
       });
 
       // Updates the statusbar to display the filename when new files are opened
-      this.addListener(InternalEvent.OPEN, () => {
+      this.addListener(EventNames.OPEN, () => {
         this.setStatus(
           `${translate(this.currentFileResource) || this.currentFileResource}: ${
             this.filename
@@ -1743,7 +1744,7 @@ export class Editor extends EventSource {
    * @param container DOM node that will contain the title.
    */
   setTitleContainer(container: any): void {
-    this.addListener(InternalEvent.ROOT, (sender: any) => {
+    this.addListener(EventNames.ROOT, (sender: any) => {
       container.innerHTML = this.getTitle();
     });
   }
@@ -1847,7 +1848,7 @@ export class Editor extends EventSource {
       this.readGraphModel(xml.documentElement);
       this.filename = filename;
 
-      this.fireEvent(new EventObject(InternalEvent.OPEN, { filename }));
+      this.fireEvent(new EventObject(EventNames.OPEN, { filename }));
     }
   }
 
@@ -1893,7 +1894,7 @@ export class Editor extends EventSource {
     }
 
     // Dispatches a save event
-    this.fireEvent(new EventObject(InternalEvent.SAVE, { url }));
+    this.fireEvent(new EventObject(EventNames.SAVE, { url }));
   }
 
   /**
@@ -1908,7 +1909,7 @@ export class Editor extends EventSource {
    *
    * @example
    * ```javascript
-   * editor.addListener(mxEvent.POST, function(sender, evt)
+   * editor.addListener(EventNames.POST, function(sender, evt)
    * {
    *   // Process response (replace diagram)
    *   var req = evt.getProperty('request');
@@ -1925,7 +1926,7 @@ export class Editor extends EventSource {
     }
 
     post(url, `${this.postParameterName}=${data}`, (req: string) => {
-      this.fireEvent(new EventObject(InternalEvent.POST, { request: req, url, data }));
+      this.fireEvent(new EventObject(EventNames.POST, { request: req, url, data }));
     });
   }
 
@@ -2232,9 +2233,9 @@ export class Editor extends EventSource {
         this.createTasks(div);
       };
 
-      this.graph.getDataModel().addListener(InternalEvent.CHANGE, funct);
-      this.graph.getSelectionModel().addListener(InternalEvent.CHANGE, funct);
-      this.graph.addListener(InternalEvent.ROOT, funct);
+      this.graph.getDataModel().addListener(EventNames.CHANGE, funct);
+      this.graph.getSelectionModel().addListener(EventNames.CHANGE, funct);
+      this.graph.addListener(EventNames.ROOT, funct);
 
       // Assigns the icon to the tasks window
       if (this.tasksWindowImage != null) {
@@ -2317,10 +2318,10 @@ export class Editor extends EventSource {
           frame.setAttribute('height', `${h - 26}px`);
         };
 
-        wnd.addListener(InternalEvent.RESIZE_END, handler);
-        wnd.addListener(InternalEvent.MAXIMIZE, handler);
-        wnd.addListener(InternalEvent.NORMALIZE, handler);
-        wnd.addListener(InternalEvent.SHOW, handler);
+        wnd.addListener(EventNames.RESIZE_END, handler);
+        wnd.addListener(EventNames.MAXIMIZE, handler);
+        wnd.addListener(EventNames.NORMALIZE, handler);
+        wnd.addListener(EventNames.SHOW, handler);
       }
 
       this.help = wnd;
@@ -2363,7 +2364,7 @@ export class Editor extends EventSource {
       wnd.setResizable(true);
       wnd.destroyOnClose = false;
 
-      wnd.addListener(InternalEvent.RESIZE_END, () => {
+      wnd.addListener(EventNames.RESIZE_END, () => {
         outline.update();
       });
 
@@ -2556,7 +2557,7 @@ export class Editor extends EventSource {
 
     this.cycleAttribute(vertex);
     this.fireEvent(
-      new EventObject(InternalEvent.BEFORE_ADD_VERTEX, { vertex: vertex, parent: parent })
+      new EventObject(EventNames.BEFORE_ADD_VERTEX, { vertex: vertex, parent: parent })
     );
 
     model.beginUpdate();
@@ -2566,7 +2567,7 @@ export class Editor extends EventSource {
       if (vertex) {
         this.graph.constrainChild(vertex);
 
-        this.fireEvent(new EventObject(InternalEvent.ADD_VERTEX, { vertex: vertex }));
+        this.fireEvent(new EventObject(EventNames.ADD_VERTEX, { vertex: vertex }));
       }
     } finally {
       model.endUpdate();
@@ -2575,7 +2576,7 @@ export class Editor extends EventSource {
     if (vertex != null) {
       this.graph.setSelectionCell(vertex);
       this.graph.scrollCellToVisible(vertex);
-      this.fireEvent(new EventObject(InternalEvent.AFTER_ADD_VERTEX, { vertex: vertex }));
+      this.fireEvent(new EventObject(EventNames.AFTER_ADD_VERTEX, { vertex: vertex }));
     }
     return vertex;
   }

@@ -60,7 +60,7 @@ declare module '../AbstractGraph' {
      * A resize listener is needed in the graph to force a repaint of the label after a resize.
      *
      * ```javascript
-     * graph.addListener(InternalEvent.RESIZE_CELLS, function(sender, evt) {
+     * graph.addListener(EventNames.RESIZE_CELLS, function(sender, evt) {
      *   const cells = evt.getProperty('cells');
      *
      *   for (const cell of cells) {

@@ -18,6 +18,7 @@ limitations under the License.
 
 import Client from '../../Client.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import { contains, getRotatedPoint, isNumeric, toRadians } from '../../util/mathUtils.js';
 import { convertPoint } from '../../util/styleUtils.js';
 import RectangleShape from '../shape/node/RectangleShape.js';
@@ -81,14 +82,14 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
       }
     };
 
-    this.graph.addListener(InternalEvent.PAN, this.panHandler);
+    this.graph.addListener(EventNames.PAN, this.panHandler);
 
     // Handles escape keystrokes
     this.escapeHandler = (sender, evt) => {
       this.reset();
     };
 
-    this.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
+    this.graph.addListener(EventNames.ESCAPE, this.escapeHandler);
 
     // Updates the preview box for remote changes
     this.refreshHandler = (sender, evt) => {
@@ -134,8 +135,8 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
       }, 0);
     };
 
-    this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
-    this.graph.addListener(InternalEvent.REFRESH, this.refreshHandler);
+    this.graph.getDataModel().addListener(EventNames.CHANGE, this.refreshHandler);
+    this.graph.addListener(EventNames.REFRESH, this.refreshHandler);
 
     this.keyHandler = (e: KeyboardEvent) => {
       if (
@@ -585,7 +586,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
           }
 
           this.cellWasClicked = true;
-          this.consumeMouseEvent(InternalEvent.MOUSE_DOWN, me);
+          this.consumeMouseEvent(EventNames.MOUSE_DOWN, me);
         }
       }
     }
@@ -1006,7 +1007,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
       }
 
       this.updateHint(me);
-      this.consumeMouseEvent(InternalEvent.MOUSE_MOVE, me);
+      this.consumeMouseEvent(EventNames.MOUSE_MOVE, me);
 
       // Cancels the bubbling of events to the container so
       // that the droptarget is not reset due to an mouseMove
@@ -1446,7 +1447,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
 
     // Consumes the event if a cell was initially clicked
     if (this.cellWasClicked) {
-      this.consumeMouseEvent(InternalEvent.MOUSE_UP, me);
+      this.consumeMouseEvent(EventNames.MOUSE_UP, me);
     }
 
     this.reset();

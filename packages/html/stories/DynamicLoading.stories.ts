@@ -20,7 +20,7 @@ import {
   EventObject,
   Graph,
   GraphDataModel,
-  InternalEvent,
+  EventNames,
   ModelXmlSerializer,
   Perimeter,
   TextShape,
@@ -54,7 +54,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   graph.setEnabled(false);
 
   // Handles clicks on cells
-  graph.addListener(InternalEvent.CLICK, function (_sender: any, evt: EventObject) {
+  graph.addListener(EventNames.CLICK, function (_sender: any, evt: EventObject) {
     const cell = evt.getProperty('cell');
 
     if (cell != null) {
@@ -80,7 +80,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   // Animates the changes in the graph model
   graph
     .getDataModel()
-    .addListener(InternalEvent.CHANGE, function (_sender: any, evt: EventObject) {
+    .addListener(EventNames.CHANGE, function (_sender: any, evt: EventObject) {
       const { changes } = evt.getProperty('edit');
       Effects.animateChanges(graph, changes);
     });

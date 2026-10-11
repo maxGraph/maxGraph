@@ -20,7 +20,7 @@ import { findNearestSegment } from '../../util/mathUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import Cell from '../cell/Cell.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import Geometry from '../geometry/Geometry.js';
 import type Point from '../geometry/Point.js';
 
@@ -159,7 +159,7 @@ export const EdgeMixin: PartialType = {
 
         // Removes all existing control points
         this.resetEdge(edge);
-        this.fireEvent(new EventObject(InternalEvent.FLIP_EDGE, { edge }));
+        this.fireEvent(new EventObject(EventNames.FLIP_EDGE, { edge }));
       });
     }
     return edge;
@@ -212,7 +212,7 @@ export const EdgeMixin: PartialType = {
       );
       this.cellConnected(edge, cells[0], true);
       this.fireEvent(
-        new EventObject(InternalEvent.SPLIT_EDGE, { edge, cells, newEdge, dx, dy })
+        new EventObject(EventNames.SPLIT_EDGE, { edge, cells, newEdge, dx, dy })
       );
     });
 

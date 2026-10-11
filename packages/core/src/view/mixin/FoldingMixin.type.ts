@@ -59,7 +59,7 @@ declare module '../AbstractGraph' {
      * Sets the collapsed state of the specified cells and all descendants if recurse is `true`.
      * The change is carried out using {@link cellsFolded}.
      *
-     * This method fires {@link InternalEvent.FOLD_CELLS} while the transaction is in progress.
+     * This method fires {@link EventNames.FOLD_CELLS} while the transaction is in progress.
      *
      * Returns the cells whose collapsed state was changed.
      *
@@ -80,7 +80,7 @@ declare module '../AbstractGraph' {
     /**
      * Sets the collapsed state of the specified cells.
      *
-     * This method fires {@link InternalEvent.CELLS_FOLDED} while the transaction is in progress.
+     * This method fires {@link EventNames.CELLS_FOLDED} while the transaction is in progress.
      *
      * Returns the cells whose collapsed state was changed.
      *

@@ -27,7 +27,7 @@ import {
 } from '../../util/Constants.js';
 import CellHighlight from './CellHighlight.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import { intersectsHotspot } from '../../util/mathUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import { ColorValue } from '../../types.js';
@@ -52,7 +52,7 @@ import type Cell from './Cell.js';
  * ```
  *
  * ### Events
- * **{@link InternalEvent.MARK}**
+ * **{@link EventNames.MARK}**
  *
  * Fires after a cell has been marked or unmarked. The `state` property contains the marked {@link CellState} or `null` if no state is marked.
  */
@@ -276,16 +276,16 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Marks the {@link markedState} and fires a {@link InternalEvent.MARK} event.
+   * Marks the {@link markedState} and fires a {@link EventNames.MARK} event.
    */
   mark() {
     this.highlight.setHighlightColor(this.currentColor);
     this.highlight.highlight(this.markedState);
-    this.fireEvent(new EventObject(InternalEvent.MARK, 'state', this.markedState));
+    this.fireEvent(new EventObject(EventNames.MARK, 'state', this.markedState));
   }
 
   /**
-   * Hides the marker and fires a {@link InternalEvent.MARK} event.
+   * Hides the marker and fires a {@link EventNames.MARK} event.
    */
   unmark(): void {
     this.mark();

@@ -31,6 +31,7 @@ import {
   HierarchicalLayout,
   ImageBox,
   InternalEvent,
+  EventNames,
   type InternalMouseEvent,
   Morphing,
   type PopupMenuHandler,
@@ -165,7 +166,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     } finally {
       // New API for animating graph layout results asynchronously
       const morph = new Morphing(graph);
-      morph.addListener(InternalEvent.DONE, () => {
+      morph.addListener(EventNames.DONE, () => {
         graph.getDataModel().endUpdate();
         post?.();
       });
@@ -183,7 +184,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     // Installs a handler for clicks on the overlay
     overlay.addListener(
-      InternalEvent.CLICK,
+      EventNames.CLICK,
       (_name: string, _funct: (sender: EventTarget, evt: EventObject) => void) => {
         graph.clearSelection();
 
@@ -250,7 +251,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     addOverlay(vertex1);
   });
 
-  connectionHandler.addListener(InternalEvent.CONNECT, function () {
+  connectionHandler.addListener(EventNames.CONNECT, function () {
     executeLayout();
   });
 

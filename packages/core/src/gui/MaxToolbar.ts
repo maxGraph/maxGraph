@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import InternalEvent from '../view/event/InternalEvent.js';
+import { EventNames } from '../view/event/EventNames.js';
 import Point from '../view/geometry/Point.js';
 import MaxPopupMenu from './MaxPopupMenu.js';
 import EventSource from '../view/event/EventSource.js';
@@ -38,7 +39,7 @@ export interface HTMLImageElementWithProps extends HTMLImageElement {
 /**
  * Creates a toolbar inside a given DOM node. The toolbar may contain icons, buttons and combo boxes.
  *
- * ### `InternalEvent.SELECT`
+ * ### `EventNames.SELECT`
  *
  * Fires when an item was selected in the toolbar. The EventObject {@link InternalEvent.function}
  * property contains the function that was selected in {@link selectMode}.
@@ -231,7 +232,7 @@ class MaxToolbar extends EventSource {
     select.className = style || 'mxToolbarCombo';
     this.addOption(select, title, null);
 
-    InternalEvent.addListener(select, 'change', (evt: InternalEvent) => {
+    InternalEvent.addListener(select, 'change', (evt: Event) => {
       const value = <HTMLSelectOptionWithFunct>select.options[select.selectedIndex];
       select.selectedIndex = 0;
 
@@ -319,7 +320,7 @@ class MaxToolbar extends EventSource {
         img.className = `${img.initialClassName}Selected`;
       }
 
-      this.fireEvent(new EventObject(InternalEvent.SELECT));
+      this.fireEvent(new EventObject(EventNames.SELECT));
       funct();
     });
 
@@ -418,7 +419,7 @@ class MaxToolbar extends EventSource {
         this.selectedMode.className = `${this.selectedMode.initialClassName}Selected`;
       }
 
-      this.fireEvent(new EventObject(InternalEvent.SELECT, { function: funct }));
+      this.fireEvent(new EventObject(EventNames.SELECT, { function: funct }));
     }
   }
 

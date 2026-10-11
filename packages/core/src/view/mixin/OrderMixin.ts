@@ -16,7 +16,7 @@ limitations under the License.
 
 import { sortCells } from '../../util/styleUtils.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import type Cell from '../cell/Cell.js';
 
@@ -37,13 +37,7 @@ export const OrderMixin: PartialType = {
 
     this.batchUpdate(() => {
       this.cellsOrdered(<Cell[]>cells, back);
-      const event = new EventObject(
-        InternalEvent.ORDER_CELLS,
-        'back',
-        back,
-        'cells',
-        cells
-      );
+      const event = new EventObject(EventNames.ORDER_CELLS, 'back', back, 'cells', cells);
       this.fireEvent(event);
     });
 
@@ -66,7 +60,7 @@ export const OrderMixin: PartialType = {
         }
       }
 
-      this.fireEvent(new EventObject(InternalEvent.CELLS_ORDERED, { back, cells }));
+      this.fireEvent(new EventObject(EventNames.CELLS_ORDERED, { back, cells }));
     });
   },
 };

@@ -18,7 +18,7 @@ import Cell from '../cell/Cell.js';
 import { sortCells } from '../../util/styleUtils.js';
 import Geometry from '../geometry/Geometry.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import Rectangle from '../geometry/Rectangle.js';
 import type Point from '../geometry/Point.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
@@ -103,9 +103,7 @@ export const GroupingMixin: PartialType = {
         // Resizes the group
         this.cellsResized([group], [bounds], false);
 
-        this.fireEvent(
-          new EventObject(InternalEvent.GROUP_CELLS, { group, border, cells })
-        );
+        this.fireEvent(new EventObject(EventNames.GROUP_CELLS, { group, border, cells }));
       });
     }
     return group;
@@ -198,7 +196,7 @@ export const GroupingMixin: PartialType = {
         }
 
         this.removeCellsAfterUngroup(_cells);
-        this.fireEvent(new EventObject(InternalEvent.UNGROUP_CELLS, { cells }));
+        this.fireEvent(new EventObject(EventNames.UNGROUP_CELLS, { cells }));
       });
     }
     return result;
@@ -231,7 +229,7 @@ export const GroupingMixin: PartialType = {
       const index = parent.getChildCount();
 
       this.cellsAdded(<Cell[]>cells, parent, index, null, null, true);
-      this.fireEvent(new EventObject(InternalEvent.REMOVE_CELLS_FROM_PARENT, { cells }));
+      this.fireEvent(new EventObject(EventNames.REMOVE_CELLS_FROM_PARENT, { cells }));
     });
     return cells;
   },

@@ -16,7 +16,7 @@ limitations under the License.
 
 import Cell from '../cell/Cell.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import Geometry from '../geometry/Geometry.js';
 import { toRadians } from '../../util/mathUtils.js';
 import Rectangle from '../geometry/Rectangle.js';
@@ -102,7 +102,7 @@ export const FoldingMixin: PartialType = {
       this.cellsFolded(cells, collapse, recurse, checkFoldable);
       this.fireEvent(
         new EventObject(
-          InternalEvent.FOLD_CELLS,
+          EventNames.FOLD_CELLS,
           'collapse',
           collapse,
           'recurse',
@@ -140,7 +140,7 @@ export const FoldingMixin: PartialType = {
         }
 
         this.fireEvent(
-          new EventObject(InternalEvent.CELLS_FOLDED, { cells, collapse, recurse })
+          new EventObject(EventNames.CELLS_FOLDED, { cells, collapse, recurse })
         );
       });
     }

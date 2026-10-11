@@ -35,7 +35,7 @@ import type { AbstractGraph } from '../AbstractGraph.js';
  *   circleLayout.execute(graph.getDefaultParent());
  * } finally {
  *   const morph = new Morphing(graph);
- *   morph.addListener(mxEvent.DONE, () => {
+ *   morph.addListener(EventNames.DONE, () => {
  *     graph.getDataModel().endUpdate();
  *   });
  *

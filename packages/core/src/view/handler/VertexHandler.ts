@@ -19,6 +19,7 @@ limitations under the License.
 import Rectangle from '../geometry/Rectangle.js';
 import { NONE } from '../../util/Constants.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import RectangleShape from '../shape/node/RectangleShape.js';
 import ImageShape from '../shape/node/ImageShape.js';
 import EllipseShape from '../shape/node/EllipseShape.js';
@@ -346,7 +347,7 @@ class VertexHandler implements MouseListenerSet {
       this.reset();
     };
 
-    this.state.view.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
+    this.state.view.graph.addListener(EventNames.ESCAPE, this.escapeHandler);
   }
 
   private getSelectionHandler(): SelectionHandler | undefined {

@@ -24,7 +24,7 @@ import {
   eventUtils,
   FastOrganicLayout,
   Graph,
-  InternalEvent,
+  EventNames,
   requestUtils,
   ModelXmlSerializer,
   type PanningHandler,
@@ -124,7 +124,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   });
 
   graph.dblClick = function (evt: MouseEvent, cell?: Cell | null) {
-    const mxe = new EventObject(InternalEvent.DOUBLE_CLICK, { event: evt, cell });
+    const mxe = new EventObject(EventNames.DOUBLE_CLICK, { event: evt, cell });
     this.fireEvent(mxe);
 
     if (

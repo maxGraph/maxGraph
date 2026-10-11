@@ -9,6 +9,23 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+**Breaking Changes**:
+- The 96 event names, such as `CLICK`, `CHANGE` or `CELLS_MOVED`, are no longer static properties of `InternalEvent`. They have moved to the new `EventNames` object, with the same names and the same values. `InternalEvent` keeps its DOM helper methods (`addListener`, `consume`, `disableContextMenu`...), the handle indexes (`LABEL_HANDLE`, `ROTATION_HANDLE`, `CUSTOM_HANDLE`, `VIRTUAL_HANDLE`) and `PINCH_THRESHOLD`.
+  This separates the names of the events fired by maxGraph from the DOM event helpers.
+
+  For example, migrate:
+  ```typescript
+  graph.addListener(InternalEvent.CELLS_MOVED, (sender, evt) => { ... });
+  ```
+  to:
+  ```typescript
+  graph.addListener(EventNames.CELLS_MOVED, (sender, evt) => { ... });
+  ```
+
+  TypeScript reports every former access as an error. **JavaScript applications get no error**: `InternalEvent.CELLS_MOVED` is now `undefined`, so a listener registered with it never fires. Search the code for `InternalEvent\.[A-Z]` to find all the accesses, then exclude the four handle indexes and `PINCH_THRESHOLD`, which have not moved.
+
+  TypeScript applications also get the `EventName` type, the union of the event names.
+
 ## 0.25.0
 
 Release date: `2026-10-06`

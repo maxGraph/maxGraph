@@ -22,7 +22,7 @@ import CellPath from './cell/CellPath.js';
 import Cell from './cell/Cell.js';
 import { isNumeric } from '../util/mathUtils.js';
 import EventObject from './event/EventObject.js';
-import InternalEvent from './event/InternalEvent.js';
+import { EventNames } from './event/EventNames.js';
 import ChildChange from './undoable-change/ChildChange.js';
 import CollapseChange from './undoable-change/CollapseChange.js';
 import GeometryChange from './undoable-change/GeometryChange.js';
@@ -79,7 +79,7 @@ import type { CellStyle, FilterFunction } from '../types.js';
  * each change from the given array of changes.
  *
  * ```javascript
- * model.addListener(mxEvent.CHANGE, function(sender, evt)
+ * model.addListener(EventNames.CHANGE, function(sender, evt)
  * {
  *   var changes = evt.getProperty('edit').changes;
  *   var nodes = [];
@@ -123,18 +123,18 @@ import type { CellStyle, FilterFunction } from '../types.js';
  *
  * edit.notify()
  * {
- *   edit.source.fireEvent(new mxEventObject(mxEvent.CHANGE,
+ *   edit.source.fireEvent(new mxEventObject(EventNames.CHANGE,
  *   	'edit', edit, 'changes', edit.changes));
- *   edit.source.fireEvent(new mxEventObject(mxEvent.NOTIFY,
+ *   edit.source.fireEvent(new mxEventObject(EventNames.NOTIFY,
  *   	'edit', edit, 'changes', edit.changes));
  * }
  *
- * model.fireEvent(new mxEventObject(mxEvent.UNDO, 'edit', edit));
- * model.fireEvent(new mxEventObject(mxEvent.CHANGE,
+ * model.fireEvent(new mxEventObject(EventNames.UNDO, 'edit', edit));
+ * model.fireEvent(new mxEventObject(EventNames.CHANGE,
  *    'edit', edit, 'changes', changes));
  * ```
  *
- * Event: mxEvent.CHANGE
+ * Event: EventNames.CHANGE
  *
  * Fires when an undoable edit is dispatched. The `edit` property
  * contains the {@link UndoableEdit}. The `changes` property contains
@@ -146,7 +146,7 @@ import type { CellStyle, FilterFunction } from '../types.js';
  * For finding newly inserted cells, the following code can be used:
  *
  * ```javascript
- * graph.model.addListener(mxEvent.CHANGE, function(sender, evt)
+ * graph.model.addListener(EventNames.CHANGE, function(sender, evt)
  * {
  *   var changes = evt.getProperty('edit').changes;
  *
@@ -164,56 +164,55 @@ import type { CellStyle, FilterFunction } from '../types.js';
  * });
  * ```
  *
- * Event: mxEvent.NOTIFY
+ * Event: EventNames.NOTIFY
  *
- * Same as {@link Event#CHANGE}, this event can be used for classes that need to
+ * Same as {@link EventNames.CHANGE}, this event can be used for classes that need to
  * implement a sync mechanism between this model and, say, a remote model. In
  * such a setup, only local changes should trigger a notify event and all
  * changes should trigger a change event.
  *
- * Event: mxEvent.EXECUTE
+ * Event: EventNames.EXECUTE
  *
  * Fires between begin- and endUpdate and after an atomic change was executed
  * in the model. The `change` property contains the atomic change
  * that was executed.
  *
- * Event: mxEvent.EXECUTED
+ * Event: EventNames.EXECUTED
  *
- * Fires between START_EDIT and END_EDIT after an atomic change was executed.
+ * Fires between EventNames.START_EDIT and EventNames.END_EDIT after an atomic change was executed.
  * The `change` property contains the change that was executed.
  *
- * Event: mxEvent.BEGIN_UPDATE
+ * Event: EventNames.BEGIN_UPDATE
  *
  * Fires after the {@link updateLevel} was incremented in {@link beginUpdate}. This event
  * contains no properties.
  *
- * Event: mxEvent.START_EDIT
+ * Event: EventNames.START_EDIT
  *
  * Fires after the {@link updateLevel} was changed from 0 to 1. This event
  * contains no properties.
  *
- * Event: mxEvent.END_UPDATE
+ * Event: EventNames.END_UPDATE
  *
  * Fires after the {@link updateLevel} was decreased in {@link endUpdate} but before any
  * notification or change dispatching. The `edit` property contains
  * the {@link currentEdit}.
  *
- * Event: mxEvent.END_EDIT
+ * Event: EventNames.END_EDIT
  *
  * Fires after the {@link updateLevel} was changed from 1 to 0. This event
  * contains no properties.
  *
- * Event: mxEvent.BEFORE_UNDO
+ * Event: EventNames.BEFORE_UNDO
  *
  * Fires before the change is dispatched after the update level has reached 0
  * in {@link endUpdate}. The `edit` property contains the {@link currentEdit}.
  *
- * Event: mxEvent.UNDO
+ * Event: EventNames.UNDO
  *
  * Fires after the change was dispatched in {@link endUpdate}. The `edit`
  * property contains the {@link currentEdit}.
  *
- * @class GraphDataModel
  */
 export class GraphDataModel extends EventSource {
   /**
@@ -948,9 +947,9 @@ export class GraphDataModel extends EventSource {
     change.execute();
     this.beginUpdate();
     this.currentEdit.add(change);
-    this.fireEvent(new EventObject(InternalEvent.EXECUTE, { change }));
+    this.fireEvent(new EventObject(EventNames.EXECUTE, { change }));
     // New global executed event
-    this.fireEvent(new EventObject(InternalEvent.EXECUTED, { change }));
+    this.fireEvent(new EventObject(EventNames.EXECUTED, { change }));
     this.endUpdate();
   }
 
@@ -1018,10 +1017,10 @@ export class GraphDataModel extends EventSource {
    */
   beginUpdate(): void {
     this.updateLevel += 1;
-    this.fireEvent(new EventObject(InternalEvent.BEGIN_UPDATE));
+    this.fireEvent(new EventObject(EventNames.BEGIN_UPDATE));
 
     if (this.updateLevel === 1) {
-      this.fireEvent(new EventObject(InternalEvent.START_EDIT));
+      this.fireEvent(new EventObject(EventNames.START_EDIT));
     }
   }
 
@@ -1041,24 +1040,22 @@ export class GraphDataModel extends EventSource {
     this.updateLevel -= 1;
 
     if (this.updateLevel === 0) {
-      this.fireEvent(new EventObject(InternalEvent.END_EDIT));
+      this.fireEvent(new EventObject(EventNames.END_EDIT));
     }
 
     if (!this.endingUpdate) {
       this.endingUpdate = this.updateLevel === 0;
-      this.fireEvent(
-        new EventObject(InternalEvent.END_UPDATE, { edit: this.currentEdit })
-      );
+      this.fireEvent(new EventObject(EventNames.END_UPDATE, { edit: this.currentEdit }));
 
       try {
         if (this.endingUpdate && !this.currentEdit.isEmpty()) {
           this.fireEvent(
-            new EventObject(InternalEvent.BEFORE_UNDO, { edit: this.currentEdit })
+            new EventObject(EventNames.BEFORE_UNDO, { edit: this.currentEdit })
           );
           const tmp = this.currentEdit;
           this.currentEdit = this.createUndoableEdit();
           tmp.notify();
-          this.fireEvent(new EventObject(InternalEvent.UNDO, { edit: tmp }));
+          this.fireEvent(new EventObject(EventNames.UNDO, { edit: tmp }));
         }
       } finally {
         this.endingUpdate = false;
@@ -1080,10 +1077,10 @@ export class GraphDataModel extends EventSource {
     edit.notify = () => {
       // LATER: Remove changes property (deprecated)
       edit.source.fireEvent(
-        new EventObject(InternalEvent.CHANGE, { edit, changes: edit.changes })
+        new EventObject(EventNames.CHANGE, { edit, changes: edit.changes })
       );
       edit.source.fireEvent(
-        new EventObject(InternalEvent.NOTIFY, { edit, changes: edit.changes })
+        new EventObject(EventNames.NOTIFY, { edit, changes: edit.changes })
       );
     };
 

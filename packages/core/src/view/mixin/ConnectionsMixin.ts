@@ -19,7 +19,7 @@ import ConnectionConstraint from '../other/ConnectionConstraint.js';
 import { getRotatedPoint, toRadians } from '../../util/mathUtils.js';
 import Cell from '../cell/Cell.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import type ConnectionHandler from '../plugin/ConnectionHandler.js';
 
@@ -331,7 +331,7 @@ export const ConnectionsMixin: PartialType = {
       this.cellConnected(edge, terminal, source, constraint);
       this.fireEvent(
         new EventObject(
-          InternalEvent.CONNECT_CELL,
+          EventNames.CONNECT_CELL,
           'edge',
           edge,
           'terminal',
@@ -376,7 +376,7 @@ export const ConnectionsMixin: PartialType = {
 
       this.fireEvent(
         new EventObject(
-          InternalEvent.CELL_CONNECTED,
+          EventNames.CELL_CONNECTED,
           'edge',
           edge,
           'terminal',

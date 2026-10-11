@@ -174,7 +174,7 @@ declare module '../AbstractGraph' {
      * To handle a click event, use the following code.
      *
      * ```javascript
-     * graph.addListener(InternalEvent.CLICK, function(sender, evt) {
+     * graph.addListener(EventNames.CLICK, function(sender, evt) {
      *   const e = evt.getProperty('event'); // mouse event
      *   const cell = evt.getProperty('cell'); // cell may be null
      *
@@ -199,7 +199,7 @@ declare module '../AbstractGraph' {
      *
      * ```javascript
      * graph.dblClick = function(evt, cell) {
-     *   const mxe = new EventObject(InternalEvent.DOUBLE_CLICK, 'event', evt, 'cell', cell);
+     *   const mxe = new EventObject(EventNames.DOUBLE_CLICK, 'event', evt, 'cell', cell);
      *   this.fireEvent(mxe);
      *
      *   if (this.isEnabled() && !InternalEvent.isConsumed(evt) && !mxe.isConsumed()) {
@@ -212,7 +212,7 @@ declare module '../AbstractGraph' {
      * Example listener for this event.
      *
      * ```javascript
-     * graph.addListener(InternalEvent.DOUBLE_CLICK, function(sender, evt) {
+     * graph.addListener(EventNames.DOUBLE_CLICK, function(sender, evt) {
      *   const cell = evt.getProperty('cell');
      *   // do something with the cell and consume the
      *   // event to prevent in-place editing from start
@@ -302,8 +302,8 @@ declare module '../AbstractGraph' {
     /**
      * Dispatches the given event in the graph event dispatch loop.
      *
-     * Possible event names are {@link InternalEvent.MOUSE_DOWN}, {@link InternalEvent.MOUSE_MOVE} and
-     * {@link InternalEvent.MOUSE_UP}.
+     * Possible event names are {@link EventNames.MOUSE_DOWN}, {@link EventNames.MOUSE_MOVE} and
+     * {@link EventNames.MOUSE_UP}.
      * All listeners are invoked for all events regardless of the consumed state of the event.
      *
      * @param evtName String that specifies the type of event to be dispatched.
@@ -326,11 +326,11 @@ declare module '../AbstractGraph' {
     ) => void;
 
     /**
-     * Dispatches a {@link InternalEvent.GESTURE} event. The following example will resize the
+     * Dispatches a {@link EventNames.GESTURE} event. The following example will resize the
      * cell under the mouse based on the scale property of the native touch event.
      *
      * ```javascript
-     * graph.addListener(mxEvent.GESTURE, function(sender, eo) {
+     * graph.addListener(EventNames.GESTURE, function(sender, eo) {
      *   const evt = eo.getProperty('event');
      *   const state = graph.view.getState(eo.getProperty('cell'));
      *

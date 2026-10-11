@@ -25,6 +25,7 @@ import {
   setOpacity,
 } from '../../util/styleUtils.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import Client from '../../Client.js';
 import Guide from './Guide.js';
 import { DROP_TARGET_COLOR } from '../../util/Constants.js';
@@ -69,7 +70,7 @@ class DragSource {
       const evtName = evt.getProperty('eventName');
       const me = evt.getProperty('event');
 
-      if (evtName !== InternalEvent.MOUSE_DOWN) {
+      if (evtName !== EventNames.MOUSE_DOWN) {
         me.consume();
       }
     };
@@ -525,7 +526,7 @@ class DragSource {
     }
 
     // Consumes all events in the current graph before they are fired
-    graph.addListener(InternalEvent.FIRE_MOUSE_EVENT, this.eventConsumer);
+    graph.addListener(EventNames.FIRE_MOUSE_EVENT, this.eventConsumer);
   }
 
   /**

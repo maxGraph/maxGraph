@@ -110,7 +110,7 @@ declare module '../AbstractGraph' {
     ) => Point | null;
 
     /**
-     * Connects the specified end of the given edge to the given terminal using {@link cellConnected} and fires {@link InternalEvent.CONNECT_CELL} while the transaction is in progress.
+     * Connects the specified end of the given edge to the given terminal using {@link cellConnected} and fires {@link EventNames.CONNECT_CELL} while the transaction is in progress.
      *
      * @param edge {@link Cell} whose terminal should be updated.
      * @param terminal {@link Cell} that represents the new terminal to be used.
@@ -128,7 +128,7 @@ declare module '../AbstractGraph' {
     /**
      * Sets the new terminal for the given edge and resets the edge points if {@link resetEdgesOnConnect} is `true`.
      *
-     * This method fires {@link InternalEvent.CELL_CONNECTED} while the transaction is in progress.
+     * This method fires {@link EventNames.CELL_CONNECTED} while the transaction is in progress.
      *
      * @param edge {@link Cell} whose terminal should be updated.
      * @param terminal {@link Cell} that represents the new terminal to be used.

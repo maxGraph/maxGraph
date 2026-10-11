@@ -22,7 +22,7 @@ import type Cell from './cell/Cell.js';
 import SelectionChange from './undoable-change/SelectionChange.js';
 import UndoableEdit from './undoable-change/UndoableEdit.js';
 import EventObject from './event/EventObject.js';
-import InternalEvent from './event/InternalEvent.js';
+import { EventNames } from './event/EventNames.js';
 import { isI18nEnabled } from '../internal/i18n-utils.js';
 
 /**
@@ -31,7 +31,7 @@ import { isI18nEnabled } from '../internal/i18n-utils.js';
  * Here is a listener that handles all removed selection cells.
  *
  * ```javascript
- * graph.getSelectionModel().addListener(InternalEvent.CHANGE, function(sender, evt) {
+ * graph.getSelectionModel().addListener(EventNames.CHANGE, function(sender, evt) {
  *   const cells = evt.getProperty('added');
  *   for (const cell of cells) {
  *     // Handle cell...
@@ -41,13 +41,13 @@ import { isI18nEnabled } from '../internal/i18n-utils.js';
  *
  * ### Events
  *
- * **{@link InternalEvent.UNDO}**
+ * **{@link EventNames.UNDO}**
  *
  * Fires after the selection was changed in {@link changeSelection}. The
  * `edit` property contains the {@link UndoableEdit} which contains the
  * {@link SelectionChange}.
  *
- * **{@link InternalEvent.CHANGE}**
+ * **{@link EventNames.CHANGE}**
  *
  * Fires after the selection changes by executing an {@link SelectionChange}.
  *
@@ -124,7 +124,7 @@ class GraphSelectionModel extends EventSource {
   }
 
   /**
-   * Clears the selection and fires a {@link InternalEvent.CHANGE} event if the selection was not empty.
+   * Clears the selection and fires a {@link EventNames.CHANGE} event if the selection was not empty.
    */
   clear(): void {
     this.changeSelection(null, this.cells);
@@ -140,7 +140,7 @@ class GraphSelectionModel extends EventSource {
   }
 
   /**
-   * Selects the given array of {@link Cell} and fires a {@link InternalEvent.CHANGE} event.
+   * Selects the given array of {@link Cell} and fires a {@link EventNames.CHANGE} event.
    *
    * @param cells Array of {@link Cell} to be selected.
    */
@@ -166,7 +166,7 @@ class GraphSelectionModel extends EventSource {
   }
 
   /**
-   * Adds the given {@link Cell} to the selection and fires a {@link InternalEvent.CHANGE} event.
+   * Adds the given {@link Cell} to the selection and fires a {@link EventNames.CHANGE} event.
    *
    * @param cell {@link Cell} to add to the selection.
    */
@@ -175,7 +175,7 @@ class GraphSelectionModel extends EventSource {
   }
 
   /**
-   * Adds the given array of {@link Cell} to the selection and fires a {@link InternalEvent.CHANGE} event.
+   * Adds the given array of {@link Cell} to the selection and fires a {@link EventNames.CHANGE} event.
    *
    * @param cells Array of {@link Cell} to add to the selection.
    */
@@ -195,7 +195,7 @@ class GraphSelectionModel extends EventSource {
   }
 
   /**
-   * Removes the specified {@link Cell} from the selection and fires a {@link InternalEvent.CHANGE} event
+   * Removes the specified {@link Cell} from the selection and fires a {@link EventNames.CHANGE} event
    * for the remaining cells.
    *
    * @param cell {@link Cell} to remove from the selection.
@@ -205,7 +205,7 @@ class GraphSelectionModel extends EventSource {
   }
 
   /**
-   * Removes the specified {@link Cell} from the selection and fires a {@link InternalEvent.CHANGE} event
+   * Removes the specified {@link Cell} from the selection and fires a {@link EventNames.CHANGE} event
    * for the remaining cells.
    *
    * @param cells {@link Cell}s to remove from the selection.
@@ -229,7 +229,7 @@ class GraphSelectionModel extends EventSource {
       change.execute();
       const edit = new UndoableEdit(this.graph, false);
       edit.add(change);
-      this.fireEvent(new EventObject(InternalEvent.UNDO, { edit }));
+      this.fireEvent(new EventObject(EventNames.UNDO, { edit }));
     }
   }
 

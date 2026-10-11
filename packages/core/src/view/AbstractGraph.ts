@@ -19,7 +19,7 @@ limitations under the License.
 import Image from './image/ImageBox.js';
 import EventObject from './event/EventObject.js';
 import EventSource from './event/EventSource.js';
-import InternalEvent from './event/InternalEvent.js';
+import { EventNames } from './event/EventNames.js';
 import Rectangle from './geometry/Rectangle.js';
 import Client from '../Client.js';
 import type PanningHandler from './plugin/PanningHandler.js';
@@ -444,7 +444,7 @@ export abstract class AbstractGraph extends EventSource {
     this.graphModelChangeListener = (_sender: any, evt: EventObject) => {
       this.graphModelChanged(evt.getProperty('edit').changes);
     };
-    this.getDataModel().addListener(InternalEvent.CHANGE, this.graphModelChangeListener);
+    this.getDataModel().addListener(EventNames.CHANGE, this.graphModelChangeListener);
 
     // Initializes the container using the view
     this.view.init();
@@ -573,7 +573,7 @@ export abstract class AbstractGraph extends EventSource {
         this.view.translate.y = 0;
       }
 
-      this.fireEvent(new EventObject(InternalEvent.ROOT));
+      this.fireEvent(new EventObject(EventNames.ROOT));
     }
 
     // Adds or removes a child to the view by online invaliding
@@ -906,7 +906,7 @@ export abstract class AbstractGraph extends EventSource {
     }
     this.view.validate();
     this.sizeDidChange();
-    this.fireEvent(new EventObject(InternalEvent.REFRESH));
+    this.fireEvent(new EventObject(EventNames.REFRESH));
   }
 
   /**

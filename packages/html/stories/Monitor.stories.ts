@@ -22,7 +22,7 @@ import {
   EdgeStyle,
   Graph,
   type ImageBox,
-  InternalEvent,
+  EventNames,
   ModelXmlSerializer,
   Perimeter,
   StyleDefaultsConfig,
@@ -348,7 +348,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     const overlay = new CellOverlay(image, tooltip);
 
     // Installs a handler for clicks on the overlay
-    overlay.addListener(InternalEvent.CLICK, () =>
+    overlay.addListener(EventNames.CLICK, () =>
       window.alert(`${tooltip}\nLast update: ${new Date()}`)
     );
 

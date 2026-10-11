@@ -313,7 +313,7 @@ declare module '../AbstractGraph' {
     /**
      * Adds the cells to the parent at the given index, connecting each cell to
      * the optional source and target terminal. The change is carried out using
-     * {@link cellsAdded}. This method fires {@link InternalEvent.ADD_CELLS} while the
+     * {@link cellsAdded}. This method fires {@link EventNames.ADD_CELLS} while the
      * transaction is in progress. Returns the cells that were added.
      *
      * @param cells Array of {@link Cell}s to be inserted.
@@ -367,7 +367,7 @@ declare module '../AbstractGraph' {
     /**
      * Removes the given cells from the graph including all connected edges if
      * includeEdges is true. The change is carried out using {@link cellsRemoved}.
-     * This method fires {@link InternalEvent.REMOVE_CELLS} while the transaction is in
+     * This method fires {@link EventNames.REMOVE_CELLS} while the transaction is in
      * progress. The removed cells are returned as an array.
      *
      * @param cells Array of {@link Cell} to remove. If `null` is specified, then the selection cells which are deletable are used.
@@ -377,7 +377,7 @@ declare module '../AbstractGraph' {
 
     /**
      * Removes the given cells from the model. This method fires
-     * {@link InternalEvent.CELLS_REMOVED} while the transaction is in progress.
+     * {@link EventNames.CELLS_REMOVED} while the transaction is in progress.
      *
      * @param cells Array of {@link Cell} to remove.
      */
@@ -386,7 +386,7 @@ declare module '../AbstractGraph' {
     /**
      * Sets the visible state of the specified cells and all connected edges
      * if includeEdges is true. The change is carried out using {@link cellsToggled}.
-     * This method fires {@link InternalEvent.TOGGLE_CELLS} while the transaction is in
+     * This method fires {@link EventNames.TOGGLE_CELLS} while the transaction is in
      * progress. Returns the cells whose visible state was changed.
      *
      * @param show Boolean that specifies the visible state to be assigned.
@@ -405,7 +405,7 @@ declare module '../AbstractGraph' {
 
     /**
      * Updates the size of the given cell in the model using {@link cellSizeUpdated}.
-     * This method fires {@link InternalEvent.UPDATE_CELL_SIZE} while the transaction is in
+     * This method fires {@link EventNames.UPDATE_CELL_SIZE} while the transaction is in
      * progress. Returns the cell whose size was updated.
      *
      * @param cell {@link Cell} whose size should be updated.
@@ -458,7 +458,7 @@ declare module '../AbstractGraph' {
     resizeCell: (cell: Cell, bounds: Rectangle, recurse?: boolean) => Cell;
 
     /**
-     * Sets the bounds of the given cells and fires a {@link InternalEvent.RESIZE_CELLS}
+     * Sets the bounds of the given cells and fires a {@link EventNames.RESIZE_CELLS}
      * event while the transaction is in progress. Returns the cells which
      * have been passed to the function.
      *
@@ -469,7 +469,7 @@ declare module '../AbstractGraph' {
     resizeCells: (cells: Cell[], bounds: Rectangle[], recurse: boolean) => Cell[];
 
     /**
-     * Sets the bounds of the given cells and fires a {@link InternalEvent.CELLS_RESIZED}
+     * Sets the bounds of the given cells and fires a {@link EventNames.CELLS_RESIZED}
      * event. If {@link extendParents} is true, then the parent is extended if a
      * child size is changed so that it overlaps with the parent.
      *
@@ -477,7 +477,7 @@ declare module '../AbstractGraph' {
      * that all child cells stay within the group.
      *
      * ```javascript
-     * graph.addListener(InternalEvent.CELLS_RESIZED, function(sender, evt) {
+     * graph.addListener(EventNames.CELLS_RESIZED, function(sender, evt) {
      *   const cells = evt.getProperty('cells');
      *
      *   if (cells) {
@@ -608,7 +608,7 @@ declare module '../AbstractGraph' {
     /**
      * Moves the specified cells by the given vector, disconnecting the cells using disconnectGraph is disconnect is true.
      *
-     * This method fires {@link InternalEvent.CELLS_MOVED} while the transaction is in progress.
+     * This method fires {@link EventNames.CELLS_MOVED} while the transaction is in progress.
      */
     cellsMoved: (
       cells: Cell[],

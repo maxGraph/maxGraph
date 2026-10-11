@@ -33,8 +33,8 @@ declare module '../AbstractGraph' {
     startEditing: (evt: MouseEvent) => void;
 
     /**
-     * Fires a {@link InternalEvent.START_EDITING} event and invokes {@link CellEditorHandler.startEditing}.
-     * After editing was started, a {@link InternalEvent.EDITING_STARTED} event is fired.
+     * Fires a {@link EventNames.START_EDITING} event and invokes {@link CellEditorHandler.startEditing}.
+     * After editing was started, a {@link EventNames.EDITING_STARTED} event is fired.
      *
      * @param cell {@link Cell} to start the in-place editor for.
      * @param evt Optional mouse event that triggered the editing.
@@ -54,7 +54,7 @@ declare module '../AbstractGraph' {
     getEditingValue: (cell: Cell, evt: MouseEvent | null) => string;
 
     /**
-     * Stops the current editing  and fires a {@link InternalEvent.EDITING_STOPPED} event.
+     * Stops the current editing  and fires a {@link EventNames.EDITING_STOPPED} event.
      *
      * @param cancel Boolean that specifies if the current editing value should be stored.
      */
@@ -62,7 +62,7 @@ declare module '../AbstractGraph' {
 
     /**
      * Sets the label of the specified cell to the given value using {@link cellLabelChanged}
-     * and fires {@link InternalEvent.LABEL_CHANGED} while the transaction is in progress.
+     * and fires {@link EventNames.LABEL_CHANGED} while the transaction is in progress.
      *
      * @param cell {@link Cell} whose label should be changed.
      * @param value New label to be assigned.

@@ -76,7 +76,7 @@ declare module '../AbstractGraph' {
      * Shifts the graph display by the given amount. This is used to preview panning operations, use {@link GraphView.setTranslate} to set a persistent
      * translation of the view.
      *
-     * Fires {@link InternalEvent.PAN}.
+     * Fires {@link EventNames.PAN}.
      *
      * @param dx Amount to shift the graph along the x-axis.
      * @param dy Amount to shift the graph along the y-axis.

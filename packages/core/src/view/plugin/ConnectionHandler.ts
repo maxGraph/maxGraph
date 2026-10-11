@@ -21,6 +21,7 @@ import Cell from '../cell/Cell.js';
 import Point from '../geometry/Point.js';
 import EventObject from '../event/EventObject.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import {
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
@@ -159,12 +160,12 @@ type FactoryMethod = (
  *
  * ### Events
  *
- * #### InternalEvent.START
+ * #### EventNames.START
  *
  * Fires when a new connection is being created by the user. The `state`
  * property contains the state of the source cell.
  *
- * #### InternalEvent.CONNECT
+ * #### EventNames.CONNECT
  *
  * Fires between begin- and endUpdate in {@link connect}. The `cell`
  * property contains the inserted edge, the `event` and `target`
@@ -181,7 +182,7 @@ type FactoryMethod = (
  * the port IDs, use {@link GraphDataModel.getCell}.
  *
  * ```javascript
- * graph.getPlugin('ConnectionHandler')?.addListener(mxEvent.CONNECT, (sender, evt) => {
+ * graph.getPlugin('ConnectionHandler')?.addListener(EventNames.CONNECT, (sender, evt) => {
  *   const edge = evt.getProperty('cell');
  *   const source = graph.getDataModel().getTerminal(edge, true);
  *   const target = graph.getDataModel().getTerminal(edge, false);
@@ -195,7 +196,7 @@ type FactoryMethod = (
  * });
  * ```
  *
- * #### InternalEvent.RESET
+ * #### EventNames.RESET
  *
  * Fires when the {@link reset} method is invoked.
  *
@@ -428,28 +429,26 @@ export default class ConnectionHandler
       }
     };
 
-    this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.changeHandler);
-    this.graph.getView().addListener(InternalEvent.SCALE, this.changeHandler);
-    this.graph.getView().addListener(InternalEvent.TRANSLATE, this.changeHandler);
-    this.graph
-      .getView()
-      .addListener(InternalEvent.SCALE_AND_TRANSLATE, this.changeHandler);
+    this.graph.getDataModel().addListener(EventNames.CHANGE, this.changeHandler);
+    this.graph.getView().addListener(EventNames.SCALE, this.changeHandler);
+    this.graph.getView().addListener(EventNames.TRANSLATE, this.changeHandler);
+    this.graph.getView().addListener(EventNames.SCALE_AND_TRANSLATE, this.changeHandler);
 
     // Removes the icon if we step into/up or start editing
     this.drillHandler = (sender: Listenable) => {
       this.reset();
     };
 
-    this.graph.addListener(InternalEvent.START_EDITING, this.drillHandler);
-    this.graph.getView().addListener(InternalEvent.DOWN, this.drillHandler);
-    this.graph.getView().addListener(InternalEvent.UP, this.drillHandler);
+    this.graph.addListener(EventNames.START_EDITING, this.drillHandler);
+    this.graph.getView().addListener(EventNames.DOWN, this.drillHandler);
+    this.graph.getView().addListener(EventNames.UP, this.drillHandler);
 
     // Handles escape keystrokes
     this.escapeHandler = () => {
       this.reset();
     };
 
-    this.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
+    this.graph.addListener(EventNames.ESCAPE, this.escapeHandler);
   }
 
   /**
@@ -564,7 +563,7 @@ export default class ConnectionHandler
     this.marker.markedState = state;
     this.marker.mark();
 
-    this.fireEvent(new EventObject(InternalEvent.START, { state: this.previous }));
+    this.fireEvent(new EventObject(EventNames.START, { state: this.previous }));
   }
 
   /**
@@ -680,7 +679,7 @@ export default class ConnectionHandler
         if (!isConsumed(evt)) {
           this.icon = icon;
           this.graph.fireMouseEvent(
-            InternalEvent.MOUSE_DOWN,
+            EventNames.MOUSE_DOWN,
             new InternalMouseEvent(evt, getState())
           );
         }
@@ -819,7 +818,7 @@ export default class ConnectionHandler
         this.edgeState.cell.geometry.setTerminalPoint(pt, true);
       }
 
-      this.fireEvent(new EventObject(InternalEvent.START, { state: this.previous }));
+      this.fireEvent(new EventObject(EventNames.START, { state: this.previous }));
 
       me.consume();
     }
@@ -1602,7 +1601,7 @@ export default class ConnectionHandler
     this.mouseDownCounter = 0;
     this.first = null;
 
-    this.fireEvent(new EventObject(InternalEvent.RESET));
+    this.fireEvent(new EventObject(EventNames.RESET));
   }
 
   /**
@@ -1817,7 +1816,7 @@ export default class ConnectionHandler
 
           this.fireEvent(
             new EventObject(
-              InternalEvent.CONNECT,
+              EventNames.CONNECT,
               'cell',
               edge,
               'terminal',

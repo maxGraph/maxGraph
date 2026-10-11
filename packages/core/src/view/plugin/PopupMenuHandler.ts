@@ -18,6 +18,7 @@ limitations under the License.
 
 import MaxPopupMenu from '../../gui/MaxPopupMenu.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import { getScrollOrigin } from '../../util/styleUtils.js';
 import { getMainEvent, isMultiTouchEvent } from '../../util/EventUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
@@ -48,7 +49,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin, MouseListene
       this.inTolerance = false;
     };
 
-    this.graph.addListener(InternalEvent.GESTURE, this.gestureHandler);
+    this.graph.addListener(EventNames.GESTURE, this.gestureHandler);
 
     this.init();
   }

@@ -16,7 +16,7 @@ limitations under the License.
 
 import CellOverlay from '../cell/CellOverlay.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import type InternalMouseEvent from '../event/InternalMouseEvent.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 
@@ -53,7 +53,7 @@ export const OverlaysMixin: PartialType = {
       this.getCellRenderer().redraw(state);
     }
 
-    this.fireEvent(new EventObject(InternalEvent.ADD_OVERLAY, { cell, overlay }));
+    this.fireEvent(new EventObject(EventNames.ADD_OVERLAY, { cell, overlay }));
     return overlay;
   },
 
@@ -77,7 +77,7 @@ export const OverlaysMixin: PartialType = {
           this.getCellRenderer().redraw(state);
         }
 
-        this.fireEvent(new EventObject(InternalEvent.REMOVE_OVERLAY, { cell, overlay }));
+        this.fireEvent(new EventObject(EventNames.REMOVE_OVERLAY, { cell, overlay }));
       } else {
         overlay = null;
       }
@@ -100,13 +100,7 @@ export const OverlaysMixin: PartialType = {
 
     for (let i = 0; i < overlays.length; i += 1) {
       this.fireEvent(
-        new EventObject(
-          InternalEvent.REMOVE_OVERLAY,
-          'cell',
-          cell,
-          'overlay',
-          overlays[i]
-        )
+        new EventObject(EventNames.REMOVE_OVERLAY, 'cell', cell, 'overlay', overlays[i])
       );
     }
 
@@ -138,14 +132,11 @@ export const OverlaysMixin: PartialType = {
 
       // Adds a handler for single mouseclicks to select the cell
       if (isSelect) {
-        overlay.addListener(
-          InternalEvent.CLICK,
-          (sender: any, evt: InternalMouseEvent) => {
-            if (this.isEnabled()) {
-              this.setSelectionCell(cell);
-            }
+        overlay.addListener(EventNames.CLICK, (sender: any, evt: InternalMouseEvent) => {
+          if (this.isEnabled()) {
+            this.setSelectionCell(cell);
           }
-        );
+        });
       }
 
       // Sets and returns the overlay in the graph

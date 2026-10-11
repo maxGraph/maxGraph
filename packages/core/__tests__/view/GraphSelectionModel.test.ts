@@ -19,7 +19,7 @@ import {
   Cell,
   EventObject,
   GlobalConfig,
-  InternalEvent,
+  EventNames,
   resetGlobalConfig,
   SelectionChange,
   UndoableEdit,
@@ -40,10 +40,10 @@ const createModel = (isCellSelectable: (cell: Cell | null) => boolean = () => tr
 const captureSelectionEvents = (model: GraphSelectionModel) => {
   const undo: EventObject[] = [];
   const change: EventObject[] = [];
-  model.addListener(InternalEvent.UNDO, (_sender: unknown, evt: EventObject) => {
+  model.addListener(EventNames.UNDO, (_sender: unknown, evt: EventObject) => {
     undo.push(evt);
   });
-  model.addListener(InternalEvent.CHANGE, (_sender: unknown, evt: EventObject) => {
+  model.addListener(EventNames.CHANGE, (_sender: unknown, evt: EventObject) => {
     change.push(evt);
   });
   return { undo, change };

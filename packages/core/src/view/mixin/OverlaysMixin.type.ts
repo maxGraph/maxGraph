@@ -23,7 +23,7 @@ declare module '../AbstractGraph' {
     /**
      * Adds an {@link CellOverlay} for the specified cell.
      *
-     * This method fires an {@link InternalEvent.ADD_OVERLAY} event and returns the new {@link CellOverlay}.
+     * This method fires an {@link EventNames.ADD_OVERLAY} event and returns the new {@link CellOverlay}.
      *
      * @param cell {@link Cell} to add the overlay for.
      * @param overlay {@link CellOverlay} to be added for the cell.
@@ -40,7 +40,7 @@ declare module '../AbstractGraph' {
     /**
      * Removes and returns the given {@link CellOverlay} from the given cell.
      *
-     * This method fires a {@link InternalEvent.REMOVE_OVERLAY} event.
+     * This method fires a {@link EventNames.REMOVE_OVERLAY} event.
      *
      * If no overlay is given, then all overlays are removed using {@link removeCellOverlays}.
      *
@@ -52,7 +52,7 @@ declare module '../AbstractGraph' {
     /**
      * Removes all {@link CellOverlay}s from the given cell.
      *
-     * This method fires a {@link InternalEvent.REMOVE_OVERLAY} event for each {@link CellOverlay}
+     * This method fires a {@link EventNames.REMOVE_OVERLAY} event for each {@link CellOverlay}
      * and returns an array of {@link CellOverlay}s that was removed from the cell.
      *
      * @param cell {@link Cell} whose overlays should be removed

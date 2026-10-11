@@ -27,7 +27,7 @@ import {
   DomHelpers,
   FastOrganicLayout,
   Graph,
-  InternalEvent,
+  EventNames,
   Morphing,
 } from '@maxgraph/core';
 
@@ -102,7 +102,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       } finally {
         if (args.animate) {
           const morph = new Morphing(graph, 6, 1.5, 20);
-          morph.addListener(InternalEvent.DONE, function () {
+          morph.addListener(EventNames.DONE, function () {
             graph.getDataModel().endUpdate();
           });
           morph.startAnimation();
@@ -123,7 +123,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
         if (args.animate) {
           // Default values are 6, 1.5, 20
           const morph = new Morphing(graph, 10, 1.7, 20);
-          morph.addListener(InternalEvent.DONE, function () {
+          morph.addListener(EventNames.DONE, function () {
             graph.getDataModel().endUpdate();
           });
           morph.startAnimation();

@@ -31,7 +31,7 @@ import {
 import { StyleDefaultsConfig } from '../../util/config.js';
 import Geometry from '../geometry/Geometry.js';
 import EventObject from '../event/EventObject.js';
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import Rectangle from '../geometry/Rectangle.js';
 import Point from '../geometry/Point.js';
 import { htmlEntities } from '../../util/StringUtils.js';
@@ -470,7 +470,7 @@ export const CellsMixin: PartialType = {
             }
           }
 
-          this.fireEvent(new EventObject(InternalEvent.ALIGN_CELLS, { align, cells }));
+          this.fireEvent(new EventObject(EventNames.ALIGN_CELLS, { align, cells }));
         });
       }
     }
@@ -604,7 +604,7 @@ export const CellsMixin: PartialType = {
     this.batchUpdate(() => {
       this.cellsAdded(cells, p, i, source, target, absolute, true);
       this.fireEvent(
-        new EventObject(InternalEvent.ADD_CELLS, { cells, p, i, source, target })
+        new EventObject(EventNames.ADD_CELLS, { cells, p, i, source, target })
       );
     });
 
@@ -693,7 +693,7 @@ export const CellsMixin: PartialType = {
       });
 
       this.fireEvent(
-        new EventObject(InternalEvent.CELLS_ADDED, {
+        new EventObject(EventNames.CELLS_ADDED, {
           cells,
           parent,
           index,
@@ -749,9 +749,7 @@ export const CellsMixin: PartialType = {
 
     this.batchUpdate(() => {
       this.cellsRemoved(cells as Cell[]);
-      this.fireEvent(
-        new EventObject(InternalEvent.REMOVE_CELLS, { cells, includeEdges })
-      );
+      this.fireEvent(new EventObject(EventNames.REMOVE_CELLS, { cells, includeEdges }));
     });
 
     return cells ?? [];
@@ -843,7 +841,7 @@ export const CellsMixin: PartialType = {
           this.getDataModel().remove(cell);
         }
 
-        this.fireEvent(new EventObject(InternalEvent.CELLS_REMOVED, { cells }));
+        this.fireEvent(new EventObject(EventNames.CELLS_REMOVED, { cells }));
       });
     }
   },
@@ -863,7 +861,7 @@ export const CellsMixin: PartialType = {
     this.batchUpdate(() => {
       this.cellsToggled(cells, show);
       this.fireEvent(
-        new EventObject(InternalEvent.TOGGLE_CELLS, { show, cells, includeEdges })
+        new EventObject(EventNames.TOGGLE_CELLS, { show, cells, includeEdges })
       );
     });
     return cells;
@@ -887,7 +885,7 @@ export const CellsMixin: PartialType = {
     this.batchUpdate(() => {
       this.cellSizeUpdated(cell, ignoreChildren);
       this.fireEvent(
-        new EventObject(InternalEvent.UPDATE_CELL_SIZE, { cell, ignoreChildren })
+        new EventObject(EventNames.UPDATE_CELL_SIZE, { cell, ignoreChildren })
       );
     });
     return cell;
@@ -1059,9 +1057,7 @@ export const CellsMixin: PartialType = {
 
     this.batchUpdate(() => {
       const prev = this.cellsResized(cells, bounds, recurse);
-      this.fireEvent(
-        new EventObject(InternalEvent.RESIZE_CELLS, { cells, bounds, prev })
-      );
+      this.fireEvent(new EventObject(EventNames.RESIZE_CELLS, { cells, bounds, prev }));
     });
     return cells;
   },
@@ -1086,7 +1082,7 @@ export const CellsMixin: PartialType = {
         }
 
         this.fireEvent(
-          new EventObject(InternalEvent.CELLS_RESIZED, { cells, bounds, prev })
+          new EventObject(EventNames.CELLS_RESIZED, { cells, bounds, prev })
         );
       });
     }
@@ -1340,7 +1336,7 @@ export const CellsMixin: PartialType = {
 
         // Dispatches a move event
         this.fireEvent(
-          new EventObject(InternalEvent.MOVE_CELLS, {
+          new EventObject(EventNames.MOVE_CELLS, {
             cells,
             dx,
             dy,
@@ -1376,7 +1372,7 @@ export const CellsMixin: PartialType = {
         }
 
         this.fireEvent(
-          new EventObject(InternalEvent.CELLS_MOVED, { cells, dx, dy, disconnect })
+          new EventObject(EventNames.CELLS_MOVED, { cells, dx, dy, disconnect })
         );
       });
     }

@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import EventObject from '../event/EventObject.js';
 import EventSource from '../event/EventSource.js';
 
@@ -45,17 +45,17 @@ import type { UndoableChange } from '../../types.js';
  * graph.model.execute(new CustomChange(graph.model, name));
  * ```
  *
- * Event: mxEvent.EXECUTED
+ * Event: EventNames.EXECUTED
  *
  * Fires between START_EDIT and END_EDIT after an atomic change was executed.
  * The <code>change</code> property contains the change that was executed.
  *
- * Event: mxEvent.START_EDIT
+ * Event: EventNames.START_EDIT
  *
  * Fires before a set of changes will be executed in <undo> or <redo>.
  * This event contains no properties.
  *
- * Event: mxEvent.END_EDIT
+ * Event: EventNames.END_EDIT
  *
  * Fires after a set of changes was executed in <undo> or <redo>.
  * This event contains no properties.
@@ -143,7 +143,7 @@ class UndoableEdit {
    */
   undo() {
     if (!this.undone) {
-      this.source.fireEvent(new EventObject(InternalEvent.START_EDIT));
+      this.source.fireEvent(new EventObject(EventNames.START_EDIT));
       const count = this.changes.length;
 
       for (let i = count - 1; i >= 0; i--) {
@@ -156,12 +156,12 @@ class UndoableEdit {
         }
 
         // New global executed event
-        this.source.fireEvent(new EventObject(InternalEvent.EXECUTED, { change }));
+        this.source.fireEvent(new EventObject(EventNames.EXECUTED, { change }));
       }
 
       this.undone = true;
       this.redone = false;
-      this.source.fireEvent(new EventObject(InternalEvent.END_EDIT));
+      this.source.fireEvent(new EventObject(EventNames.END_EDIT));
     }
 
     this.notify();
@@ -172,7 +172,7 @@ class UndoableEdit {
    */
   redo() {
     if (!this.redone) {
-      this.source.fireEvent(new EventObject(InternalEvent.START_EDIT));
+      this.source.fireEvent(new EventObject(EventNames.START_EDIT));
       const count = this.changes.length;
 
       for (let i = 0; i < count; i += 1) {
@@ -185,12 +185,12 @@ class UndoableEdit {
         }
 
         // New global executed event
-        this.source.fireEvent(new EventObject(InternalEvent.EXECUTED, { change }));
+        this.source.fireEvent(new EventObject(EventNames.EXECUTED, { change }));
       }
 
       this.undone = false;
       this.redone = true;
-      this.source.fireEvent(new EventObject(InternalEvent.END_EDIT));
+      this.source.fireEvent(new EventObject(EventNames.END_EDIT));
     }
 
     this.notify();

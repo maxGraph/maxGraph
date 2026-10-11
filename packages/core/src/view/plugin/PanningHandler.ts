@@ -20,6 +20,7 @@ import EventSource from '../event/EventSource.js';
 import { hasScrollbars } from '../../util/styleUtils.js';
 import EventObject from '../event/EventObject.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import {
   isConsumed,
   isControlDown,
@@ -45,19 +46,19 @@ import type { AbstractGraph } from '../AbstractGraph.js';
  *
  * ### Events
  *
- * **{@link InternalEvent.PAN_START}**
+ * **{@link EventNames.PAN_START}**
  *
  * Fires when the panning handler changes its {@link active} state to `true`.
  *
  * In the {@link EventObject} parameter of the listener function, the `event` property contains the corresponding {@link MouseEvent}.
  *
- * **{@link InternalEvent.PAN}**
+ * **{@link EventNames.PAN}**
  *
  * Fires while handle is processing events.
  *
  * In the {@link EventObject} parameter of the listener function, the `event` property contains the corresponding {@link MouseEvent}.
  *
- * **{@link InternalEvent.PAN_END}**
+ * **{@link EventNames.PAN_END}**
  *
  * Fires when the panning handler changes its {@link active} state to `false`.
  *
@@ -80,15 +81,15 @@ class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSe
       const evtName = eo.getProperty('eventName');
       const me = eo.getProperty('event');
 
-      if (evtName === InternalEvent.MOUSE_DOWN && this.isForcePanningEvent(me)) {
+      if (evtName === EventNames.MOUSE_DOWN && this.isForcePanningEvent(me)) {
         this.start(me);
         this.active = true;
-        this.fireEvent(new EventObject(InternalEvent.PAN_START, { event: me }));
+        this.fireEvent(new EventObject(EventNames.PAN_START, { event: me }));
         me.consume();
       }
     };
 
-    this.graph.addListener(InternalEvent.FIRE_MOUSE_EVENT, this.forcePanningHandler);
+    this.graph.addListener(EventNames.FIRE_MOUSE_EVENT, this.forcePanningHandler);
 
     // Handles pinch gestures
     this.gestureHandler = (_sender: EventSource, eo: EventObject) => {
@@ -113,7 +114,7 @@ class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSe
       }
     };
 
-    this.graph.addListener(InternalEvent.GESTURE, this.gestureHandler);
+    this.graph.addListener(EventNames.GESTURE, this.gestureHandler);
 
     this.mouseUpListener = () => {
       if (this.active) {
@@ -369,7 +370,7 @@ class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSe
         this.graph.panGraph(this.dx + this.dx0, this.dy + this.dy0);
       }
 
-      this.fireEvent(new EventObject(InternalEvent.PAN, { event: me }));
+      this.fireEvent(new EventObject(EventNames.PAN, { event: me }));
     } else if (this.panningTrigger) {
       const tmp = this.active;
 
@@ -380,7 +381,7 @@ class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSe
         Math.abs(this.dy) > this.graph.getSnapTolerance();
 
       if (!tmp && this.active) {
-        this.fireEvent(new EventObject(InternalEvent.PAN_START, { event: me }));
+        this.fireEvent(new EventObject(EventNames.PAN_START, { event: me }));
       }
     }
 
@@ -410,7 +411,7 @@ class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSe
         me.consume();
       }
 
-      this.fireEvent(new EventObject(InternalEvent.PAN_END, { event: me }));
+      this.fireEvent(new EventObject(EventNames.PAN_END, { event: me }));
     }
 
     this.reset();

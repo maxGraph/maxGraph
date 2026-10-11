@@ -114,7 +114,7 @@ declare module '../AbstractGraph' {
     /**
      * Toggles the style of the given edge between `null` (or empty) and {@link alternateEdgeStyle}.
      *
-     * This method fires {@link InternalEvent.FLIP_EDGE} while the transaction is in progress.
+     * This method fires {@link EventNames.FLIP_EDGE} while the transaction is in progress.
      *
      * Here is an example that overrides this implementation to invert the value of {@link CellStateStyle.elbow} without removing any existing styles.
      *
@@ -138,7 +138,7 @@ declare module '../AbstractGraph' {
      * Splits the given edge by adding the newEdge between the previous source and the given cell
      * and reconnecting the source of the given edge to the given cell.
      *
-     * This method fires {@link InternalEvent.SPLIT_EDGE} while the transaction is in progress.
+     * This method fires {@link EventNames.SPLIT_EDGE} while the transaction is in progress.
      *
      * @param edge {@link Cell} that represents the edge to be split.
      * @param cells {@link Cell}s that represents the cells to insert into the edge.

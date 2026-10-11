@@ -40,6 +40,7 @@ import ImageShape from '../shape/node/ImageShape.js';
 import RectangleShape from '../shape/node/RectangleShape.js';
 import ConnectionConstraint from '../other/ConnectionConstraint.js';
 import InternalEvent from '../event/InternalEvent.js';
+import { EventNames } from '../event/EventNames.js';
 import ConstraintHandler from './ConstraintHandler.js';
 import Rectangle from '../geometry/Rectangle.js';
 import Client from '../../Client.js';
@@ -328,7 +329,7 @@ class EdgeHandler implements MouseListenerSet {
       }
     };
 
-    this.state.view.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
+    this.state.view.graph.addListener(EventNames.ESCAPE, this.escapeHandler);
   }
 
   /**
