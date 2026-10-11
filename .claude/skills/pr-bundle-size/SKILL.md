@@ -1,15 +1,17 @@
 ---
 name: pr-bundle-size
-description: "Build the bundle size comparison table of a maxGraph pull request from the CI logs, without building anything locally. Use when the user asks for the bundle size impact of a pull request, for instance a bundler upgrade or a change in @maxgraph/core."
+description: "Build the bundle size comparison table of a maxGraph pull request from the CI logs, or of a local branch with no pull request yet by building the examples locally. Use when the user asks for the bundle size impact of a pull request or of a branch, for instance a bundler upgrade or a change in @maxgraph/core."
 disable-model-invocation: true
-argument-hint: "<pr-number>"
+argument-hint: "[<pr-number>]"
 ---
 
 # Bundle size comparison of a pull request
 
 Compare the sizes of the examples built by the CI run of the pull request with those of the `main` commit that run
-was based on. Read [`.claude/shared/bundle-sizes/README.md`](../../shared/bundle-sizes/README.md) first: it explains
-where the sizes come from and holds the reading rules that apply to the explanation below the table.
+was based on. Without a pull request number, or when the branch has no pull request yet, follow
+[No pull request yet](#no-pull-request-yet) instead. Read
+[`.claude/shared/bundle-sizes/README.md`](../../shared/bundle-sizes/README.md) first: it explains where the sizes come
+from and holds the reading rules that apply to the explanation below the table.
 
 All the commands below use the shared script, from the root of the repository:
 
@@ -83,3 +85,53 @@ follows the reading rules of the shared README:
 
 Do not edit the pull request yourself. When the user asks to add the table to its description, follow
 `.claude/rules/git/pull-requests.md` to keep the blocks added by bots.
+
+## No pull request yet
+
+The branch is checked out locally and has no CI run to read, for instance a Dependabot branch reworked before its pull
+request is opened. The reference still comes from the CI of `main`, the other side from a local build. This is the
+local fallback that the shared README allows.
+
+1. **Find the reference.** It is the merge base of the branch, which the local build starts from:
+   ```bash
+   git fetch origin main
+   base=$(git merge-base HEAD origin/main)
+   $S main-run "$base"                        # <main run> <main run sha>
+   $S relevant-files "$base" origin/main
+   ```
+   When `relevant-files` prints something, `main` gained changes that affect the sizes since the branch started, and
+   the comparison would not show what the merged branch gives: tell the user that the branch needs a rebase on `main`
+   first, and stop.
+2. **Install the locked toolchain, then check it.** A `node_modules` left from another branch measures the old
+   bundler. This happened while measuring a webpack upgrade: the first build ran on the previous webpack.
+   ```bash
+   nvm use && npm install
+   git diff --exit-code package-lock.json
+   $S local-toolchain
+   ```
+   `npm install` only changes the packages that differ from the lock file, where `npm ci` would reinstall all of them.
+   It rewrites `package-lock.json` instead of failing when `package.json` and the lock file disagree, so the build
+   would no longer measure the committed lock: when `git diff` shows a change, tell the user and stop.
+   `local-toolchain` must print nothing. Building with a different toolchain than the lock file is not a measurement.
+3. **Build** core, then the examples, keeping the output:
+   ```bash
+   npm run build -w packages/core
+   ./scripts/build-all-examples.bash --fail-at-end > <scratchpad>/build-examples.log 2>&1
+   ```
+   It takes several minutes, run it in the background.
+4. **Read the sizes and the toolchain:**
+   ```bash
+   $S csv <main run> > <scratchpad>/main.csv
+   $S local-csv <scratchpad>/build-examples.log > <scratchpad>/local.csv
+   $S toolchain <main run sha> HEAD
+   ```
+   `toolchain` reads the commits from git when they are local, so the unpushed head works.
+5. **Build the table** as in step 4 above, with `<scratchpad>/local.csv` as the second file, and report as in step 5,
+   with the run link of `main` only. The column keeps its `PR` header so the table can be pasted unchanged once the
+   pull request exists.
+
+**Check the local build against the CI.** Examples whose dependencies the branch does not change must give exactly
+the CI size. When they do, the local build reproduces the CI and the other rows can be trusted. When they do not,
+something differs in the environment (Node version, a stale build of core): find it before reporting.
+
+A local build is a forecast. Once the pull request exists, its CI run is the measurement to report.

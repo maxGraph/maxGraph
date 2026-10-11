@@ -2,7 +2,8 @@
 
 Shared by the `prepare-release` and `pr-bundle-size` skills. Read the sizes from the CI logs with
 [`ci-bundle-sizes.sh`](./ci-bundle-sizes.sh), run with `--help` for its commands, and read them with the rules below.
-Never build anything to get them, unless the skill offers a local fallback.
+Never build anything to get them, unless the skill offers a local fallback, as `pr-bundle-size` does for a branch
+with no pull request yet.
 
 ## Where the sizes come from
 

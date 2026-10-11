@@ -25,7 +25,7 @@ REPO="maxGraph/maxGraph"
 WORKFLOW="build.yml"
 EXAMPLES_JOB="build_examples (ubuntu-24.04) / build"
 # Bundlers and minifiers whose version changes the sizes on their own
-TOOLCHAIN_PACKAGES_REGEX='(^|/)node_modules/(webpack|terser-webpack-plugin|terser|vite|rolldown|esbuild|lightningcss)$'
+TOOLCHAIN_PACKAGES_REGEX='(^|/)node_modules/(webpack|minimizer-webpack-plugin|terser-webpack-plugin|terser|vite|rolldown|esbuild|lightningcss)$'
 
 usage() {
   cat <<EOF
@@ -34,6 +34,9 @@ Usage: $0 <command> [arguments]
 Commands:
   csv <run> [<repo> [<job>]]  Print the CSV of bundle sizes of a run: the header line, then the values line.
                               Defaults: $REPO, "$EXAMPLES_JOB".
+  local-csv <log>             Print the CSV of bundle sizes from the output of a local run of build-all-examples.bash.
+  local-toolchain             Check, from the root of the repository, that the installed bundlers, minifiers and Node
+                              version match package-lock.json and .nvmrc of HEAD. Print the mismatches and fail if any.
   pr-run <pr>                 Print "<run> <status> <conclusion>" of the latest $WORKFLOW run on the head of the pull
                               request. Print nothing when there is none.
   pr-base <run>               Print "<merge sha> <base sha>" of a pull_request run: the commit it built
@@ -42,7 +45,8 @@ Commands:
                               ancestors. Fail when the commits in between change a file that triggers $WORKFLOW.
   relevant-files <from> <to>  Print the files changed between two commits that trigger $WORKFLOW.
   toolchain <from> <to>       Print the bundlers, minifiers and Node versions that differ between two commits, as
-                              "<package-lock key> <from version> -> <to version>".
+                              "<package-lock key> <from version> -> <to version>". A commit available locally is read
+                              from git, so unpushed commits work.
   table <label> <from csv> <to csv>
                               Print the markdown table comparing two CSV files written by the csv command. <label> is the
                               header of the reference column, for instance "main 173688fcd".
@@ -62,11 +66,39 @@ job_log() {
   gh run view "$run" -R "$repo" --job "$job" --log | sed -E 's/^[^\t]*\t[^\t]*\t[0-9TZ:.-]+ //'
 }
 
-cmd_csv() {
-  local run="$1" repo="${2:-$REPO}" job_name="${3:-$EXAMPLES_JOB}" csv
-  csv=$(job_log "$run" "$repo" "$job_name" | grep -A4 'CSV of bundle sizes' | grep -v -e '^#' -e '^CSV of' -e '^[[:space:]]*$' | head -2)
-  [[ $(wc -l <<<"$csv") -eq 2 ]] || fail "no CSV of bundle sizes in run $run, check that the job ran the examples build"
+extract_csv() {
+  local source="$1" csv
+  csv=$(grep -A4 'CSV of bundle sizes' | grep -v -e '^#' -e '^CSV of' -e '^[[:space:]]*$' | head -2)
+  [[ $(wc -l <<<"$csv") -eq 2 ]] || fail "no CSV of bundle sizes in $source, check that it ran the examples build"
   echo "$csv"
+}
+
+cmd_csv() {
+  local run="$1" repo="${2:-$REPO}" job_name="${3:-$EXAMPLES_JOB}"
+  job_log "$run" "$repo" "$job_name" | extract_csv "run $run"
+}
+
+cmd_local_csv() {
+  local log="$1"
+  [[ -f "$log" ]] || fail "no file $log"
+  extract_csv "$log" <"$log"
+}
+
+cmd_local_toolchain() {
+  local key locked installed mismatches=0
+  while read -r key locked; do
+    if [[ "$key" == ".nvmrc" ]]; then
+      installed=$(node --version 2>/dev/null | sed 's/^v//' || true)
+    else
+      installed=$(jq -r .version "$key/package.json" 2>/dev/null || echo none)
+    fi
+    # .nvmrc may hold a partial version, such as 24, which any 24.x.y satisfies
+    if [[ "$installed" != "$locked" && "$installed" != "$locked".* ]]; then
+      echo "$key locked $locked, installed ${installed:-none}"
+      mismatches=1
+    fi
+  done < <(toolchain_versions HEAD)
+  [[ "$mismatches" -eq 0 ]] || fail "the installed toolchain differs from the lock file, run 'npm install' (and 'nvm use') before building"
 }
 
 cmd_pr_run() {
@@ -118,11 +150,22 @@ cmd_main_run() {
   fail "no successful push run of main found on $sha or its ancestors in the latest 100 runs"
 }
 
+# Read from git when the commit is local, so that unpushed commits work, and from GitHub otherwise, for instance for
+# the refs/pull/<N>/merge commit built by a pull request run, which is never fetched.
+file_at() {
+  local sha="$1" path="$2"
+  if git cat-file -e "$sha^{commit}" 2>/dev/null; then
+    git show "$sha:$path"
+  else
+    gh api -H 'Accept: application/vnd.github.raw' "repos/$REPO/contents/$path?ref=$sha"
+  fi
+}
+
 toolchain_versions() {
   local sha="$1"
-  gh api -H 'Accept: application/vnd.github.raw' "repos/$REPO/contents/package-lock.json?ref=$sha" |
+  file_at "$sha" package-lock.json |
     jq -r --arg regex "$TOOLCHAIN_PACKAGES_REGEX" '.packages | to_entries[] | select(.key | test($regex)) | "\(.key) \(.value.version)"'
-  echo ".nvmrc $(gh api -H 'Accept: application/vnd.github.raw' "repos/$REPO/contents/.nvmrc?ref=$sha" | tr -d '[:space:]')"
+  echo ".nvmrc $(file_at "$sha" .nvmrc | tr -d '[:space:]')"
 }
 
 cmd_toolchain() {
@@ -162,6 +205,8 @@ command="${1:-}"
 [[ $# -gt 0 ]] && shift
 case "$command" in
   csv) [[ $# -ge 1 ]] || fail "usage: csv <run> [<repo> [<job>]]"; cmd_csv "$@" ;;
+  local-csv) [[ $# -eq 1 ]] || fail "usage: local-csv <log>"; cmd_local_csv "$@" ;;
+  local-toolchain) [[ $# -eq 0 ]] || fail "usage: local-toolchain"; cmd_local_toolchain ;;
   pr-run) [[ $# -eq 1 ]] || fail "usage: pr-run <pr>"; cmd_pr_run "$@" ;;
   pr-base) [[ $# -eq 1 ]] || fail "usage: pr-base <run>"; cmd_pr_base "$@" ;;
   main-run) [[ $# -eq 1 ]] || fail "usage: main-run <sha>"; cmd_main_run "$@" ;;
