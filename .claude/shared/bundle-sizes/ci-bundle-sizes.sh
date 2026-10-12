@@ -24,8 +24,9 @@ export LC_ALL=C
 REPO="maxGraph/maxGraph"
 WORKFLOW="build.yml"
 EXAMPLES_JOB="build_examples (ubuntu-24.04) / build"
-# Bundlers and minifiers whose version changes the sizes on their own
-TOOLCHAIN_PACKAGES_REGEX='(^|/)node_modules/(webpack|minimizer-webpack-plugin|terser-webpack-plugin|terser|vite|rolldown|esbuild|lightningcss)$'
+# Bundlers, minifiers and compiler whose version changes the sizes on their own. TypeScript compiles packages/core/lib,
+# which every example bundles. Only its root copy does: the nested ones belong to other tools or to packages/ts-support.
+TOOLCHAIN_PACKAGES_REGEX='(^|/)node_modules/(webpack|minimizer-webpack-plugin|terser-webpack-plugin|terser|vite|rolldown|esbuild|lightningcss)$|^node_modules/typescript$'
 
 usage() {
   cat <<EOF
@@ -35,8 +36,9 @@ Commands:
   csv <run> [<repo> [<job>]]  Print the CSV of bundle sizes of a run: the header line, then the values line.
                               Defaults: $REPO, "$EXAMPLES_JOB".
   local-csv <log>             Print the CSV of bundle sizes from the output of a local run of build-all-examples.bash.
-  local-toolchain             Check, from the root of the repository, that the installed bundlers, minifiers and Node
-                              version match package-lock.json and .nvmrc of HEAD. Print the mismatches and fail if any.
+  local-toolchain             Check, from the root of the repository, that the installed bundlers, minifiers, compiler
+                              and Node version match package-lock.json and .nvmrc of HEAD. Print the mismatches and fail
+                              if any.
   pr-run <pr>                 Print "<run> <status> <conclusion>" of the latest $WORKFLOW run on the head of the pull
                               request. Print nothing when there is none.
   pr-base <run>               Print "<merge sha> <base sha>" of a pull_request run: the commit it built
@@ -44,8 +46,8 @@ Commands:
   main-run <sha>              Print "<run> <run sha>" of the latest successful push run of main on <sha> or on one of its
                               ancestors. Fail when the commits in between change a file that triggers $WORKFLOW.
   relevant-files <from> <to>  Print the files changed between two commits that trigger $WORKFLOW.
-  toolchain <from> <to>       Print the bundlers, minifiers and Node versions that differ between two commits, as
-                              "<package-lock key> <from version> -> <to version>". A commit available locally is read
+  toolchain <from> <to>       Print the bundlers, minifiers, compiler and Node versions that differ between two commits,
+                              as "<package-lock key> <from version> -> <to version>". A commit available locally is read
                               from git, so unpushed commits work.
   table <label> <from csv> <to csv>
                               Print the markdown table comparing two CSV files written by the csv command. <label> is the

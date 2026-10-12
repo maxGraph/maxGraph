@@ -316,15 +316,16 @@ The `csv` command is not tied to the `maxGraph` repository: pass the repository 
 
 **Size information from the pull requests.** Pull requests that change the bundle size often carry a comparison
 table (before/after, or against the previous version). Look at the PRs of the range labelled `enhancement` or
-`refactor`, or whose title starts with `feat`, `refactor` or `perf`, and at the bundler upgrades
-(`chore(deps-dev): bump` of `vite` or `webpack`):
+`refactor`, or whose title starts with `feat`, `refactor` or `perf`, and at the toolchain upgrades
+(`chore(deps-dev): bump` of `vite`, `webpack` or `typescript`). TypeScript counts as toolchain: it compiles
+`packages/core/lib`, which every example bundles, and its bumps carry neither of these labels nor these prefixes:
 
 - `gh pr view <NNNN> --json body,comments,reviews` and look for size tables. When a PR has none, the
   [`pr-bundle-size`](../pr-bundle-size/SKILL.md) skill builds it from the CI logs.
 - Keep the intermediate values: they explain where a size change comes from, and the release notes can show them
   as extra columns (see [step 8](#8-bundle-size-paragraph)). For example, the v0.20.0 release notes had the columns
   `v0.19.0 | enums removal | EdgeStyles tree-shaking | v0.20.0`.
-- Watch the bundler upgrades: their effect must not be attributed to `maxGraph`. Compare the new sizes with the
+- Watch the toolchain upgrades: their effect must not be attributed to `maxGraph`. Compare the new sizes with the
   last `<previous> (...)` tooling row when there is one. For the integration projects, the `release` job gives this
   baseline directly (see above). For the maxGraph examples, there is no such job: when an upgrade has no tooling row
   yet, tell the user, who may add one.
@@ -435,7 +436,7 @@ one table per repository. Do not split the description of the changes from the r
 separate section.
 
 - Start with a short explanation of the size changes, per repository: which change of the release causes them
-  (link the PRs found in [step 5](#5-bundle-sizes-of-the-examples)), and which part comes from a bundler upgrade.
+  (link the PRs found in [step 5](#5-bundle-sizes-of-the-examples)), and which part comes from a toolchain upgrade.
   If the sizes grew, say so in the title and the explanation.
   The reading rules of [`.claude/shared/bundle-sizes/README.md`](../../shared/bundle-sizes/README.md) apply to this
   explanation. For the toolchain rule, compare with the tooling row when there is one (see
@@ -515,7 +516,7 @@ Append the sizes of `<target>` to both CSV files of `docs/examples-bundle-size/`
 `<target>`, values as printed by the CI, in the column order of the header. A new example gets a new column, with
 `-` for the previous versions.
 
-- When the release contains a bundler upgrade whose effect was measured or extrapolated, the corresponding
+- When the release contains a toolchain upgrade whose effect was measured or extrapolated, the corresponding
   `<previous> (...)` tooling row is added to the CSV at the same time, before the `<target>` row. For the
   integration projects, its values come from the `build_projects (release)` job (see
   [step 5](#5-bundle-sizes-of-the-examples)).

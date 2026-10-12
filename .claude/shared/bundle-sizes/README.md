@@ -36,7 +36,8 @@ Apply them to any explanation of a size change, in a pull request or in the rele
   Attribute a change to a pull request only when that pull request measured it, or when the diff between the
   measurements was inspected. Otherwise describe the change without naming a cause.
 - **Lead with the largest changes in kB, not in %.** A large percentage on a small bundle is usually noise.
-- **Compare measurements made with the same toolchain** (Node version, bundler and dependencies). Nothing in the sizes
-  records it, so a tooling change between two measurements is part of their difference, which then cannot be
-  attributed to `maxGraph` alone. The `toolchain` command lists the bundlers, minifiers and Node versions that differ
-  between two commits.
+- **Compare measurements made with the same toolchain** (Node version, bundler, compiler and dependencies). Nothing in
+  the sizes records it, so a tooling change between two measurements is part of their difference, which then cannot be
+  attributed to `maxGraph` alone. TypeScript belongs to it: it compiles `packages/core/lib`, which every example
+  bundles, so a new version can change the sizes without any change in `maxGraph`. The `toolchain` command lists the
+  bundlers, minifiers, compiler and Node versions that differ between two commits.
