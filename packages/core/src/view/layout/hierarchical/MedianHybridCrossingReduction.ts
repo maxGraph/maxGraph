@@ -276,17 +276,17 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
           orderedCells[tempRank] = cell;
         }
 
-        let leftCellAboveConnections: GraphAbstractHierarchyCell[] | null = null;
-        let leftCellBelowConnections: GraphAbstractHierarchyCell[] | null = null;
+        let leftCellAboveConnections: GraphAbstractHierarchyCell[] | null;
+        let leftCellBelowConnections: GraphAbstractHierarchyCell[] | null;
         let rightCellAboveConnections: GraphAbstractHierarchyCell[] | null = null;
         let rightCellBelowConnections: GraphAbstractHierarchyCell[] | null = null;
 
-        let leftAbovePositions: number[] | null = null;
-        let leftBelowPositions: number[] | null = null;
+        let leftAbovePositions: number[] | null;
+        let leftBelowPositions: number[] | null;
         let rightAbovePositions: number[] | null = null;
         let rightBelowPositions: number[] | null = null;
 
-        let leftCell = null;
+        let leftCell;
         let rightCell = null;
 
         for (let j = 0; j < rank.length - 1; j++) {

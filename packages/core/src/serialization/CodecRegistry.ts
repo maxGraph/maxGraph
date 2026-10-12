@@ -95,8 +95,6 @@ class CodecRegistry {
       return null;
     }
 
-    let codec = null;
-
     // Equivalent of calling import { getFunctionName } from '../util/StringUtils';
     let name =
       typeof constructorOrName === 'string' ? constructorOrName : constructorOrName.name;
@@ -106,7 +104,7 @@ class CodecRegistry {
       name = tmp;
     }
 
-    codec = CodecRegistry.codecs[name] ?? null;
+    let codec = CodecRegistry.codecs[name] ?? null;
 
     // Registers a new default codec for the given constructor if no codec has been previously defined.
     if (codec == null) {

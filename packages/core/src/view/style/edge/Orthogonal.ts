@@ -227,11 +227,10 @@ export const OrthogonalConnector: EdgeStyleFunction = (
   // that the edge may connect to
   // portConstraint [source, target]
   const portConstraint: number[] = [DIRECTION_MASK.ALL, DIRECTION_MASK.ALL];
-  let rotation = 0;
 
   if (source != null) {
     portConstraint[0] = getPortConstraints(source, state, true, DIRECTION_MASK.ALL);
-    rotation = source.style.rotation ?? 0;
+    const rotation = source.style.rotation ?? 0;
 
     if (rotation !== 0) {
       const newRect = <Rectangle>(
@@ -249,7 +248,7 @@ export const OrthogonalConnector: EdgeStyleFunction = (
 
   if (target != null) {
     portConstraint[1] = getPortConstraints(target, state, false, DIRECTION_MASK.ALL);
-    rotation = target.style.rotation ?? 0;
+    const rotation = target.style.rotation ?? 0;
 
     if (rotation !== 0) {
       const newRect = <Rectangle>(
@@ -442,7 +441,6 @@ export const OrthogonalConnector: EdgeStyleFunction = (
     prefOrdering[0][1] = vertPref[0];
     prefOrdering[1][0] = horPref[1];
     prefOrdering[1][1] = vertPref[1];
-    preferredOrderSet = true;
   }
 
   // The source and target prefs are now an ordered list of
@@ -534,7 +532,7 @@ export const OrthogonalConnector: EdgeStyleFunction = (
   let lastOrientation =
     (dir[0] & (DIRECTION_MASK.EAST | DIRECTION_MASK.WEST)) > 0 ? 0 : 1;
   const initialOrientation = lastOrientation;
-  let currentOrientation = 0;
+  let currentOrientation: number;
 
   for (let i = 0; i < routePattern.length; i += 1) {
     const nextDirection = routePattern[i] & 0xf;
@@ -578,7 +576,7 @@ export const OrthogonalConnector: EdgeStyleFunction = (
     const center = (routePattern[i] & CENTER_MASK) > 0;
 
     if ((sou || tar) && side < 9) {
-      let limit = 0;
+      let limit: number;
       const souTar = sou ? 0 : 1;
 
       if (center && currentOrientation === 0) {

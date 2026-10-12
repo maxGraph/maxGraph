@@ -82,7 +82,7 @@ class PartitionLayout extends GraphLayout {
     const parent = cell.getParent();
 
     if (cell != null && parent != null) {
-      let i = 0;
+      let i: number;
       let last = 0;
       const childCount = parent.getChildCount();
 

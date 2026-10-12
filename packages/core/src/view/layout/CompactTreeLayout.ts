@@ -737,7 +737,7 @@ export class CompactTreeLayout extends GraphLayout {
    */
   // offset(p1: number, p2: number, a1: number, a2: number, b1: number, b2: number): number;
   offset(p1: number, p2: number, a1: number, a2: number, b1: number, b2: number): number {
-    let d = 0;
+    let d: number;
 
     if (b1 <= p1 || p1 + a1 <= 0) {
       return 0;
@@ -780,13 +780,12 @@ export class CompactTreeLayout extends GraphLayout {
     y2: number
   ) {
     const dx = x2 + line2.dx - x1;
-    let dy = 0;
-    let s = 0;
+    let dy: number;
 
     if (line2.dx === 0) {
       dy = line2.dy;
     } else {
-      s = dx * line2.dy;
+      const s = dx * line2.dy;
       dy = s / line2.dx;
     }
 
@@ -963,7 +962,6 @@ export class CompactTreeLayout extends GraphLayout {
     let maxYOffset = 0;
 
     const parentBounds = this.getVertexBounds(parentCell);
-    child = node.child;
 
     for (let j = 0; j < sortedCells.length; j++) {
       const childCell = <Cell>(<_mxCompactTreeLayoutNode>sortedCells[j].cell).cell;
@@ -971,8 +969,8 @@ export class CompactTreeLayout extends GraphLayout {
       const edges = this.graph.getEdgesBetween(parentCell, childCell, false);
 
       const newPoints: Point[] = [];
-      let x = 0;
-      let y = 0;
+      let x: number;
+      let y: number;
 
       for (let i = 0; i < edges.length; i += 1) {
         if (this.horizontal) {

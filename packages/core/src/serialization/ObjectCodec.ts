@@ -813,7 +813,7 @@ class ObjectCodec {
 
     if (fieldname == null || !this.isExcluded(obj, fieldname, child, false)) {
       const template = this.getFieldTemplate(obj, fieldname, child);
-      let value = null;
+      let value;
 
       if (child.nodeName === 'add') {
         value = child.getAttribute('value');

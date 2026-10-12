@@ -739,7 +739,6 @@ export class StencilShape extends Shape {
         disableShadow &&
         (name === 'fillstroke' || name === 'fill' || name === 'stroke')
       ) {
-        disableShadow = false;
         canvas.setShadow(false);
       }
     }

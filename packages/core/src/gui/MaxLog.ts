@@ -138,8 +138,8 @@ class MaxLog {
       });
 
       // Cross-browser code to get window size
-      let h = 0;
-      let w = 0;
+      let h: number;
+      let w: number;
 
       if (typeof window.innerWidth === 'number') {
         h = window.innerHeight;

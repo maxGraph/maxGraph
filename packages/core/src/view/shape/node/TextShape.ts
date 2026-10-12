@@ -942,8 +942,8 @@ class TextShape extends Shape {
    * Returns the spacing as an {@link Point}.
    */
   getSpacing() {
-    let dx = 0;
-    let dy = 0;
+    let dx: number;
+    let dy: number;
 
     if (this.align === 'center') {
       dx = (this.spacingLeft - this.spacingRight) / 2;

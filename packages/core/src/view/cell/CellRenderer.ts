@@ -869,7 +869,7 @@ class CellRenderer {
    */
   isTextShapeInvalid(state: CellState, shape: TextShape): boolean {
     function check(property: string, styleName: string, defaultValue: any) {
-      let result = false;
+      let result: boolean;
 
       // Workaround for spacing added to directional spacing
       if (

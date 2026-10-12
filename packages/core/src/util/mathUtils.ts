@@ -119,8 +119,6 @@ export const arcToCurves = (
   let ms = Math.sin(s1);
   let x2 = -t * (cpsir1 * ms + spsir2 * mc);
   let y2 = -t * (spsir1 * ms - cpsir2 * mc);
-  let x3 = 0;
-  let y3 = 0;
 
   const result = [];
 
@@ -129,8 +127,8 @@ export const arcToCurves = (
     mc = Math.cos(s1);
     ms = Math.sin(s1);
 
-    x3 = cpsir1 * mc - spsir2 * ms + tx;
-    y3 = spsir1 * mc + cpsir2 * ms + ty;
+    const x3 = cpsir1 * mc - spsir2 * ms + tx;
+    const y3 = spsir1 * mc + cpsir2 * ms + ty;
     const dx = -t * (cpsir1 * ms + spsir2 * mc);
     const dy = -t * (spsir1 * ms - cpsir2 * mc);
 
@@ -327,9 +325,7 @@ export const getPortConstraints = (
  * becomes south | west
  */
 export const reversePortConstraints = (constraint: number) => {
-  let result = 0;
-
-  result = (constraint & DIRECTION_MASK.WEST) << 3;
+  let result = (constraint & DIRECTION_MASK.WEST) << 3;
   result |= (constraint & DIRECTION_MASK.NORTH) << 1;
   result |= (constraint & DIRECTION_MASK.SOUTH) >> 1;
   result |= (constraint & DIRECTION_MASK.EAST) >> 3;

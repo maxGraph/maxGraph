@@ -277,7 +277,7 @@ class VertexHandler implements MouseListenerSet {
             this.sizers.push(this.createSizer('s-resize', i++));
           }
 
-          this.sizers.push(this.createSizer('se-resize', i++));
+          this.sizers.push(this.createSizer('se-resize', i));
         }
 
         const geo = this.state.cell.getGeometry();
@@ -1159,9 +1159,6 @@ class VertexHandler implements MouseListenerSet {
     this.state.height = this.bounds.height;
 
     // Redraws cell and handles
-    let off = this.state.absoluteOffset;
-    off = new Point(off.x, off.y);
-
     // Required to store and reset absolute offset for updating label position
     this.state.absoluteOffset.x = 0;
     this.state.absoluteOffset.y = 0;
@@ -1664,8 +1661,6 @@ class VertexHandler implements MouseListenerSet {
 
       left += cdx;
       top += cdy;
-      right += cdx;
-      bottom += cdy;
     }
 
     // Flips over left side

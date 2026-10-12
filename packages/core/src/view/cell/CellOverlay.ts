@@ -161,7 +161,7 @@ class CellOverlay extends EventSource implements ObjectIdentity {
   getBounds(state: CellState): Rectangle {
     const isEdge = state.cell.isEdge();
     const s = state.view.scale;
-    let pt = null;
+    let pt: Point;
 
     const image = this.image;
     const w = image.width;

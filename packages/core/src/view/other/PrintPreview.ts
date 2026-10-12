@@ -693,8 +693,8 @@ class PrintPreview {
     content: (div: HTMLDivElement) => void,
     pageNumber?: number
   ): HTMLDivElement {
-    let div: HTMLDivElement | null = document.createElement('div');
-    let arg = null;
+    const div = document.createElement('div');
+    let arg: HTMLDivElement;
 
     try {
       // Workaround for ignored clipping in IE 9 standards
@@ -743,10 +743,9 @@ class PrintPreview {
         arg = innerDiv;
       }
     } catch (e) {
-      if (div && div.parentNode) {
+      if (div.parentNode) {
         div.parentNode.removeChild(div);
       }
-      div = null;
       throw e;
     }
 

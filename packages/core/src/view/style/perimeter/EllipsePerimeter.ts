@@ -94,8 +94,8 @@ export const EllipsePerimeter: PerimeterFunction = (
   const dist2 = Math.sqrt(Math.pow(xout2 - px, 2) + Math.pow(yout2 - py, 2));
 
   // Correct solution
-  let xout = 0;
-  let yout = 0;
+  let xout: number;
+  let yout: number;
 
   if (dist1 < dist2) {
     xout = xout1;

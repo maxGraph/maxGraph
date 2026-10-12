@@ -384,7 +384,7 @@ export class EditorToolbar {
       vertex.isConnectable() &&
       graph.isEdgeValid(null, source, vertex)
     ) {
-      let edge = null;
+      let edge: Cell;
 
       model.beginUpdate();
       try {

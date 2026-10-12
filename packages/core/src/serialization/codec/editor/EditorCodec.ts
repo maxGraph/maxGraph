@@ -152,7 +152,7 @@ export class EditorCodec extends ObjectCodec {
           const as = <string>tmp.getAttribute('as');
           const elt = tmp.getAttribute('element');
           const style = tmp.getAttribute('style');
-          let element = null;
+          let element;
 
           if (elt != null) {
             element = document.getElementById(elt);

@@ -900,7 +900,7 @@ class CellEditorHandler implements GraphPlugin {
     const minSize = this.getMinimumSize(state);
     const minWidth = minSize.width;
     const minHeight = minSize.height;
-    let result = null;
+    let result: Rectangle;
 
     if (
       !isEdge &&

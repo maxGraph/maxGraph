@@ -759,7 +759,7 @@ class SwimlaneLayout extends GraphLayout {
             otherVertex = this.getVisibleTerminal(edges[i], false);
           }
 
-          let otherIndex = 0;
+          let otherIndex: number;
 
           // Get the swimlane index of the other terminal
           for (otherIndex = 0; otherIndex < this.swimlanes!.length; otherIndex++) {

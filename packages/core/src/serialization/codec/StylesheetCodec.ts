@@ -163,7 +163,7 @@ export class StylesheetCodec extends ObjectCodec {
 
               if (entry.nodeName === 'add') {
                 const text = getTextContent(<Text>(<unknown>entry));
-                let value = null;
+                let value;
 
                 if (text && StylesheetCodec.allowEval) {
                   value = doEval(text);
