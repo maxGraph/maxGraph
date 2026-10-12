@@ -67,10 +67,11 @@ export const EditingMixin: PartialType = {
         cell = this.getSelectionCell();
 
         if (cell && !this.isCellEditable(cell)) {
-          // eslint-disable-next-line no-useless-assignment -- the else below ignores the fallback cell, a bug to fix separately
           cell = null;
         }
-      } else {
+      }
+
+      if (cell) {
         this.fireEvent(
           new EventObject(InternalEvent.START_EDITING, { cell, event: evt })
         );
