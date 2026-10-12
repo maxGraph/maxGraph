@@ -1864,7 +1864,7 @@ export class GraphView extends EventSource {
 
         px -= x1;
         py -= y1;
-        let projlenSq = 0;
+        let projlenSq: number;
 
         px = xSegment - px;
         py = ySegment - py;

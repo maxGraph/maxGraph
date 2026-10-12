@@ -36,7 +36,7 @@ export const getViewXml = (
   }
 
   const view = graph.getView();
-  let result = null;
+  let result;
 
   // Disables events on the view
   const eventsEnabled = view.isEventsEnabled();

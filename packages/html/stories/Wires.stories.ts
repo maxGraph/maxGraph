@@ -529,7 +529,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       isClone: boolean,
       me: InternalMouseEvent
     ): Cell {
-      let result: Cell | null = null;
+      let result: Cell;
       const model = this.graph.getDataModel();
 
       model.beginUpdate();

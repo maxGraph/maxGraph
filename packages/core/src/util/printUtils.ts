@@ -62,8 +62,6 @@ export const getScaleForPageCount = (
   const graphWidth = graphBounds.width;
   const graphHeight = graphBounds.height;
 
-  let scale = 1;
-
   // The ratio of the width/height for each printer page
   const pageFormatAspectRatio = availablePageWidth / availablePageHeight;
   // The ratio of the width/height for the graph to be printer
@@ -125,7 +123,7 @@ export const getScaleForPageCount = (
 
     // Check which rounding down is smaller, but in the case of very small roundings
     // try the other dimension instead
-    let scaleChange = 1;
+    let scaleChange: number;
 
     // Use the higher of the two values
     if (roundRowDownProportion > roundColumnDownProportion) {
@@ -148,7 +146,7 @@ export const getScaleForPageCount = (
   // Work out the scale from the number of row pages required
   // The column pages will give the same value
   const posterWidth = availablePageWidth * numRowPages;
-  scale = posterWidth / graphWidth;
+  const scale = posterWidth / graphWidth;
 
   // Allow for rounding errors
   return scale * 0.99999;

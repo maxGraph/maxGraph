@@ -60,7 +60,7 @@ export const SegmentConnector: EdgeStyleFunction = (
   // Whether the first segment outgoing from the source end is horizontal
   let lastPushed = result.length > 0 ? result[0] : null;
   let horizontal = true;
-  let hint = null;
+  let hint: Point;
 
   // Adds waypoints only if outside of tolerance
   function pushPoint(pt: Point) {
@@ -138,8 +138,8 @@ export const SegmentConnector: EdgeStyleFunction = (
 
     let currentTerm = source;
     let currentPt = pts[0];
-    let hozChan = false;
-    let vertChan = false;
+    let hozChan: boolean;
+    let vertChan: boolean;
     let currentHint = hint;
 
     if (currentPt != null) {

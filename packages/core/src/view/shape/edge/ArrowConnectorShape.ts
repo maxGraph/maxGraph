@@ -208,10 +208,6 @@ class ArrowConnectorShape extends Shape {
       }
     }
 
-    let dx1 = 0;
-    let dy1 = 0;
-    let dist1 = 0;
-
     for (let i = 0; i < pts.length - 2; i += 1) {
       // Work out in which direction the line is bending
       const pos = relativeCcw(
@@ -223,10 +219,10 @@ class ArrowConnectorShape extends Shape {
         pts[i + 2].y
       );
 
-      dx1 = pts[i + 2].x - pts[i + 1].x;
-      dy1 = pts[i + 2].y - pts[i + 1].y;
+      const dx1 = pts[i + 2].x - pts[i + 1].x;
+      const dy1 = pts[i + 2].y - pts[i + 1].y;
 
-      dist1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);
+      const dist1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);
 
       if (dist1 !== 0) {
         nx1 = dx1 / dist1;

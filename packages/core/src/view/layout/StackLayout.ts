@@ -158,7 +158,7 @@ class StackLayout extends GraphLayout {
     const horizontal = this.isHorizontal();
 
     if (cell != null && parent != null) {
-      let i = 0;
+      let i: number;
       let last = 0;
       const childCount = parent.getChildCount();
       let value = horizontal ? x : y;

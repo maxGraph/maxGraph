@@ -615,7 +615,7 @@ class Outline implements MouseListenerSet {
       const delta = this.getTranslateForEvent(me);
       let dx = delta.x;
       let dy = delta.y;
-      let bounds = null;
+      let bounds: Rectangle;
 
       if (outline && !this.zoom) {
         // Previews the panning on the source graph

@@ -484,7 +484,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       weightedValues[i] = new WeightedCellSorter(currentCell);
       weightedValues[i].rankIndex = i;
       cellMap[<string>currentCell.id] = weightedValues[i];
-      let nextLayerConnectedCells = null;
+      let nextLayerConnectedCells;
 
       if (nextRankValue < rankValue) {
         nextLayerConnectedCells = currentCell.getPreviousLayerConnectedCells(rankValue);
@@ -505,9 +505,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
     // its temp variable
 
     for (let i = 0; i < weightedValues.length; i += 1) {
-      let numConnectionsNextLevel = 0;
       const cell = <GraphHierarchyNode>(<unknown>weightedValues[i].cell);
-      let nextLayerConnectedCells = null;
+      let nextLayerConnectedCells;
       let medianNextLevel = 0;
 
       if (nextRankValue < rankValue) {
@@ -517,7 +516,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       }
 
       if (nextLayerConnectedCells != null) {
-        numConnectionsNextLevel = nextLayerConnectedCells.length;
+        const numConnectionsNextLevel = nextLayerConnectedCells.length;
 
         if (numConnectionsNextLevel > 0) {
           medianNextLevel = this.medianXValue(nextLayerConnectedCells, nextRankValue);
@@ -889,7 +888,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         let downSegCount = 0;
         const upXPositions = [];
         const downXPositions = [];
-        let i = 0;
+        let i: number;
 
         let currentX = cell.getGeneralPurposeVariable(cell.minRank + 1);
 

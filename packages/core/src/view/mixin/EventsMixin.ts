@@ -785,8 +785,6 @@ export const EventsMixin: PartialType = {
   },
 
   consumeMouseEvent(evtName, me, sender) {
-    sender = sender ?? this;
-
     // Workaround for duplicate click in Windows 8 with Chrome/FF/Opera with touch
     if (evtName === InternalEvent.MOUSE_DOWN && isTouchEvent(me.getEvent())) {
       me.consume(false);

@@ -48,7 +48,7 @@ export const HexagonPerimeter: PerimeterFunction = (
   const pi = Math.PI;
   const pi2 = Math.PI / 2;
 
-  let result: Point | null = new Point(cx, cy);
+  let result: Point | null;
 
   const direction = vertex?.style?.direction ?? 'east';
   const vertical = direction === 'north' || direction === 'south';
