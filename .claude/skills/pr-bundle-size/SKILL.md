@@ -60,7 +60,8 @@ $S csv <run> > <scratchpad>/pr.csv
 $S toolchain <main run sha> <merge sha>
 ```
 
-`toolchain` lists the bundlers, minifiers and Node versions that differ between the reference and the merge commit.
+`toolchain` lists the bundlers, minifiers, compiler and Node versions that differ between the reference and the merge
+commit.
 Any line means the toolchain changed in the pull request, which matters for the explanation.
 
 ## 4. Build the table
@@ -78,8 +79,8 @@ Print the table, ready to paste into the description of the pull request, follow
 follows the reading rules of the shared README:
 
 - the changes, the largest first, in kB;
-- the toolchain changes found in step 3, if any, stated as facts: an upgrade of a bundler or a minifier is part of
-  the difference, so never attribute the whole change to `maxGraph`;
+- the toolchain changes found in step 3, if any, stated as facts: an upgrade of a bundler, a minifier or TypeScript is
+  part of the difference, so never attribute the whole change to `maxGraph`;
 - the run links, `https://github.com/maxGraph/maxGraph/actions/runs/<run>`, for both sides;
 - a failed size budget, if any, with the example and the limit to update.
 

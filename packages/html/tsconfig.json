@@ -4,12 +4,14 @@
     "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ES2020", "DOM"],
     "skipLibCheck": false,
+    // Types the css side-effect imports, checked by default since TypeScript 6.0 (noUncheckedSideEffectImports)
+    "types": ["vite/client"],
 
     /* Bundler mode */
     "allowJs": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
