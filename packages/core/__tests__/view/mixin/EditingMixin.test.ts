@@ -20,7 +20,7 @@ import {
   Cell,
   type CellStyle,
   type EventObject,
-  type Graph,
+  Graph,
   InternalEvent,
 } from '../../../src';
 
@@ -69,16 +69,20 @@ const captureEditingEvents = (graph: Graph) => {
   return { startEditingCellIds, editingStartedCellIds };
 };
 
+const insertVertex = (graph: Graph, style: CellStyle = {}): Cell =>
+  graph.insertVertex({ value: 'vertex', position: [10, 10], size: [80, 30], style });
+
 const createGraphWithSelectedVertex = (style: CellStyle = {}) => {
   const graph = createGraphWithoutPlugins();
-  const vertex = graph.insertVertex({
-    value: 'vertex',
-    position: [10, 10],
-    size: [80, 30],
-    style,
-  });
+  const vertex = insertVertex(graph, style);
   graph.setSelectionCell(vertex);
   return { graph, vertex, events: captureEditingEvents(graph) };
+};
+
+const createMultiTouchEvent = (): MouseEvent => {
+  const evt = new MouseEvent('touchstart');
+  Object.defineProperty(evt, 'touches', { value: [{}, {}] });
+  return evt;
 };
 
 describe('startEditingAtCell', () => {
@@ -130,6 +134,29 @@ describe('startEditingAtCell', () => {
     expect(events.startEditingCellIds).toEqual([]);
     expect(events.editingStartedCellIds).toEqual([]);
   });
+
+  test('Start editing the first selection cell when several cells are selected', () => {
+    const { graph, vertex, events } = createGraphWithSelectedVertex();
+    const otherVertex = insertVertex(graph);
+    graph.setSelectionCells([otherVertex, vertex]);
+
+    graph.startEditingAtCell(null);
+
+    expect(events.startEditingCellIds).toEqual([otherVertex.getId()]);
+    expect(events.editingStartedCellIds).toEqual([otherVertex.getId()]);
+  });
+
+  test.each([
+    ['no cell is given', null],
+    ['a cell is given', 'vertex'],
+  ])('Do not start editing on a multi-touch event when %s', (_description, cellKind) => {
+    const { graph, vertex, events } = createGraphWithSelectedVertex();
+
+    graph.startEditingAtCell(cellKind ? vertex : null, createMultiTouchEvent());
+
+    expect(events.startEditingCellIds).toEqual([]);
+    expect(events.editingStartedCellIds).toEqual([]);
+  });
 });
 
 describe('startEditing', () => {
@@ -140,5 +167,20 @@ describe('startEditing', () => {
 
     expect(events.startEditingCellIds).toEqual([vertex.getId()]);
     expect(events.editingStartedCellIds).toEqual([vertex.getId()]);
+  });
+
+  test('Open the cell editor on the selection cell', () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const graph = new Graph(container);
+    const vertex = insertVertex(graph);
+    graph.setSelectionCell(vertex);
+
+    graph.startEditing(new MouseEvent('dblclick'));
+
+    expect(graph.isEditing(vertex)).toBe(true);
+
+    graph.destroy();
+    container.remove();
   });
 });
