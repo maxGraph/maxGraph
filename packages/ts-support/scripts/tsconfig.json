@@ -1,0 +1,14 @@
+{
+  // The scripts run on Node, which strips their types. They are not covered by the tsconfig of the package, which only
+  // checks src with the minimum supported TypeScript version.
+  "compilerOptions": {
+    "module": "nodenext",
+    "strict": true,
+    "noEmit": true,
+    "types": ["node"],
+    // only the syntax that Node can strip
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+  },
+  "include": ["*.ts"],
+}
