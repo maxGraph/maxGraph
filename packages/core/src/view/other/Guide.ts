@@ -16,13 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/Constants.js';
 import Point from '../geometry/Point.js';
 import PolylineShape from '../shape/edge/PolylineShape.js';
 import type CellState from '../cell/CellState.js';
 import Shape from '../shape/Shape.js';
 import Rectangle from '../geometry/Rectangle.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
+import { GuideConfig } from './config.js';
 
 /**
  * Implements the alignment of selection cells to other cells in the graph.
@@ -103,14 +103,14 @@ class Guide {
    * Returns the Shape to be used for painting the respective guide.
    * This is a hook for subclassers to return different shapes for the guides.
    *
-   * This implementation returns a new, dashed and crisp {@link PolylineShape} using
-   * {@link GUIDE_COLOR} and {@link GUIDE_STROKEWIDTH} as the format.
+   * This implementation returns a new {@link PolylineShape} using {@link GuideConfig.color},
+   * {@link GuideConfig.strokeWidth} and {@link GuideConfig.dashed} as the format.
    *
    * @param _horizontal Boolean that specifies which guide should be created.
    */
   createGuideShape(_horizontal = false) {
-    const guide = new PolylineShape([], GUIDE_COLOR, GUIDE_STROKEWIDTH);
-    guide.isDashed = true;
+    const guide = new PolylineShape([], GuideConfig.color, GuideConfig.strokeWidth);
+    guide.isDashed = GuideConfig.dashed;
     return guide;
   }
 
@@ -350,10 +350,16 @@ class Guide {
   }
 
   /**
-   * Hides all current guides.
+   * Returns the color of the guide drawn for the given reference cell.
+   * This is a hook for subclassers to return different colors for the guides.
+   *
+   * This implementation returns {@link GuideConfig.color}.
+   *
+   * @param _state {@link CellState} of the cell the selection is aligned to.
+   * @param _horizontal `true` for the guide aligning the x coordinates (drawn as a vertical line), `false` for the one aligning the y coordinates.
    */
-  getGuideColor(state: CellState, horizontal: boolean) {
-    return GUIDE_COLOR;
+  getGuideColor(_state: CellState, _horizontal: boolean) {
+    return GuideConfig.color;
   }
 
   /**

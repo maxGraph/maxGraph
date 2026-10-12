@@ -23,6 +23,7 @@ import {
   resetEdgeHandlerConfig,
   resetEntityRelationConnectorConfig,
   resetGlobalConfig,
+  resetGuideConfig,
   resetHandleConfig,
   resetManhattanConnectorConfig,
   resetOrthogonalConnectorConfig,
@@ -67,6 +68,7 @@ const resetMaxGraphConfigs = (): void => {
 
   resetEdgeHandlerConfig();
   resetEntityRelationConnectorConfig();
+  resetGuideConfig();
   resetHandleConfig();
   resetManhattanConnectorConfig();
   resetOrthogonalConnectorConfig();

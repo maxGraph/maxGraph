@@ -24,6 +24,7 @@ import {
   RubberBandHandler,
   KeyHandler,
   getDefaultPlugins,
+  GuideConfig,
 } from '@maxgraph/core';
 
 import {
@@ -62,12 +63,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
   div.appendChild(container);
 
-  // TODO provide a change default value of GUIDE_COLOR and GUIDE_STROKEWIDTH, see https://github.com/maxGraph/maxGraph/issues/192
-  // Defines the guides to be red (default)
-  // constants.GUIDE_COLOR = '#FF0000';
-
-  // Defines the guides to be 1 pixel (default)
-  // constants.GUIDE_STROKEWIDTH = 1;
+  // Defines the guides to defaults
+  GuideConfig.color = '#0000FF';
+  GuideConfig.strokeWidth = 3;
 
   // Enables snapping waypoints to terminals
   EdgeHandler.prototype.snapToTerminals = true;

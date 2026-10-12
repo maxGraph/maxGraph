@@ -127,6 +127,7 @@ export * from './view/shape/stencil/StencilShape.js';
 export * from './view/shape/stencil/StencilShapeRegistry.js';
 
 export { default as Guide } from './view/other/Guide.js';
+export * from './view/other/config.js';
 
 export { default as Translations, TranslationsAsI18n } from './i18n/Translations.js';
 export * from './i18n/config.js';

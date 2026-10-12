@@ -15,6 +15,7 @@ The following objects can be used to configure `maxGraph` globally:
   - `Client`: this is the historical entry point for global configuration, coming from the `mxGraph` library.
   - `EdgeHandlerConfig` (since 0.14.0): for `EdgeHandler` (including subclasses).
   - `GlobalConfig` (since 0.11.0): for shared resources (logger).
+  - `GuideConfig` (since 0.26.0): for `Guide`, the [alignment guide](./alignment-guide.md).
   - `HandleConfig` (since 0.14.0): for shared handle configurations.
   - `StencilShapeConfig` (since 0.11.0): for stencil shapes.
   - `StyleDefaultsConfig` (since 0.14.0): for the default values of the Cell styles.
@@ -29,6 +30,7 @@ Some functions are provided to reset the global configuration to the default val
 
   - `resetEdgeHandlerConfig` (since 0.14.0)
   - `resetGlobalConfig` (since 0.23.0)
+  - `resetGuideConfig` (since 0.26.0)
   - `resetHandleConfig` (since 0.14.0)
   - `resetStencilShapeConfig` (since 0.23.0)
   - `resetStyleDefaultsConfig` (since 0.14.0)
