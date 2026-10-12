@@ -1,12 +1,13 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "declarationMap": false,
     "emitDeclarationOnly": false,
     "isolatedModules": true,
     "outDir": "./lib/esm",
+    // Since TypeScript 6.0, rootDir defaults to the folder of this file, which would emit to lib/esm/src
+    "rootDir": "./src",
     "strict": true,
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true,

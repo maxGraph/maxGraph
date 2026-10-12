@@ -1,7 +1,16 @@
 {
-  // This file is not used in compilation. It is here just for a nice editor experience.
+  // Not used by the Docusaurus build, which compiles with its own bundler configuration.
+  // Used by the editor, and by the "typecheck" script run by the website workflow.
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "baseUrl": "."
+    // @docusaurus/tsconfig sets "baseUrl": ".", deprecated since TypeScript 6.0 (error TS5101), and removed in 7.0.
+    // null cancels the inherited value. Remove these overrides once the preset no longer sets baseUrl.
+    "baseUrl": null,
+    // Without baseUrl, "paths" resolve relatively to the tsconfig declaring them. The "@site/*" alias inherited from the
+    // preset would then point inside node_modules/@docusaurus/tsconfig, so it is declared again here to resolve from
+    // the website folder, as Docusaurus does at build time.
+    "paths": {
+      "@site/*": ["./*"]
+    }
   }
 }

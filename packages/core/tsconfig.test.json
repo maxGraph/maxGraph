@@ -1,5 +1,11 @@
 {
   "extends": "./tsconfig",
+  "compilerOptions": {
+    // the tests import the sources, so the root must cover both
+    "rootDir": ".",
+    // Since TypeScript 6.0, no @types package is loaded unless listed. The jest types rely on the node ones
+    "types": ["jest", "node"],
+  },
   "include": ["__tests__/**/*.ts"],
   "exclude": ["src"],
 }
