@@ -235,9 +235,9 @@ export class EditorCodec extends ObjectCodec {
     }
 
     const children = <Element[]>getChildNodes(node);
-    for (let j = 0; j < children.length; j++) {
-      const name = <string>children[j].getAttribute('as');
-      let child = <Element | null>children[j].firstChild;
+    for (const templateNode of children) {
+      const name = <string>templateNode.getAttribute('as');
+      let child = <Element | null>templateNode.firstChild;
 
       while (child != null && child.nodeType !== 1) {
         child = <Element | null>child.nextSibling;

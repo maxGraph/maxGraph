@@ -266,19 +266,19 @@ export default class Translations {
     if (text != null) {
       const lines = text.split('\n');
 
-      for (let i = 0; i < lines.length; i += 1) {
-        if (lines[i].charAt(0) !== '#') {
-          const index = lines[i].indexOf('=');
+      for (const line of lines) {
+        if (line.charAt(0) !== '#') {
+          const index = line.indexOf('=');
 
           if (index > 0) {
-            const key = lines[i].substring(0, index);
-            let idx = lines[i].length;
+            const key = line.substring(0, index);
+            let idx = line.length;
 
-            if (lines[i].charCodeAt(idx - 1) === 13) {
+            if (line.charCodeAt(idx - 1) === 13) {
               idx--;
             }
 
-            let value = lines[i].substring(index + 1, idx);
+            let value = line.substring(index + 1, idx);
 
             if (Translations.resourcesEncoded) {
               value = value.replace(/\\(?=u[a-fA-F\d]{4})/g, '%');

@@ -2099,12 +2099,12 @@ export class Editor extends EventSource {
       const attrs = value.attributes;
       const texts: HTMLTextAreaElement[] = [];
 
-      for (let i = 0; i < attrs.length; i += 1) {
+      for (const attr of attrs) {
         // Creates a textarea with more lines for
         // the cell label
-        const val = attrs[i].value;
+        const val = attr.value;
         texts.push(
-          form.addTextarea(attrs[i].nodeName, val, attrs[i].nodeName === 'label' ? 4 : 2)
+          form.addTextarea(attr.nodeName, val, attr.nodeName === 'label' ? 4 : 2)
         );
       }
 

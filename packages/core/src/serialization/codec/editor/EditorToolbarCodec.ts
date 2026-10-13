@@ -192,15 +192,13 @@ export class EditorToolbarCodec extends ObjectCodec {
                     toggle
                   );
                 } else {
-                  const children = getChildNodes(node);
+                  const children = <Element[]>getChildNodes(node);
 
                   if (children.length > 0) {
                     if (icon == null) {
                       const combo = into.addActionCombo(as);
 
-                      for (let i = 0; i < children.length; i += 1) {
-                        const child = <Element>children[i];
-
+                      for (const child of children) {
                         if (child.nodeName === 'separator') {
                           into.addOption(combo, '---');
                         } else if (child.nodeName === 'add') {
@@ -259,9 +257,7 @@ export class EditorToolbarCodec extends ObjectCodec {
                       });
 
                       // Adds the entries to the combobox
-                      for (let i = 0; i < children.length; i += 1) {
-                        const child = <Element>children[i];
-
+                      for (const child of children) {
                         if (child.nodeName === 'separator') {
                           into.addOption(select, '---');
                         } else if (child.nodeName === 'add') {

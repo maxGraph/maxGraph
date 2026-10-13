@@ -145,8 +145,7 @@ export class CellCodec extends ObjectCodec {
     // Preprocesses and removes all Id-references in order to use the
     // correct encoder (this) for the known references to cells (all).
     if (inner != null) {
-      for (let i = 0; i < this.idrefs.length; i += 1) {
-        const attr = this.idrefs[i];
+      for (const attr of this.idrefs) {
         const ref = inner.getAttribute(attr);
 
         if (ref != null) {
