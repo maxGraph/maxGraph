@@ -114,10 +114,10 @@ export const removeDuplicates = (arr: any[]): any[] => {
   const coveredEntries = new Map();
   const result = [];
 
-  for (let i = 0; i < arr.length; i += 1) {
-    if (!coveredEntries.get(arr[i])) {
-      result.push(arr[i]);
-      coveredEntries.set(arr[i], true);
+  for (const entry of arr) {
+    if (!coveredEntries.get(entry)) {
+      result.push(entry);
+      coveredEntries.set(entry, true);
     }
   }
   return result;

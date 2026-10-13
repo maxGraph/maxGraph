@@ -140,9 +140,9 @@ export const getPrettyXml = (
         const attrs = node.attributes;
 
         if (attrs != null) {
-          for (let i = 0; i < attrs.length; i += 1) {
-            const val = htmlEntities(attrs[i].value);
-            result.push(` ${attrs[i].nodeName}="${val}"`);
+          for (const attr of attrs) {
+            const val = htmlEntities(attr.value);
+            result.push(` ${attr.nodeName}="${val}"`);
           }
         }
 

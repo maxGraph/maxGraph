@@ -345,12 +345,12 @@ export default class MaxXmlRequest {
     const pars = params.indexOf('&') > 0 ? params.split('&') : params.split(' ');
 
     // Adds the parameters as text areas to the form
-    for (let i = 0; i < pars.length; i += 1) {
-      const pos = pars[i].indexOf('=');
+    for (const par of pars) {
+      const pos = par.indexOf('=');
 
       if (pos > 0) {
-        const name = pars[i].substring(0, pos);
-        let value = pars[i].substring(pos + 1);
+        const name = par.substring(0, pos);
+        let value = par.substring(pos + 1);
 
         if (this.decodeSimulateValues) {
           value = decodeURIComponent(value);

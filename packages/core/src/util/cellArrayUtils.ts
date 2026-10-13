@@ -63,12 +63,11 @@ export const getTopmostCells = (cells: Cell[]) => {
   const coveredEntries = new Map<Cell, boolean>();
   const tmp = [] as Cell[];
 
-  for (let i = 0; i < cells.length; i += 1) {
-    coveredEntries.set(cells[i], true);
+  for (const cell of cells) {
+    coveredEntries.set(cell, true);
   }
 
-  for (let i = 0; i < cells.length; i += 1) {
-    const cell = cells[i];
+  for (const cell of cells) {
     let topmost = true;
     let parent = cell.getParent();
 

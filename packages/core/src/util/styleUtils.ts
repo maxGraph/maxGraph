@@ -348,9 +348,7 @@ export const setCellStyles = (
 ) => {
   if (cells.length > 0) {
     model.batchUpdate(() => {
-      for (let i = 0; i < cells.length; i += 1) {
-        const cell = cells[i];
-
+      for (const cell of cells) {
         if (cell) {
           // Currently, the style object must be cloned, otherwise model.setStyle does not trigger the change event and the cell state in the view is not updated
           const style = cell.getClonedStyle();
@@ -392,9 +390,7 @@ export const setCellStyleFlags = (
 ) => {
   if (cells.length > 0) {
     model.batchUpdate(() => {
-      for (let i = 0; i < cells.length; i += 1) {
-        const cell = cells[i];
-
+      for (const cell of cells) {
         if (cell) {
           // Currently, the style object must be cloned, otherwise model.setStyle does not trigger the change event and the cell state in the view is not updated
           const style = setStyleFlag(cell.getClonedStyle(), key, flag, value);

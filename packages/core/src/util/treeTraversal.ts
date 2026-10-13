@@ -53,8 +53,8 @@ export function findTreeRoots(
         let fanOut = 0;
         let fanIn = 0;
 
-        for (let j = 0; j < conns.length; j++) {
-          const src = graph.view.getVisibleTerminal(conns[j], true);
+        for (const conn of conns) {
+          const src = graph.view.getVisibleTerminal(conn, true);
 
           if (src == cell) {
             fanOut++;
