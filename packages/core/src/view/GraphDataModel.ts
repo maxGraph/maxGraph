@@ -79,16 +79,11 @@ import type { CellStyle, FilterFunction } from '../types.js';
  * each change from the given array of changes.
  *
  * ```javascript
- * model.addListener(mxEvent.CHANGE, function(sender, evt)
- * {
- *   var changes = evt.getProperty('edit').changes;
- *   var nodes = [];
- *   var codec = new Codec();
+ * model.addListener(InternalEvent.CHANGE, function(sender, evt) {
+ *   const changes = evt.getProperty('edit').changes;
+ *   const codec = new Codec();
  *
- *   for (var i = 0; i < changes.length; i++)
- *   {
- *     nodes.push(codec.encode(changes[i]));
- *   }
+ *   const nodes = changes.map(change => codec.encode(change));
  *   // do something with the nodes
  * });
  * ```
@@ -118,23 +113,23 @@ import type { CellStyle, FilterFunction } from '../types.js';
  * The changes can then be dispatched using the model as follows.
  *
  * ```javascript
- * var edit = new mxUndoableEdit(model, false);
+ * var edit = new UndoableEdit(model, false);
  * edit.changes = changes;
  *
  * edit.notify()
  * {
- *   edit.source.fireEvent(new mxEventObject(mxEvent.CHANGE,
+ *   edit.source.fireEvent(new EventObject(InternalEvent.CHANGE,
  *   	'edit', edit, 'changes', edit.changes));
- *   edit.source.fireEvent(new mxEventObject(mxEvent.NOTIFY,
+ *   edit.source.fireEvent(new EventObject(InternalEvent.NOTIFY,
  *   	'edit', edit, 'changes', edit.changes));
  * }
  *
- * model.fireEvent(new mxEventObject(mxEvent.UNDO, 'edit', edit));
- * model.fireEvent(new mxEventObject(mxEvent.CHANGE,
+ * model.fireEvent(new EventObject(InternalEvent.UNDO, 'edit', edit));
+ * model.fireEvent(new EventObject(InternalEvent.CHANGE,
  *    'edit', edit, 'changes', changes));
  * ```
  *
- * Event: mxEvent.CHANGE
+ * Event: InternalEvent.CHANGE
  *
  * Fires when an undoable edit is dispatched. The `edit` property
  * contains the {@link UndoableEdit}. The `changes` property contains
@@ -146,17 +141,11 @@ import type { CellStyle, FilterFunction } from '../types.js';
  * For finding newly inserted cells, the following code can be used:
  *
  * ```javascript
- * graph.model.addListener(mxEvent.CHANGE, function(sender, evt)
- * {
- *   var changes = evt.getProperty('edit').changes;
+ * graph.model.addListener(InternalEvent.CHANGE, function(sender, evt) {
+ *   const changes = evt.getProperty('edit').changes;
  *
- *   for (var i = 0; i < changes.length; i++)
- *   {
- *     var change = changes[i];
- *
- *     if (change instanceof mxChildChange &&
- *       change.change.previous == null)
- *     {
+ *   for (const change of changes) {
+ *     if (change instanceof ChildChange && !change.change.previous) {
  *       graph.startEditingAtCell(change.child);
  *       break;
  *     }
@@ -164,51 +153,51 @@ import type { CellStyle, FilterFunction } from '../types.js';
  * });
  * ```
  *
- * Event: mxEvent.NOTIFY
+ * Event: InternalEvent.NOTIFY
  *
  * Same as {@link Event#CHANGE}, this event can be used for classes that need to
  * implement a sync mechanism between this model and, say, a remote model. In
  * such a setup, only local changes should trigger a notify event and all
  * changes should trigger a change event.
  *
- * Event: mxEvent.EXECUTE
+ * Event: InternalEvent.EXECUTE
  *
  * Fires between begin- and endUpdate and after an atomic change was executed
  * in the model. The `change` property contains the atomic change
  * that was executed.
  *
- * Event: mxEvent.EXECUTED
+ * Event: InternalEvent.EXECUTED
  *
  * Fires between START_EDIT and END_EDIT after an atomic change was executed.
  * The `change` property contains the change that was executed.
  *
- * Event: mxEvent.BEGIN_UPDATE
+ * Event: InternalEvent.BEGIN_UPDATE
  *
  * Fires after the {@link updateLevel} was incremented in {@link beginUpdate}. This event
  * contains no properties.
  *
- * Event: mxEvent.START_EDIT
+ * Event: InternalEvent.START_EDIT
  *
  * Fires after the {@link updateLevel} was changed from 0 to 1. This event
  * contains no properties.
  *
- * Event: mxEvent.END_UPDATE
+ * Event: InternalEvent.END_UPDATE
  *
  * Fires after the {@link updateLevel} was decreased in {@link endUpdate} but before any
  * notification or change dispatching. The `edit` property contains
  * the {@link currentEdit}.
  *
- * Event: mxEvent.END_EDIT
+ * Event: InternalEvent.END_EDIT
  *
  * Fires after the {@link updateLevel} was changed from 1 to 0. This event
  * contains no properties.
  *
- * Event: mxEvent.BEFORE_UNDO
+ * Event: InternalEvent.BEFORE_UNDO
  *
  * Fires before the change is dispatched after the update level has reached 0
  * in {@link endUpdate}. The `edit` property contains the {@link currentEdit}.
  *
- * Event: mxEvent.UNDO
+ * Event: InternalEvent.UNDO
  *
  * Fires after the change was dispatched in {@link endUpdate}. The `edit`
  * property contains the {@link currentEdit}.

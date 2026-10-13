@@ -111,6 +111,15 @@ export default tsEslint.config(
     },
   },
 
+  // Only the plugin folder has been migrated to for-of loops, enable the rule there to avoid regressions
+  {
+    files: ['packages/core/src/view/plugin/**/*'],
+    rules: {
+      // https://typescript-eslint.io/rules/prefer-for-of/ part of "plugin:@typescript-eslint/stylistic"
+      '@typescript-eslint/prefer-for-of': 'error',
+    },
+  },
+
   // Storybook rules - only apply to story files in packages/html
   // See https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
   ...storybook.configs['flat/recommended'].map((config) => ({
