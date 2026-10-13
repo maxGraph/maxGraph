@@ -59,32 +59,24 @@ export const getOpposites = (
  * descendants for each {@link Cell} that it contains. Duplicates should be
  * removed in the cells array to improve performance.
  */
-export const getTopmostCells = (cells: Cell[]) => {
+export const getTopmostCells = (cells: Cell[]): Cell[] => {
   const coveredEntries = new Map<Cell, boolean>();
-  const tmp = [] as Cell[];
 
   for (const cell of cells) {
     coveredEntries.set(cell, true);
   }
 
-  for (const cell of cells) {
-    let topmost = true;
+  return cells.filter((cell) => {
     let parent = cell.getParent();
 
     while (parent != null) {
       if (coveredEntries.get(parent)) {
-        topmost = false;
-        break;
+        return false;
       }
       parent = parent.getParent();
     }
-
-    if (topmost) {
-      tmp.push(cell);
-    }
-  }
-
-  return tmp;
+    return true;
+  });
 };
 
 /**
