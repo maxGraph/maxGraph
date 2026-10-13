@@ -167,6 +167,9 @@ const cloneCellImpl = (cell: Cell, mapping: any = {}, includeChildren = false): 
     mapping[identity] = clone;
 
     if (includeChildren) {
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = cell.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {
@@ -200,6 +203,9 @@ const restoreClone = (clone: Cell, cell: Cell, mapping: any): void => {
     }
   }
 
+  // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+  // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+  // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
   const childCount = clone.getChildCount();
   for (let i = 0; i < childCount; i += 1) {
     restoreClone(<Cell>clone.getChildAt(i), <Cell>cell.getChildAt(i), mapping);
