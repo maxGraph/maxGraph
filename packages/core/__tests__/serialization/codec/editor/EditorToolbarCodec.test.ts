@@ -50,27 +50,26 @@ const decode = (xml: string) => {
 };
 
 describe('decode', () => {
-  test('add every entry of an action combo', () => {
-    const addedOptions = decode(
-      '<EditorToolbar><add as="actions"><add as="Save" action="save"/><separator/><add as="Open" action="open"/></add></EditorToolbar>'
-    );
-
-    expect(addedOptions).toEqual([
-      ['action combo', 'Save', 'save'],
-      ['action combo', '---', null],
-      ['action combo', 'Open', 'open'],
-    ]);
-  });
-
-  test('add every entry of a template combo', () => {
-    const addedOptions = decode(
-      '<EditorToolbar><add as="shapes" icon="shapes.gif"><add as="Box" template="box"/><separator/><add as="Ellipse" template="ellipse"/></add></EditorToolbar>'
-    );
-
-    expect(addedOptions).toEqual([
-      ['combo', 'Box', 'box'],
-      ['combo', '---', null],
-      ['combo', 'Ellipse', 'ellipse'],
-    ]);
+  test.each([
+    [
+      'an action combo',
+      '<EditorToolbar><add as="actions"><add as="Save" action="save"/><separator/><add as="Open" action="open"/></add></EditorToolbar>',
+      [
+        ['action combo', 'Save', 'save'],
+        ['action combo', '---', null],
+        ['action combo', 'Open', 'open'],
+      ],
+    ],
+    [
+      'a template combo',
+      '<EditorToolbar><add as="shapes" icon="shapes.gif"><add as="Box" template="box"/><separator/><add as="Ellipse" template="ellipse"/></add></EditorToolbar>',
+      [
+        ['combo', 'Box', 'box'],
+        ['combo', '---', null],
+        ['combo', 'Ellipse', 'ellipse'],
+      ],
+    ],
+  ])('add every entry of %s', (_description, xml, expectedOptions) => {
+    expect(decode(xml)).toEqual(expectedOptions);
   });
 });
