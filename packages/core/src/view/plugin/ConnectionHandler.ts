@@ -1792,11 +1792,9 @@ export default class ConnectionHandler
           if (this.waypoints.length > 0) {
             const s = this.graph.view.scale;
             const tr = this.graph.view.translate;
-            geo.points = [];
-
-            for (const pt of this.waypoints) {
-              geo.points.push(new Point(pt.x / s - tr.x, pt.y / s - tr.y));
-            }
+            geo.points = this.waypoints.map(
+              (pt) => new Point(pt.x / s - tr.x, pt.y / s - tr.y)
+            );
           }
 
           if (!target && this.currentPoint) {

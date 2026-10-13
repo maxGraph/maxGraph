@@ -110,15 +110,4 @@ export const equalEntries = (a: Properties | null, b: Properties | null) => {
 /**
  * Removes all duplicates from the given array.
  */
-export const removeDuplicates = (arr: any[]): any[] => {
-  const coveredEntries = new Map();
-  const result = [];
-
-  for (const entry of arr) {
-    if (!coveredEntries.get(entry)) {
-      result.push(entry);
-      coveredEntries.set(entry, true);
-    }
-  }
-  return result;
-};
+export const removeDuplicates = (arr: any[]): any[] => Array.from(new Set(arr));
