@@ -13,28 +13,28 @@ This guide explains how to configure `maxGraph` globally. This global configurat
 The following objects can be used to configure `maxGraph` globally:
 
   - `Client`: this is the historical entry point for global configuration, coming from the `mxGraph` library.
-  - `EdgeHandlerConfig` (since 0.14.0): for `EdgeHandler` (including subclasses).
-  - `GlobalConfig` (since 0.11.0): for shared resources (logger).
-  - `HandleConfig` (since 0.14.0): for shared handle configurations.
+  - [`EdgeHandlerConfig`](./cell-handlers.md#edgehandlerconfig) (since 0.14.0): for `EdgeHandler` (including subclasses).
+  - `GlobalConfig` (since 0.11.0): for shared resources ([i18n](./i18n.md) since 0.17.0, [logger](./tree-shaking.md#logger)).
+  - [`HandleConfig`](./cell-handlers.md#handleconfig) (since 0.14.0): for shared handle configurations.
   - `StencilShapeConfig` (since 0.11.0): for stencil shapes.
   - `StyleDefaultsConfig` (since 0.14.0): for the default values of the Cell styles.
-  - `TranslationsConfig` (since 0.16.0): for the configuration of `Translations`.
-  - `VertexHandlerConfig` (since 0.12.0): for `VertexHandler`.
-  - For Connectors/EdgeStyles:
+  - [`TranslationsConfig`](./i18n.md#built-in-provider) (since 0.16.0): for the configuration of `Translations`.
+  - [`VertexHandlerConfig`](./cell-handlers.md#vertexhandlerconfig) (since 0.12.0): for `VertexHandler`.
+  - For [Connectors/EdgeStyles](./edge-styles.md):
     - `EntityRelationConnectorConfig` (since 0.15.0): for `EntityRelation`.
     - `ManhattanConnectorConfig` (since 0.16.0): for `ManhattanConnector`.
     - `OrthogonalConnectorConfig` (since 0.16.0): for `OrthConnector`.
 
 Some functions are provided to reset the global configuration to the default values. For example:
 
-  - `resetEdgeHandlerConfig` (since 0.14.0)
+  - [`resetEdgeHandlerConfig`](./cell-handlers.md#resetting-the-configuration) (since 0.14.0)
   - `resetGlobalConfig` (since 0.23.0)
-  - `resetHandleConfig` (since 0.14.0)
+  - [`resetHandleConfig`](./cell-handlers.md#resetting-the-configuration) (since 0.14.0)
   - `resetStencilShapeConfig` (since 0.23.0)
   - `resetStyleDefaultsConfig` (since 0.14.0)
   - `resetTranslationsConfig` (since 0.16.0)
-  - `resetVertexHandlerConfig` (since 0.14.0)
-  - For Connectors/EdgeStyles:
+  - [`resetVertexHandlerConfig`](./cell-handlers.md#resetting-the-configuration) (since 0.14.0)
+  - For [Connectors/EdgeStyles](./edge-styles.md):
     - `resetEntityRelationConnectorConfig` (since 0.15.0)
     - `resetManhattanConnectorConfig` (since 0.16.0)
     - `resetOrthogonalConnectorConfig` (since 0.16.0)
