@@ -53,8 +53,8 @@ export function findTreeRoots(
         let fanOut = 0;
         let fanIn = 0;
 
-        for (let j = 0; j < conns.length; j++) {
-          const src = graph.view.getVisibleTerminal(conns[j], true);
+        for (const conn of conns) {
+          const src = graph.view.getVisibleTerminal(conn, true);
 
           if (src == cell) {
             fanOut++;
@@ -133,6 +133,9 @@ export function traverse(
       const result = func(vertex, edge);
 
       if (result == null || result) {
+        // Keep it outside the loop to have a single call to getEdgeCount for performance reasons.
+        // Subclassers may override getEdgeCount to return a different value than the actual number of edges, and this retrieval could be expensive.
+        // Keeping it outside the loop also avoids calling getEdgeCount multiple times for the same cell.
         const edgeCount = vertex.getEdgeCount();
 
         if (edgeCount > 0) {

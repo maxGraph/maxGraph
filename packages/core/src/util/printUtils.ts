@@ -201,20 +201,20 @@ export const show = (
 
   const base = document.getElementsByTagName('base');
 
-  for (let i = 0; i < base.length; i += 1) {
-    doc.writeln(getOuterHtml(base[i]));
+  for (const element of base) {
+    doc.writeln(getOuterHtml(element));
   }
 
   const links = document.getElementsByTagName('link');
 
-  for (let i = 0; i < links.length; i += 1) {
-    doc.writeln(getOuterHtml(links[i]));
+  for (const link of links) {
+    doc.writeln(getOuterHtml(link));
   }
 
   const styles = document.getElementsByTagName('style');
 
-  for (let i = 0; i < styles.length; i += 1) {
-    doc.writeln(getOuterHtml(styles[i]));
+  for (const style of styles) {
+    doc.writeln(getOuterHtml(style));
   }
 
   doc.writeln('</head><body style="margin:0px;"></body></html>');

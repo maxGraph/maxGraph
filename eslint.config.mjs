@@ -111,9 +111,9 @@ export default tsEslint.config(
     },
   },
 
-  // Only the plugin folder has been migrated to for-of loops, enable the rule there to avoid regressions
+  // Only some folders have been migrated to for-of loops, enable the rule there to avoid regressions
   {
-    files: ['packages/core/src/view/plugin/**/*'],
+    files: ['packages/core/src/util/**/*', 'packages/core/src/view/plugin/**/*'],
     rules: {
       // https://typescript-eslint.io/rules/prefer-for-of/ part of "plugin:@typescript-eslint/stylistic"
       '@typescript-eslint/prefer-for-of': 'error',

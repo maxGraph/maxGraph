@@ -15,7 +15,12 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { cloneCell, cloneCells, getOpposites } from '../../src/util/cellArrayUtils';
+import {
+  cloneCell,
+  cloneCells,
+  getOpposites,
+  getTopmostCells,
+} from '../../src/util/cellArrayUtils';
 import { IDENTITY_FIELD_NAME } from '../../src/util/Constants';
 import Cell from '../../src/view/cell/Cell';
 
@@ -172,5 +177,34 @@ describe('cloneCell', () => {
         expect(clone).toStrictEqual(cell);
       }
     );
+  });
+});
+
+describe('getTopmostCells', () => {
+  test('exclude the cells having an ancestor in the array, and keep the order', () => {
+    const root = new Cell();
+    const parent = new Cell();
+    const child = new Cell();
+    const grandChild = new Cell();
+    const otherParent = new Cell();
+    root.insert(parent);
+    parent.insert(child);
+    child.insert(grandChild);
+    root.insert(otherParent);
+
+    expect(getTopmostCells([parent, grandChild, otherParent, child])).toEqual([
+      parent,
+      otherParent,
+    ]);
+  });
+
+  test('keep the cells whose ancestors are not in the array', () => {
+    const parent = new Cell();
+    const child1 = new Cell();
+    const child2 = new Cell();
+    parent.insert(child1);
+    parent.insert(child2);
+
+    expect(getTopmostCells([child2, child1])).toEqual([child2, child1]);
   });
 });
