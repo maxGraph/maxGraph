@@ -75,11 +75,11 @@ Other global configurations are described in [Global Configuration](../usage/glo
 
 :::
 
-The following global variables may be defined before the client is loaded to specify its language or base path, respectively:
-- BasePath: Specifies the path in `Client.basePath`.
-- ImageBasePath: Specifies the path in `Client.imageBasePath`.
-- Language: Specifies the language for resources in `Client.language`.
-- DefaultLanguage: Specifies the default language in `Client.defaultLanguage`.
+The base paths are configured with the following functions:
+- `Client.setBasePath`: specifies the path in `Client.basePath`.
+- `Client.setImageBasePath`: specifies the path in `Client.imageBasePath`.
+
+The language is configured with `TranslationsConfig`, see the [i18n](../usage/i18n.md#built-in-provider) documentation.
 
 
 ## Reserved Words
