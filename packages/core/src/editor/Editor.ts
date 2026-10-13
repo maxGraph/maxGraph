@@ -2097,16 +2097,10 @@ export class Editor extends EventSource {
 
       // Creates text areas for each attribute of the user object within the cell
       const attrs = value.attributes;
-      const texts: HTMLTextAreaElement[] = [];
-
-      for (let i = 0; i < attrs.length; i += 1) {
-        // Creates a textarea with more lines for
-        // the cell label
-        const val = attrs[i].value;
-        texts.push(
-          form.addTextarea(attrs[i].nodeName, val, attrs[i].nodeName === 'label' ? 4 : 2)
-        );
-      }
+      // Creates a textarea with more lines for the cell label
+      const texts = Array.from(attrs, (attr) =>
+        form.addTextarea(attr.nodeName, attr.value, attr.nodeName === 'label' ? 4 : 2)
+      );
 
       // Adds an OK and Cancel button to the dialog
       // contents and implements the respective

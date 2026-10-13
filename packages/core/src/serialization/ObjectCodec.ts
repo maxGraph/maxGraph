@@ -725,8 +725,8 @@ class ObjectCodec {
     const attrs = node.attributes;
 
     if (attrs != null) {
-      for (let i = 0; i < attrs.length; i += 1) {
-        this.decodeAttribute(dec, attrs[i], obj);
+      for (const attr of attrs) {
+        this.decodeAttribute(dec, attr, obj);
       }
     }
   }
