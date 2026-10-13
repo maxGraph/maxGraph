@@ -64,7 +64,7 @@
     "test-check": "tsc --noEmit --project tsconfig.test.json"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "~0.18.2",
+    "@arethetypeswrong/cli": "~0.18.5",
     "@swc/core": "~1.16.13",
     "@swc/jest": "~0.2.39",
     "@types/jest": "~30.0.0",
