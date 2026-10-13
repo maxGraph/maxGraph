@@ -685,7 +685,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
           if (state) {
             let bbox = null;
 
-            if (cell.isVertex() && state.shape && state.shape.boundingBox) {
+            if (cell.isVertex() && state.shape?.boundingBox) {
               bbox = state.shape.boundingBox;
             }
 
@@ -1180,7 +1180,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
           if (state.cell.isEdge()) {
             const geometry = state.cell.getGeometry();
             const points = (geometry?.points ?? [])
-              .filter((point) => point)
+              .filter(Boolean)
               .map((point) => new Point(point.x + dx / s, point.y + dy / s));
 
             let source = state.visibleSourceState;
