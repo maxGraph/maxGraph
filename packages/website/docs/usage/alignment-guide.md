@@ -83,9 +83,23 @@ Holding **Shift** constrains the move to one axis, and the guides are not used d
 
 ### Customizing the Guide
 
-The `Guide` instance is created by `SelectionHandler.createGuide` at the beginning of every move. Customizing the guide therefore means two things: subclassing `Guide`, then overriding `createGuide` to return the subclass.
+#### Changing the appearance of the lines
 
-#### Subclassing `Guide`
+The color, stroke width and dashed state of the lines are read from `GuideConfig` (since 0.26.0), a [global configuration](./global-configuration.md) object applying to every graph:
+
+```typescript
+GuideConfig.color = '#0000FF'; // '#FF0000' by default
+GuideConfig.strokeWidth = 2; // 1 by default
+GuideConfig.dashed = false; // true by default
+```
+
+`resetGuideConfig()` restores the default values.
+
+#### Changing the behavior
+
+For anything else, or for a color depending on the reference cell or the direction, subclass `Guide`. The `Guide` instance is created by `SelectionHandler.createGuide` at the beginning of every move, so this means two things: subclassing `Guide`, then overriding `createGuide` to return the subclass.
+
+##### Subclassing `Guide`
 
 These members are meant to be changed:
 
@@ -98,8 +112,6 @@ These members are meant to be changed:
 | `isEnabledForEvent(evt)` | Whether the guide is used for the given mouse event. Returns `true` by default. |
 | `getGuideColor(state, horizontal)` | Color of the line drawn for the given reference cell. |
 | `createGuideShape(horizontal)` | Shape used to draw a line. A dashed `PolylineShape` by default. |
-
-The default color and stroke width come from the `GUIDE_COLOR` (`#FF0000`) and `GUIDE_STROKEWIDTH` (`1`) constants. They cannot be reassigned, so override `getGuideColor` or `createGuideShape` to change them.
 
 ```typescript
 class CustomGuide extends Guide {
@@ -119,7 +131,7 @@ class CustomGuide extends Guide {
 
 Using Alt in `isEnabledForEvent` matches the default of `isGridEnabledEvent` on the graph, which disables the grid snapping while Alt is held. The user then has a single key to move a cell freely, without the grid nor the guides.
 
-#### Providing the custom guide
+##### Providing the custom guide
 
 Override `createGuide`, either in a subclass of `SelectionHandler` registered in place of the default one, or by patching the plugin instance. [Choosing between a subclass and an instance patch](../guides/extend-maxgraph.md#choosing-between-a-subclass-and-an-instance-patch) explains how to choose.
 

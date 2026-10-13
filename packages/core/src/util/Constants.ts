@@ -186,14 +186,12 @@ export const VERTEX_SELECTION_DASHED = true;
 export const EDGE_SELECTION_DASHED = true;
 
 /**
- * Defines the color to be used for the guidelines in `Guide`.
- * @default #FF0000.
+ * Default value of {@link GuideConfig.color}.
  */
 export const GUIDE_COLOR = '#FF0000';
 
 /**
- * Defines the strokewidth to be used for the guidelines in `Guide`.
- * @default 1.
+ * Default value of {@link GuideConfig.strokeWidth}.
  */
 export const GUIDE_STROKEWIDTH = 1;
 
