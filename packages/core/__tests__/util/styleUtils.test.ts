@@ -23,7 +23,7 @@ import {
   setCellStyles,
 } from '../../src/util/styleUtils';
 import { FONT_STYLE_MASK } from '../../src/util/Constants';
-import { type CellStyle, BaseGraph, Client } from '../../src';
+import { type Cell, type CellStyle, BaseGraph, Client } from '../../src';
 import { createGraphWithoutPlugins } from '../utils';
 
 describe('parseCssNumber', () => {
@@ -320,4 +320,45 @@ test.each([
   setCellStyles(graph.getDataModel(), [cell], 'strokeColor', 'chartreuse');
   expect(cell.style.strokeColor).toBe('chartreuse');
   expect(graph.getView().getState(cell)?.style?.strokeColor).toBe('chartreuse');
+});
+
+describe('update several cells at once', () => {
+  const insertVertices = (graph: BaseGraph): Cell[] =>
+    [1, 2].map(() =>
+      graph.insertVertex({ position: [0, 0], size: [10, 10], style: { fontStyle: 4 } })
+    );
+
+  test('setCellStyles updates every cell and skips the missing ones', () => {
+    const graph = new BaseGraph();
+    const [cell1, cell2] = insertVertices(graph);
+
+    setCellStyles(
+      graph.getDataModel(),
+      [cell1, null as unknown as Cell, cell2],
+      'strokeColor',
+      'chartreuse'
+    );
+
+    expect([cell1.style.strokeColor, cell2.style.strokeColor]).toEqual([
+      'chartreuse',
+      'chartreuse',
+    ]);
+    graph.destroy();
+  });
+
+  test('setCellStyleFlags updates every cell and skips the missing ones', () => {
+    const graph = new BaseGraph();
+    const [cell1, cell2] = insertVertices(graph);
+
+    setCellStyleFlags(
+      graph.getDataModel(),
+      [cell1, null as unknown as Cell, cell2],
+      'fontStyle',
+      FONT_STYLE_MASK.BOLD,
+      true
+    );
+
+    expect([cell1.style.fontStyle, cell2.style.fontStyle]).toEqual([5, 5]);
+    graph.destroy();
+  });
 });
