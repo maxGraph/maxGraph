@@ -746,20 +746,15 @@ class VertexHandler implements MouseListenerSet {
           this.customHandles[InternalEvent.CUSTOM_HANDLE - index].setVisible(true);
         }
 
-        // Gets the array of connected edge handlers for redrawing
-        const edges = this.state.cell.getEdges();
-        this.edgeHandlers = [];
-
         const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
           'SelectionCellsHandler'
         );
 
-        for (const edge of edges) {
-          const handler = selectionCellsHandler?.getHandler(edge);
-          if (handler) {
-            this.edgeHandlers.push(handler as EdgeHandler);
-          }
-        }
+        // Gets the array of connected edge handlers for redrawing
+        this.edgeHandlers = this.state.cell
+          .getEdges()
+          .map((edge) => selectionCellsHandler?.getHandler(edge))
+          .filter((handler) => !isNullish(handler)) as EdgeHandler[];
       }
     }
   }
