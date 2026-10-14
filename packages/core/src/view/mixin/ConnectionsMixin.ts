@@ -397,8 +397,8 @@ export const ConnectionsMixin: PartialType = {
       // Fast lookup for finding cells in array
       const dict = new Map<Cell, boolean>();
 
-      for (let i = 0; i < cells.length; i += 1) {
-        dict.set(cells[i], true);
+      for (const cell of cells) {
+        dict.set(cell, true);
       }
 
       for (const cell of cells) {

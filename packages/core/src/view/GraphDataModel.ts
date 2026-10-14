@@ -505,6 +505,9 @@ export class GraphDataModel extends EventSource {
    */
   updateEdgeParents(cell: Cell, root: Cell = <Cell>this.getRoot(cell)) {
     // Updates edges on children first
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = cell.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {
@@ -513,6 +516,9 @@ export class GraphDataModel extends EventSource {
     }
 
     // Updates the parents of all connected edges
+    // Keep it outside the loop to have a single call to getEdgeCount for performance reasons.
+    // Subclassers may override getEdgeCount to return a different value than the actual number of edges, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getEdgeCount multiple times for the same cell.
     const edgeCount = cell.getEdgeCount();
     const edges: Cell[] = [];
 
@@ -520,9 +526,7 @@ export class GraphDataModel extends EventSource {
       edges.push(cell.getEdgeAt(i));
     }
 
-    for (let i = 0; i < edges.length; i += 1) {
-      const edge = edges[i];
-
+    for (const edge of edges) {
       // Updates edge parent if edge and child have
       // a common root node (does not need to be the
       // model root node)
@@ -621,6 +625,9 @@ export class GraphDataModel extends EventSource {
   cellRemoved(cell: Cell): void {
     if (cell != null && this.cells != null) {
       // Recursively processes child cells
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = cell.getChildCount();
 
       for (let i = childCount - 1; i >= 0; i--) {
@@ -1128,6 +1135,9 @@ export class GraphDataModel extends EventSource {
   mergeChildrenImpl(from: Cell, to: Cell, cloneAllEdges: boolean, mapping: any = {}) {
     this.beginUpdate();
     try {
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = from.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {

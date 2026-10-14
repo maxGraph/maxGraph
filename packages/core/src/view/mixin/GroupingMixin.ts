@@ -169,12 +169,12 @@ export const GroupingMixin: PartialType = {
       this.batchUpdate(() => {
         const _cells = <Cell[]>cells;
 
-        for (let i = 0; i < _cells.length; i += 1) {
-          let children = _cells[i].getChildren();
+        for (const cell of _cells) {
+          let children = cell.getChildren();
 
           if (children != null && children.length > 0) {
             children = children.slice();
-            const parent = <Cell>_cells[i].getParent();
+            const parent = <Cell>cell.getParent();
             const index = parent.getChildCount();
 
             this.cellsAdded(children, parent, index, null, null, true);
@@ -210,9 +210,9 @@ export const GroupingMixin: PartialType = {
     // Finds the cells with children
     const tmp = [];
 
-    for (let i = 0; i < cells.length; i += 1) {
-      if (cells[i].isVertex() && cells[i].getChildCount() > 0) {
-        tmp.push(cells[i]);
+    for (const cell of cells) {
+      if (cell.isVertex() && cell.getChildCount() > 0) {
+        tmp.push(cell);
       }
     }
     return tmp;

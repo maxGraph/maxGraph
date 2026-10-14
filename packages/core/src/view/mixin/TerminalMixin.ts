@@ -38,15 +38,15 @@ export const TerminalMixin: PartialType = {
     // Fast lookup to avoid duplicates in terminals array
     const coveredEntries = new Map<Cell, boolean>();
 
-    for (let i = 0; i < edges.length; i += 1) {
-      const state = this.getView().getState(edges[i]);
+    for (const edge of edges) {
+      const state = this.getView().getState(edge);
 
       const source = state
         ? state.getVisibleTerminal(true)
-        : this.getView().getVisibleTerminal(edges[i], true);
+        : this.getView().getVisibleTerminal(edge, true);
       const target = state
         ? state.getVisibleTerminal(false)
-        : this.getView().getVisibleTerminal(edges[i], false);
+        : this.getView().getVisibleTerminal(edge, false);
 
       // Checks if the terminal is the source of the edge and if the target should be stored in the result
       if (source === terminal && target && target !== terminal && includeTargets) {

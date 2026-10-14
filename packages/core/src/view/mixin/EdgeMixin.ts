@@ -277,15 +277,18 @@ export const EdgeMixin: PartialType = {
     let edges: Cell[] = [];
 
     if (cells) {
-      for (let i = 0; i < cells.length; i += 1) {
-        const edgeCount = cells[i].getEdgeCount();
+      for (const cell of cells) {
+        // Keep it outside the loop to have a single call to getEdgeCount for performance reasons.
+        // Subclassers may override getEdgeCount to return a different value than the actual number of edges, and this retrieval could be expensive.
+        // Keeping it outside the loop also avoids calling getEdgeCount multiple times for the same cell.
+        const edgeCount = cell.getEdgeCount();
 
         for (let j = 0; j < edgeCount; j++) {
-          edges.push(cells[i].getEdgeAt(j));
+          edges.push(cell.getEdgeAt(j));
         }
 
         // Recurses
-        const children = cells[i].getChildren();
+        const children = cell.getChildren();
         edges = edges.concat(this.getAllEdges(children));
       }
     }
@@ -310,6 +313,9 @@ export const EdgeMixin: PartialType = {
   ) {
     let edges: Cell[] = [];
     const isCollapsed = cell.isCollapsed();
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = cell.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {
@@ -323,15 +329,15 @@ export const EdgeMixin: PartialType = {
     edges = edges.concat(cell.getEdges(incoming, outgoing));
     const result = [];
 
-    for (let i = 0; i < edges.length; i += 1) {
-      const state = this.getView().getState(edges[i]);
+    for (const edge of edges) {
+      const state = this.getView().getState(edge);
 
       const source = state
         ? state.getVisibleTerminal(true)
-        : this.getView().getVisibleTerminal(edges[i], true);
+        : this.getView().getVisibleTerminal(edge, true);
       const target = state
         ? state.getVisibleTerminal(false)
-        : this.getView().getVisibleTerminal(edges[i], false);
+        : this.getView().getVisibleTerminal(edge, false);
 
       if (
         (includeLoops && source === target) ||
@@ -343,7 +349,7 @@ export const EdgeMixin: PartialType = {
               source === cell &&
               (!parent || this.isValidAncestor(target, parent, recurse)))))
       ) {
-        result.push(edges[i]);
+        result.push(edge);
       }
     }
     return result;
@@ -363,21 +369,21 @@ export const EdgeMixin: PartialType = {
 
     // Checks if the edge is connected to the correct
     // cell and returns the first match
-    for (let i = 0; i < edges.length; i += 1) {
-      const state = this.getView().getState(edges[i]);
+    for (const edge of edges) {
+      const state = this.getView().getState(edge);
 
       const src = state
         ? state.getVisibleTerminal(true)
-        : this.getView().getVisibleTerminal(edges[i], true);
+        : this.getView().getVisibleTerminal(edge, true);
       const trg = state
         ? state.getVisibleTerminal(false)
-        : this.getView().getVisibleTerminal(edges[i], false);
+        : this.getView().getVisibleTerminal(edge, false);
 
       if (
         (src === source && trg === target) ||
         (!directed && src === target && trg === source)
       ) {
-        result.push(edges[i]);
+        result.push(edge);
       }
     }
     return result;
@@ -391,31 +397,31 @@ export const EdgeMixin: PartialType = {
     // Prepares faster cells lookup
     const dict = new Map<Cell | null, boolean>();
 
-    for (let i = 0; i < cells.length; i += 1) {
-      dict.set(cells[i], true);
+    for (const cell of cells) {
+      dict.set(cell, true);
     }
 
     this.batchUpdate(() => {
-      for (let i = 0; i < cells.length; i += 1) {
-        const edges = cells[i].getEdges();
+      for (const cell of cells) {
+        const edges = cell.getEdges();
 
-        for (let j = 0; j < edges.length; j++) {
-          const state = this.getView().getState(edges[j]);
+        for (const edge of edges) {
+          const state = this.getView().getState(edge);
 
           const source = state
             ? state.getVisibleTerminal(true)
-            : this.getView().getVisibleTerminal(edges[j], true);
+            : this.getView().getVisibleTerminal(edge, true);
           const target = state
             ? state.getVisibleTerminal(false)
-            : this.getView().getVisibleTerminal(edges[j], false);
+            : this.getView().getVisibleTerminal(edge, false);
 
           // Checks if one of the terminals is not in the given array
           if (!dict.get(source) || !dict.get(target)) {
-            this.resetEdge(edges[j]);
+            this.resetEdge(edge);
           }
         }
 
-        this.resetEdges(cells[i].getChildren());
+        this.resetEdges(cell.getChildren());
       }
     });
   },

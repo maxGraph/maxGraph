@@ -98,15 +98,9 @@ export const OverlaysMixin: PartialType = {
       this.getCellRenderer().redraw(state);
     }
 
-    for (let i = 0; i < overlays.length; i += 1) {
+    for (const overlay of overlays) {
       this.fireEvent(
-        new EventObject(
-          InternalEvent.REMOVE_OVERLAY,
-          'cell',
-          cell,
-          'overlay',
-          overlays[i]
-        )
+        new EventObject(InternalEvent.REMOVE_OVERLAY, 'cell', cell, 'overlay', overlay)
       );
     }
 
@@ -121,6 +115,9 @@ export const OverlaysMixin: PartialType = {
     this.removeCellOverlays(cell);
 
     // Recursively removes all overlays from the children
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = cell.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {
