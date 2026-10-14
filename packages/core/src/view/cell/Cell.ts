@@ -706,6 +706,9 @@ export class Cell implements IdentityObject {
    * Default is false.
    */
   getChildCells(vertices = false, edges = false) {
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = this.getChildCount();
     const result = [];
 
@@ -734,6 +737,9 @@ export class Cell implements IdentityObject {
    */
   getDirectedEdgeCount(outgoing: boolean, ignoredEdge: Cell | null = null) {
     let count = 0;
+    // Keep it outside the loop to have a single call to getEdgeCount for performance reasons.
+    // Subclassers may override getEdgeCount to return a different value than the actual number of edges, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getEdgeCount multiple times for the same cell.
     const edgeCount = this.getEdgeCount();
 
     for (let i = 0; i < edgeCount; i += 1) {
@@ -781,6 +787,9 @@ export class Cell implements IdentityObject {
    * Default is true.
    */
   getEdges(incoming = true, outgoing = true, includeLoops = true) {
+    // Keep it outside the loop to have a single call to getEdgeCount for performance reasons.
+    // Subclassers may override getEdgeCount to return a different value than the actual number of edges, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getEdgeCount multiple times for the same cell.
     const edgeCount = this.getEdgeCount();
     const result = [];
 
@@ -862,6 +871,9 @@ export class Cell implements IdentityObject {
     }
 
     // Visits the children of the cell
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = this.getChildCount();
     for (let i = 0; i < childCount; i += 1) {
       const child = this.getChildAt(i);

@@ -492,8 +492,7 @@ export const ManhattanConnector: EdgeStyleFunction = (
         }
 
         // Go over all possible directions and find neighbors.
-        for (let i = 0; i < opt.directions.length; i++) {
-          const direction = opt.directions[i];
+        for (const direction of opt.directions) {
           const directionChangedAngle = getDirectionChange(
             currentDirectionAngle,
             direction.angle

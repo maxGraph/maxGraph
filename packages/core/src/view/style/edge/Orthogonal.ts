@@ -534,8 +534,8 @@ export const OrthogonalConnector: EdgeStyleFunction = (
   const initialOrientation = lastOrientation;
   let currentOrientation: number;
 
-  for (let i = 0; i < routePattern.length; i += 1) {
-    const nextDirection = routePattern[i] & 0xf;
+  for (const routeStep of routePattern) {
+    const nextDirection = routeStep & 0xf;
 
     // Rotate the index of this direction by the quad
     // to get the real direction
@@ -564,16 +564,16 @@ export const OrthogonalConnector: EdgeStyleFunction = (
       wayPoints1[currentIndex][1] = wayPoints1[currentIndex - 1][1];
     }
 
-    const tar = (routePattern[i] & TARGET_MASK) > 0;
-    const sou = (routePattern[i] & SOURCE_MASK) > 0;
-    let side = (routePattern[i] & SIDE_MASK) >> 5;
+    const tar = (routeStep & TARGET_MASK) > 0;
+    const sou = (routeStep & SOURCE_MASK) > 0;
+    let side = (routeStep & SIDE_MASK) >> 5;
     side <<= quad;
 
     if (side > 0xf) {
       side >>= 4;
     }
 
-    const center = (routePattern[i] & CENTER_MASK) > 0;
+    const center = (routeStep & CENTER_MASK) > 0;
 
     if ((sou || tar) && side < 9) {
       let limit: number;

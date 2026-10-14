@@ -1224,29 +1224,29 @@ class CellRenderer {
     const graph = state.view.graph;
     const shapes = this.getShapesForState(state);
 
-    for (let i = 0; i < shapes.length; i += 1) {
+    for (const shape of shapes) {
       // @ts-ignore
-      if (shapes[i] != null && shapes[i].node != null) {
+      if (shape != null && shape.node != null) {
         const html =
           // @ts-ignore
-          shapes[i].node.parentNode !== state.view.getDrawPane() &&
+          shape.node.parentNode !== state.view.getDrawPane() &&
           // @ts-ignore
-          shapes[i].node.parentNode !== state.view.getOverlayPane();
+          shape.node.parentNode !== state.view.getOverlayPane();
         const temp = html ? htmlNode : node;
 
         // @ts-ignore
-        if (temp != null && temp.nextSibling !== shapes[i].node) {
+        if (temp != null && temp.nextSibling !== shape.node) {
           if (temp.nextSibling == null) {
             // @ts-ignore
-            temp.parentNode.appendChild(shapes[i].node);
+            temp.parentNode.appendChild(shape.node);
           } else {
             // @ts-ignore
-            temp.parentNode.insertBefore(shapes[i].node, temp.nextSibling);
+            temp.parentNode.insertBefore(shape.node, temp.nextSibling);
           }
         } else if (temp == null) {
           // Special case: First HTML node should be first sibling after canvas
           // @ts-ignore
-          const shapeNode: HTMLElement = <HTMLElement>shapes[i].node;
+          const shapeNode: HTMLElement = <HTMLElement>shape.node;
 
           if (shapeNode.parentNode === graph.container) {
             let { canvas } = state.view;
@@ -1277,10 +1277,10 @@ class CellRenderer {
 
         if (html) {
           // @ts-ignore
-          htmlNode = shapes[i].node;
+          htmlNode = shape.node;
         } else {
           // @ts-ignore
-          node = shapes[i].node;
+          node = shape.node;
         }
       }
     }

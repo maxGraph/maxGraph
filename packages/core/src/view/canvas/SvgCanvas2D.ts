@@ -1615,8 +1615,8 @@ class SvgCanvas2D extends AbstractCanvas2D {
       }
     }
 
-    for (let i = 0; i < lines.length; i += 1) {
-      const line = trim(lines[i]);
+    for (const rawLine of lines) {
+      const line = trim(rawLine);
 
       // Workaround for bounding box of empty lines and spaces
       if (line) {

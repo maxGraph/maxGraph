@@ -65,9 +65,7 @@ class Effects {
     const animate = () => {
       let isRequired = false;
 
-      for (let i = 0; i < changes.length; i += 1) {
-        const change = changes[i];
-
+      for (const change of changes) {
         if (
           change instanceof GeometryChange ||
           change instanceof TerminalChange ||
@@ -136,6 +134,9 @@ class Effects {
    */
   static cascadeOpacity(graph: AbstractGraph, cell: Cell, opacity: number): void {
     // Fades all children
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = cell.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {
@@ -152,8 +153,8 @@ class Effects {
     const edges = cell.getEdges();
 
     if (edges != null) {
-      for (let i = 0; i < edges.length; i += 1) {
-        const edgeState = graph.getView().getState(edges[i]);
+      for (const edge of edges) {
+        const edgeState = graph.getView().getState(edge);
 
         if (edgeState != null) {
           setOpacity(edgeState.shape!.node, opacity);

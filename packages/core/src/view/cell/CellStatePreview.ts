@@ -163,6 +163,9 @@ class CellStatePreview {
   }
 
   addEdges(state: CellState): void {
+    // Keep it outside the loop to have a single call to getEdgeCount for performance reasons.
+    // Subclassers may override getEdgeCount to return a different value than the actual number of edges, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getEdgeCount multiple times for the same cell.
     const edgeCount = state.cell.getEdgeCount();
 
     for (let i = 0; i < edgeCount; i += 1) {

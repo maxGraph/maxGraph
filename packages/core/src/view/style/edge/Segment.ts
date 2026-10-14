@@ -99,8 +99,8 @@ export const SegmentConnector: EdgeStyleFunction = (
     // Converts all hints and removes nulls
     let hints = [];
 
-    for (let i = 0; i < controlHints.length; i += 1) {
-      const tmp = state.view.transformControlPoint(state, controlHints[i], true);
+    for (const controlHint of controlHints) {
+      const tmp = state.view.transformControlPoint(state, controlHint, true);
 
       if (tmp != null) {
         hints.push(tmp);
@@ -229,9 +229,9 @@ export const SegmentConnector: EdgeStyleFunction = (
       pt.x = hint.x;
     }
 
-    for (let i = 0; i < hints.length; i += 1) {
+    for (const currentHint of hints) {
       horizontal = !horizontal;
-      hint = hints[i];
+      hint = currentHint;
 
       if (horizontal) {
         pt.y = hint.y;

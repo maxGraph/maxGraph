@@ -241,11 +241,11 @@ class Geometry extends Rectangle {
 
     // Translate the control points
     if (this.points) {
-      for (let i = 0; i < this.points.length; i += 1) {
-        if (this.points[i]) {
-          const pt = getRotatedPoint(this.points[i], cos, sin, cx);
-          this.points[i].x = Math.round(pt.x);
-          this.points[i].y = Math.round(pt.y);
+      for (const point of this.points) {
+        if (point) {
+          const pt = getRotatedPoint(point, cos, sin, cx);
+          point.x = Math.round(pt.x);
+          point.y = Math.round(pt.y);
         }
       }
     }
@@ -282,10 +282,10 @@ class Geometry extends Rectangle {
 
     // Translate the control points
     if (this.TRANSLATE_CONTROL_POINTS && this.points) {
-      for (let i = 0; i < this.points.length; i += 1) {
-        if (this.points[i]) {
-          this.points[i].x = this.points[i].x + dx;
-          this.points[i].y = this.points[i].y + dy;
+      for (const point of this.points) {
+        if (point) {
+          point.x = point.x + dx;
+          point.y = point.y + dy;
         }
       }
     }
@@ -317,10 +317,10 @@ class Geometry extends Rectangle {
 
     // Translate the control points
     if (this.points) {
-      for (let i = 0; i < this.points.length; i += 1) {
-        if (this.points[i]) {
-          this.points[i].x = this.points[i].x * sx;
-          this.points[i].y = this.points[i].y * sy;
+      for (const point of this.points) {
+        if (point) {
+          point.x = point.x * sx;
+          point.y = point.y * sy;
         }
       }
     }

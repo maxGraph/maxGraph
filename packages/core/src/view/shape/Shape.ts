@@ -659,9 +659,7 @@ class Shape {
           // Paints edge shape
           const pts = [];
 
-          for (let i = 0; i < this.points.length; i += 1) {
-            const p = this.points[i];
-
+          for (const p of this.points) {
             if (p) {
               pts.push(new Point(p.x / s, p.y / s));
             }

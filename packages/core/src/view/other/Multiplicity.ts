@@ -182,11 +182,11 @@ class Multiplicity {
     let isValid = !this.validNeighborsAllowed;
     const valid = this.validNeighbors;
 
-    for (let j = 0; j < valid.length; j++) {
-      if (this.source && this.checkType(graph, targetValue, valid[j])) {
+    for (const validNeighbor of valid) {
+      if (this.source && this.checkType(graph, targetValue, validNeighbor)) {
         isValid = this.validNeighborsAllowed;
         break;
-      } else if (!this.source && this.checkType(graph, sourceValue, valid[j])) {
+      } else if (!this.source && this.checkType(graph, sourceValue, validNeighbor)) {
         isValid = this.validNeighborsAllowed;
         break;
       }
