@@ -89,8 +89,8 @@ class CellPath {
     let parent: Cell | null = root;
 
     const tokens = path.split(CellPath.PATH_SEPARATOR);
-    for (let i = 0; i < tokens.length; i += 1) {
-      parent = parent.getChildAt(Number.parseInt(tokens[i]));
+    for (const token of tokens) {
+      parent = parent.getChildAt(Number.parseInt(token));
     }
 
     return parent;

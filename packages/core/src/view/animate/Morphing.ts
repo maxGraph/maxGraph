@@ -142,6 +142,9 @@ class Morphing extends Animation {
     }
 
     if (recurse && !this.stopRecursion(state, delta)) {
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = cell.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {

@@ -120,7 +120,16 @@ export default tsEslint.config(
       'packages/core/src/internal/**/*',
       'packages/core/src/serialization/**/*',
       'packages/core/src/util/**/*',
+      'packages/core/src/view/animate/**/*',
+      'packages/core/src/view/canvas/**/*',
+      'packages/core/src/view/cell/**/*',
+      'packages/core/src/view/geometry/**/*',
+      'packages/core/src/view/image/**/*',
+      'packages/core/src/view/other/**/*',
       'packages/core/src/view/plugin/**/*',
+      'packages/core/src/view/shape/**/*',
+      'packages/core/src/view/style/**/*',
+      'packages/core/src/view/undoable-change/**/*',
     ],
     rules: {
       // https://typescript-eslint.io/rules/prefer-for-of/ part of "plugin:@typescript-eslint/stylistic"

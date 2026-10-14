@@ -193,8 +193,8 @@ class UndoManager extends EventSource {
         this.history.length - this.indexOfNextAdd
       );
 
-      for (let i = 0; i < edits.length; i += 1) {
-        edits[i].die();
+      for (const edit of edits) {
+        edit.die();
       }
     }
   }

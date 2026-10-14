@@ -162,11 +162,9 @@ export class StencilShape extends Shape {
       const tmp = getChildNodes(conns);
 
       if (tmp.length > 0) {
-        this.constraints = [];
-
-        for (let i = 0; i < tmp.length; i += 1) {
-          this.constraints.push(this.parseConstraint(tmp[i] as Element));
-        }
+        this.constraints = tmp.map((constraintNode) =>
+          this.parseConstraint(constraintNode as Element)
+        );
       }
     }
   }
@@ -422,17 +420,17 @@ export class StencilShape extends Shape {
             }
 
             if (!parseRegularly && pointCount > 0) {
-              for (let i = 0; i < segs.length; i += 1) {
+              for (const seg of segs) {
                 let close = false;
-                const ps = segs[i][0];
-                const pe = segs[i][segs[i].length - 1];
+                const ps = seg[0];
+                const pe = seg[seg.length - 1];
 
                 if (ps.x === pe.x && ps.y === pe.y) {
-                  segs[i].pop();
+                  seg.pop();
                   close = true;
                 }
 
-                this.addPoints(canvas, segs[i], true, arcSize, close);
+                this.addPoints(canvas, seg, true, arcSize, close);
               }
             } else {
               parseRegularly = true;
@@ -657,16 +655,11 @@ export class StencilShape extends Shape {
           let value = node.getAttribute('pattern');
 
           if (value != null) {
-            const tmp = value.split(' ');
-            const pat = [];
-
-            for (let i = 0; i < tmp.length; i += 1) {
-              if (tmp[i].length > 0) {
-                pat.push(Number(tmp[i]) * minScale);
-              }
-            }
-
-            value = pat.join(' ');
+            value = value
+              .split(' ')
+              .filter((dashValue) => dashValue.length > 0)
+              .map((dashValue) => Number(dashValue) * minScale)
+              .join(' ');
             canvas.setDashPattern(value);
           }
 

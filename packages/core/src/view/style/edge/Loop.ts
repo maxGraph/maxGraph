@@ -47,9 +47,8 @@ export const Loop: EdgeStyleFunction = (
 
   if (p0 != null && pe != null) {
     if (points != null && points.length > 0) {
-      for (let i = 0; i < points.length; i += 1) {
-        let pt = points[i];
-        pt = <Point>state.view.transformControlPoint(state, pt);
+      for (const point of points) {
+        const pt = <Point>state.view.transformControlPoint(state, point);
         result.push(new Point(pt.x, pt.y));
       }
     }

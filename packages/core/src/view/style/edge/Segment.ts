@@ -19,6 +19,7 @@ limitations under the License.
 import CellState from '../../cell/CellState.js';
 import Point from '../../geometry/Point.js';
 import { contains } from '../../../util/mathUtils.js';
+import { isNullish } from '../../../internal/utils.js';
 import { scaleCellState, scalePointArray } from './shared.js';
 
 import type { EdgeStyleFunction } from '../../../types.js';
@@ -97,15 +98,9 @@ export const SegmentConnector: EdgeStyleFunction = (
   // Adds the waypoints
   if (controlHints != null && controlHints.length > 0) {
     // Converts all hints and removes nulls
-    let hints = [];
-
-    for (let i = 0; i < controlHints.length; i += 1) {
-      const tmp = state.view.transformControlPoint(state, controlHints[i], true);
-
-      if (tmp != null) {
-        hints.push(tmp);
-      }
-    }
+    let hints = controlHints
+      .map((controlHint) => state.view.transformControlPoint(state, controlHint, true))
+      .filter((hint) => !isNullish(hint));
 
     if (hints.length === 0) {
       return;
@@ -229,9 +224,9 @@ export const SegmentConnector: EdgeStyleFunction = (
       pt.x = hint.x;
     }
 
-    for (let i = 0; i < hints.length; i += 1) {
+    for (const currentHint of hints) {
       horizontal = !horizontal;
-      hint = hints[i];
+      hint = currentHint;
 
       if (horizontal) {
         pt.y = hint.y;

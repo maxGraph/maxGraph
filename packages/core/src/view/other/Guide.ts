@@ -230,9 +230,7 @@ class Guide {
         overrideY = overrideY || override;
       };
 
-      for (let i = 0; i < this.states.length; i += 1) {
-        const state = this.states[i];
-
+      for (const state of this.states) {
         if (state && !this.isStateIgnored(state)) {
           // Align x
           if (this.horizontal) {

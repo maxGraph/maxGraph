@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { CellRenderer, CellState, CellStateStyle } from '../../../src';
+import { CellRenderer, CellState, CellStateStyle, Graph } from '../../../src';
 
 describe('checkPlaceholderStyles', () => {
   test('CellState with unset style', () => {
@@ -40,4 +40,40 @@ describe('checkPlaceholderStyles', () => {
       });
     }
   );
+});
+
+test('insertStateAfter moves every shape of the state after the given node', () => {
+  const graph = new Graph();
+  const group = graph.insertVertex({
+    value: 'group',
+    position: [0, 0],
+    size: [100, 100],
+  });
+  graph.insertVertex({
+    parent: group,
+    value: 'child',
+    position: [10, 10],
+    size: [20, 20],
+  });
+  const anchor = graph.insertVertex({
+    value: 'anchor',
+    position: [300, 0],
+    size: [40, 40],
+  });
+  const state = graph.view.getState(group)!;
+  const anchorNode = graph.view.getState(anchor)!.shape!.node;
+  // the shape, the label and the folding icon of the group
+  const stateNodes = [state.shape!.node, state.text!.node, state.control!.node];
+
+  const result = graph.cellRenderer.insertStateAfter(state, anchorNode, null);
+
+  const drawPaneNodes = Array.from(graph.view.getDrawPane().childNodes);
+  const anchorIndex = drawPaneNodes.indexOf(anchorNode);
+  expect(stateNodes.map((node) => drawPaneNodes.indexOf(node))).toEqual([
+    anchorIndex + 1,
+    anchorIndex + 2,
+    anchorIndex + 3,
+  ]);
+  expect(result).toEqual([state.control!.node, null]);
+  graph.destroy();
 });
