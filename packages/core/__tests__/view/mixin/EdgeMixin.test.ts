@@ -16,7 +16,7 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { createGraphWithoutContainer } from '../../utils';
-import { Cell, type CellStyle, Geometry } from '../../../src';
+import { Cell, type CellStyle, Geometry, Point } from '../../../src';
 
 describe('insertEdge', () => {
   test('Legacy method (with several parameters)', () => {
@@ -117,5 +117,63 @@ describe('insertEdge', () => {
     const children = parentCell.children;
     expect(children).toContain(childCell);
     expect(children).toHaveLength(1);
+  });
+});
+
+describe('getAllEdges', () => {
+  test('return the edges of every given cell', () => {
+    const graph = createGraphWithoutContainer();
+    const cells = [
+      graph.insertVertex({ value: 'A' }),
+      graph.insertVertex({ value: 'B' }),
+    ];
+    const other = graph.insertVertex({ value: 'other' });
+    const edges = cells.map((cell) => graph.insertEdge({ source: cell, target: other }));
+
+    expect(graph.getAllEdges(cells)).toEqual(edges);
+  });
+});
+
+describe('getEdgesBetween', () => {
+  test('return every edge connecting the two cells', () => {
+    const graph = createGraphWithoutContainer();
+    const source = graph.insertVertex({ value: 'source' });
+    const target = graph.insertVertex({ value: 'target' });
+    const firstEdgeBetween = graph.insertEdge({ source, target });
+    graph.insertEdge({ source, target: graph.insertVertex({ value: 'other' }) });
+    const lastEdgeBetween = graph.insertEdge({ source, target });
+
+    expect(graph.getEdgesBetween(source, target)).toEqual([
+      firstEdgeBetween,
+      lastEdgeBetween,
+    ]);
+  });
+});
+
+describe('resetEdges', () => {
+  test('reset the points of the edges leaving the given cells, and only those', () => {
+    const graph = createGraphWithoutContainer();
+    const cells = [
+      graph.insertVertex({ value: 'A' }),
+      graph.insertVertex({ value: 'B' }),
+    ];
+    const outside = graph.insertVertex({ value: 'outside' });
+    const insertEdgeWithPoints = (source: Cell, target: Cell): Cell => {
+      const edge = graph.insertEdge({ source, target });
+      edge.getGeometry()!.points = [new Point(10, 10)];
+      return edge;
+    };
+    const firstLeavingEdge = insertEdgeWithPoints(cells[0], outside);
+    const edgeBetweenCells = insertEdgeWithPoints(cells[0], cells[1]);
+    const leavingEdges = [
+      firstLeavingEdge,
+      insertEdgeWithPoints(cells[0], outside),
+      insertEdgeWithPoints(cells[1], outside),
+    ];
+
+    graph.resetEdges(cells);
+
+    expect(leavingEdges.map((edge) => edge.getGeometry()!.points)).toEqual([[], [], []]);
+    expect(edgeBetweenCells.getGeometry()!.points).toEqual([new Point(10, 10)]);
   });
 });
