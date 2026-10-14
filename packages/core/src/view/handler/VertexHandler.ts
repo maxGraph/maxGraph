@@ -754,8 +754,8 @@ class VertexHandler implements MouseListenerSet {
           'SelectionCellsHandler'
         );
 
-        for (let i = 0; i < edges.length; i += 1) {
-          const handler = selectionCellsHandler?.getHandler(edges[i]);
+        for (const edge of edges) {
+          const handler = selectionCellsHandler?.getHandler(edge);
           if (handler) {
             this.edgeHandlers.push(handler as EdgeHandler);
           }
@@ -783,12 +783,12 @@ class VertexHandler implements MouseListenerSet {
   setHandlesVisible(visible: boolean) {
     this.handlesVisible = visible;
 
-    for (let i = 0; i < this.sizers.length; i += 1) {
-      this.sizers[i].node.style.display = visible ? '' : 'none';
+    for (const sizer of this.sizers) {
+      sizer.node.style.display = visible ? '' : 'none';
     }
 
-    for (let i = 0; i < this.customHandles.length; i += 1) {
-      this.customHandles[i].setVisible(visible);
+    for (const customHandle of this.customHandles) {
+      customHandle.setVisible(visible);
     }
   }
 
@@ -1350,6 +1350,9 @@ class VertexHandler implements MouseListenerSet {
 
           if ((cell.isVertex() && !geo.relative) || cell.isEdge()) {
             // Recursive rotation
+            // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+            // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+            // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
             const childCount = cell.getChildCount();
 
             for (let i = 0; i < childCount; i += 1) {
@@ -1384,8 +1387,8 @@ class VertexHandler implements MouseListenerSet {
     }
 
     if (this.livePreviewActive) {
-      for (let i = 0; i < this.sizers.length; i += 1) {
-        this.sizers[i].node.style.display = '';
+      for (const sizer of this.sizers) {
+        sizer.node.style.display = '';
       }
 
       // Shows folding icon
@@ -1394,12 +1397,12 @@ class VertexHandler implements MouseListenerSet {
       }
     }
 
-    for (let i = 0; i < this.customHandles.length; i += 1) {
-      if (this.customHandles[i].active) {
-        this.customHandles[i].active = false;
-        this.customHandles[i].reset();
+    for (const customHandle of this.customHandles) {
+      if (customHandle.active) {
+        customHandle.active = false;
+        customHandle.reset();
       } else {
-        this.customHandles[i].setVisible(true);
+        customHandle.setVisible(true);
       }
     }
 
@@ -1486,6 +1489,9 @@ class VertexHandler implements MouseListenerSet {
    */
   moveChildren(cell: Cell, dx: number, dy: number) {
     const model = this.graph.getDataModel();
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = cell.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {
@@ -1765,19 +1771,17 @@ class VertexHandler implements MouseListenerSet {
     this.horizontalOffset = 0;
     this.verticalOffset = 0;
 
-    for (let i = 0; i < this.customHandles.length; i += 1) {
-      const shape = this.customHandles[i].shape;
+    for (const customHandle of this.customHandles) {
+      const shape = customHandle.shape;
 
       if (shape) {
         const temp = shape.node.style.display;
-        this.customHandles[i].redraw();
+        customHandle.redraw();
         shape.node.style.display = temp;
 
         // Hides custom handles during text editing
         shape.node.style.visibility =
-          this.handlesVisible && this.isCustomHandleVisible(this.customHandles[i])
-            ? ''
-            : 'hidden';
+          this.handlesVisible && this.isCustomHandleVisible(customHandle) ? '' : 'hidden';
       }
     }
 
@@ -1927,8 +1931,8 @@ class VertexHandler implements MouseListenerSet {
     }
 
     if (this.edgeHandlers != null) {
-      for (let i = 0; i < this.edgeHandlers.length; i += 1) {
-        this.edgeHandlers[i].redraw();
+      for (const edgeHandler of this.edgeHandlers) {
+        edgeHandler.redraw();
       }
     }
   }
@@ -2087,14 +2091,14 @@ class VertexHandler implements MouseListenerSet {
     this.labelShape = null;
     this.removeHint();
 
-    for (let i = 0; i < this.sizers.length; i += 1) {
-      this.sizers[i].destroy();
+    for (const sizer of this.sizers) {
+      sizer.destroy();
     }
 
     this.sizers = [];
 
-    for (let i = 0; i < this.customHandles.length; i += 1) {
-      this.customHandles[i].destroy();
+    for (const customHandle of this.customHandles) {
+      customHandle.destroy();
     }
 
     this.customHandles = [];

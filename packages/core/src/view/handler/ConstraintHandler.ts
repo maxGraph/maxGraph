@@ -125,8 +125,8 @@ class ConstraintHandler {
    * Resets the state of this handler.
    */
   reset() {
-    for (let i = 0; i < this.focusIcons.length; i += 1) {
-      this.focusIcons[i].destroy();
+    for (const focusIcon of this.focusIcons) {
+      focusIcon.destroy();
     }
 
     this.focusIcons = [];
@@ -183,8 +183,8 @@ class ConstraintHandler {
    * Destroys the {@link focusIcons} if they exist.
    */
   destroyIcons() {
-    for (let i = 0; i < this.focusIcons.length; i += 1) {
-      this.focusIcons[i].destroy();
+    for (const focusIcon of this.focusIcons) {
+      focusIcon.destroy();
     }
 
     this.focusIcons = [];
@@ -396,16 +396,16 @@ class ConstraintHandler {
       this.currentFocus = state;
       this.currentFocusArea = new Rectangle(state.x, state.y, state.width, state.height);
 
-      for (let i = 0; i < this.focusIcons.length; i += 1) {
-        this.focusIcons[i].destroy();
+      for (const focusIcon of this.focusIcons) {
+        focusIcon.destroy();
       }
 
       this.focusIcons = [];
       this.focusPoints = [];
 
-      for (let i = 0; i < this.constraints.length; i += 1) {
-        const cp = this.graph.getConnectionPoint(state, this.constraints[i]) as Point;
-        const img = this.getImageForConstraint(state, this.constraints[i], cp);
+      for (const constraint of this.constraints) {
+        const cp = this.graph.getConnectionPoint(state, constraint) as Point;
+        const img = this.getImageForConstraint(state, constraint, cp);
 
         const { src } = img;
         const bounds = new Rectangle(

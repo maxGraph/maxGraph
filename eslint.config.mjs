@@ -125,6 +125,7 @@ export default tsEslint.config(
       'packages/core/src/view/canvas/**/*',
       'packages/core/src/view/cell/**/*',
       'packages/core/src/view/geometry/**/*',
+      'packages/core/src/view/handler/**/*',
       'packages/core/src/view/image/**/*',
       'packages/core/src/view/mixin/**/*',
       'packages/core/src/view/other/**/*',
