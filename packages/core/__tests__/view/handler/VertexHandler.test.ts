@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeEach, describe, expect, test } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globals';
 import {
   type Cell,
+  type EdgeHandler,
   Graph,
   InternalEvent,
   InternalMouseEvent,
@@ -26,7 +27,7 @@ import {
   VertexHandler,
   VertexHandlerConfig,
 } from '../../../src';
-import { createContainer } from '../../utils';
+import { createCellHandleStub, createContainer } from '../../utils';
 
 const createMouseEvent = (type: string, x: number, y: number): InternalMouseEvent => {
   // Alt disables the grid, so that the angle is not snapped to the rotation raster
@@ -235,5 +236,108 @@ describe('rotation with the rotation handle', () => {
     handler.mouseUp(graph, createMouseEvent('mouseup', release.graphX, release.graphY));
 
     expect(graph.getCurrentCellStyle(vertex).rotation).toBe(90);
+  });
+});
+
+describe('loops over the handles', () => {
+  const getHandler = (graph: Graph, cell: Cell): VertexHandler =>
+    graph
+      .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+      .getHandler(cell) as VertexHandler;
+
+  const selectVertex = (): { graph: Graph; handler: VertexHandler } => {
+    const graph = createGraph(1);
+    const cell = graph.insertVertex({ position: [100, 100], size: [80, 60] });
+    graph.setSelectionCell(cell);
+    return { graph, handler: getHandler(graph, cell) };
+  };
+
+  const sizerDisplays = (handler: VertexHandler): string[] =>
+    handler.sizers.map((sizer) => sizer.node.style.display);
+
+  test('setHandlesVisible hides every sizer and every custom handle', () => {
+    const { handler } = selectVertex();
+    const customHandles = [createCellHandleStub(), createCellHandleStub()];
+    handler.customHandles = customHandles;
+
+    handler.setHandlesVisible(false);
+
+    expect(sizerDisplays(handler)).toEqual(handler.sizers.map(() => 'none'));
+    for (const customHandle of customHandles) {
+      expect(customHandle.setVisible).toHaveBeenCalledWith(false);
+    }
+  });
+
+  test('reset shows every sizer again and resets every custom handle', () => {
+    const { handler } = selectVertex();
+    handler.livePreviewActive = true;
+    for (const sizer of handler.sizers) {
+      sizer.node.style.display = 'none';
+    }
+    const inactiveCustomHandle = createCellHandleStub(false);
+    const activeCustomHandle = createCellHandleStub(true);
+    handler.customHandles = [inactiveCustomHandle, activeCustomHandle];
+
+    handler.reset();
+
+    expect(sizerDisplays(handler)).toEqual(handler.sizers.map(() => ''));
+    expect(inactiveCustomHandle.setVisible).toHaveBeenCalledWith(true);
+    expect(activeCustomHandle.reset).toHaveBeenCalledTimes(1);
+    expect(activeCustomHandle.active).toBe(false);
+  });
+
+  test('redrawHandles redraws every custom handle and every edge handler', () => {
+    const { handler } = selectVertex();
+    const customHandles = [createCellHandleStub(), createCellHandleStub()];
+    handler.customHandles = customHandles;
+    const edgeHandlers = [{ redraw: jest.fn() }, { redraw: jest.fn() }];
+    handler.edgeHandlers = edgeHandlers as unknown as EdgeHandler[];
+
+    handler.redrawHandles();
+
+    for (const handle of [...customHandles, ...edgeHandlers]) {
+      expect(handle.redraw).toHaveBeenCalled();
+    }
+  });
+
+  test('onDestroy destroys every sizer and every custom handle', () => {
+    const { handler } = selectVertex();
+    const sizerDestroys = handler.sizers.map((sizer) => jest.spyOn(sizer, 'destroy'));
+    const customHandles = [createCellHandleStub(), createCellHandleStub()];
+    handler.customHandles = customHandles;
+
+    handler.onDestroy();
+
+    for (const destroy of [
+      ...sizerDestroys,
+      ...customHandles.map((handle) => handle.destroy),
+    ]) {
+      expect(destroy).toHaveBeenCalledTimes(1);
+    }
+  });
+
+  test('start with a live preview collects the handler of every connected edge', () => {
+    const graph = createGraph(1);
+    const cell = graph.insertVertex({ position: [100, 100], size: [80, 60] });
+    const edges = [
+      graph.insertEdge({
+        source: cell,
+        target: graph.insertVertex({ position: [400, 100] }),
+      }),
+      graph.insertEdge({
+        source: cell,
+        target: graph.insertVertex({ position: [400, 300] }),
+      }),
+    ];
+    graph.setSelectionCells([cell, ...edges]);
+    const handler = getHandler(graph, cell);
+    handler.livePreview = true;
+
+    handler.start(100, 100, 0);
+
+    // Compare the ids, a failure diffing the handlers themselves would never end on their circular references
+    expect(
+      handler.edgeHandlers.map((edgeHandler) => edgeHandler.state.cell.getId())
+    ).toEqual(edges.map((edge) => edge.getId()));
   });
 });
