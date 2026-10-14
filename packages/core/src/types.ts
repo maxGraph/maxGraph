@@ -251,6 +251,7 @@ export interface CellStateStyle {
    *
    * @see {@link entryDy} for the vertical offset.
    * @see {@link exitDx} for the equivalent on the source terminal.
+   * @default 0
    */
   entryDx?: number;
   /**
@@ -260,6 +261,7 @@ export interface CellStateStyle {
    *
    * @see {@link entryDx} for the horizontal offset.
    * @see {@link exitDy} for the equivalent on the source terminal.
+   * @default 0
    */
   entryDy?: number;
   /**
@@ -267,7 +269,7 @@ export interface CellStateStyle {
    *
    * When `false`, the target behaves as if it has no {@link perimeter}: the connection point is located at the center of the terminal.
    *
-   * Only applies when {@link entryX} and {@link entryY} are `undefined` (i.e. no fixed connection point is set).
+   * Only applies when a fixed connection point is set, i.e. when both {@link entryX} and {@link entryY} are defined. Otherwise, the connection point always uses the perimeter.
    *
    * @default true
    * @see {@link perimeter} for how the perimeter is defined on a cell.
@@ -308,6 +310,7 @@ export interface CellStateStyle {
    *
    * @see {@link exitDy} for the vertical offset.
    * @see {@link entryDx} for the equivalent on the target terminal.
+   * @default 0
    */
   exitDx?: number;
   /**
@@ -317,6 +320,7 @@ export interface CellStateStyle {
    *
    * @see {@link exitDx} for the horizontal offset.
    * @see {@link entryDy} for the equivalent on the target terminal.
+   * @default 0
    */
   exitDy?: number;
   /**
@@ -324,7 +328,7 @@ export interface CellStateStyle {
    *
    * When `false`, the source behaves as if it has no {@link perimeter}: the connection point is located at the center of the terminal.
    *
-   * Only applies when {@link exitX} and {@link exitY} are `undefined` (i.e. no fixed connection point is set).
+   * Only applies when a fixed connection point is set, i.e. when both {@link exitX} and {@link exitY} are defined. Otherwise, the connection point always uses the perimeter.
    *
    * @default true
    * @see {@link perimeter} for how the perimeter is defined on a cell.
