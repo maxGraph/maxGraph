@@ -975,8 +975,8 @@ class EdgeHandler implements MouseListenerSet {
       snapToTerminal(this.state.getVisibleTerminalState(true));
       snapToTerminal(this.state.getVisibleTerminalState(false));
 
-      for (let i = 0; i < this.state.absolutePoints.length; i += 1) {
-        snapToPoint(this.state.absolutePoints[i]);
+      for (const absolutePoint of this.state.absolutePoints) {
+        snapToPoint(absolutePoint);
       }
     }
 
@@ -1609,8 +1609,8 @@ class EdgeHandler implements MouseListenerSet {
     this.constraintHandler.reset();
 
     if (this.customHandles) {
-      for (let i = 0; i < this.customHandles.length; i += 1) {
-        this.customHandles[i].reset();
+      for (const customHandle of this.customHandles) {
+        customHandle.reset();
       }
     }
 
@@ -2013,16 +2013,16 @@ class EdgeHandler implements MouseListenerSet {
 
     this.labelShape.redraw();
     if (this.customHandles) {
-      for (let i = 0; i < this.customHandles.length; i += 1) {
-        const shape = this.customHandles[i].shape;
+      for (const customHandle of this.customHandles) {
+        const shape = customHandle.shape;
 
         if (shape) {
           const temp = shape.node.style.display;
-          this.customHandles[i].redraw();
+          customHandle.redraw();
           shape.node.style.display = temp;
 
           // Hides custom handles during text editing
-          shape.node.style.visibility = this.isCustomHandleVisible(this.customHandles[i])
+          shape.node.style.visibility = this.isCustomHandleVisible(customHandle)
             ? ''
             : 'hidden';
         }
@@ -2041,21 +2041,21 @@ class EdgeHandler implements MouseListenerSet {
    * Shortcut to {@link hideSizers}.
    */
   setHandlesVisible(visible: boolean) {
-    for (let i = 0; i < this.bends.length; i += 1) {
-      this.bends[i].node.style.display = visible ? '' : 'none';
+    for (const bend of this.bends) {
+      bend.node.style.display = visible ? '' : 'none';
     }
 
     if (this.virtualBends) {
-      for (let i = 0; i < this.virtualBends.length; i += 1) {
-        this.virtualBends[i].node.style.display = visible ? '' : 'none';
+      for (const virtualBend of this.virtualBends) {
+        virtualBend.node.style.display = visible ? '' : 'none';
       }
     }
 
     this.labelShape.node.style.display = visible ? '' : 'none';
 
     if (this.customHandles) {
-      for (let i = 0; i < this.customHandles.length; i += 1) {
-        this.customHandles[i].setVisible(visible);
+      for (const customHandle of this.customHandles) {
+        customHandle.setVisible(visible);
       }
     }
   }
@@ -2208,9 +2208,9 @@ class EdgeHandler implements MouseListenerSet {
    */
   destroyBends(bends: Shape[] | CellHandle[]) {
     if (bends != null) {
-      for (let i = 0; i < bends.length; i += 1) {
-        if (bends[i] != null) {
-          bends[i].destroy();
+      for (const bend of bends) {
+        if (bend != null) {
+          bend.destroy();
         }
       }
     }

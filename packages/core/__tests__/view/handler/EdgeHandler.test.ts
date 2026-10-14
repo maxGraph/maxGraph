@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeAll, describe, expect, test } from '@jest/globals';
+import { afterEach, beforeAll, describe, expect, jest, test } from '@jest/globals';
 import {
   BaseGraph,
   Cell,
@@ -25,12 +25,17 @@ import {
   type EdgeStyleFunction,
   EdgeStyleRegistry,
   Geometry,
+  Graph,
+  InternalMouseEvent,
   Point,
   Rectangle,
   RectangleShape,
   registerDefaultEdgeStyles,
+  type SelectionCellsHandler,
+  type Shape,
   unregisterAllEdgeStyles,
 } from '../../../src';
+import { createCellHandleStub, createContainer } from '../../utils';
 
 const createEdgeHandlerForStyle = (
   edgeStyle: EdgeStyleFunction | undefined,
@@ -122,5 +127,94 @@ describe('isHandleVisible', () => {
       skipDefaultRegistration: true,
     });
     expect(handler.isHandleVisible(2)).toBe(true);
+  });
+});
+
+describe('loops over the handles', () => {
+  let graph: Graph;
+
+  afterEach(() => {
+    graph.destroy();
+  });
+
+  /**
+   * Selects an edge with 2 waypoints, whose absolute points are (40, 20), (150, 20), (150, 220) and (300, 220).
+   */
+  const selectEdge = (): EdgeHandler => {
+    graph = new Graph(createContainer({ offsetWidth: 1200, offsetHeight: 900 }));
+    const source = graph.insertVertex({ position: [0, 0], size: [40, 40] });
+    const target = graph.insertVertex({ position: [300, 200], size: [40, 40] });
+    const edge = graph.insertEdge({ source, target });
+    edge.getGeometry()!.points = [new Point(150, 20), new Point(150, 220)];
+    graph.view.invalidate();
+    graph.view.validate();
+    graph.setSelectionCell(edge);
+    return graph
+      .getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!
+      .getHandler(edge) as EdgeHandler;
+  };
+
+  const createShapeStubs = (): Shape[] =>
+    [{ node: { style: {} } }, { node: { style: {} } }] as unknown as Shape[];
+
+  test.each([
+    ['the first point', 42, 40],
+    ['the last point', 298, 300],
+  ])('getPointForEvent snaps to %s of the edge', (_description, pointerX, expectedX) => {
+    const handler = selectEdge();
+    handler.snapToTerminals = true;
+    graph.setGridEnabled(false);
+    const mouseEvent = new InternalMouseEvent(new MouseEvent('mousemove'));
+    mouseEvent.graphX = pointerX;
+    mouseEvent.graphY = 100;
+
+    expect(handler.getPointForEvent(mouseEvent)).toEqual(new Point(expectedX, 100));
+  });
+
+  test('setHandlesVisible hides every bend, virtual bend and custom handle', () => {
+    const handler = selectEdge();
+    const virtualBends = createShapeStubs();
+    handler.virtualBends = virtualBends;
+    const customHandles = [createCellHandleStub(), createCellHandleStub()];
+    handler.customHandles = customHandles;
+
+    handler.setHandlesVisible(false);
+
+    expect(
+      [...handler.bends, ...virtualBends].map((bend) => bend.node.style.display)
+    ).toEqual([...handler.bends, ...virtualBends].map(() => 'none'));
+    for (const customHandle of customHandles) {
+      expect(customHandle.setVisible).toHaveBeenCalledWith(false);
+    }
+  });
+
+  test.each(['reset', 'redrawHandles'] as const)(
+    '%s acts on every custom handle',
+    (method) => {
+      const handler = selectEdge();
+      // an active handler is refreshed by reset, which replaces the custom handles before the loop
+      handler.active = false;
+      const customHandles = [createCellHandleStub(), createCellHandleStub()];
+      handler.customHandles = customHandles;
+
+      handler[method]();
+
+      for (const customHandle of customHandles) {
+        expect(
+          method === 'reset' ? customHandle.reset : customHandle.redraw
+        ).toHaveBeenCalled();
+      }
+    }
+  );
+
+  test('destroyBends destroys every given bend', () => {
+    const handler = selectEdge();
+    const bends = [{ destroy: jest.fn() }, { destroy: jest.fn() }] as unknown as Shape[];
+
+    handler.destroyBends(bends);
+
+    for (const bend of bends) {
+      expect(bend.destroy).toHaveBeenCalledTimes(1);
+    }
   });
 });

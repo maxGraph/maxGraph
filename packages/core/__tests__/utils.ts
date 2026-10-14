@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { expect } from '@jest/globals';
-import { Cell, type CellStateStyle, Graph } from '../src';
+import { expect, jest } from '@jest/globals';
+import { Cell, type CellHandle, type CellStateStyle, Graph } from '../src';
 
 /**
  * Creates a `div` to be used as the container of a {@link Graph}, with the given dimensions faked.
@@ -78,3 +78,17 @@ export const expectGeometryBounds = (
     height: geometry?.height,
   }).toStrictEqual(expected);
 };
+
+/**
+ * Creates a {@link CellHandle} whose methods are mocks, with a shape whose style can be read, to check what a handler
+ * does to each of its custom handles.
+ */
+export const createCellHandleStub = (active = false): CellHandle =>
+  ({
+    active,
+    shape: { node: { style: { display: '', visibility: '' } } },
+    setVisible: jest.fn(),
+    reset: jest.fn(),
+    redraw: jest.fn(),
+    destroy: jest.fn(),
+  }) as unknown as CellHandle;
