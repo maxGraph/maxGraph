@@ -120,6 +120,34 @@ panningHandler.ignoreCell = true; // pan even when the drag starts on a cell
 Here, the non-null assertion (`!`) is intentional: `PanningHandler` is one of the [default plugins](#available-plugins) of `Graph`, so it is always available.
 When the plugin may be absent, for example with `BaseGraph` or with a plugin list built at runtime, use optional chaining (`?.`) or an explicit check instead.
 
+### Pass the id as a string
+
+Pass the id of the plugin as a string literal, as in the example above, rather than reading the `pluginId` property of
+its class:
+
+```typescript
+import type { PanningHandler } from '@maxgraph/core';
+
+// Good: the class is only used as a type
+const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler');
+
+// Avoid: reading pluginId needs a value import, `import { PanningHandler }`, so a runtime reference to the class
+const otherPanningHandler = graph.getPlugin<PanningHandler>(PanningHandler.pluginId);
+```
+
+- **The string is not a blind guess.** `getPlugin` takes a `PluginId`, which lists the ids of the built-in plugins, so
+  the editor suggests them as you type. It accepts any other string as well, for custom plugins, so a misspelled id is
+  not reported by the compiler: it makes `getPlugin` return `undefined`.
+- **The class is only needed as a type.** The type parameter is erased at compile time, so `import type` is all the
+  call needs and the plugin implementation is not referenced by that code.
+- **Reading `pluginId` keeps the plugin in the bundle.** It needs a value import of the class, which the bundler cannot
+  remove. This costs nothing when the application passes that plugin to the graph anyway, but code reaching an optional
+  plugin, such as `graph.getPlugin<FitPlugin>('fit')?.fit()` in a module shared by graphs that do not all load it, then
+  ships the plugin even to the graphs that never use it. See [Tree-Shaking](./tree-shaking.md#plugins).
+
+maxGraph provides no constant holding the ids apart from the plugin classes. For a custom plugin, you can declare its
+id in a module of its own, imported by both the plugin class and the code calling `getPlugin`.
+
 
 ## Choosing the Plugins to Use
 

@@ -362,6 +362,7 @@ A checklist of the patterns that silently inflate the bundle:
 - **`registerAllCodecs()`** when the application only imports or exports the data model.
 - **`MaxLogAsLogger`**, and more generally the UI elements of `maxGraph` you do not display: `MaxLog`, `MaxWindow`, `MaxPopupMenu`, `MaxToolbar`, `MaxForm`. `MaxPopupMenu` also arrives through `PopupMenuHandler`, which extends it, so that one leaves the bundle with the plugin rather than with an import.
 - **The `Editor` class and its companions** (`EditorToolbar`, `EditorPopupMenu`, `EditorKeyHandler`). This is a large legacy component inherited from `mxGraph`; do not import it unless you specifically build on it.
+- **`SomePlugin.pluginId` passed to `getPlugin`**, which imports the plugin class as a value and so keeps it in the bundle, also when the graph does not load that plugin. Pass the id as a string, see [Pass the id as a string](./plugins.md#pass-the-id-as-a-string).
 - **Forcing the CommonJS build**, which cannot be tree-shaken. Let your bundler resolve the `import` condition of the package `exports`.
 - **Re-exporting `maxGraph` through a barrel file of your own** that your whole application imports, which can defeat the module-level analysis of some bundlers.
 
