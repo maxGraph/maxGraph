@@ -327,9 +327,8 @@ export const EdgeMixin: PartialType = {
     }
 
     edges = edges.concat(cell.getEdges(incoming, outgoing));
-    const result = [];
 
-    for (const edge of edges) {
+    return edges.filter((edge) => {
       const state = this.getView().getState(edge);
 
       const source = state
@@ -339,7 +338,7 @@ export const EdgeMixin: PartialType = {
         ? state.getVisibleTerminal(false)
         : this.getView().getVisibleTerminal(edge, false);
 
-      if (
+      return (
         (includeLoops && source === target) ||
         (source !== target &&
           ((incoming &&
@@ -348,11 +347,8 @@ export const EdgeMixin: PartialType = {
             (outgoing &&
               source === cell &&
               (!parent || this.isValidAncestor(target, parent, recurse)))))
-      ) {
-        result.push(edge);
-      }
-    }
-    return result;
+      );
+    });
   },
 
   // ***************************************************************************
@@ -364,12 +360,8 @@ export const EdgeMixin: PartialType = {
   },
 
   getEdgesBetween(source, target, directed = false) {
-    const edges = this.getEdges(source);
-    const result = [];
-
-    // Checks if the edge is connected to the correct
-    // cell and returns the first match
-    for (const edge of edges) {
+    // Keeps the edges connected to the correct cells
+    return this.getEdges(source).filter((edge) => {
       const state = this.getView().getState(edge);
 
       const src = state
@@ -379,14 +371,11 @@ export const EdgeMixin: PartialType = {
         ? state.getVisibleTerminal(false)
         : this.getView().getVisibleTerminal(edge, false);
 
-      if (
+      return (
         (src === source && trg === target) ||
         (!directed && src === target && trg === source)
-      ) {
-        result.push(edge);
-      }
-    }
-    return result;
+      );
+    });
   },
 
   // ***************************************************************************

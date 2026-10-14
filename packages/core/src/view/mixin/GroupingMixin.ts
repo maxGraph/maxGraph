@@ -205,17 +205,10 @@ export const GroupingMixin: PartialType = {
   },
 
   getCellsForUngroup() {
-    const cells = this.getSelectionCells();
-
     // Finds the cells with children
-    const tmp = [];
-
-    for (const cell of cells) {
-      if (cell.isVertex() && cell.getChildCount() > 0) {
-        tmp.push(cell);
-      }
-    }
-    return tmp;
+    return this.getSelectionCells().filter(
+      (cell) => cell.isVertex() && cell.getChildCount() > 0
+    );
   },
 
   removeCellsAfterUngroup(cells) {
