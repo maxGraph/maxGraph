@@ -162,11 +162,9 @@ export class StencilShape extends Shape {
       const tmp = getChildNodes(conns);
 
       if (tmp.length > 0) {
-        this.constraints = [];
-
-        for (const constraintNode of tmp) {
-          this.constraints.push(this.parseConstraint(constraintNode as Element));
-        }
+        this.constraints = tmp.map((constraintNode) =>
+          this.parseConstraint(constraintNode as Element)
+        );
       }
     }
   }
@@ -657,16 +655,11 @@ export class StencilShape extends Shape {
           let value = node.getAttribute('pattern');
 
           if (value != null) {
-            const tmp = value.split(' ');
-            const pat = [];
-
-            for (const dashValue of tmp) {
-              if (dashValue.length > 0) {
-                pat.push(Number(dashValue) * minScale);
-              }
-            }
-
-            value = pat.join(' ');
+            value = value
+              .split(' ')
+              .filter((dashValue) => dashValue.length > 0)
+              .map((dashValue) => Number(dashValue) * minScale)
+              .join(' ');
             canvas.setDashPattern(value);
           }
 

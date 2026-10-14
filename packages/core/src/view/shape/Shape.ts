@@ -657,13 +657,9 @@ class Shape {
 
         if (this.points.length > 0) {
           // Paints edge shape
-          const pts = [];
-
-          for (const p of this.points) {
-            if (p) {
-              pts.push(new Point(p.x / s, p.y / s));
-            }
-          }
+          const pts = this.points
+            .filter((point) => !isNullish(point))
+            .map((point) => new Point(point.x / s, point.y / s));
 
           this.paintEdgeShape(c, pts);
         } else {
