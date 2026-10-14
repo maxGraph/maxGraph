@@ -237,3 +237,123 @@ describe('rotation with the rotation handle', () => {
     expect(graph.getCurrentCellStyle(vertex).rotation).toBe(90);
   });
 });
+
+describe('rotateCell', () => {
+  const rotateCell = (graph: Graph, cell: Cell, angle: number): void => {
+    const handler = new VertexHandler(graph.view.getState(cell)!);
+    graph.batchUpdate(() => {
+      handler.rotateCell(cell, angle);
+    });
+  };
+
+  test('rotates a vertex without children', () => {
+    const graph = createGraph(1);
+    const vertex = graph.insertVertex({
+      value: 'vertex',
+      position: [100, 100],
+      size: [200, 200],
+      style: { rotation: 30 },
+    });
+
+    rotateCell(graph, vertex, 60);
+
+    expect(graph.getCurrentCellStyle(vertex).rotation).toBe(90);
+  });
+
+  test('rotates the children of a vertex and moves them around its centre', () => {
+    const graph = createGraph(1);
+    const group = graph.insertVertex({
+      value: 'group',
+      position: [100, 100],
+      size: [200, 200],
+    });
+    const child = graph.insertVertex({
+      parent: group,
+      value: 'child',
+      position: [20, 60],
+      size: [60, 40],
+      style: { rotation: 10 },
+    });
+
+    rotateCell(graph, group, 90);
+
+    expect(graph.getCurrentCellStyle(group).rotation).toBe(90);
+    expect(graph.getCurrentCellStyle(child).rotation).toBe(100);
+    // The centre of the child, (50, 80), is rotated by 90 degrees around the centre of the group, which is (100, 100)
+    // in the coordinates of its children, giving (120, 50). The geometry is then repositioned around that centre.
+    const childGeometry = child.getGeometry()!;
+    expect(childGeometry.x).toBe(90);
+    expect(childGeometry.y).toBe(30);
+  });
+
+  test('rotates the descendants recursively', () => {
+    const graph = createGraph(1);
+    const group = graph.insertVertex({
+      value: 'group',
+      position: [100, 100],
+      size: [200, 200],
+    });
+    const child = graph.insertVertex({
+      parent: group,
+      value: 'child',
+      position: [20, 60],
+      size: [60, 40],
+    });
+    const grandChild = graph.insertVertex({
+      parent: child,
+      value: 'grandChild',
+      position: [5, 5],
+      size: [20, 20],
+    });
+
+    rotateCell(graph, group, 45);
+
+    expect(graph.getCurrentCellStyle(child).rotation).toBe(45);
+    expect(graph.getCurrentCellStyle(grandChild).rotation).toBe(45);
+  });
+
+  test('rotates a relative child without moving its geometry', () => {
+    const graph = createGraph(1);
+    const group = graph.insertVertex({
+      value: 'group',
+      position: [100, 100],
+      size: [200, 200],
+    });
+    const child = graph.insertVertex({
+      parent: group,
+      value: 'relative child',
+      position: [0.5, 0.5],
+      size: [20, 20],
+      relative: true,
+    });
+
+    rotateCell(graph, group, 90);
+
+    expect(graph.getCurrentCellStyle(child).rotation).toBe(90);
+    const childGeometry = child.getGeometry()!;
+    expect(childGeometry.x).toBe(0.5);
+    expect(childGeometry.y).toBe(0.5);
+  });
+
+  test('does nothing when the angle is 0', () => {
+    const graph = createGraph(1);
+    const group = graph.insertVertex({
+      value: 'group',
+      position: [100, 100],
+      size: [200, 200],
+      style: { rotation: 30 },
+    });
+    const child = graph.insertVertex({
+      parent: group,
+      value: 'child',
+      position: [20, 60],
+      size: [60, 40],
+    });
+
+    rotateCell(graph, group, 0);
+
+    expect(graph.getCurrentCellStyle(group).rotation).toBe(30);
+    expect(graph.getCurrentCellStyle(child).rotation).toBeUndefined();
+    expect(child.getGeometry()!.x).toBe(20);
+  });
+});
