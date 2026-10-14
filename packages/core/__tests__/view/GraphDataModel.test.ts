@@ -16,6 +16,7 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { Cell, GraphDataModel } from '../../src';
+import { createGraphWithoutPlugins } from '../utils';
 
 describe('filterCells', () => {
   const model: GraphDataModel = new GraphDataModel();
@@ -61,5 +62,25 @@ describe('isLayer', () => {
     root.children.push(child);
     child.setParent(root);
     expect(model.isLayer(child)).toBeTruthy();
+  });
+});
+
+describe('updateEdgeParents', () => {
+  test('move every connected edge to the nearest common ancestor of its terminals', () => {
+    const graph = createGraphWithoutPlugins();
+    const model = graph.getDataModel();
+    const group = graph.insertVertex({ value: 'group' });
+    const source = graph.insertVertex({ parent: group, value: 'source' });
+    const target = graph.insertVertex({ parent: group, value: 'target' });
+    model.maintainEdgeParent = false;
+    const edges = [
+      graph.insertEdge({ source, target }),
+      graph.insertEdge({ source, target }),
+    ];
+    model.maintainEdgeParent = true;
+
+    model.updateEdgeParents(source);
+
+    expect(edges.map((edge) => edge.getParent())).toEqual([group, group]);
   });
 });

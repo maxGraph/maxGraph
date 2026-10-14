@@ -361,9 +361,9 @@ export class GraphView extends EventSource {
     let result: Rectangle | null = null;
 
     if (cells.length > 0) {
-      for (let i = 0; i < cells.length; i += 1) {
-        if (cells[i].isVertex() || cells[i].isEdge()) {
-          const state = this.getState(cells[i]);
+      for (const cell of cells) {
+        if (cell.isVertex() || cell.isEdge()) {
+          const state = this.getState(cell);
 
           if (state) {
             if (!result) {
@@ -511,6 +511,9 @@ export class GraphView extends EventSource {
 
         // Recursively invalidates all descendants
         if (recurse) {
+          // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+          // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+          // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
           const childCount = cell.getChildCount();
 
           for (let i = 0; i < childCount; i += 1) {
@@ -521,6 +524,9 @@ export class GraphView extends EventSource {
 
         // Propagates invalidation to all connected edges
         if (includeEdges) {
+          // Keep it outside the loop to have a single call to getEdgeCount for performance reasons.
+          // Subclassers may override getEdgeCount to return a different value than the actual number of edges, and this retrieval could be expensive.
+          // Keeping it outside the loop also avoids calling getEdgeCount multiple times for the same cell.
           const edgeCount = cell.getEdgeCount();
 
           for (let i = 0; i < edgeCount; i += 1) {
@@ -596,6 +602,9 @@ export class GraphView extends EventSource {
       }
 
       if (recurse) {
+        // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+        // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+        // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
         const childCount = state.cell.getChildCount();
 
         for (let i = 0; i < childCount; i += 1) {
@@ -793,6 +802,9 @@ export class GraphView extends EventSource {
     if (state && !visible) {
       this.removeState(cell);
     } else {
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = cell.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {
@@ -858,6 +870,9 @@ export class GraphView extends EventSource {
             this.stateValidated(state);
           }
 
+          // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+          // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+          // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
           const childCount = cell.getChildCount();
           for (let i = 0; i < childCount; i += 1) {
             this.validateCellState(cell.getChildAt(i));
@@ -1264,9 +1279,9 @@ export class GraphView extends EventSource {
         trg.setRect(trgBounds.x, trgBounds.y, trgBounds.width, trgBounds.height);
       }
     } else if (points) {
-      for (let i = 0; i < points.length; i += 1) {
-        if (points[i]) {
-          const pt = clone(points[i]);
+      for (const point of points) {
+        if (point) {
+          const pt = clone(point);
           pts.push(this.transformControlPoint(edge, pt));
         }
       }

@@ -54,3 +54,40 @@ describe('groupCells', () => {
     expectGeometryBounds(child2, { x: 100, y: 100, ...childSize });
   });
 });
+
+describe('ungroupCells', () => {
+  test('move the children of every given group to its parent', () => {
+    const graph = createGraphWithoutPlugins();
+    const groups = [
+      graph.insertVertex({ value: 'group 1', size: [100, 100] }),
+      graph.insertVertex({ value: 'group 2', size: [100, 100] }),
+    ];
+    const children = groups.map((group) =>
+      graph.insertVertex({ parent: group, value: 'child', size: [10, 10] })
+    );
+
+    graph.ungroupCells(groups);
+
+    expect(children.map((child) => child.getParent())).toEqual([
+      graph.getDefaultParent(),
+      graph.getDefaultParent(),
+    ]);
+  });
+});
+
+describe('getCellsForUngroup', () => {
+  test('return the selected vertices having children', () => {
+    const graph = createGraphWithoutPlugins();
+    const groups = [
+      graph.insertVertex({ value: 'group 1', size: [100, 100] }),
+      graph.insertVertex({ value: 'group 2', size: [100, 100] }),
+    ];
+    for (const group of groups) {
+      graph.insertVertex({ parent: group, value: 'child', size: [10, 10] });
+    }
+    const vertexWithoutChild = graph.insertVertex({ value: 'vertex' });
+    graph.setSelectionCells([groups[0], vertexWithoutChild, groups[1]]);
+
+    expect(graph.getCellsForUngroup()).toEqual(groups);
+  });
+});

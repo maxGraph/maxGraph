@@ -82,6 +82,9 @@ export const SwimlaneMixin: PartialType = {
     }
 
     if (parent) {
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = parent.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {
@@ -227,8 +230,8 @@ export const SwimlaneMixin: PartialType = {
 
   getDropTarget(cells, evt, cell = null, clone = false) {
     if (!this.isSwimlaneNesting()) {
-      for (let i = 0; i < cells.length; i += 1) {
-        if (this.isSwimlane(cells[i])) {
+      for (const cell of cells) {
+        if (this.isSwimlane(cell)) {
           return null;
         }
       }

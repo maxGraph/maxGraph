@@ -118,24 +118,24 @@ export const FoldingMixin: PartialType = {
   cellsFolded(cells = null, collapse = false, recurse = false, checkFoldable = false) {
     if (cells != null && cells.length > 0) {
       this.batchUpdate(() => {
-        for (let i = 0; i < cells.length; i += 1) {
+        for (const cell of cells) {
           if (
-            (!checkFoldable || this.isCellFoldable(cells[i], collapse)) &&
-            collapse !== cells[i].isCollapsed()
+            (!checkFoldable || this.isCellFoldable(cell, collapse)) &&
+            collapse !== cell.isCollapsed()
           ) {
-            this.getDataModel().setCollapsed(cells[i], collapse);
-            this.swapBounds(cells[i], collapse);
+            this.getDataModel().setCollapsed(cell, collapse);
+            this.swapBounds(cell, collapse);
 
-            if (this.isExtendParent(cells[i])) {
-              this.extendParent(cells[i]);
+            if (this.isExtendParent(cell)) {
+              this.extendParent(cell);
             }
 
             if (recurse) {
-              const children = cells[i].getChildren();
+              const children = cell.getChildren();
               this.cellsFolded(children, collapse, recurse);
             }
 
-            this.constrainChild(cells[i]);
+            this.constrainChild(cell);
           }
         }
 

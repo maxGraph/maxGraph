@@ -23,6 +23,7 @@ import {
   GraphView,
   Perimeter,
   PerimeterRegistry,
+  Rectangle,
   unregisterAllEdgeStyles,
   unregisterAllPerimeters,
 } from '../../src';
@@ -165,5 +166,18 @@ describe('getPerimeterFunction', () => {
     const graph = new BaseGraph();
     const cellState = new CellState(graph.view, null, { perimeter });
     expect(graph.view.getPerimeterFunction(cellState)).toBe(perimeter);
+  });
+});
+
+describe('getBounds', () => {
+  test('return the union of the states of every given cell', () => {
+    const graph = new BaseGraph();
+    const cells = [
+      graph.insertVertex({ position: [10, 20], size: [30, 40] }),
+      graph.insertVertex({ position: [100, 200], size: [30, 40] }),
+    ];
+
+    expect(graph.view.getBounds(cells)).toEqual(new Rectangle(10, 20, 120, 220));
+    graph.destroy();
   });
 });

@@ -147,6 +147,9 @@ export const ValidationMixin: PartialType = {
     context = context ?? {};
 
     let isValid = true;
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = cell.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {
@@ -213,9 +216,7 @@ export const ValidationMixin: PartialType = {
     const value = cell.getValue();
     let error = '';
 
-    for (let i = 0; i < this.multiplicities.length; i += 1) {
-      const rule = this.multiplicities[i];
-
+    for (const rule of this.multiplicities) {
       if (
         rule.source &&
         isNode(value, rule.type, rule.attr, rule.value) &&

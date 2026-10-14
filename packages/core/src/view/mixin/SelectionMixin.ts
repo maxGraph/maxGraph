@@ -265,6 +265,9 @@ export const SelectionMixin: PartialType = {
 
   isSiblingSelected(cell) {
     const parent = cell.getParent() as Cell;
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = parent.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {
@@ -291,6 +294,9 @@ export const SelectionMixin: PartialType = {
           coveredElements.set(cell, true);
           cells.push(cell);
         } else {
+          // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+          // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+          // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
           const childCount = cell.getChildCount();
 
           for (let i = 0; i < childCount; i += 1) {
@@ -300,9 +306,7 @@ export const SelectionMixin: PartialType = {
       }
     };
 
-    for (let i = 0; i < changes.length; i += 1) {
-      const change = changes[i];
-
+    for (const change of changes) {
       if (change.constructor !== RootChange && (!ignoreFn || !ignoreFn(change))) {
         let cell = null;
 

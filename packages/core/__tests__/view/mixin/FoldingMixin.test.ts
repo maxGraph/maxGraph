@@ -58,3 +58,17 @@ describe('isCellFoldable', () => {
     ).toBeFalsy();
   });
 });
+
+describe('cellsFolded', () => {
+  test('collapse every given cell', () => {
+    const graph = createGraphWithoutPlugins();
+    const groups = [
+      graph.insertVertex({ value: 'group 1', size: [100, 100] }),
+      graph.insertVertex({ value: 'group 2', size: [100, 100] }),
+    ];
+
+    graph.cellsFolded(groups, true, false);
+
+    expect(groups.map((group) => group.isCollapsed())).toEqual([true, true]);
+  });
+});

@@ -61,3 +61,16 @@ describe('getAllConnectionConstraints', () => {
     expect(graph.getAllConnectionConstraints(cellState, true)).toBe(constraints);
   });
 });
+
+describe('disconnectGraph', () => {
+  test('keep the edges whose terminals are all in the given cells', () => {
+    const graph = createGraphWithoutPlugins();
+    const source = graph.insertVertex({ value: 'source' });
+    const target = graph.insertVertex({ value: 'target' });
+    const edge = graph.insertEdge({ source, target });
+
+    graph.disconnectGraph([source, edge, target]);
+
+    expect([edge.getTerminal(true), edge.getTerminal(false)]).toEqual([source, target]);
+  });
+});
