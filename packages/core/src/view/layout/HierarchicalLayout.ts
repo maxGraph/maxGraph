@@ -217,16 +217,9 @@ class HierarchicalLayout extends GraphLayout {
     }
 
     if (roots != null) {
-      const rootsCopy = [];
-
-      for (let i = 0; i < roots.length; i += 1) {
-        const ancestor = parent != null ? parent.isAncestor(roots[i]) : true;
-
-        if (ancestor && roots[i].isVertex()) {
-          rootsCopy.push(roots[i]);
-        }
-      }
-      this.roots = rootsCopy;
+      this.roots = roots.filter(
+        (root) => (parent != null ? parent.isAncestor(root) : true) && root.isVertex()
+      );
     }
 
     const { model } = this.graph;
@@ -277,8 +270,8 @@ class HierarchicalLayout extends GraphLayout {
           let fanOut = 0;
           let fanIn = 0;
 
-          for (let k = 0; k < conns.length; k++) {
-            const src = this.getVisibleTerminal(conns[k], true);
+          for (const connection of conns) {
+            const src = this.getVisibleTerminal(connection, true);
 
             if (src === cell) {
               fanOut++;
@@ -320,6 +313,9 @@ class HierarchicalLayout extends GraphLayout {
 
     let edges: Cell[] = [];
     const isCollapsed = cell.isCollapsed();
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = cell.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {
@@ -335,9 +331,9 @@ class HierarchicalLayout extends GraphLayout {
     edges = edges.concat(cell.getEdges(true, true));
     const result = [];
 
-    for (let i = 0; i < edges.length; i += 1) {
-      const source = this.getVisibleTerminal(edges[i], true);
-      const target = this.getVisibleTerminal(edges[i], false);
+    for (const edge of edges) {
+      const source = this.getVisibleTerminal(edge, true);
+      const target = this.getVisibleTerminal(edge, false);
 
       if (
         source === target ||
@@ -349,7 +345,7 @@ class HierarchicalLayout extends GraphLayout {
               (this.parent == null ||
                 this.isAncestor(this.parent, target, this.traverseAncestors)))))
       ) {
-        result.push(edges[i]);
+        result.push(edge);
       }
     }
 
@@ -427,12 +423,12 @@ class HierarchicalLayout extends GraphLayout {
         // the layout. We may need a custom set that holds such groups and forces
         // them to be processed for resizing and/or moving.
 
-        for (let i = 0; i < candidateRoots.length; i += 1) {
+        for (const candidateRoot of candidateRoots) {
           const vertexSet = Object();
           hierarchyVertices.push(vertexSet);
 
           this.traverse({
-            vertex: candidateRoots[i],
+            vertex: candidateRoot,
             directed: true,
             edge: null,
             allVertices: allVertexSet,
@@ -444,8 +440,8 @@ class HierarchicalLayout extends GraphLayout {
           });
         }
 
-        for (let i = 0; i < candidateRoots.length; i += 1) {
-          this.roots.push(candidateRoots[i]);
+        for (const candidateRoot of candidateRoots) {
+          this.roots.push(candidateRoot);
         }
 
         filledVertexSetEmpty = true;
@@ -462,12 +458,12 @@ class HierarchicalLayout extends GraphLayout {
       // Find vertex set as directed traversal from roots
       const roots = this.roots as Cell[]; // NEED CHECK - roots cannot be null
 
-      for (let i = 0; i < roots.length; i += 1) {
+      for (const root of roots) {
         const vertexSet = Object();
         hierarchyVertices.push(vertexSet);
 
         this.traverse({
-          vertex: roots[i],
+          vertex: root,
           directed: true,
           edge: null,
           allVertices: allVertexSet,
@@ -486,8 +482,7 @@ class HierarchicalLayout extends GraphLayout {
     // Track initial coordinate x-positioning
     let initialX = 0;
 
-    for (let i = 0; i < hierarchyVertices.length; i += 1) {
-      const vertexSet = hierarchyVertices[i];
+    for (const vertexSet of hierarchyVertices) {
       const tmp = [];
 
       for (const key in vertexSet) {
@@ -521,6 +516,9 @@ class HierarchicalLayout extends GraphLayout {
     }
 
     if (this.traverseAncestors || (cell === this.parent && cell.isVisible())) {
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = cell.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {
@@ -563,15 +561,15 @@ class HierarchicalLayout extends GraphLayout {
 
     // Checks if the edge is connected to the correct
     // cell and returns the first match
-    for (let i = 0; i < edges.length; i += 1) {
-      const src = this.getVisibleTerminal(edges[i], true);
-      const trg = this.getVisibleTerminal(edges[i], false);
+    for (const edge of edges) {
+      const src = this.getVisibleTerminal(edge, true);
+      const trg = this.getVisibleTerminal(edge, false);
 
       if (
         (src === source && trg === target) ||
         (!directed && src === target && trg === source)
       ) {
-        result.push(edges[i]);
+        result.push(edge);
       }
     }
     return result;

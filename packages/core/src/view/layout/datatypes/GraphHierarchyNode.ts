@@ -86,9 +86,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
       this.nextLayerConnectedCells = {};
       this.nextLayerConnectedCells[0] = [];
 
-      for (let i = 0; i < this.connectsAsTarget.length; i += 1) {
-        const edge = this.connectsAsTarget[i];
-
+      for (const edge of this.connectsAsTarget) {
         if (edge.maxRank === -1 || edge.maxRank === layer + 1) {
           // Either edge is not in any rank or
           // no dummy nodes in edge, add node of other side of edge
@@ -110,9 +108,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
       this.previousLayerConnectedCells = [];
       this.previousLayerConnectedCells[0] = [];
 
-      for (let i = 0; i < this.connectsAsSource.length; i += 1) {
-        const edge = this.connectsAsSource[i];
-
+      for (const edge of this.connectsAsSource) {
         if (edge.minRank === -1 || edge.minRank === layer - 1) {
           // No dummy nodes in edge, add node of other side of edge
           this.previousLayerConnectedCells[0].push(

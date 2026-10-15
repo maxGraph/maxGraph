@@ -21,6 +21,7 @@ import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge.js';
 import Cell from '../../cell/Cell.js';
 import HierarchicalLayout from '../HierarchicalLayout.js';
 import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell.js';
+import { isNullish } from '../../../internal/utils.js';
 
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges
@@ -76,8 +77,7 @@ class GraphHierarchyModel {
     for (let i = 0; i < vertices.length; i += 1) {
       const edges = internalVertices[i].connectsAsSource;
 
-      for (let j = 0; j < edges.length; j++) {
-        const internalEdge = edges[j];
+      for (const internalEdge of edges) {
         const realEdges = internalEdge.edges;
 
         // Only need to process the first real edge, since
@@ -193,8 +193,8 @@ class GraphHierarchyModel {
       // Create internal edges, but don't do any rank assignment yet
       // First use the information from the greedy cycle remover to
       // invert the leftward edges internally
-      for (let j = 0; j < conns.length; j++) {
-        const cell = <Cell>layout.getVisibleTerminal(conns[j], false);
+      for (const connection of conns) {
+        const cell = <Cell>layout.getVisibleTerminal(connection, false);
 
         // Looking for outgoing edges only
         if (cell !== vertices[i] && cell.isVertex() && !layout.isVertexIgnored(cell)) {
@@ -222,8 +222,7 @@ class GraphHierarchyModel {
           ) {
             const internalEdge = new GraphHierarchyEdge(undirectedEdges);
 
-            for (let k = 0; k < undirectedEdges.length; k++) {
-              const edge = undirectedEdges[k];
+            for (const edge of undirectedEdges) {
               this.edgeMapper.set(edge, internalEdge);
 
               // Resets all point on the edge and disables the edge style
@@ -256,23 +255,15 @@ class GraphHierarchyModel {
    * Starting at the sinks is basically a longest path layering algorithm.
    */
   initialRank(): void {
-    const startNodes: GraphHierarchyNode[] = [];
-
-    if (this.roots != null) {
-      for (let i = 0; i < this.roots.length; i += 1) {
-        const internalNode = this.vertexMapper.get(this.roots[i]);
-
-        if (internalNode != null) {
-          startNodes.push(internalNode);
-        }
-      }
-    }
+    const startNodes = (this.roots ?? [])
+      .map((root) => this.vertexMapper.get(root))
+      .filter((internalNode) => !isNullish(internalNode)) as GraphHierarchyNode[];
 
     const internalNodes = Array.from(this.vertexMapper.values());
 
-    for (let i = 0; i < internalNodes.length; i += 1) {
+    for (const internalNode of internalNodes) {
       // Mark the node as not having had a layer assigned
-      internalNodes[i].temp[0] = -1;
+      internalNode.temp[0] = -1;
     }
 
     const startNodesCopy = startNodes.slice();
@@ -291,9 +282,7 @@ class GraphHierarchyModel {
       // the layer determining edges variable
       let minimumLayer = this.SOURCESCANSTARTRANK;
 
-      for (let i = 0; i < layerDeterminingEdges.length; i += 1) {
-        const internalEdge = layerDeterminingEdges[i];
-
+      for (const internalEdge of layerDeterminingEdges) {
         if (internalEdge.temp[0] === 5270620) {
           // This edge has been scanned, get the layer of the
           // node on the other end
@@ -313,9 +302,7 @@ class GraphHierarchyModel {
         this.maxRank = Math.min(this.maxRank, minimumLayer);
 
         if (edgesToBeMarked != null) {
-          for (let i = 0; i < edgesToBeMarked.length; i += 1) {
-            const internalEdge = <GraphHierarchyEdge>edgesToBeMarked[i];
-
+          for (const internalEdge of edgesToBeMarked) {
             // Assign unique stamp ( y/m/d/h )
             internalEdge.temp[0] = 5270620;
 
@@ -355,19 +342,17 @@ class GraphHierarchyModel {
 
     // Normalize the ranks down from their large starting value to place
     // at least 1 sink on layer 0
-    for (let i = 0; i < internalNodes.length; i += 1) {
+    for (const internalNode of internalNodes) {
       // Mark the node as not having had a layer assigned
-      internalNodes[i].temp[0] -= this.maxRank;
+      internalNode.temp[0] -= this.maxRank;
     }
 
     // Tighten the rank 0 nodes as far as possible
-    for (let i = 0; i < startNodesCopy.length; i += 1) {
-      const internalNode = startNodesCopy[i];
+    for (const internalNode of startNodesCopy) {
       let currentMaxLayer = 0;
       const layerDeterminingEdges = internalNode.connectsAsSource;
 
-      for (let j = 0; j < layerDeterminingEdges.length; j++) {
-        const internalEdge = layerDeterminingEdges[j];
+      for (const internalEdge of layerDeterminingEdges) {
         const otherNode = <GraphHierarchyNode>internalEdge.target;
         internalNode.temp[0] = Math.max(currentMaxLayer, otherNode.temp[0] + 1);
         currentMaxLayer = internalNode.temp[0];
@@ -531,8 +516,7 @@ class GraphHierarchyModel {
         // can change the original for edge direction inversions
         const outgoingEdges = root.connectsAsSource.slice();
 
-        for (let i = 0; i < outgoingEdges.length; i += 1) {
-          const internalEdge = outgoingEdges[i];
+        for (const internalEdge of outgoingEdges) {
           const targetNode = internalEdge.target;
 
           // Root check is O(|roots|)
