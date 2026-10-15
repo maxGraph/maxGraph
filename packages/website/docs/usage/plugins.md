@@ -138,8 +138,11 @@ const otherPanningHandler = graph.getPlugin<PanningHandler>(PanningHandler.plugi
 - **The string is not a blind guess.** `getPlugin` takes a `PluginId`, which lists the ids of the built-in plugins, so
   the editor suggests them as you type. It accepts any other string as well, for custom plugins, so a misspelled id is
   not reported by the compiler: it makes `getPlugin` return `undefined`.
-- **The class is only needed as a type.** The type parameter is erased at compile time, so `import type` is all the
-  call needs and the plugin implementation is not referenced by that code.
+- **The string keeps the dependency on the plugin loose.** The type parameter is erased at compile time, so
+  `import type` is all the call needs: the calling module depends on the plugin only through its type, and not at all
+  at runtime. Reading `pluginId` turns this into a hard dependency, since the calling module then imports the plugin
+  module itself. Keeping the runtime dependencies between modules to what is needed makes the code more robust, and it
+  is what lets a bundler leave out the code an application does not use.
 - **Reading `pluginId` keeps the plugin in the bundle.** It needs a value import of the class, which the bundler cannot
   remove. This costs nothing when the application passes that plugin to the graph anyway, but code reaching an optional
   plugin, such as `graph.getPlugin<FitPlugin>('fit')?.fit()` in a module shared by graphs that do not all load it, then
@@ -148,8 +151,8 @@ const otherPanningHandler = graph.getPlugin<PanningHandler>(PanningHandler.plugi
   Farm, Rollup, Rsbuild, Vite and webpack, as measured in [PR #1270](https://github.com/maxGraph/maxGraph/pull/1270).
   See [Tree-Shaking](./tree-shaking.md#plugins).
 
-maxGraph provides no constant holding the ids apart from the plugin classes. For a custom plugin, you can declare its
-id in a module of its own, imported by both the plugin class and the code calling `getPlugin`.
+maxGraph currently provides no constant holding the ids apart from the plugin classes. For a custom plugin, you can
+declare its id in a module of its own, imported by both the plugin class and the code calling `getPlugin`.
 
 
 ## Choosing the Plugins to Use
