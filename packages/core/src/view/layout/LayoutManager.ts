@@ -230,11 +230,11 @@ class LayoutManager extends EventSource {
         getClientY(evt)
       );
 
-      for (let i = 0; i < cells.length; i += 1) {
-        const layout = this.getLayout(cells[i].getParent(), InternalEvent.MOVE_CELLS);
+      for (const cell of cells) {
+        const layout = this.getLayout(cell.getParent(), InternalEvent.MOVE_CELLS);
 
         if (layout) {
-          layout.moveCell(cells[i], point.x, point.y);
+          layout.moveCell(cell, point.x, point.y);
         }
       }
     }
@@ -329,7 +329,12 @@ class LayoutManager extends EventSource {
    */
   addDescendantsWithLayout(cell: Cell | null, result: Cell[] = []) {
     if (cell && this.hasLayout(cell)) {
-      for (let i = 0; i < cell.getChildCount(); i += 1) {
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
+      const childCount = cell.getChildCount();
+
+      for (let i = 0; i < childCount; i += 1) {
         const child = <Cell>cell.getChildAt(i);
 
         if (this.hasLayout(child)) {

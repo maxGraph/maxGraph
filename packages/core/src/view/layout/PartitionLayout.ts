@@ -84,6 +84,9 @@ class PartitionLayout extends GraphLayout {
     if (cell != null && parent != null) {
       let i: number;
       let last = 0;
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = parent.getChildCount();
 
       // Finds index of the closest swimlane
@@ -135,6 +138,9 @@ class PartitionLayout extends GraphLayout {
 
     if (pgeo != null) {
       const children = [];
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = parent.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {

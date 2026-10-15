@@ -114,6 +114,9 @@ class ParallelEdgeLayout extends GraphLayout {
       }
     } else {
       const model = this.graph.getDataModel();
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = parent.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {
@@ -144,16 +147,9 @@ class ParallelEdgeLayout extends GraphLayout {
         const state = view.getState(edge);
 
         if (state != null && state.absolutePoints != null) {
-          const tmp = [];
-
-          for (let i = 0; i < state.absolutePoints.length; i += 1) {
-            const pt = state.absolutePoints[i];
-
-            if (pt != null) {
-              tmp.push(pt.x, pt.y);
-            }
-          }
-          pts = tmp.join(',');
+          pts = state.absolutePoints
+            .flatMap((point) => (point != null ? [point.x, point.y] : []))
+            .join(',');
         }
       }
       return (<string>src > <string>trg ? `${trg}-${src}` : `${src}-${trg}`) + pts;
@@ -179,8 +175,8 @@ class ParallelEdgeLayout extends GraphLayout {
       x0 = src.x + src.width + this.spacing;
       y0 = src.y + src.height / 2;
 
-      for (let i = 0; i < parallels.length; i += 1) {
-        this.route(parallels[i], x0, y0);
+      for (const parallel of parallels) {
+        this.route(parallel, x0, y0);
         x0 += this.spacing;
       }
     } else if (src != null && trg != null) {
@@ -206,8 +202,8 @@ class ParallelEdgeLayout extends GraphLayout {
         x0 += (nx * (parallels.length - 1)) / 2;
         y0 -= (ny * (parallels.length - 1)) / 2;
 
-        for (let i = 0; i < parallels.length; i += 1) {
-          this.route(parallels[i], x0, y0);
+        for (const parallel of parallels) {
+          this.route(parallel, x0, y0);
           x0 -= nx;
           y0 += ny;
         }

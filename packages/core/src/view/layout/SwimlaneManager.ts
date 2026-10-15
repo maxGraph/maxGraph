@@ -229,6 +229,9 @@ class SwimlaneManager extends EventSource {
    */
   swimlaneAdded(swimlane: Cell) {
     const parent = <Cell>swimlane.getParent();
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = parent.getChildCount();
     let geo = null;
 
@@ -331,6 +334,9 @@ class SwimlaneManager extends EventSource {
       w -= tmp.width;
       h -= tmp.height;
 
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = swimlane.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {

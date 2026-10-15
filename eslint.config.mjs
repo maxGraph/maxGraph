@@ -111,37 +111,9 @@ export default tsEslint.config(
     },
   },
 
-  // Only some folders have been migrated to for-of loops, enable the rule there to avoid regressions
+  // Only the core package has been migrated to for-of loops, enable the rule there to avoid regressions
   {
-    files: [
-      'packages/core/src/editor/**/*',
-      'packages/core/src/gui/**/*',
-      'packages/core/src/i18n/**/*',
-      'packages/core/src/internal/**/*',
-      'packages/core/src/serialization/**/*',
-      'packages/core/src/util/**/*',
-      'packages/core/src/view/*',
-      'packages/core/src/view/animate/**/*',
-      'packages/core/src/view/canvas/**/*',
-      'packages/core/src/view/cell/**/*',
-      'packages/core/src/view/geometry/**/*',
-      'packages/core/src/view/handler/**/*',
-      'packages/core/src/view/image/**/*',
-      'packages/core/src/view/layout/HierarchicalLayout.ts',
-      'packages/core/src/view/layout/datatypes/**/*',
-      'packages/core/src/view/layout/hierarchical/CoordinateAssignment.ts',
-      'packages/core/src/view/layout/hierarchical/GraphHierarchyModel.ts',
-      'packages/core/src/view/layout/hierarchical/HierarchicalLayoutStage.ts',
-      'packages/core/src/view/layout/hierarchical/MedianHybridCrossingReduction.ts',
-      'packages/core/src/view/layout/hierarchical/MinimumCycleRemover.ts',
-      'packages/core/src/view/layout/util/**/*',
-      'packages/core/src/view/mixin/**/*',
-      'packages/core/src/view/other/**/*',
-      'packages/core/src/view/plugin/**/*',
-      'packages/core/src/view/shape/**/*',
-      'packages/core/src/view/style/**/*',
-      'packages/core/src/view/undoable-change/**/*',
-    ],
+    files: ['packages/core/**/*'],
     rules: {
       // https://typescript-eslint.io/rules/prefer-for-of/ part of "plugin:@typescript-eslint/stylistic"
       '@typescript-eslint/prefer-for-of': 'error',

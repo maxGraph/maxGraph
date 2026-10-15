@@ -234,12 +234,12 @@ class SwimlaneLayout extends GraphLayout {
 
     // Check the swimlanes all have vertices
     // in them
-    for (let i = 0; i < swimlanes.length; i += 1) {
-      const children = this.graph.getChildCells(swimlanes[i]);
+    for (const swimlane of swimlanes) {
+      const children = this.graph.getChildCells(swimlane);
 
       if (children == null || children.length === 0) {
         const vertex = this.graph.insertVertex({
-          parent: swimlanes[i],
+          parent: swimlane,
           position: [0, 0],
           size: [this.dummyVertexWidth, 0],
         });
@@ -284,8 +284,8 @@ class SwimlaneLayout extends GraphLayout {
     const model = <SwimlaneModel>this.model;
 
     for (const cell of model.edgeMapper.keys()) {
-      for (let i = 0; i < cell.edges.length; i += 1) {
-        cells.push(cell.edges[i]);
+      for (const edge of cell.edges) {
+        cells.push(edge);
       }
     }
 
@@ -382,12 +382,12 @@ class SwimlaneLayout extends GraphLayout {
           let fanOut = 0;
           let fanIn = 0;
 
-          for (let k = 0; k < conns.length; k++) {
-            const src = this.getVisibleTerminal(conns[k], true);
+          for (const connection of conns) {
+            const src = this.getVisibleTerminal(connection, true);
 
             if (src === cell) {
               // Only count connection within this swimlane
-              const other = this.getVisibleTerminal(conns[k], false);
+              const other = this.getVisibleTerminal(connection, false);
 
               if (parent.isAncestor(other)) {
                 fanOut += 1;
@@ -431,6 +431,9 @@ class SwimlaneLayout extends GraphLayout {
 
     let edges: Cell[] = [];
     const isCollapsed = cell.isCollapsed();
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = cell.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {
@@ -446,9 +449,9 @@ class SwimlaneLayout extends GraphLayout {
     edges = edges.concat(cell.getEdges(true, true));
     const result = [];
 
-    for (let i = 0; i < edges.length; i += 1) {
-      const source = this.getVisibleTerminal(edges[i], true);
-      const target = this.getVisibleTerminal(edges[i], false);
+    for (const edge of edges) {
+      const source = this.getVisibleTerminal(edge, true);
+      const target = this.getVisibleTerminal(edge, false);
 
       if (
         source === target ||
@@ -468,7 +471,7 @@ class SwimlaneLayout extends GraphLayout {
                   this.traverseAncestors
                 )))))
       ) {
-        result.push(edges[i]);
+        result.push(edge);
       }
     }
 
@@ -527,8 +530,8 @@ class SwimlaneLayout extends GraphLayout {
     if (this.swimlanes != null && this.swimlanes.length > 0 && parent != null) {
       const filledVertexSet: { [key: string]: Cell } = {};
 
-      for (let i = 0; i < this.swimlanes.length; i += 1) {
-        this.filterDescendants(this.swimlanes[i], filledVertexSet);
+      for (const swimlane of this.swimlanes) {
+        this.filterDescendants(swimlane, filledVertexSet);
       }
 
       this.roots = [];
@@ -559,12 +562,12 @@ class SwimlaneLayout extends GraphLayout {
         // If the candidate root is an unconnected group cell, remove it from
         // the layout. We may need a custom set that holds such groups and forces
         // them to be processed for resizing and/or moving.
-        for (let i = 0; i < candidateRoots.length; i += 1) {
+        for (const candidateRoot of candidateRoots) {
           const vertexSet = Object();
           hierarchyVertices.push(vertexSet);
 
           this.traverse({
-            vertex: candidateRoots[i],
+            vertex: candidateRoot,
             directed: true,
             edge: null,
             allVertices: allVertexSet,
@@ -577,8 +580,8 @@ class SwimlaneLayout extends GraphLayout {
           });
         }
 
-        for (let i = 0; i < candidateRoots.length; i += 1) {
-          this.roots.push(candidateRoots[i]);
+        for (const candidateRoot of candidateRoots) {
+          this.roots.push(candidateRoot);
         }
 
         filledVertexSetEmpty = true;
@@ -649,6 +652,9 @@ class SwimlaneLayout extends GraphLayout {
     }
 
     if (this.traverseAncestors || (cell === this.parent && cell.isVisible())) {
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = cell.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {
@@ -690,15 +696,15 @@ class SwimlaneLayout extends GraphLayout {
 
     // Checks if the edge is connected to the correct
     // cell and returns the first match
-    for (let i = 0; i < edges.length; i += 1) {
-      const src = this.getVisibleTerminal(edges[i], true);
-      const trg = this.getVisibleTerminal(edges[i], false);
+    for (const edge of edges) {
+      const src = this.getVisibleTerminal(edge, true);
+      const trg = this.getVisibleTerminal(edge, false);
 
       if (
         (src === source && trg === target) ||
         (!directed && src === target && trg === source)
       ) {
-        result.push(edges[i]);
+        result.push(edge);
       }
     }
     return result;
@@ -751,12 +757,12 @@ class SwimlaneLayout extends GraphLayout {
 
         const edges = this.getEdges(vertex);
 
-        for (let i = 0; i < edges.length; i += 1) {
-          let otherVertex = this.getVisibleTerminal(edges[i], true);
+        for (const edge of edges) {
+          let otherVertex = this.getVisibleTerminal(edge, true);
           const isSource = otherVertex === vertex;
 
           if (isSource) {
-            otherVertex = this.getVisibleTerminal(edges[i], false);
+            otherVertex = this.getVisibleTerminal(edge, false);
           }
 
           let otherIndex: number;
@@ -782,7 +788,7 @@ class SwimlaneLayout extends GraphLayout {
             currentComp = this.traverse({
               vertex: otherVertex,
               directed,
-              edge: edges[i],
+              edge,
               allVertices,
               currentComp,
               hierarchyVertices,

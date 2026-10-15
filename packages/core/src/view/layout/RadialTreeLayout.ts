@@ -263,8 +263,8 @@ class RadialTreeLayout extends CompactTreeLayout {
 
     let rowHasChildren = false;
 
-    for (let i = 0; i < row.length; i += 1) {
-      let child = row[i] != null ? row[i].child : null;
+    for (const node of row) {
+      let child = node != null ? node.child : null;
 
       while (child != null) {
         const { cell } = child;

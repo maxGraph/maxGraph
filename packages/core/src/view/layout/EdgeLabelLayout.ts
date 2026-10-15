@@ -53,6 +53,9 @@ class EdgeLabelLayout extends GraphLayout {
     // Gets all vertices and edges inside the parent
     const edges = [];
     const vertices = [];
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = parent.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {
@@ -81,13 +84,9 @@ class EdgeLabelLayout extends GraphLayout {
     // radius is large enough for the vertices to not
     // overlap
     this.graph.batchUpdate(() => {
-      for (let i = 0; i < e.length; i += 1) {
-        const edge = e[i];
-
+      for (const edge of e) {
         if (edge != null && edge.text != null && edge.text.boundingBox != null) {
-          for (let j = 0; j < v.length; j += 1) {
-            const vertex = v[j];
-
+          for (const vertex of v) {
             if (vertex != null) {
               this.avoid(edge, vertex);
             }

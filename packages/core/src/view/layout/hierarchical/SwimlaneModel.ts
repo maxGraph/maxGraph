@@ -76,8 +76,7 @@ class SwimlaneModel {
     for (let i = 0; i < vertices.length; i += 1) {
       const edges = internalVertices[i].connectsAsSource;
 
-      for (let j = 0; j < edges.length; j++) {
-        const internalEdge = edges[j];
+      for (const internalEdge of edges) {
         const realEdges = internalEdge.edges;
 
         // Only need to process the first real edge, since
@@ -207,8 +206,8 @@ class SwimlaneModel {
       // Create internal edges, but don't do any rank assignment yet
       // First use the information from the greedy cycle remover to
       // invert the leftward edges internally
-      for (let j = 0; j < conns.length; j += 1) {
-        const cell = <Cell>layout.getVisibleTerminal(conns[j], false);
+      for (const connection of conns) {
+        const cell = <Cell>layout.getVisibleTerminal(connection, false);
 
         // Looking for outgoing edges only
         if (cell !== vertices[i] && cell.isVertex() && !layout.isVertexIgnored(cell)) {
@@ -236,8 +235,7 @@ class SwimlaneModel {
           ) {
             const internalEdge = new GraphHierarchyEdge(undirectedEdges);
 
-            for (let k = 0; k < undirectedEdges.length; k += 1) {
-              const edge = undirectedEdges[k];
+            for (const edge of undirectedEdges) {
               this.edgeMapper.set(edge, internalEdge);
 
               // Resets all point on the edge and disables the edge style
@@ -276,8 +274,8 @@ class SwimlaneModel {
     const seen = {};
 
     if (this.roots != null) {
-      for (let i = 0; i < this.roots.length; i += 1) {
-        const internalNode = <GraphHierarchyNode>this.vertexMapper.get(this.roots[i]);
+      for (const root of this.roots) {
+        const internalNode = <GraphHierarchyNode>this.vertexMapper.get(root);
         this.maxChainDfs(null, internalNode, null, seen, 0);
 
         if (internalNode != null) {
@@ -304,9 +302,9 @@ class SwimlaneModel {
 
     const internalNodes = Array.from(this.vertexMapper.values());
 
-    for (let i = 0; i < internalNodes.length; i += 1) {
+    for (const internalNode of internalNodes) {
       // Mark the node as not having had a layer assigned
-      internalNodes[i].temp[0] = -1;
+      internalNode.temp[0] = -1;
     }
 
     const startNodesCopy = startNodes.slice();
@@ -325,9 +323,7 @@ class SwimlaneModel {
       // the layer determining edges variable
       let minimumLayer = upperRank[0];
 
-      for (let i = 0; i < layerDeterminingEdges.length; i += 1) {
-        const internalEdge = layerDeterminingEdges[i];
-
+      for (const internalEdge of layerDeterminingEdges) {
         if (internalEdge.temp[0] === 5270620) {
           // This edge has been scanned, get the layer of the
           // node on the other end
@@ -350,9 +346,7 @@ class SwimlaneModel {
         internalNode.temp[0] = minimumLayer;
 
         if (edgesToBeMarked != null) {
-          for (let i = 0; i < edgesToBeMarked.length; i += 1) {
-            const internalEdge = edgesToBeMarked[i];
-
+          for (const internalEdge of edgesToBeMarked) {
             // Assign unique stamp ( y/m/d/h )
             internalEdge.temp[0] = 5270620;
 
@@ -454,8 +448,7 @@ class SwimlaneModel {
         // can change the original for edge direction inversions
         const outgoingEdges = root.connectsAsSource.slice();
 
-        for (let i = 0; i < outgoingEdges.length; i += 1) {
-          const internalEdge = <GraphHierarchyEdge>outgoingEdges[i];
+        for (const internalEdge of outgoingEdges) {
           const targetNode = <GraphHierarchyNode>internalEdge.target;
 
           // Only navigate in source->target direction within the same
@@ -627,8 +620,7 @@ class SwimlaneModel {
         // can change the original for edge direction inversions
         const outgoingEdges = root.connectsAsSource.slice();
 
-        for (let i = 0; i < outgoingEdges.length; i += 1) {
-          const internalEdge = outgoingEdges[i];
+        for (const internalEdge of outgoingEdges) {
           const targetNode = <GraphHierarchyNode>internalEdge.target;
 
           // Root check is O(|roots|)

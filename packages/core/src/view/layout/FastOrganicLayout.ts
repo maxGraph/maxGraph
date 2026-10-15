@@ -168,14 +168,8 @@ class FastOrganicLayout extends GraphLayout {
    * given parent where <isVertexIgnored> returns false.
    */
   override execute(parent: Cell) {
-    this.vertexArray = [];
     let cells = this.graph.getChildVertices(parent);
-
-    for (let i = 0; i < cells.length; i += 1) {
-      if (!this.isVertexIgnored(cells[i])) {
-        this.vertexArray.push(cells[i]);
-      }
-    }
+    this.vertexArray = cells.filter((cell) => !this.isVertexIgnored(cell));
 
     const initialBounds = this.useInputOrigin
       ? this.graph.getBoundingBoxFromGeometry(this.vertexArray)
@@ -385,10 +379,8 @@ class FastOrganicLayout extends GraphLayout {
     // Check the neighbours of each vertex and calculate the attractive
     // force of the edge connecting them
     for (let i = 0; i < this.vertexArray.length; i += 1) {
-      for (let k = 0; k < this.neighbours[i].length; k += 1) {
-        // Get the index of the othe cell in the vertex array
-        const j = this.neighbours[i][k];
-
+      // Each neighbour is the index of the other cell in the vertex array
+      for (const j of this.neighbours[i]) {
         // Do not proceed self-loops
         if (i !== j && this.isMoveable[i] && this.isMoveable[j]) {
           const xDelta = this.cellLocation[i][0] - this.cellLocation[j][0];
