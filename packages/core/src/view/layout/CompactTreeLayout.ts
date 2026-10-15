@@ -274,13 +274,12 @@ export class CompactTreeLayout extends GraphLayout {
         const roots = findTreeRoots(this.graph, parent, true, this.invert);
 
         if (roots.length > 0) {
-          for (let i = 0; i < roots.length; i += 1) {
+          for (const root of roots) {
             if (
-              !this.isVertexIgnored(roots[i]) &&
-              this.graph.getEdges(roots[i], null, this.invert, !this.invert, false)
-                .length > 0
+              !this.isVertexIgnored(root) &&
+              this.graph.getEdges(root, null, this.invert, !this.invert, false).length > 0
             ) {
-              this.root = roots[i];
+              this.root = root;
               break;
             }
           }
@@ -498,9 +497,7 @@ export class CompactTreeLayout extends GraphLayout {
         this.sortOutgoingEdges(cell, out);
       }
 
-      for (let i = 0; i < out.length; i += 1) {
-        const edge = out[i];
-
+      for (const edge of out) {
         if (!this.isEdgeIgnored(edge)) {
           // Resets the points on the traversed edge
           if (this.resetEdges) {
@@ -972,7 +969,7 @@ export class CompactTreeLayout extends GraphLayout {
       let x: number;
       let y: number;
 
-      for (let i = 0; i < edges.length; i += 1) {
+      for (const edge of edges) {
         if (this.horizontal) {
           // Use opposite co-ords, calculation was done for
           //
@@ -983,7 +980,7 @@ export class CompactTreeLayout extends GraphLayout {
           newPoints.push(new Point(x, y));
           y = childBounds.y + childBounds.height / 2.0;
           newPoints.push(new Point(x, y));
-          this.setEdgePoints(edges[i], newPoints);
+          this.setEdgePoints(edge, newPoints);
         } else {
           x = parentBounds.x + currentXOffset;
           y = parentBounds.y + parentBounds.height;
@@ -992,7 +989,7 @@ export class CompactTreeLayout extends GraphLayout {
           newPoints.push(new Point(x, y));
           x = childBounds.x + childBounds.width / 2.0;
           newPoints.push(new Point(x, y));
-          this.setEdgePoints(edges[i], newPoints);
+          this.setEdgePoints(edge, newPoints);
         }
       }
 

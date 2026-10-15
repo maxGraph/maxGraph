@@ -79,8 +79,8 @@ class CompositeLayout extends GraphLayout {
    */
   override execute(parent: Cell): void {
     this.graph.batchUpdate(() => {
-      for (let i = 0; i < this.layouts.length; i += 1) {
-        this.layouts[i].execute.apply(this.layouts[i], [parent]);
+      for (const layout of this.layouts) {
+        layout.execute.apply(layout, [parent]);
       }
     });
   }

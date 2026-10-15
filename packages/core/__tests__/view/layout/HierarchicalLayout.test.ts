@@ -17,50 +17,13 @@ limitations under the License.
 import { describe, expect, test } from '@jest/globals';
 import { type Graph, HierarchicalLayout } from '../../../src';
 import { createGraphWithoutContainer } from '../../utils';
-
-/**
- * Inserts a vertex for each letter of `vertexValues`, and an edge for each value of
- * `edgeValues`, going from the vertex of its first letter to the vertex of its second one.
- */
-const insertCells = (graph: Graph, vertexValues: string, edgeValues: string[]) => {
-  const vertices = new Map(
-    vertexValues
-      .split('')
-      .map((value) => [value, graph.insertVertex({ value, size: [40, 20] })])
-  );
-  for (const value of edgeValues) {
-    const [source, target] = value.split('');
-    graph.insertEdge({
-      value,
-      source: vertices.get(source),
-      target: vertices.get(target),
-    });
-  }
-  return vertices;
-};
+import { getPositions, insertCells } from './utils';
 
 const executeLayout = (graph: Graph): void => {
   graph.batchUpdate(() => {
     new HierarchicalLayout(graph).execute(graph.getDefaultParent());
   });
 };
-
-const round = (value: number) => Math.round(value * 100) / 100;
-
-/**
- * Returns the position of every vertex and the points of every edge, by cell value.
- */
-const getPositions = (graph: Graph) =>
-  Object.fromEntries(
-    graph
-      .getDefaultParent()
-      .children.map((cell) => [
-        cell.value,
-        cell.isVertex()
-          ? [round(cell.geometry!.x), round(cell.geometry!.y)]
-          : cell.geometry!.points!.map((point) => [round(point.x), round(point.y)]),
-      ])
-  );
 
 describe('layout execute', () => {
   test('Circular layout graph is created successfully', () => {

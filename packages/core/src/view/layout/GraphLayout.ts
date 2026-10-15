@@ -154,6 +154,9 @@ class GraphLayout {
         const result = func(vertex, edge);
 
         if (result == null || result) {
+          // Keep it outside the loop to have a single call to getEdgeCount for performance reasons.
+          // Subclassers may override getEdgeCount to return a different value than the actual number of edges, and this retrieval could be expensive.
+          // Keeping it outside the loop also avoids calling getEdgeCount multiple times for the same cell.
           const edgeCount = vertex.getEdgeCount();
 
           if (edgeCount > 0) {
@@ -296,9 +299,9 @@ class GraphLayout {
         const parent = <Cell>edge.getParent();
         const parentOffset = this.getParentOffset(parent);
 
-        for (let i = 0; i < points.length; i += 1) {
-          points[i].x = points[i].x - parentOffset.x;
-          points[i].y = points[i].y - parentOffset.y;
+        for (const point of points) {
+          point.x = point.x - parentOffset.x;
+          point.y = point.y - parentOffset.y;
         }
       }
 

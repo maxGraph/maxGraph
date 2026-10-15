@@ -160,6 +160,9 @@ class StackLayout extends GraphLayout {
     if (cell != null && parent != null) {
       let i: number;
       let last = 0;
+      // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+      // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+      // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
       const childCount = parent.getChildCount();
       let value = horizontal ? x : y;
       const pstate = this.graph.getView().getState(parent);
@@ -225,6 +228,9 @@ class StackLayout extends GraphLayout {
    */
   getLayoutCells(parent: Cell): Cell[] {
     const model = this.graph.getDataModel();
+    // Keep it outside the loop to have a single call to getChildCount for performance reasons.
+    // Subclassers may override getChildCount to return a different value than the actual number of children, and this retrieval could be expensive.
+    // Keeping it outside the loop also avoids calling getChildCount multiple times for the same cell.
     const childCount = parent.getChildCount();
     const cells = [];
 
@@ -326,8 +332,7 @@ class StackLayout extends GraphLayout {
         let lastChild = null;
         const cells = this.getLayoutCells(parent);
 
-        for (let i = 0; i < cells.length; i += 1) {
-          const child = cells[i];
+        for (const child of cells) {
           let geo = child.getGeometry();
 
           if (geo != null) {
