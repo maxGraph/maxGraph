@@ -56,8 +56,8 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
     const unseenNodesArray = Array.from(model.vertexMapper.values());
     const unseenNodes: { [key: string]: GraphHierarchyNode } = {};
 
-    for (let i = 0; i < unseenNodesArray.length; i += 1) {
-      unseenNodes[unseenNodesArray[i].id] = unseenNodesArray[i];
+    for (const unseenNode of unseenNodesArray) {
+      unseenNodes[unseenNode.id] = unseenNode;
     }
 
     // Perform a dfs through the internal model. If a cycle is found,

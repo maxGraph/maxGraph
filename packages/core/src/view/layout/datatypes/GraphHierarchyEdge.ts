@@ -62,11 +62,7 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   constructor(edges: Cell[]) {
     super();
     this.edges = edges;
-    this.ids = [];
-
-    for (let i = 0; i < edges.length; i += 1) {
-      this.ids.push(<string>ObjectIdentity.get(edges[i]));
-    }
+    this.ids = edges.map((edge) => <string>ObjectIdentity.get(edge));
   }
 
   /**
