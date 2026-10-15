@@ -143,7 +143,10 @@ const otherPanningHandler = graph.getPlugin<PanningHandler>(PanningHandler.plugi
 - **Reading `pluginId` keeps the plugin in the bundle.** It needs a value import of the class, which the bundler cannot
   remove. This costs nothing when the application passes that plugin to the graph anyway, but code reaching an optional
   plugin, such as `graph.getPlugin<FitPlugin>('fit')?.fit()` in a module shared by graphs that do not all load it, then
-  ships the plugin even to the graphs that never use it. See [Tree-Shaking](./tree-shaking.md#plugins).
+  ships the plugin even to the graphs that never use it. For example, with maxGraph 0.24.0 and 0.25.0, reading
+  `FitPlugin.pluginId` in an application that does not register `FitPlugin` added about 1.6 to 1.9 kB to the bundle with
+  Farm, Rollup, Rsbuild, Vite and webpack, as measured in [PR #1270](https://github.com/maxGraph/maxGraph/pull/1270).
+  See [Tree-Shaking](./tree-shaking.md#plugins).
 
 maxGraph provides no constant holding the ids apart from the plugin classes. For a custom plugin, you can declare its
 id in a module of its own, imported by both the plugin class and the code calling `getPlugin`.
