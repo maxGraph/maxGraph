@@ -207,10 +207,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
       // Checks if any lanes or pools are selected
       cells ??= [];
-      for (let i = 0; i < cells.length; i++) {
-        const tmp = cells[i].getParent();
+      for (const selectedCell of cells) {
+        const tmp = selectedCell.getParent();
         lane = lane || this.isPool(tmp);
-        pool = pool || this.isPool(cells[i]);
+        pool = pool || this.isPool(selectedCell);
 
         cell = cell || !(lane || pool);
       }
@@ -234,8 +234,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     const foldingHandler = function (_sender: any, evt: EventObject) {
       const cells = evt.getProperty('cells');
 
-      for (let i = 0; i < cells.length; i++) {
-        const geo = cells[i].getGeometry();
+      for (const cell of cells) {
+        const geo = cell.getGeometry();
 
         if (geo.alternateBounds != null) {
           geo.width = geo.alternateBounds.width;

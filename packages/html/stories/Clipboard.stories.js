@@ -75,8 +75,8 @@ const Template = ({ label, ...args }) => {
     const model = new GraphDataModel();
     const parent = model.getRoot().getChildAt(0);
 
-    for (let i = 0; i < cells.length; i++) {
-      model.add(parent, cells[i]);
+    for (const cell of cells) {
+      model.add(parent, cell);
     }
     // Not pretty-printed: the trailing newline would be trimmed by pasteText, which would no longer recognize the last
     // copied cells and would paste them without any offset

@@ -382,22 +382,15 @@ const Template = ({ label, ...args }) => {
       // Routes multiple incoming edges along common waypoints if
       // the edges have a common target row
       if (source && domUtils.isNode(edge.cell.value) && start != null && end != null) {
-        let edges = this.graph.getEdgesBetween(start.cell, end.cell, true);
-        let tmp = [];
-
         // Filters the edges with the same source row
         let row = edge.cell.value.getAttribute('targetRow');
-
-        for (let i = 0; i < edges.length; i++) {
-          if (
-            domUtils.isNode(edges[i].value) &&
-            edges[i].value.getAttribute('targetRow') == row
-          ) {
-            tmp.push(edges[i]);
-          }
-        }
-
-        edges = tmp;
+        const edges = this.graph
+          .getEdgesBetween(start.cell, end.cell, true)
+          .filter(
+            (otherEdge) =>
+              domUtils.isNode(otherEdge.value) &&
+              otherEdge.value.getAttribute('targetRow') == row
+          );
 
         if (edges.length > 1 && edge.cell === edges[edges.length - 1]) {
           // Finds the vertical center

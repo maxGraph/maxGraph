@@ -156,24 +156,24 @@ function loadModelFromCustomTextFile(graph: Graph, filename: string) {
 
   // Parses all lines (vertices must be first in the file)
   graph.batchUpdate(() => {
-    for (let i = 0; i < lines.length; i++) {
+    for (const line of lines) {
       // Ignores comments (starting with #)
-      const colon = lines[i].indexOf(':');
+      const colon = line.indexOf(':');
 
-      if (lines[i].substring(0, 1) != '#' || colon == -1) {
-        const comma = lines[i].indexOf(',');
-        const value = lines[i].substring(colon + 2, lines[i].length);
+      if (line.substring(0, 1) != '#' || colon == -1) {
+        const comma = line.indexOf(',');
+        const value = line.substring(colon + 2, line.length);
 
         if (comma == -1 || comma > colon) {
-          const key = lines[i].substring(0, colon);
+          const key = line.substring(0, colon);
 
           if (key.length > 0) {
             vertices[key] = graph.insertVertex(parent, null, value, 0, 0, 80, 70);
           }
         } else if (comma < colon) {
           // Looks up the vertices in the lookup table
-          const source = vertices[lines[i].substring(0, comma)];
-          const target = vertices[lines[i].substring(comma + 1, colon)];
+          const source = vertices[line.substring(0, comma)];
+          const target = vertices[line.substring(comma + 1, colon)];
 
           if (source != null && target != null) {
             const e = graph.insertEdge(parent, null, value, source, target);

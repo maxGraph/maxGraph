@@ -260,8 +260,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       const form = new MaxForm('');
       const attrs = cell.value.attributes;
 
-      for (let i = 0; i < attrs.length; i++) {
-        createTextField(graph, form, cell, attrs[i]);
+      for (const attribute of attrs) {
+        createTextField(graph, form, cell, attribute);
       }
 
       div.appendChild(form.getTable());
