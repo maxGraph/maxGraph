@@ -36,7 +36,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -53,7 +53,19 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
+  const div = createMainDiv(`
+  This example demonstrates using the clipboard for providing cross-tab and cross-browser copy and paste.
+  <br>
+  Select cells and press Ctrl+C or Ctrl+X (Cmd on macOS), then Ctrl+V to paste them, here or in another tab. Each paste shifts the cells by one more grid size, so that they do not overlap.
+  `);
+
   const container = createGraphContainer(args);
+  div.appendChild(container);
+  // Storybook renders the story in an iframe that only gets the keyboard focus when the container takes it
+  container.addEventListener('click', () => {
+    container.focus();
+  });
+  container.setAttribute('tabindex', '0');
 
   // Creates the graph inside the given this.el
   const graph = new Graph(container);
@@ -66,7 +78,9 @@ const Template = ({ label, ...args }) => {
     for (let i = 0; i < cells.length; i++) {
       model.add(parent, cells[i]);
     }
-    return new ModelXmlSerializer(model).export();
+    // Not pretty-printed: the trailing newline would be trimmed by pasteText, which would no longer recognize the last
+    // copied cells and would paste them without any offset
+    return new ModelXmlSerializer(model).export({ pretty: false });
   };
 
   // Focused but invisible textarea during control or meta key events
@@ -250,7 +264,7 @@ const Template = ({ label, ...args }) => {
       }
 
       // Standard paste via control-v
-      if (xml.substring(0, 14) === '<Transactions>') {
+      if (xml.startsWith('<GraphDataModel>')) {
         graph.setSelectionCells(importXml(xml, dx, dy));
         graph.scrollCellToVisible(graph.getSelectionCell());
       }
@@ -324,7 +338,7 @@ const Template = ({ label, ...args }) => {
     const e1 = graph.insertEdge({ parent, source: v1, target: v2 });
   });
 
-  return container;
+  return div;
 };
 
 export const Default = Template.bind({});
