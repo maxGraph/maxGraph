@@ -16,8 +16,8 @@
   ],
   "scripts": {
     "dev": "node ./scripts/dev",
-    "lint": "eslint \"**/*.ts\"",
-    "lint:fix": "eslint --fix \"**/*.ts\""
+    "lint": "eslint \"**/*.{ts,js,cjs,mjs}\"",
+    "lint:fix": "eslint --fix \"**/*.{ts,js,cjs,mjs}\""
   },
   "devDependencies": {
     "@eslint/js": "~10.0.1",
@@ -29,6 +29,7 @@
     "eslint-plugin-prettier": "~5.5.6",
     "eslint-plugin-storybook": "~10.6.1",
     "eslint-plugin-unicorn": "~77.0.0",
+    "globals": "~17.13.0",
     "prettier": "~3.9.10",
     "typescript": "~6.0.3",
     "typescript-eslint": "~8.71.1"

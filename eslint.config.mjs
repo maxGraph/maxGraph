@@ -20,6 +20,7 @@ import nodePlugin from 'eslint-plugin-n';
 import prettierRecommendedConfig from 'eslint-plugin-prettier/recommended';
 import storybook from 'eslint-plugin-storybook';
 import unicornPlugin from 'eslint-plugin-unicorn';
+import globals from 'globals';
 import tsEslint from 'typescript-eslint';
 
 export default tsEslint.config(
@@ -34,6 +35,7 @@ export default tsEslint.config(
       'packages/core/build/**',
       'packages/core/coverage/**',
       'packages/html/stashed/**',
+      'packages/website/.docusaurus/**',
       'packages/website/build/**',
       'packages/website/generated/**',
     ],
@@ -92,6 +94,39 @@ export default tsEslint.config(
       ],
       'no-console': 'error',
       'no-eval': 'error',
+    },
+  },
+
+  // JS files running in the browser: stories and sources of the examples
+  {
+    files: ['packages/html/**/*.js', 'packages/*/src/**/*.js'],
+    ignores: ['**/*.config.js', 'packages/js-example-nodejs/**'],
+    languageOptions: {
+      globals: globals.browser,
+    },
+  },
+
+  // JS files running in Node: build configurations, scripts and the Node.js example
+  {
+    files: ['**/*.{cjs,mjs}', '**/*.config.js', 'packages/js-example-nodejs/**/*.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+      'no-console': 'off',
+    },
+  },
+
+  // CommonJS files, as declared by their extension or by the "type" of their package
+  {
+    files: [
+      '**/*.cjs',
+      'packages/js-example*/webpack.config.js',
+      'packages/js-example-nodejs/**/*.js',
+    ],
+    languageOptions: {
+      sourceType: 'commonjs',
     },
   },
 

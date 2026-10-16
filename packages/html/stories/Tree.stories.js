@@ -90,16 +90,12 @@ const Template = ({ label, ...args }) => {
   class MyCustomGraphView extends GraphView {
     updateFloatingTerminalPoint(edge, start, end, source) {
       // Defines a custom perimeter for the nodes in the tree
-      let pt = null;
-
-      if (source) {
-        pt = new Point(
-          start.x + start.width / 2,
-          start.y + start.height + TreeNodeShape.segment
-        );
-      } else {
-        pt = new Point(start.x + start.width / 2, start.y);
-      }
+      const pt = source
+        ? new Point(
+            start.x + start.width / 2,
+            start.y + start.height + TreeNodeShape.segment
+          )
+        : new Point(start.x + start.width / 2, start.y);
 
       edge.setAbsoluteTerminalPoint(pt, source);
     }
