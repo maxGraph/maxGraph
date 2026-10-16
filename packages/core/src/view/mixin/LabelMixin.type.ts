@@ -19,6 +19,36 @@ import type Cell from '../cell/Cell.js';
 declare module '../AbstractGraph' {
   interface AbstractGraph {
     /**
+     * Returns the textual representation for the given cell.
+     *
+     * This implementation returns the node name or string-representation of the user object.
+     *
+     * The following returns the label attribute from the cells user object if it is an XML node.
+     *
+     * @example
+     * ```javascript
+     * graph.convertValueToString = function(cell)
+     * {
+     * 	return cell.getAttribute('label');
+     * }
+     * ```
+     *
+     * See also: {@link cellLabelChanged}.
+     *
+     * @param cell {@link Cell} whose textual representation should be returned.
+     */
+    convertValueToString: (cell: Cell) => string;
+
+    /**
+     * Returns the string to be used as the link for the given cell.
+     *
+     * This implementation returns null.
+     *
+     * @param cell {@link Cell} whose link should be returned.
+     */
+    getLinkForCell: (cell: Cell) => string | null;
+
+    /**
      * Specifies if labels should be visible. This is used in {@link getLabel}.
      * @default true
      */
