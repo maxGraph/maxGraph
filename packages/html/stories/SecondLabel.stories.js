@@ -101,14 +101,14 @@ const Template = ({ label, ...args }) => {
 
   // Overrides method to hide relative child vertices
   // TODO this function is not used
-  const isVisible = function () {
-    return (
-      !cell.isVertex() ||
-      cell.geometry == null ||
-      !cell.geometry.relative ||
-      cell.geometry.relative == relativeChildVerticesVisible
-    );
-  };
+  // const isVisible = function () {
+  //   return (
+  //     !cell.isVertex() ||
+  //     cell.geometry == null ||
+  //     !cell.geometry.relative ||
+  //     cell.geometry.relative == relativeChildVerticesVisible
+  //   );
+  // };
 
   // Creates the shape for the shape number and puts it into the draw pane
   const { redrawShape } = graph.cellRenderer;
@@ -235,7 +235,10 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(
     DomHelpers.button('Toggle Child Vertices', function (evt) {
       relativeChildVerticesVisible = !relativeChildVerticesVisible;
-      graph.refresh();
+      const relativeChildVertices = graph
+        .getDefaultParent()
+        .filterDescendants((cell) => cell.isVertex() && cell.geometry?.relative);
+      graph.toggleCells(relativeChildVerticesVisible, relativeChildVertices);
     })
   );
 
