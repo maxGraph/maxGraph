@@ -79,6 +79,8 @@ export default tsEslint.config(
         },
       ],
       '@typescript-eslint/no-unused-vars': 'off',
+      // https://typescript-eslint.io/rules/prefer-for-of/ part of "plugin:@typescript-eslint/stylistic"
+      '@typescript-eslint/prefer-for-of': 'error',
       'no-restricted-syntax': [
         'error',
         // ban const enums
@@ -108,15 +110,6 @@ export default tsEslint.config(
       'unicorn/prefer-includes': 'error',
       'unicorn/prefer-number-properties': 'error',
       'unicorn/prefer-switch': 'error',
-    },
-  },
-
-  // Only the core package has been migrated to for-of loops, enable the rule there to avoid regressions
-  {
-    files: ['packages/core/**/*'],
-    rules: {
-      // https://typescript-eslint.io/rules/prefer-for-of/ part of "plugin:@typescript-eslint/stylistic"
-      '@typescript-eslint/prefer-for-of': 'error',
     },
   },
 

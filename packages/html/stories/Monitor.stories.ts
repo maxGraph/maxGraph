@@ -299,10 +299,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
           model.beginUpdate();
 
           try {
-            for (let i = 0; i < nodes.length; i++) {
+            for (const node of nodes) {
               // Processes the activity nodes inside the process node
-              const id = nodes[i].getAttribute('id')!;
-              const state = nodes[i].getAttribute('state');
+              const id = node.getAttribute('id')!;
+              const state = node.getAttribute('state');
 
               // Gets the cell for the given activity name from the model
               const cell = model.getCell(id);

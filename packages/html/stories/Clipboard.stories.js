@@ -63,8 +63,8 @@ const Template = ({ label, ...args }) => {
     const model = new GraphDataModel();
     const parent = model.getRoot().getChildAt(0);
 
-    for (let i = 0; i < cells.length; i++) {
-      model.add(parent, cells[i]);
+    for (const cell of cells) {
+      model.add(parent, cell);
     }
     return new ModelXmlSerializer(model).export();
   };
