@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, styleUtils } from '@maxgraph/core';
+import { eventUtils, Graph, styleUtils } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
 
@@ -72,7 +72,7 @@ const Template = ({ label, ...args }) => {
       // Overrides double click handling to use the tolerance
       if (cell == null) {
         const pt = styleUtils.convertPoint(
-          el,
+          container,
           eventUtils.getClientX(evt),
           eventUtils.getClientY(evt)
         );

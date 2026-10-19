@@ -30,6 +30,7 @@ import {
   MaxToolbar,
   StyleDefaultsConfig,
   printUtils,
+  PrintPreview,
 } from '@maxgraph/core';
 import {
   contextMenuTypes,

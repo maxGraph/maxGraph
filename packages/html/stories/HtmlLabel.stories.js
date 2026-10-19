@@ -75,11 +75,11 @@ It also shows the usage of the undo/redo manager (<code>UndoManager</code>).`
     // Ignores cached label in codec
     CodecRegistry.getCodec(Cell).exclude.push('div');
 
-    // Invalidates cached labels
+    // Invalidates cached labels, also when the value is restored by undo/redo
     MyCustomGraphDataModel = class extends GraphDataModel {
-      setValue(cell, value) {
+      valueForCellChanged(cell, value) {
         cell.div = null;
-        super.setValue.apply(this, arguments);
+        return super.valueForCellChanged(cell, value);
       }
     };
   } else {
@@ -144,7 +144,7 @@ It also shows the usage of the undo/redo manager (<code>UndoManager</code>).`
         newValue = elt;
       }
 
-      super.cellLabelChanged.apply(this, arguments);
+      super.cellLabelChanged(cell, newValue, autoSize);
     }
 
     // Overrides method to create the editing value
