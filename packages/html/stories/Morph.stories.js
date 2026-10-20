@@ -65,10 +65,10 @@ const Template = ({ label, ...args }) => {
   // Adds cells to the model in a single step
   graph.getDataModel().beginUpdate();
   let v1;
-  var v2;
+  let v2;
   try {
     v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-    var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+    v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
     const e1 = graph.insertEdge(parent, null, '', v1, v2);
   } finally {
     // Updates the display
