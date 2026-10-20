@@ -199,7 +199,7 @@ const Template = ({ label, ...args }) => {
    * are visible and the visible pages do not change.
    */
   const graphViewValidate = graph.view.validate;
-  graph.view.validate = function () {
+  graph.view.validate = function (cell) {
     if (this.graph.container != null && styleUtils.hasScrollbars(this.graph.container)) {
       const pad = this.graph.getPagePadding();
       const size = this.graph.getPageSize();
@@ -212,7 +212,7 @@ const Template = ({ label, ...args }) => {
       this.translate.y = pad.y / this.scale - (this.y0 || 0) * size.height;
     }
 
-    graphViewValidate.apply(this, arguments);
+    graphViewValidate.call(this, cell);
   };
 
   // Enables rubberband selection

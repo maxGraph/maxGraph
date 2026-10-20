@@ -94,6 +94,11 @@ export default tsEslint.config(
       ],
       'no-console': 'error',
       'no-eval': 'error',
+      // modern syntax for all files, TS included: typescript-eslint enables them for TS only, don't depend on it
+      'no-var': 'error',
+      'prefer-const': 'error',
+      'prefer-rest-params': 'error',
+      'prefer-spread': 'error',
     },
   },
 

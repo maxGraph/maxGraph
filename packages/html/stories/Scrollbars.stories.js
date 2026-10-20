@@ -126,10 +126,10 @@ const Template = ({ label, ...args }) => {
   InternalEvent.disableContextMenu(container);
 
   // Defines global helper function to get y-coordinate for a given cell state and row
-  let getRowY = function (state, tr) {
-    let s = state.view.scale;
-    let div = tr.parentNode.parentNode.parentNode;
-    let offsetTop = parseInt(div.style.top);
+  const getRowY = function (state, tr) {
+    const s = state.view.scale;
+    const div = tr.parentNode.parentNode.parentNode;
+    const offsetTop = Number.parseInt(div.style.top);
     let y =
       state.y + (tr.offsetTop + tr.offsetHeight / 2 - div.scrollTop + offsetTop) * s;
     y = Math.min(state.y + state.height, Math.max(state.y + offsetTop * s, y));
@@ -222,8 +222,8 @@ const Template = ({ label, ...args }) => {
       target = this.updateRow(target);
 
       if (target != null && this.currentRow != null) {
-        let div = target.parentNode.parentNode.parentNode;
-        let s = state.view.scale;
+        const div = target.parentNode.parentNode.parentNode;
+        const s = state.view.scale;
 
         icons[0].node.style.visibility = 'visible';
         icons[0].bounds.x =
@@ -259,18 +259,18 @@ const Template = ({ label, ...args }) => {
         // Destroys icon to prevent event redirection via image in IE
         this.destroyIcons();
       }
-      super.mouseMove.apply(this, arguments);
+      super.mouseMove(sender, me);
     }
 
     // Creates the edge state that may be used for preview
     createEdgeState(me) {
-      let relation = doc.createElement('Relation');
+      const relation = doc.createElement('Relation');
       relation.setAttribute('sourceRow', this.currentRow || '0');
       relation.setAttribute('targetRow', '0');
 
-      let edge = this.createEdge(relation);
-      let style = this.graph.getCellStyle(edge);
-      let state = new Cell(this.graph.view, edge, style);
+      const edge = this.createEdge(relation);
+      const style = this.graph.getCellStyle(edge);
+      const state = new Cell(this.graph.view, edge, style);
 
       // Stores the source row in the handler
       this.sourceRowNode = this.currentRowNode;
@@ -282,7 +282,7 @@ const Template = ({ label, ...args }) => {
   class MyCustomCellRenderer extends CellRenderer {
     // Scroll events should not start moving the vertex
     isLabelEvent(state, evt) {
-      let source = InternalEvent.getSource(evt);
+      const source = InternalEvent.getSource(evt);
 
       return (
         state.text != null &&
@@ -293,28 +293,26 @@ const Template = ({ label, ...args }) => {
 
     // Adds scrollbars to the outermost div and keeps the
     // DIV position and size the same as the vertex
-    redrawLabel(state) {
-      super.redrawLabel.apply(this, arguments); // "supercall"
-      let graph = state.view.graph;
-      let model = graph.model;
+    redrawLabel(state, forced) {
+      super.redrawLabel(state, forced);
+      const graph = state.view.graph;
 
       if (state.cell.isVertex() && state.text != null) {
         // Scrollbars are on the div
-        let s = graph.view.scale;
-        let div = state.text.node.getElementsByTagName('div')[2];
+        const div = state.text.node.getElementsByTagName('div')[2];
 
         if (div != null) {
           // Installs the handler for updating connected edges
           if (div.scrollHandler == null) {
             div.scrollHandler = true;
 
-            let updateEdges = () => {
-              let edgeCount = state.cell.getEdgeCount();
+            const updateEdges = () => {
+              const edgeCount = state.cell.getEdgeCount();
 
               // Only updates edges to avoid update in DOM order
               // for text label which would reset the scrollbar
               for (let i = 0; i < edgeCount; i++) {
-                let edge = state.cell.getEdgeAt(i);
+                const edge = state.cell.getEdgeAt(i);
                 graph.view.invalidate(edge, true, false);
                 graph.view.validate(edge);
               }
@@ -331,8 +329,8 @@ const Template = ({ label, ...args }) => {
   class MyCustomGraphView extends GraphView {
     // Implements a special perimeter for table rows inside the table markup
     updateFloatingTerminalPoint(edge, start, end, source) {
-      let next = this.getNextPoint(edge, end, source);
-      let div = start.text.node.getElementsByTagName('div')[2];
+      const next = this.getNextPoint(edge, end, source);
+      const div = start.text.node.getElementsByTagName('div')[2];
 
       let x = start.x;
       let y = start.getCenterY();
@@ -346,13 +344,13 @@ const Template = ({ label, ...args }) => {
         y = start.getCenterY() - div.scrollTop;
 
         if (domUtils.isNode(edge.cell.value) && !start.cell.isCollapsed()) {
-          let attr = source ? 'sourceRow' : 'targetRow';
-          let row = parseInt(edge.cell.value.getAttribute(attr));
+          const attr = source ? 'sourceRow' : 'targetRow';
+          const row = Number.parseInt(edge.cell.value.getAttribute(attr));
 
           // HTML labels contain an outer table which is built-in
-          let table = div.getElementsByTagName('table')[0];
-          let trs = table.getElementsByTagName('tr');
-          let tr = trs[Math.min(trs.length - 1, row - 1)];
+          const table = div.getElementsByTagName('table')[0];
+          const trs = table.getElementsByTagName('tr');
+          const tr = trs[Math.min(trs.length - 1, row - 1)];
 
           // Gets vertical center of source or target row
           if (tr != null) {
@@ -361,7 +359,7 @@ const Template = ({ label, ...args }) => {
         }
 
         // Keeps vertical coordinate inside start
-        let offsetTop = parseInt(div.style.top) * start.view.scale;
+        const offsetTop = Number.parseInt(div.style.top) * start.view.scale;
         y = Math.min(
           isNaN(start.y + start.height) ? 9999999999999 : start.y + start.height,
           isNaN(Math.max(start.y + offsetTop, y))
@@ -383,7 +381,7 @@ const Template = ({ label, ...args }) => {
       // the edges have a common target row
       if (source && domUtils.isNode(edge.cell.value) && start != null && end != null) {
         // Filters the edges with the same source row
-        let row = edge.cell.value.getAttribute('targetRow');
+        const row = edge.cell.value.getAttribute('targetRow');
         const edges = this.graph
           .getEdgesBetween(start.cell, end.cell, true)
           .filter(
@@ -394,7 +392,7 @@ const Template = ({ label, ...args }) => {
 
         if (edges.length > 1 && edge.cell === edges[edges.length - 1]) {
           // Finds the vertical center
-          let states = [];
+          const states = [];
           let y = 0;
 
           for (let i = 0; i < edges.length; i++) {
@@ -405,7 +403,7 @@ const Template = ({ label, ...args }) => {
           y /= edges.length;
 
           for (let i = 0; i < states.length; i++) {
-            let x = states[i].absolutePoints[1].x;
+            const x = states[i].absolutePoints[1].x;
 
             if (states[i].absolutePoints.length < 5) {
               states[i].absolutePoints.splice(2, 0, new Point(x, y));
@@ -477,7 +475,7 @@ const Template = ({ label, ...args }) => {
   }
 
   // Creates the graph inside the given container
-  let graph = new MyCustomGraph(
+  const graph = new MyCustomGraph(
     container,
     null,
     // use a dedicated set of plugins
@@ -522,11 +520,11 @@ const Template = ({ label, ...args }) => {
   graph.setHtmlLabels(true);
 
   // User objects (data) for the individual cells
-  let doc = xmlUtils.createXmlDocument();
+  const doc = xmlUtils.createXmlDocument();
 
   // Same should be used to create the XML node for the table
   // description and the rows (most probably as child nodes)
-  let relation = doc.createElement('Relation');
+  const relation = doc.createElement('Relation');
   relation.setAttribute('sourceRow', '4');
   relation.setAttribute('targetRow', '6');
 
@@ -535,17 +533,17 @@ const Template = ({ label, ...args }) => {
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
-  let parent = graph.getDefaultParent();
+  const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  let width = 160;
-  let height = 230;
+  const width = 160;
+  const height = 230;
 
   graph.batchUpdate(() => {
-    let v1 = graph.insertVertex(parent, null, '', 20, 20, width, height);
+    const v1 = graph.insertVertex(parent, null, '', 20, 20, width, height);
     v1.geometry.alternateBounds = new Rectangle(0, 0, width, 26);
 
-    let v2 = graph.insertVertex(parent, null, '', 400, 150, width, height);
+    const v2 = graph.insertVertex(parent, null, '', 400, 150, width, height);
     v2.geometry.alternateBounds = new Rectangle(0, 0, width, 26);
 
     graph.insertEdge(parent, null, relation, v1, v2);

@@ -132,7 +132,7 @@ const Template = ({ label, ...args }) => {
           this.model.setGeometry(cell, geo);
         }
       } else {
-        Graph.prototype.translateCell.apply(this, arguments);
+        super.translateCell(cell, dx, dy);
       }
     }
   }
@@ -182,7 +182,12 @@ const Template = ({ label, ...args }) => {
     return (
       cells.length === 0 &&
       !cells[0].geometry.relative &&
-      SelectionHandler.prototype.shouldRemoveCellsFromParent.apply(this, arguments)
+      SelectionHandler.prototype.shouldRemoveCellsFromParent.call(
+        this,
+        parent,
+        cells,
+        evt
+      )
     );
   };
 
