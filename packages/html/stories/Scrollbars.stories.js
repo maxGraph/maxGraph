@@ -296,11 +296,9 @@ const Template = ({ label, ...args }) => {
     redrawLabel(state, forced) {
       super.redrawLabel(state, forced);
       const graph = state.view.graph;
-      const model = graph.model;
 
       if (state.cell.isVertex() && state.text != null) {
         // Scrollbars are on the div
-        const s = graph.view.scale;
         const div = state.text.node.getElementsByTagName('div')[2];
 
         if (div != null) {
