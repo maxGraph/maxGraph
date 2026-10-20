@@ -113,7 +113,7 @@ const Template = ({ label, ...args }) => {
   // Creates the shape for the shape number and puts it into the draw pane
   const { redrawShape } = graph.cellRenderer;
   graph.cellRenderer.redrawShape = function (state, force, rendering) {
-    const result = redrawShape.apply(this, arguments);
+    const result = redrawShape.call(this, state, force, rendering);
 
     if (
       result &&
@@ -162,7 +162,7 @@ const Template = ({ label, ...args }) => {
   // Destroys the shape number
   const { destroy } = graph.cellRenderer;
   graph.cellRenderer.destroy = function (state) {
-    destroy.apply(this, arguments);
+    destroy.call(this, state);
 
     if (state.secondLabel != null) {
       state.secondLabel.destroy();

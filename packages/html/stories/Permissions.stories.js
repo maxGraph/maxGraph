@@ -145,38 +145,42 @@ const Template = ({ label, ...args }) => {
   // isSelectable).
   const oldDisconnectable = graph.isCellDisconnectable;
   graph.isCellDisconnectable = function (cell, terminal, source) {
-    return oldDisconnectable.apply(this, arguments) && currentPermission.editEdges;
+    return (
+      oldDisconnectable.call(this, cell, terminal, source) && currentPermission.editEdges
+    );
   };
 
   const oldTerminalPointMovable = graph.isTerminalPointMovable;
-  graph.isTerminalPointMovable = function (cell) {
-    return oldTerminalPointMovable.apply(this, arguments) && currentPermission.editEdges;
+  graph.isTerminalPointMovable = function (cell, source) {
+    return (
+      oldTerminalPointMovable.call(this, cell, source) && currentPermission.editEdges
+    );
   };
 
   const oldBendable = graph.isCellBendable;
   graph.isCellBendable = function (cell) {
-    return oldBendable.apply(this, arguments) && currentPermission.editEdges;
+    return oldBendable.call(this, cell) && currentPermission.editEdges;
   };
 
   const oldLabelMovable = graph.isLabelMovable;
   graph.isLabelMovable = function (cell) {
-    return oldLabelMovable.apply(this, arguments) && currentPermission.editEdges;
+    return oldLabelMovable.call(this, cell) && currentPermission.editEdges;
   };
 
   const oldMovable = graph.isCellMovable;
   graph.isCellMovable = function (cell) {
-    return oldMovable.apply(this, arguments) && currentPermission.editVertices;
+    return oldMovable.call(this, cell) && currentPermission.editVertices;
   };
 
   const oldResizable = graph.isCellResizable;
   graph.isCellResizable = function (cell) {
-    return oldResizable.apply(this, arguments) && currentPermission.editVertices;
+    return oldResizable.call(this, cell) && currentPermission.editVertices;
   };
 
   const oldEditable = graph.isCellEditable;
   graph.isCellEditable = function (cell) {
     return (
-      (oldEditable.apply(this, arguments) &&
+      (oldEditable.call(this, cell) &&
         cell.isVertex() &&
         currentPermission.editVertices) ||
       (cell.isEdge() && currentPermission.editEdges)
@@ -186,7 +190,7 @@ const Template = ({ label, ...args }) => {
   const oldDeletable = graph.isCellDeletable;
   graph.isCellDeletable = function (cell) {
     return (
-      (oldDeletable.apply(this, arguments) &&
+      (oldDeletable.call(this, cell) &&
         cell.isVertex() &&
         currentPermission.editVertices) ||
       (cell.isEdge() && currentPermission.editEdges)
@@ -195,7 +199,7 @@ const Template = ({ label, ...args }) => {
 
   const oldCloneable = graph.isCellCloneable;
   graph.isCellCloneable = function (cell) {
-    return oldCloneable.apply(this, arguments) && currentPermission.cloneCells;
+    return oldCloneable.call(this, cell) && currentPermission.cloneCells;
   };
 
   // Gets the default parent for inserting new cells. This

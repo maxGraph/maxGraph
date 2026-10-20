@@ -121,9 +121,6 @@ const Template = ({ label, ...args }) => {
     }
   }
 
-  // Make the layout instance accessible by MyCustomGraph
-  let layout;
-
   class MyCustomGraph extends Graph {
     // Sets the collapse and expand icons. The values below are the default
     // values, but this is how to replace them if you need to.
@@ -212,7 +209,7 @@ const Template = ({ label, ...args }) => {
   // Enables automatic layout on the graph and installs
   // a tree layout for all groups who's children are
   // being changed, added or removed.
-  layout = new CompactTreeLayout(graph, false);
+  const layout = new CompactTreeLayout(graph, false);
   layout.useBoundingBox = false;
   layout.edgeRouting = false;
   layout.levelDistance = 30;

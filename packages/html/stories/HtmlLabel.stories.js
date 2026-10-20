@@ -62,13 +62,13 @@ It also shows the usage of the undo/redo manager (<code>UndoManager</code>).`
   InternalEvent.disableContextMenu(container);
 
   // Creates a user object that stores the state
-  let doc = xmlUtils.createXmlDocument();
-  let obj = doc.createElement('UserObject');
+  const doc = xmlUtils.createXmlDocument();
+  const obj = doc.createElement('UserObject');
   obj.setAttribute('label', 'Hello, World!');
   obj.setAttribute('checked', 'false');
 
   // Adds optional caching for the HTML label
-  let cached = true;
+  const cached = true;
   let MyCustomGraphDataModel;
 
   if (cached) {
@@ -101,11 +101,11 @@ It also shows the usage of the undo/redo manager (<code>UndoManager</code>).`
         cell.value.nodeName.toLowerCase() === 'userobject'
       ) {
         // Returns a DOM for the label
-        let div = document.createElement('div');
+        const div = document.createElement('div');
         div.innerHTML = cell.getAttribute('label');
         domUtils.br(div);
 
-        let checkbox = document.createElement('input');
+        const checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
 
         if (cell.getAttribute('checked') == 'true') {
@@ -115,7 +115,7 @@ It also shows the usage of the undo/redo manager (<code>UndoManager</code>).`
 
         // Writes back to cell if checkbox is clicked
         InternalEvent.addListener(checkbox, 'change', function (evt) {
-          let elt = cell.value.cloneNode(true);
+          const elt = cell.value.cloneNode(true);
           elt.setAttribute('checked', checkbox.checked ? 'true' : 'false');
 
           graph.model.setValue(cell, elt);
@@ -139,7 +139,7 @@ It also shows the usage of the undo/redo manager (<code>UndoManager</code>).`
         cell.value.nodeName.toLowerCase() === 'userobject'
       ) {
         // Clones the value for correct undo/redo
-        let elt = cell.value.cloneNode(true);
+        const elt = cell.value.cloneNode(true);
         elt.setAttribute('label', newValue);
         newValue = elt;
       }
@@ -159,7 +159,7 @@ It also shows the usage of the undo/redo manager (<code>UndoManager</code>).`
   }
 
   // Creates the graph inside the given container
-  let graph = new MyCustomGraph(container, null, [
+  const graph = new MyCustomGraph(container, null, [
     CellEditorHandler,
     TooltipHandler,
     SelectionCellsHandler,
@@ -175,12 +175,12 @@ It also shows the usage of the undo/redo manager (<code>UndoManager</code>).`
   // Enables rubberband selection
   new RubberBandHandler(graph);
 
-  let parent = graph.getDefaultParent();
+  const parent = graph.getDefaultParent();
   graph.insertVertex(parent, null, obj, 20, 20, 80, 60);
 
   // Undo/redo
-  let undoManager = new UndoManager();
-  let listener = function (sender, evt) {
+  const undoManager = new UndoManager();
+  const listener = function (sender, evt) {
     undoManager.undoableEditHappened(evt.getProperty('edit'));
   };
   graph.getDataModel().addListener(InternalEvent.UNDO, listener);

@@ -94,6 +94,11 @@ export default tsEslint.config(
       ],
       'no-console': 'error',
       'no-eval': 'error',
+      // enabled by typescript-eslint for TypeScript files only, also apply them to JavaScript files
+      'no-var': 'error',
+      'prefer-const': 'error',
+      'prefer-rest-params': 'error',
+      'prefer-spread': 'error',
     },
   },
 

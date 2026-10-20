@@ -174,8 +174,8 @@ const Template = ({ label, ...args }) => {
 
   // Fix for wrong preferred size
   const oldGetPreferredSizeForCell = graph.getPreferredSizeForCell;
-  graph.getPreferredSizeForCell = function (cell) {
-    const result = oldGetPreferredSizeForCell.apply(this, arguments);
+  graph.getPreferredSizeForCell = function (cell, textWidth) {
+    const result = oldGetPreferredSizeForCell.call(this, cell, textWidth);
 
     if (result != null) {
       result.width = Math.max(120, result.width - 40);
