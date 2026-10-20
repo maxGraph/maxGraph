@@ -129,7 +129,7 @@ const Template = ({ label, ...args }) => {
   const getRowY = function (state, tr) {
     const s = state.view.scale;
     const div = tr.parentNode.parentNode.parentNode;
-    const offsetTop = parseInt(div.style.top);
+    const offsetTop = Number.parseInt(div.style.top);
     let y =
       state.y + (tr.offsetTop + tr.offsetHeight / 2 - div.scrollTop + offsetTop) * s;
     y = Math.min(state.y + state.height, Math.max(state.y + offsetTop * s, y));
@@ -345,7 +345,7 @@ const Template = ({ label, ...args }) => {
 
         if (domUtils.isNode(edge.cell.value) && !start.cell.isCollapsed()) {
           const attr = source ? 'sourceRow' : 'targetRow';
-          const row = parseInt(edge.cell.value.getAttribute(attr));
+          const row = Number.parseInt(edge.cell.value.getAttribute(attr));
 
           // HTML labels contain an outer table which is built-in
           const table = div.getElementsByTagName('table')[0];
@@ -359,7 +359,7 @@ const Template = ({ label, ...args }) => {
         }
 
         // Keeps vertical coordinate inside start
-        const offsetTop = parseInt(div.style.top) * start.view.scale;
+        const offsetTop = Number.parseInt(div.style.top) * start.view.scale;
         y = Math.min(
           isNaN(start.y + start.height) ? 9999999999999 : start.y + start.height,
           isNaN(Math.max(start.y + offsetTop, y))
