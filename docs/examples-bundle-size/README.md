@@ -77,3 +77,7 @@ Only the values that need an explanation are commented here. A version that is n
   2.16.3 to 2.16.4, rsbuild 1.7.2 to 2.1.10, rollup 4.55.1 to 4.62.4 and `@rollup/plugin-terser` 0.4.4 to 1.0.0.
   Measured by the `build_projects (release)` job of the `check-typescript-projects.yml` workflow, which builds the
   projects with the released 0.24.0 and the current tooling. The `parcel-ts` size grows by about 10 kB.
+- **0.25.0 (vite 8.3 / rsbuild 2.2)**: the sizes of 0.25.0 after the development dependencies upgrade
+  ([maxgraph-integration-examples#322](https://github.com/maxGraph/maxgraph-integration-examples/pull/322)): Vite 8.2.1
+  to 8.3.4, rsbuild 2.1.10 to 2.2.12 and rollup 4.62.4 to 4.64.5. Measured by the `build_projects (release)` job of the
+  `check-typescript-projects.yml` workflow. Only `rsbuild-ts` changes noticeably, by -0.35 kB.
