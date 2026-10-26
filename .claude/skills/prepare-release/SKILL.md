@@ -1,6 +1,6 @@
 ---
 name: prepare-release
-description: "Prepare a maxGraph release: compute the version, collect breaking changes, features, documentation changes and example bundle sizes, then write the CHANGELOG entry, the bundle size history and the GitHub release notes, and optionally update the GitHub draft release. Use when the user asks to prepare a release, its release notes or its CHANGELOG entry."
+description: "Prepare a maxGraph release: compute the version, collect breaking changes, features, documentation changes and example bundle sizes, then write the CHANGELOG entry, the bundle size history, the tightened size budgets of the examples and the GitHub release notes, and optionally update the GitHub draft release. Use when the user asks to prepare a release, its release notes or its CHANGELOG entry."
 disable-model-invocation: true
 argument-hint: "[target-version]"
 ---
@@ -82,8 +82,8 @@ entry is derived from them.
 
   Keep sequential what depends on a previous result (the job ids before their logs, the closed issues before their
   media) and every question to the user: a validation can change what the next step collects.
-- **Leave the repository changes uncommitted.** The `CHANGELOG.md` entry and the new rows of the bundle size
-  history go into the `chore(release): prepare version <version>` commit of the release procedure, together with
+- **Leave the repository changes uncommitted.** The `CHANGELOG.md` entry, the new rows of the bundle size
+  history and the tightened size budgets of the examples go into the `chore(release): prepare version <version>` commit of the release procedure, together with
   the version updates. Do not commit or push them.
 
 ## Phase 1: collect the information
@@ -524,6 +524,34 @@ Append the sizes of `<target>` to both CSV files of `docs/examples-bundle-size/`
   version in the "Notes on some versions" section of `docs/examples-bundle-size/README.md`. Only the values that
   need it are commented.
 
+### 11b. Size budgets of the examples
+
+Each example of this repository declares a size budget, see `.claude/rules/tooling/bundle-size-budgets.md`. The CI
+fails when a bundle grows past its budget, but nothing happens when it shrinks: the budget keeps the old size and
+silently becomes loose. Between 0.25.0 and 0.25.1, every example lost 1 to 3 kB and no budget followed. Catch up
+here, so that each release leaves the budgets at the sizes it ships.
+
+For each example of `docs/examples-bundle-size/maxgraph-examples.csv`, compare the `<target>` value with the budget
+declared on `origin/main`:
+
+- the `chunkSizeLimitInKB` constant of `packages/<example>/vite.config.js`, in kB;
+- the `maxAssetSize` of `packages/<example>/webpack.config.js`, in bytes.
+
+The expected budget is the value rounded up to the next kB. The CSV keeps 2 decimals of the size in kB, so a value
+ending in `.00` may hide up to 4 bytes above the kB: measure the exact size before rounding it.
+
+When a budget is above the expected one, tighten it:
+
+- **Vite examples**: set `chunkSizeLimitInKB` to the expected value.
+- **webpack examples**: set `maxAssetSize` to the expected value, and recompute `maxEntrypointSize` as well: it
+  measures the bundle plus the extracted CSS, so it drifted by the same amount. The CI logs only print the
+  entrypoint in KiB rounded by webpack, which is not precise enough, so build the webpack examples locally after
+  asking the user (see the [fallback](#fallback-build-locally) for the setup) and add the sizes of
+  `dist/main.*.js` and `dist/*.css`, then round the sum up to the next kB.
+
+Never raise a budget here: a size above its budget already failed the CI, and that growth is checked in the pull
+request that caused it. Leave the changes uncommitted, like the CSV rows.
+
 ### Report the files left for the release commit
 
 At the end of phase 2, tell the user which files were changed and left uncommitted, so they can review them and
@@ -532,6 +560,8 @@ reuse them later in the release procedure:
 - `CHANGELOG.md`, with the entry of `<target>`: to include in the `chore(release): prepare version <target>` commit;
 - `docs/examples-bundle-size/maxgraph-examples.csv` and `docs/examples-bundle-size/maxgraph-integration-examples.csv`,
   and `docs/examples-bundle-size/README.md` when a note was added: to include in the same commit;
+- the `webpack.config.js` and `vite.config.js` files of the examples whose budget was tightened in
+  [step 11b](#11b-size-budgets-of-the-examples), with the old and new values: to include in the same commit;
 - `RELEASE_NOTES_DRAFT.md`, ignored by git: the release notes body, reused in
   [phase 3](#phase-3-finalize-the-github-release) to update the draft release.
 
@@ -594,8 +624,9 @@ to `RELEASE_NOTES_DRAFT.md` at the repo root. This file is already ignored by `.
   `**Breaking Changes**: none.`
 - The bundle size paragraph contains the mandatory note block verbatim, and both tables match the CSV files.
 - Both CSV files have a `<target>` row, and every value needing an explanation has a note in the README.
+- No example budget is above its size rounded up to the next kB.
 - The Documentation paragraph, when present, only holds changes the user validated, each linking to its
   published page and its `#PR`.
-- The `CHANGELOG.md` and CSV changes are left uncommitted, and the user is told which files they are.
+- The `CHANGELOG.md`, CSV and budget changes are left uncommitted, and the user is told which files they are.
 - The `## Resources` section and everything after it is preserved unchanged in the draft.
 - The release date on the draft's first line is preserved (never overwritten by the placeholder).

@@ -63,9 +63,10 @@ The skill analyzes the commits since the previous release and their linked pull 
 - collect the bundle size of the examples of both repositories (`maxGraph` and `maxgraph-integration-examples`) from the CI logs, and compare them with the previous version recorded in the bundle size history of the `docs/examples-bundle-size` directory,
 - write the release notes body and the one-line summary,
 - write the `CHANGELOG.md` entry of the new version, adding the breaking changes missing from the `## Unreleased` section (the `CHANGELOG.md` only lists breaking changes, the deprecation notices are in the release notes),
-- append the sizes of the new version to the bundle size history.
+- append the sizes of the new version to the bundle size history,
+- tighten the size budgets of the examples whose bundle shrank, so that they match the sizes of the new version. The CI fails when a bundle exceeds its budget, but does not detect a budget left too loose after a bundle got smaller. The webpack examples are built locally for this, since their entrypoint size is not precise enough in the CI logs.
 
-The `CHANGELOG.md` and bundle size history changes are left uncommitted: they are part of the release commit (see [Apply changes in the source code](#apply-changes-in-the-source-code)). So the skill writes them on an up-to-date `main` branch, and asks you to switch to it if needed.
+The `CHANGELOG.md`, bundle size history and size budget changes are left uncommitted: they are part of the release commit (see [Apply changes in the source code](#apply-changes-in-the-source-code)). So the skill writes them on an up-to-date `main` branch, and asks you to switch to it if needed.
 
 The skill is used in two phases:
 - **Now, to prepare the content**: run it during this preparation step. At this stage the GitHub draft release does not exist yet, so the skill writes the release notes to a local file.
@@ -87,6 +88,7 @@ For more details, see the [0.1.0 Changelog](https://github.com/maxGraph/maxGraph
   - Add the one-line summary of the release notes.
   - Include all breaking changes, at the summary level, or state `**Breaking Changes**: none.` when there are none.
 - Check the new rows of the bundle size history (`docs/examples-bundle-size`), also written by the skill.
+- Check the size budgets of the examples (`webpack.config.js` and `vite.config.js` of the `packages/*-example*` directories), tightened by the skill.
 
 - Make a single commit that includes the changes described above
   - Use the following template for the commit message: `chore(release): prepare version 0.2.0`
