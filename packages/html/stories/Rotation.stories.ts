@@ -14,7 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DomHelpers, Graph, InternalEvent, VertexHandlerConfig } from '@maxgraph/core';
+import {
+  type Cell,
+  DomHelpers,
+  Graph,
+  InternalEvent,
+  VertexHandlerConfig,
+} from '@maxgraph/core';
 
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer, createMainDiv } from './shared/configure.js';
@@ -37,6 +43,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     position relative to the centre of the group.
     <br>
     The angle applied is the one the handle is dragged to, whatever the zoom level.
+    <br>
+    The vertices on the right are grouped as in
+    <a href="https://github.com/maxGraph/maxGraph/issues/927" target="_blank">issue #927</a>, with
+    <code>groupCells</code> and a group without fill nor stroke: select the group by clicking between them, then rotate
+    it. "Group selection" groups the selected vertices the same way (Ctrl+click selects several vertices).
   `);
 
   const container = createGraphContainer(args);
@@ -54,6 +65,31 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Lets the children of the group keep the position they are rotated to
   graph.constrainChildren = false;
   graph.extendParents = false;
+
+  // Groups the cells as the code of issue #927 does: an invisible group, fitted to the cells
+  const groupCells = (cells: Cell[]): Cell | null => {
+    const cellsToGroup = graph.getCellsForGroup(cells);
+    if (cellsToGroup.length < 2) {
+      return null;
+    }
+
+    const group = graph.createGroupCell(cellsToGroup);
+    graph.batchUpdate(() => {
+      graph.groupCells(group, 0, cellsToGroup);
+      graph.setCellStyle(
+        {
+          ...group.style,
+          shape: 'rectangle',
+          fillColor: 'none',
+          strokeColor: 'none',
+          rotatable: true,
+          resizable: true,
+        },
+        [group]
+      );
+    });
+    return group;
+  };
 
   graph.batchUpdate(() => {
     graph.insertVertex({
@@ -82,12 +118,25 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       size: [80, 40],
       style: { rotation: 45 },
     });
+
+    groupCells([
+      graph.insertVertex({ value: 'Grouped 1', position: [520, 140], size: [80, 40] }),
+      graph.insertVertex({ value: 'Grouped 2', position: [620, 240], size: [80, 40] }),
+    ]);
   });
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);
   buttons.appendChild(DomHelpers.button('+', () => graph.zoomIn()));
   buttons.appendChild(DomHelpers.button('-', () => graph.zoomOut()));
+  buttons.appendChild(
+    DomHelpers.button('Group selection', () => {
+      const group = groupCells(graph.getSelectionCells());
+      if (group) {
+        graph.setSelectionCell(group);
+      }
+    })
+  );
 
   return div;
 };
