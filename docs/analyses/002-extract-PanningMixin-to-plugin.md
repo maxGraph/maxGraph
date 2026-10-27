@@ -273,12 +273,18 @@ Two homes are possible for the code leaving the graph.
 | Pan offset and preview (9 members) | stays on the graph | read by every mouse event in always-bundled code (`EventsMixin.ts:397-398`), written by `PanningManager` and `Outline`, which are not plugins; a fallback of `0` everywhere would be 28 `getPlugin` lookups on a hot path |
 | `setPanning` | stays on the graph | same shape as `setTooltips`, kept by ADR 0003 D6; called by 4 examples, 19 stories, `getting-started.mdx` |
 | `scrollCellToVisible`, `scrollRectToVisible` | new plugin, one-line facade on the graph | 4 internal callers, no hot path, no shared state |
-| `scrollPointToVisible`, `center`, `ignoreScrollbars`, `translateToScrollPosition` and getters (after #1132) | new plugin, facade for the two methods | the family named by ADR 0003 B.4 |
-| `timerAutoScroll`, `allowAutoPanning` and getters | new plugin | read only by `scrollPointToVisible` |
+| `scrollPointToVisible`, `center` (after #1132) | new plugin, one-line facade on the graph | the family named by ADR 0003 B.4 |
+| `ignoreScrollbars`, `translateToScrollPosition` and getters (after #1132) | stay on the graph | public configuration; `EventsMixin.ts:689-690`, always bundled, reads both getters on every mouse up |
+| `timerAutoScroll`, `allowAutoPanning` and getters | stay on the graph, read by the plugin | public configuration; moving them would break code setting them, for a few booleans |
 | `useScrollbarsForPanning` and getter | stays on the graph | read by `panGraph`, `PanningHandler` and `Outline` as well as by `scrollRectToVisible` |
 
 The plugin name is to be chosen; something like `ViewportScrollPlugin`, id `'viewport-scroll'`, follows the naming
 rules of `coding-practices.md`.
+
+Only methods leave the graph. The configuration properties of the family stay on it and the plugin reads them from
+the graph, as `PanningHandler` already does for `useScrollbarsForPanning`. Moving them too would remove public members
+that applications set directly, `graph.allowAutoPanning = true` for instance: a type error in TypeScript, and an
+assignment silently ignored in JavaScript. Keeping them costs a few booleans and one-line getters.
 
 - **Breaking for `Graph` users**: none, if the plugin goes in `getDefaultPlugins()` and the facades are kept.
 - **Breaking for `BaseGraph` users**: a behaviour change with unchanged types, the kind 001 called the hardest to
@@ -287,7 +293,10 @@ rules of `coding-practices.md`.
   falls back to its existing revalidate branch (`ZoomMixin.ts:89-94`). Users of the `Editor` are unaffected, it builds a
   `Graph`.
 - **Fallbacks at always-bundled sites**: 2, both natural. `zoom` already handles a `false` result, and a no-op
-  `scrollPointToVisible` means no auto scroll. The 9 always-bundled sites that read offsets do not change.
+  `scrollPointToVisible` means no auto scroll. The 9 always-bundled sites that read offsets do not change, nor does
+  the mouse up branch of `EventsMixin.ts:689-690`, which converts the scroll position into a translation: it reads
+  `isIgnoreScrollbars()` and `isTranslateToScrollPosition()`, which stay on the graph. Moving those two flags to the
+  plugin would have made it a third fallback, and a silent behaviour change for a `BaseGraph` setting them.
 - **Gain**: not measured yet, see variants 2 and 3. Most of it is in `scrollPointToVisible` and `center`, which are
   in `AbstractGraph` today; without #1132 the plugin would take only about 115 lines of the mixin.
 - **Effort**: 2 to 4 days, estimated. Based on 001 option 2 (4 to 6 days for a facade of 29 methods and about 85 call
@@ -369,19 +378,27 @@ conversion.
 
 - The figures were first collected at `81aa8d73`, then checked again at the basis commit. Between the two, only the
   stories changed in a way that matters here: `Rotation.stories.ts` adds one `setPanning(true)`.
-- Call sites were counted with one `grep` per member, in call form, over `packages/core/src`,
-  `packages/core/__tests__`, `packages/html/stories`, `packages/*-example*` and `packages/website/docs`, excluding
-  `node_modules`, `dist`, `lib` and the mixin files:
+- Call sites were counted with one `git grep` per member at the basis commit, in call form for the 11 methods and
+  as a property access for the 7 properties, excluding the mixin files. `git grep` searches tracked files only, so
+  `node_modules`, `dist` and `lib` need no exclusion:
 
   ```bash
-  grep -rn --include='*.ts' --include='*.js' --include='*.md' --include='*.mdx' "\.getPanDx(" packages/core/src ...
-  grep -rnE --include='*.ts' --include='*.js' --include='*.md' --include='*.mdx' "\.panDx\b" packages/core/src ...
+  basis=6a2cebcf579556b183d86e210707c665affa45b8
+  exclude=':!packages/core/src/view/mixin/PanningMixin*'
+  for member in getPanDx getPanDy setPanDx setPanDy panGraph scrollCellToVisible scrollRectToVisible setPanning \
+      isUseScrollbarsForPanning isTimerAutoScroll isAllowAutoPanning; do
+    echo "$member $(git grep -nE "\.$member\(" "$basis" -- packages/core/src "$exclude" | wc -l)"
+  done
+  for member in panDx panDy useScrollbarsForPanning timerAutoScroll allowAutoPanning shiftPreview1 shiftPreview2; do
+    echo "$member $(git grep -nE "\.$member\b" "$basis" -- packages/core/src "$exclude" | wc -l)"
+  done
   ```
 
-  The first form for the 11 methods, the second for the 7 properties. Counts are lines: `AbstractGraph.ts:726` holds
-  both `getPanDx` and `getPanDy` and counts once for each. One hit was dropped as being on another receiver:
-  `PanningHandler.ts:407`, a call to the plugin's own `panGraph`. Every hit of `getPanDx` and `getPanDy` was read to
-  confirm the receiver is a graph.
+  It prints 56 lines in `packages/core/src`. The same loops with the pathspecs `packages/core/__tests__`,
+  `packages/html/stories`, `'packages/*-example*'` and `packages/website/docs` give the counts outside the core package.
+  Counts are lines: `AbstractGraph.ts:726` holds both `getPanDx` and `getPanDy` and counts once for each. One hit was
+  dropped as being on another receiver, which gives the 55 sites: `PanningHandler.ts:407`, a call to the plugin's own
+  `panGraph`. Every hit of `getPanDx` and `getPanDy` was read to confirm the receiver is a graph.
 - Bare names (`timerAutoScroll`, `allowAutoPanning`, `shiftPreview`, `useScrollbarsForPanning`) were also grepped
   without the dot, to find assignments or configuration objects; only a TSDoc mention in `DragDropMixin.type.ts:44`
   came up.
