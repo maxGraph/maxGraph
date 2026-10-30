@@ -50,7 +50,19 @@ export const createContainer = (dimensions: {
   return container;
 };
 
-const createdGraphs: AbstractGraph[] = [];
+/**
+ * A registered graph, with the container it had when it was registered.
+ *
+ * The container is captured at registration because {@link AbstractGraph.destroy} sets `graph.container` to `null`.
+ * Reading it at teardown time would therefore give `null` for a graph a test destroyed itself, and its container would
+ * stay attached to the document for the rest of the file.
+ */
+interface RegisteredGraph {
+  graph: AbstractGraph;
+  container: HTMLElement | null;
+}
+
+const createdGraphs: RegisteredGraph[] = [];
 
 /**
  * Registers a graph so that {@link destroyCreatedGraphs} tears it down after the current test.
@@ -59,7 +71,7 @@ const createdGraphs: AbstractGraph[] = [];
  * return already.
  */
 export const registerGraphForTeardown = <T extends AbstractGraph>(graph: T): T => {
-  createdGraphs.push(graph);
+  createdGraphs.push({ graph, container: graph.container });
   return graph;
 };
 
@@ -69,15 +81,29 @@ export const registerGraphForTeardown = <T extends AbstractGraph>(graph: T): T =
  *
  * Wired as a global `afterEach` by `__tests__/setup.ts`, so tests never call this themselves.
  *
- * A graph registers listeners on `document` and on `window` when it is constructed, through its view and through the
- * plugins, and only {@link AbstractGraph.destroy} removes them. Without this teardown, every graph a test file builds
- * stays alive and subscribed until the whole file is done.
+ * A graph registers listeners on `document` when it is constructed, through its view and through the plugins, and only
+ * {@link AbstractGraph.destroy} removes them. Without this teardown, every graph a test file builds stays alive and
+ * subscribed until the whole file is done. A `window` listener exists too, the `resize` of `CellEditorHandler`, but it
+ * is installed on the first call to `startEditing`, not at construction.
+ *
+ * Every graph is destroyed even if one of them throws, and the first error is rethrown once the loop is over. Letting
+ * the exception out of the loop would leave the graphs registered after the failing one alive and subscribed, since
+ * the registry is drained before the loop starts.
  */
 export const destroyCreatedGraphs = (): void => {
-  for (const graph of createdGraphs.splice(0)) {
-    const { container } = graph;
-    graph.destroy();
+  let firstError: unknown = null;
+
+  for (const { graph, container } of createdGraphs.splice(0)) {
+    try {
+      graph.destroy();
+    } catch (error) {
+      firstError ??= error;
+    }
     container?.remove();
+  }
+
+  if (firstError !== null) {
+    throw firstError;
   }
 };
 
