@@ -15,6 +15,21 @@
   `PanningMixin`),
   [issue #1297](https://github.com/maxGraph/maxGraph/issues/1297) (open, `PanningHandler.isActive()` always true)
 
+## Relation to ADR 0003 and PR #1132
+
+These three documents answer successive questions.
+
+- ADR 0003 decides which members leave `AbstractGraph` now, and in which existing mixin they wait for a plugin (D2). Its
+  step 3 moves `scrollPointToVisible`, `center`, `ignoreScrollbars` and `translateToScrollPosition` to `PanningMixin`.
+- PR #1132 implements that step 3. It is a relocation: the members stay mixin members.
+- This analysis covers the step that comes next, which ADR 0003 leaves open: D1 expects every mixin to become a plugin,
+  D2 says a later split may regroup members differently, and B.4 names the scroll family as the unit that should drive
+  that split, without working out how.
+
+It assumes that #1132 has landed. Its file and line references point to the basis commit, before #1132, so the members
+#1132 moves are cited at their current place in `AbstractGraph`, and the counts that #1132 changes are given for both
+states.
+
 ## Summary
 
 | Option | Gain on `ts-example-without-defaults` | Breaking | Effort |
@@ -31,7 +46,7 @@ the 316 lines of `PanningMixin.ts`, assuming the same bytes per source line. No 
 reads, the programmatic scrolling (`scrollCellToVisible`, `scrollRectToVisible`), and one switch delegating to the
 `PanningHandler` plugin (`setPanning`). Only the second is a plugin candidate. Folding the mixin into `PanningHandler`
 is not advised, see [Option 2](#option-2-split-the-scroll-family-into-a-new-plugin-with-a-facade). Recommendation: no
-standalone project; settle PR #1132 first, then extract the scroll family, see [Recommendation](#recommendation).
+standalone project; extract the scroll family once PR #1132 has landed, see [Recommendation](#recommendation).
 
 ## Current implementation
 
@@ -132,6 +147,10 @@ examples nor the documentation.
   (`AbstractGraph.ts:655,722,726`). It is itself called by `EventsMixin` on every mouse move with the button down
   (`EventsMixin.ts:686`), since `autoScroll` defaults to `true` (`DragDropMixin.ts:42`).
 
+After #1132 and option 2, `scrollPointToVisible` leaves the always-bundled code for the plugin, together with its 4
+sites. The always-bundled sites left are 5: the 4 offset reads of `EventsMixin` and `SwimlaneMixin`, and the call of
+`ZoomMixin.zoom`.
+
 **Plugins and handlers, 14 sites**: `PanningHandler` (3), `ConnectionHandler` (4), `SelectionHandler` (3, including
 `scrollCellToVisible` at `SelectionHandler.ts:1590`), `RubberBandHandler` (2), `EdgeHandler` (2). Apart from
 `PanningHandler`, they only read the offsets.
@@ -160,12 +179,12 @@ Outside the core package:
 
 ### Prior decisions
 
-- ADR 0003, Appendix A and B.4: `scrollPointToVisible`, `center` and the two scrollbar flags belong to `PanningMixin`,
-  and "that family, rather than the mixin as a whole, is the cohesive unit that should drive the eventual plugin
-  split" (B.4). PR #1132 implements the move; it is an open draft since 2026-08-10 and is breaking at runtime, since it
-  turns `isIgnoreScrollbars` and `isTranslateToScrollPosition` from arrow properties into prototype methods.
-- ADR 0003, D6: `setTooltips`, a two-line delegation to `TooltipHandler`, is kept rather than deprecated. `setPanning`
-  has exactly the same shape.
+- ADR 0003: Appendix A and B.4 place the scroll family in `PanningMixin` and name it as the unit of the eventual plugin
+  split, see [the relation above](#relation-to-adr-0003-and-pr-1132). D6 keeps `setTooltips`, a two-line delegation to
+  `TooltipHandler`, rather than deprecating it; `setPanning` has exactly the same shape.
+- PR #1132: open draft since 2026-08-10. Its description records why `center` goes to `PanningMixin` rather than
+  `FitPlugin`, and the one runtime break it brings, for detached references to `isIgnoreScrollbars` and
+  `isTranslateToScrollPosition`.
 - Issue #762 covers the handler factories and two edge style members (ADR 0003, D7), none of the panning members.
 - `git log --follow` on `PanningMixin.ts`: no member moved in or out since the mixin was created in 2021. The recent
   commits are renames and typing changes (#470, #512, #735, #743, #776, #985). `ffd503605` (#272, 2023-12-07) added the
@@ -293,10 +312,10 @@ assignment silently ignored in JavaScript. Keeping them costs a few booleans and
   falls back to its existing revalidate branch (`ZoomMixin.ts:89-94`). Users of the `Editor` are unaffected, it builds a
   `Graph`.
 - **Fallbacks at always-bundled sites**: 2, both natural. `zoom` already handles a `false` result, and a no-op
-  `scrollPointToVisible` means no auto scroll. The 9 always-bundled sites that read offsets do not change, nor does
-  the mouse up branch of `EventsMixin.ts:689-690`, which converts the scroll position into a translation: it reads
-  `isIgnoreScrollbars()` and `isTranslateToScrollPosition()`, which stay on the graph. Moving those two flags to the
-  plugin would have made it a third fallback, and a silent behaviour change for a `BaseGraph` setting them.
+  `scrollPointToVisible` means no auto scroll. The 4 offset reads of `EventsMixin` and `SwimlaneMixin` do not change,
+  nor does the mouse up branch of `EventsMixin.ts:689-690`, which converts the scroll position into a translation: it
+  reads `isIgnoreScrollbars()` and `isTranslateToScrollPosition()`, which stay on the graph. Moving those two flags to
+  the plugin would have made it a third fallback, and a silent behaviour change for a `BaseGraph` setting them.
 - **Gain**: not measured yet, see variants 2 and 3. Most of it is in `scrollPointToVisible` and `center`, which are
   in `AbstractGraph` today; without #1132 the plugin would take only about 115 lines of the mixin.
 - **Effort**: 2 to 4 days, estimated. Based on 001 option 2 (4 to 6 days for a facade of 29 methods and about 85 call
@@ -327,9 +346,9 @@ All 18 members leave the graph, together with the family of #1132. Every call be
 - **The facade decision.** Still open (001 action plan, step 3). For this mixin the evidence points one way: the
   members kept on the graph in option 2 are either a delegation already shaped like `setTooltips` or a value read on
   every mouse event. Option 2 can proceed on that basis, but the ADR asked by 001 should record the rule.
-- **Dependency on PR #1132.** Options 2 and 3 cut the family #1132 assembles. Extracting before #1132 lands means
-  moving `scrollPointToVisible` and `center` out of `AbstractGraph` directly, with #1132 then obsolete; extracting after
-  means #1132 moves code twice, as ADR 0003 accepted for interim moves (Consequences, Negative).
+- **Dependency on PR #1132.** Options 2 and 3 start from the family that #1132 gathers in `PanningMixin`, so they come
+  after it. The members of that family then move twice, from `AbstractGraph` to the mixin and from the mixin to the
+  plugin, which ADR 0003 accepts for interim moves (Consequences, Negative).
 - **No safety net.** One test, which checks that `setPanning` does not throw. `panGraph` manipulates the DOM of the
   container and `scrollRectToVisible` has two branches by scrollbars; both need tests before any move.
 - **Dead branch.** The side finding means the `allowAutoPanning` path of `scrollPointToVisible` has never run in
@@ -350,7 +369,7 @@ Do not run it as a standalone project, and do not turn `PanningMixin` into a sin
 - The real plugin candidate is the programmatic scroll family that ADR 0003 B.4 already identified, half of which is
   still in `AbstractGraph` pending PR #1132. Its gain is not measured yet.
 
-It becomes worth doing as part of the conversion tracked by issue #762, once PR #1132 is settled and the mixin has
+It becomes worth doing as part of the conversion tracked by issue #762, once PR #1132 has landed and the mixin has
 tests.
 
 ## Proposed action plan
@@ -359,8 +378,8 @@ Ordered so that each step pays off on its own.
 
 1. **Fix the `PanningHandler.isActive` bug** of the side finding, reported as issue #1297, with a test. Independent of
    the rest, and it decides whether `allowAutoPanning` is a feature to carry over or to deprecate.
-2. **Settle PR #1132**, open since 2026-08-10: merge it, so that the scroll family sits in one place, or close it if
-   option 2 is to be done next and would move those members anyway.
+2. **Land PR #1132 first.** Option 2 starts from the scroll family that #1132 gathers in `PanningMixin`. Extracting it
+   while half of the family is still in `AbstractGraph` would move code that #1132 also moves.
 3. **Write the missing tests** against `BaseGraph`: `panGraph` with and without scrollbars (DOM of the container, `PAN`
    event, offsets), `scrollRectToVisible` in both branches, `scrollCellToVisible` with `center`, `setPanning` with and
    without the plugin. About 1 day, useful now.
