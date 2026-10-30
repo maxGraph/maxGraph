@@ -179,8 +179,5 @@ describe('startEditing', () => {
     graph.startEditing(new MouseEvent('dblclick'));
 
     expect(graph.isEditing(vertex)).toBe(true);
-
-    graph.destroy();
-    container.remove();
   });
 });

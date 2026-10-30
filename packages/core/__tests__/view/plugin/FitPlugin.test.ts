@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { expect, test } from '@jest/globals';
-import { BaseGraph, FitPlugin, Rectangle } from '../../../src';
+import { FitPlugin, Rectangle } from '../../../src';
 import { createBaseGraph, createContainer } from '../../utils';
 
 describe('fitCenter', () => {

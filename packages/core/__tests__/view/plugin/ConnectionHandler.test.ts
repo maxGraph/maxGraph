@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeEach, describe, expect, test } from '@jest/globals';
+import { beforeEach, describe, expect, test } from '@jest/globals';
 
 import ConnectionHandler from '../../../src/view/plugin/ConnectionHandler';
-import { type AbstractGraph, BaseGraph, Point } from '../../../src';
+import { type AbstractGraph, Point } from '../../../src';
 import { createBaseGraph } from '../../utils';
 
 let graph: AbstractGraph;
@@ -26,10 +26,6 @@ let plugin: ConnectionHandler;
 beforeEach(() => {
   graph = createBaseGraph({ plugins: [ConnectionHandler] });
   plugin = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
-});
-
-afterEach(() => {
-  graph.destroy();
 });
 
 describe('connect', () => {

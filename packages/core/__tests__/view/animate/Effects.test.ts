@@ -31,10 +31,6 @@ beforeEach(() => {
   graph = createBaseGraph();
 });
 
-afterEach(() => {
-  graph.destroy();
-});
-
 const insertVertexAt = (x: number): Cell =>
   graph.insertVertex({ position: [x, 0], size: [40, 40] });
 

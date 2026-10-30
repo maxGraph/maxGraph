@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, jest, test } from '@jest/globals';
-import { BaseGraph, GraphLayout, LayoutManager } from '../../../src';
+import { GraphLayout, LayoutManager } from '../../../src';
 import { createBaseGraph, createContainer } from '../../utils';
 
 describe('destroy', () => {

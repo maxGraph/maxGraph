@@ -16,7 +16,6 @@ limitations under the License.
 
 import { afterEach, beforeAll, describe, expect, jest, test } from '@jest/globals';
 import {
-  BaseGraph,
   Cell,
   CellState,
   type CellStateStyle,
@@ -137,10 +136,6 @@ describe('isHandleVisible', () => {
 
 describe('loops over the handles', () => {
   let graph: Graph;
-
-  afterEach(() => {
-    graph.destroy();
-  });
 
   /**
    * Selects an edge with 2 waypoints, whose absolute points are (40, 20), (150, 20), (150, 220) and (300, 220).

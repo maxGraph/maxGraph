@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeEach, expect, test } from '@jest/globals';
+import { beforeEach, expect, test } from '@jest/globals';
 import { BaseGraph, type CellState, Point, Rectangle } from '../../../src';
 import Guide from '../../../src/view/other/Guide';
 import { createBaseGraph } from '../../utils';
@@ -23,10 +23,6 @@ let graph: BaseGraph;
 
 beforeEach(() => {
   graph = createBaseGraph();
-});
-
-afterEach(() => {
-  graph.destroy();
 });
 
 test.each([

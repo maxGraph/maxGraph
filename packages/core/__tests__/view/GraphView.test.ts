@@ -178,6 +178,5 @@ describe('getBounds', () => {
     ];
 
     expect(graph.view.getBounds(cells)).toEqual(new Rectangle(10, 20, 120, 220));
-    graph.destroy();
   });
 });

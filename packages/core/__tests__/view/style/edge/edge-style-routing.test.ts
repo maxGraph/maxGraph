@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeEach, expect, test } from '@jest/globals';
+import { beforeEach, expect, test } from '@jest/globals';
 import { type CellStyle, Graph, Point } from '../../../../src';
 import { createGraphWithoutContainer } from '../../../utils';
 
@@ -22,10 +22,6 @@ let graph: Graph;
 
 beforeEach(() => {
   graph = createGraphWithoutContainer();
-});
-
-afterEach(() => {
-  graph.destroy();
 });
 
 const computeAbsolutePoints = (

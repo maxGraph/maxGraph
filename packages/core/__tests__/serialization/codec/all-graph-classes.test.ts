@@ -18,7 +18,6 @@ import { afterEach, beforeAll, beforeEach, describe, expect, test } from '@jest/
 import { createBaseGraph, createGraphWithoutContainer } from '../../utils';
 import {
   type AbstractGraph,
-  BaseGraph,
   getDefaultPlugins,
   ImageBox,
   Multiplicity,
