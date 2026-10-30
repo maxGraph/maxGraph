@@ -97,7 +97,7 @@ describe('destroyCreatedGraphs', () => {
     // failing one alive and subscribed, which is exactly what the teardown exists to prevent.
     const failure = new Error('destroy failed');
     const failing = createBaseGraph();
-    jest.spyOn(failing, 'destroy').mockImplementation(() => {
+    const destroySpy = jest.spyOn(failing, 'destroy').mockImplementation(() => {
       throw failure;
     });
     const next = createBaseGraph();
@@ -105,6 +105,11 @@ describe('destroyCreatedGraphs', () => {
     expect(() => destroyCreatedGraphs()).toThrow(failure);
 
     expect(next.destroyed).toBe(true);
+
+    // The mock kept the real `destroy()` from running and the registry is already drained, so this test has to tear
+    // its own graph down, or it would stay subscribed for the rest of the file: the very leak under test here.
+    destroySpy.mockRestore();
+    failing.destroy();
   });
 
   test('removes from the document every listener the graph registered on it', () => {
