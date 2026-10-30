@@ -19,4 +19,9 @@ import { destroyCreatedGraphs } from './utils';
 
 // Runs before every test file, see `setupFilesAfterEnv` in jest.config.cjs. Tearing the graphs down here rather than in
 // each file means a test never inherits the graphs of the ones that ran before it.
+//
+// This assumes the tests of a file run one after the other, which is what Jest does unless a test opts out with
+// `test.concurrent`. The registry this hook drains is module state shared by the whole file, so with concurrent tests
+// it would destroy a graph another test is still using. Running test *files* in parallel is fine, each worker gets its
+// own module registry and its own jsdom.
 afterEach(destroyCreatedGraphs);
