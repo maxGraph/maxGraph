@@ -14,23 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globals';
+import { beforeEach, describe, expect, jest, test } from '@jest/globals';
 
 import Cell from '../../../src/view/cell/Cell';
 import CellState from '../../../src/view/cell/CellState';
 import SelectionHandler from '../../../src/view/plugin/SelectionHandler';
-import { type AbstractGraph, BaseGraph, Point } from '../../../src';
+import { type AbstractGraph, Point } from '../../../src';
+import { createBaseGraph } from '../../utils';
 
 let graph: AbstractGraph;
 let plugin: SelectionHandler;
 
 beforeEach(() => {
-  graph = new BaseGraph({ plugins: [SelectionHandler] });
+  graph = createBaseGraph({ plugins: [SelectionHandler] });
   plugin = graph.getPlugin<SelectionHandler>('SelectionHandler')!;
-});
-
-afterEach(() => {
-  graph.destroy();
 });
 
 describe('addStates', () => {

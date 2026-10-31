@@ -14,18 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeEach, expect, test } from '@jest/globals';
+import { beforeEach, expect, test } from '@jest/globals';
 import { BaseGraph } from '../../../src';
 import Multiplicity from '../../../src/view/other/Multiplicity';
+import { createBaseGraph } from '../../utils';
 
 let graph: BaseGraph;
 
 beforeEach(() => {
-  graph = new BaseGraph();
-});
-
-afterEach(() => {
-  graph.destroy();
+  graph = createBaseGraph();
 });
 
 test.each([

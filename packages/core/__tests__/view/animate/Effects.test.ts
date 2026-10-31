@@ -23,15 +23,12 @@ import {
   InternalEvent,
   type UndoableChange,
 } from '../../../src';
+import { createBaseGraph } from '../../utils';
 
 let graph: BaseGraph;
 
 beforeEach(() => {
-  graph = new BaseGraph();
-});
-
-afterEach(() => {
-  graph.destroy();
+  graph = createBaseGraph();
 });
 
 const insertVertexAt = (x: number): Cell =>

@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import { afterEach, beforeAll, beforeEach, describe, expect, test } from '@jest/globals';
-import { createGraphWithoutContainer } from '../../utils';
+import { createBaseGraph, createGraphWithoutContainer } from '../../utils';
 import {
   type AbstractGraph,
-  BaseGraph,
   getDefaultPlugins,
   ImageBox,
   Multiplicity,
@@ -100,7 +99,7 @@ describe.each([
     'Graph',
     () => createGraphWithoutContainer(), // This graph uses default plugins
   ],
-  ['BaseGraph', () => new BaseGraph({ plugins: getDefaultPlugins() })],
+  ['BaseGraph', () => createBaseGraph({ plugins: getDefaultPlugins() })],
 ])('%s', (name, graphFactory: () => AbstractGraph) => {
   test('Export', () => {
     const graph = graphFactory();

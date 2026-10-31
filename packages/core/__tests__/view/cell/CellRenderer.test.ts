@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { CellRenderer, CellState, CellStateStyle, Graph } from '../../../src';
+import { CellRenderer, CellState, CellStateStyle } from '../../../src';
+import { createGraphWithoutContainer } from '../../utils';
 
 describe('checkPlaceholderStyles', () => {
   test('CellState with unset style', () => {
@@ -43,7 +44,7 @@ describe('checkPlaceholderStyles', () => {
 });
 
 test('insertStateAfter moves every shape of the state after the given node', () => {
-  const graph = new Graph();
+  const graph = createGraphWithoutContainer();
   const group = graph.insertVertex({
     value: 'group',
     position: [0, 0],
@@ -75,5 +76,4 @@ test('insertStateAfter moves every shape of the state after the given node', () 
     anchorIndex + 3,
   ]);
   expect(result).toEqual([state.control!.node, null]);
-  graph.destroy();
 });

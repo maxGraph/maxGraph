@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import { afterEach, describe, expect, jest, test } from '@jest/globals';
-import { BaseGraph } from '../../src';
 import { show } from '../../src/util/printUtils';
+import { createBaseGraph } from '../utils';
 
 describe('show', () => {
   afterEach(() => {
@@ -31,12 +31,11 @@ describe('show', () => {
       '<style>.first {}</style>',
       '<style>.second {}</style>',
     ].join('');
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const targetDocument = document.implementation.createHTMLDocument();
     const writeln = jest.spyOn(targetDocument, 'writeln');
 
     show(graph, targetDocument);
-    graph.destroy();
 
     const writtenLines = writeln.mock.calls.map(([line]) => line);
     expect(writtenLines).toEqual([

@@ -14,19 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeEach, describe, expect, test } from '@jest/globals';
-import { type AbstractGraph, BaseGraph, type Cell } from '../../src';
+import { beforeEach, describe, expect, test } from '@jest/globals';
+import { type AbstractGraph, type Cell } from '../../src';
 import { findTreeRoots } from '../../src/util/treeTraversal';
+import { createBaseGraph } from '../utils';
 
 describe('findTreeRoots', () => {
   let graph: AbstractGraph;
 
   beforeEach(() => {
-    graph = new BaseGraph();
-  });
-
-  afterEach(() => {
-    graph.destroy();
+    graph = createBaseGraph();
   });
 
   const insertVertices = (count: number): Cell[] =>

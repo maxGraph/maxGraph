@@ -16,7 +16,6 @@ limitations under the License.
 
 import { afterEach, beforeAll, describe, expect, jest, test } from '@jest/globals';
 import {
-  BaseGraph,
   Cell,
   CellState,
   type CellStateStyle,
@@ -35,14 +34,19 @@ import {
   type Shape,
   unregisterAllEdgeStyles,
 } from '../../../src';
-import { createCellHandleStub, createContainer } from '../../utils';
+import {
+  createBaseGraph,
+  createCellHandleStub,
+  createContainer,
+  createGraph,
+} from '../../utils';
 
 const createEdgeHandlerForStyle = (
   edgeStyle: EdgeStyleFunction | undefined,
   pointCount: number,
   { skipDefaultRegistration = false } = {}
 ): EdgeHandler => {
-  const graph = new BaseGraph();
+  const graph = createBaseGraph();
   if (!skipDefaultRegistration) {
     registerDefaultEdgeStyles();
   }
@@ -64,7 +68,7 @@ const createEdgeHandlerForStyle = (
 };
 
 const createEdgeHandlerWithoutGeometry = (): EdgeHandler => {
-  const graph = new BaseGraph();
+  const graph = createBaseGraph();
   const cell = new Cell();
   cell.setEdge(true);
   cell.setVertex(false);
@@ -133,15 +137,11 @@ describe('isHandleVisible', () => {
 describe('loops over the handles', () => {
   let graph: Graph;
 
-  afterEach(() => {
-    graph.destroy();
-  });
-
   /**
    * Selects an edge with 2 waypoints, whose absolute points are (40, 20), (150, 20), (150, 220) and (300, 220).
    */
   const selectEdge = (): EdgeHandler => {
-    graph = new Graph(createContainer({ offsetWidth: 1200, offsetHeight: 900 }));
+    graph = createGraph(createContainer({ offsetWidth: 1200, offsetHeight: 900 }));
     const source = graph.insertVertex({ position: [0, 0], size: [40, 40] });
     const target = graph.insertVertex({ position: [300, 200], size: [40, 40] });
     const edge = graph.insertEdge({ source, target });

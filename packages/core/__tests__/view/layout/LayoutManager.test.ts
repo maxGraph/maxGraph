@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import { describe, expect, jest, test } from '@jest/globals';
-import { BaseGraph, GraphLayout, LayoutManager } from '../../../src';
-import { createContainer } from '../../utils';
+import { GraphLayout, LayoutManager } from '../../../src';
+import { createBaseGraph, createContainer } from '../../utils';
 
 describe('destroy', () => {
   test('clears eventListeners', () => {
-    const graph = new BaseGraph();
+    const graph = createBaseGraph();
     const manager = new LayoutManager(graph);
     manager.addListener('testEvent', () => {});
     expect(manager.eventListeners.length).toBeGreaterThan(0);
@@ -33,7 +33,7 @@ describe('destroy', () => {
 
 describe('cellsMoved', () => {
   test('lets the layout of the parent of every cell move it to the mouse location', () => {
-    const graph = new BaseGraph({ container: createContainer({}) });
+    const graph = createBaseGraph({ container: createContainer({}) });
     const cells = [
       graph.insertVertex({ value: 'a' }),
       graph.insertVertex({ value: 'b' }),

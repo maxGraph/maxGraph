@@ -45,11 +45,11 @@ import {
   unregisterAllEdgeStyles,
   VertexHandler,
 } from '../../../src';
-import { hasListener } from '../../utils';
+import { createBaseGraph, hasListener } from '../../utils';
 
 describe('onDestroy', () => {
   test('removes refreshHandler from selectionModel', () => {
-    const graph = new BaseGraph({ plugins: [SelectionCellsHandler] });
+    const graph = createBaseGraph({ plugins: [SelectionCellsHandler] });
     const handler = graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!;
     const { refreshHandler } = handler;
 
@@ -65,7 +65,7 @@ describe('onDestroy', () => {
   });
 
   test('clears eventListeners', () => {
-    const graph = new BaseGraph({ plugins: [SelectionCellsHandler] });
+    const graph = createBaseGraph({ plugins: [SelectionCellsHandler] });
     const handler = graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!;
     handler.addListener('testEvent', () => {});
     expect(handler.eventListeners.length).toBeGreaterThan(0);
@@ -76,7 +76,7 @@ describe('onDestroy', () => {
   });
 
   test('removes refreshHandler from dataModel', () => {
-    const graph = new BaseGraph({ plugins: [SelectionCellsHandler] });
+    const graph = createBaseGraph({ plugins: [SelectionCellsHandler] });
     const handler = graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!;
     const { refreshHandler } = handler;
 
@@ -88,7 +88,7 @@ describe('onDestroy', () => {
   });
 
   test('removes refreshHandler from view', () => {
-    const graph = new BaseGraph({ plugins: [SelectionCellsHandler] });
+    const graph = createBaseGraph({ plugins: [SelectionCellsHandler] });
     const handler = graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!;
     const { refreshHandler } = handler;
 
@@ -117,7 +117,7 @@ describe('Handler management', () => {
   const createCellStateOfVertex = (graph: AbstractGraph): CellState =>
     createCellState(graph, false);
 
-  const createNewGraph = () => new BaseGraph({ plugins: [SelectionCellsHandler] });
+  const createNewGraph = () => createBaseGraph({ plugins: [SelectionCellsHandler] });
 
   const getPlugin = (graph: BaseGraph) =>
     graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!;
@@ -433,7 +433,7 @@ describe('Handler lifecycle on selection', () => {
     unregisterAllEdgeStyles();
   });
 
-  const createNewGraph = () => new BaseGraph({ plugins: [SelectionCellsHandler] });
+  const createNewGraph = () => createBaseGraph({ plugins: [SelectionCellsHandler] });
 
   const getPlugin = (graph: BaseGraph) =>
     graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler')!;

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeEach, expect, jest, test } from '@jest/globals';
+import { beforeEach, expect, jest, test } from '@jest/globals';
 import {
   BaseGraph,
   ConnectionConstraint,
@@ -23,17 +23,14 @@ import {
   InternalMouseEvent,
   Point,
 } from '../../../src';
+import { createBaseGraph } from '../../utils';
 
 let graph: BaseGraph;
 let constraintHandler: ConstraintHandler;
 
 beforeEach(() => {
-  graph = new BaseGraph();
+  graph = createBaseGraph();
   constraintHandler = new ConstraintHandler(graph);
-});
-
-afterEach(() => {
-  graph.destroy();
 });
 
 const createIconStubs = (): ImageShape[] =>

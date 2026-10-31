@@ -15,7 +15,18 @@ limitations under the License.
 */
 
 import { expect, jest } from '@jest/globals';
-import { Cell, type CellHandle, type CellStateStyle, Graph } from '../src';
+import {
+  type AbstractGraph,
+  BaseGraph,
+  Cell,
+  type CellHandle,
+  type CellStateStyle,
+  Graph,
+  type GraphDataModel,
+  type GraphOptions,
+  type GraphPluginConstructor,
+  type Stylesheet,
+} from '../src';
 
 /**
  * Creates a `div` to be used as the container of a {@link Graph}, with the given dimensions faked.
@@ -40,16 +51,95 @@ export const createContainer = (dimensions: {
 };
 
 /**
+ * A registered graph, with the container it had when it was registered.
+ *
+ * The container is captured at registration because {@link AbstractGraph.destroy} sets `graph.container` to `null`.
+ * Reading it at teardown time would therefore give `null` for a graph a test destroyed itself, and its container would
+ * stay attached to the document for the rest of the file.
+ */
+interface RegisteredGraph {
+  graph: AbstractGraph;
+  container: HTMLElement | null;
+}
+
+const createdGraphs: RegisteredGraph[] = [];
+
+/**
+ * Registers a graph so that {@link destroyCreatedGraphs} tears it down after the current test.
+ *
+ * Only needed for a graph that cannot be built with one of the `create*Graph*` helpers below, they register what they
+ * return already.
+ */
+export const registerGraphForTeardown = <T extends AbstractGraph>(graph: T): T => {
+  createdGraphs.push({ graph, container: graph.container });
+  return graph;
+};
+
+/**
+ * Destroys the graphs built by the helpers of this module since the last call, and detaches the containers that were
+ * added to the document.
+ *
+ * Wired as a global `afterEach` by `__tests__/setup.ts`, so tests never call this themselves.
+ *
+ * A graph registers listeners on `document` when it is constructed, through its view and through the plugins, and only
+ * {@link AbstractGraph.destroy} removes them. Without this teardown, every graph a test file builds stays alive and
+ * subscribed until the whole file is done. A `window` listener exists too, the `resize` of `CellEditorHandler`, but it
+ * is installed on the first call to `startEditing`, not at construction.
+ *
+ * Every graph is destroyed even if one of them throws, and the first error is rethrown once the loop is over. Letting
+ * the exception out of the loop would leave the graphs registered after the failing one alive and subscribed, since
+ * the registry is drained before the loop starts.
+ */
+export const destroyCreatedGraphs = (): void => {
+  let firstError: unknown = null;
+
+  for (const { graph, container } of createdGraphs.splice(0)) {
+    try {
+      graph.destroy();
+    } catch (error) {
+      firstError ??= error;
+    }
+    container?.remove();
+  }
+
+  if (firstError !== null) {
+    throw firstError;
+  }
+};
+
+/**
+ * Creates a new {@link Graph}, registered for teardown.
+ *
+ * Prefer this over `new Graph(...)` in tests, so that the graph is destroyed after the test that built it. It takes
+ * the parameters of the {@link Graph} constructor, so the two specializations below cover the common cases.
+ */
+export const createGraph = (
+  container?: HTMLElement,
+  model?: GraphDataModel,
+  plugins?: GraphPluginConstructor[],
+  stylesheet?: Stylesheet | null
+): Graph => registerGraphForTeardown(new Graph(container, model, plugins, stylesheet));
+
+/**
  * Creates a new {@link Graph} without `container` (use the default value of the parameters).
  *
  * This is useful when tests don't check the view.
  */
-export const createGraphWithoutContainer = (): Graph => new Graph();
+export const createGraphWithoutContainer = (): Graph => createGraph();
 
 /**
  * Creates a new {@link Graph} without any plugins (pass an empty array of plugins).
  */
-export const createGraphWithoutPlugins = (): Graph => new Graph(undefined, undefined, []);
+export const createGraphWithoutPlugins = (): Graph =>
+  createGraph(undefined, undefined, []);
+
+/**
+ * Creates a new {@link BaseGraph}, registered for teardown.
+ *
+ * Prefer this over `new BaseGraph(...)` in tests, so that the graph is destroyed after the test that built it.
+ */
+export const createBaseGraph = (options?: GraphOptions): BaseGraph =>
+  registerGraphForTeardown(new BaseGraph(options));
 
 export const hasListener = (eventListeners: { funct: Function }[], listener: Function) =>
   eventListeners.some((l) => l.funct === listener);

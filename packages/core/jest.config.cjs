@@ -21,6 +21,8 @@ module.exports = {
   coverageReporters: ['lcov', 'text-summary'],
   extensionsToTreatAsEsm: ['.ts'],
   testEnvironment: 'jsdom', // need to access to the browser objects
+  // Destroys the graphs built by the helpers of __tests__/utils.ts after each test, see that file for why
+  setupFilesAfterEnv: ['<rootDir>/__tests__/setup.ts'],
   testMatch: ['**/__tests__/**/?(*.)+(spec|test).ts'],
   transform: {
     '^.+\\.ts$': [

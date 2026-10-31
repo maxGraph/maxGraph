@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { createCellWithStyle, createGraphWithoutPlugins } from '../../utils';
+import { createCellWithStyle, createGraph, createGraphWithoutPlugins } from '../../utils';
 import {
   Cell,
   type CellStyle,
@@ -172,15 +172,12 @@ describe('startEditing', () => {
   test('Open the cell editor on the selection cell', () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
-    const graph = new Graph(container);
+    const graph = createGraph(container);
     const vertex = insertVertex(graph);
     graph.setSelectionCell(vertex);
 
     graph.startEditing(new MouseEvent('dblclick'));
 
     expect(graph.isEditing(vertex)).toBe(true);
-
-    graph.destroy();
-    container.remove();
   });
 });
