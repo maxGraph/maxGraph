@@ -46,8 +46,8 @@ it. Follow `CLAUDE.md` for the project's test commands rather than guessing them
 
 ## In this repository
 
-- Read `CLAUDE.md`, then the `.claude/rules/` files named below. They are the source of truth: the checks below only
-  say what to look for, the rule says what is right.
+- Read `CLAUDE.md`, then the `.claude/rules/` files named in the checks above. They are the source of truth: the checks
+  above only say what to look for, the rule says what is right.
 - Never run `npm install`, the whole test suite with coverage, the CI sequence, `scripts/build-all-examples.bash` or
   the Storybook build. They saturate the machine of whoever runs the review. When a finding needs one of them, name
   the command that would settle it instead. One test file is fine: `npm test -w packages/core -- <path>`, after

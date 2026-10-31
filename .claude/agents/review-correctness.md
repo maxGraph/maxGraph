@@ -48,8 +48,8 @@ type. Guessing is what makes reviews untrustworthy.
 
 ## In this repository
 
-- Read `CLAUDE.md`, then the `.claude/rules/` files named below. They are the source of truth: the checks below only
-  say what to look for, the rule says what is right.
+- Read `CLAUDE.md`, then the `.claude/rules/` files named in the checks above. They are the source of truth: the checks
+  above only say what to look for, the rule says what is right.
 - Never run `npm install`, the whole test suite with coverage, the CI sequence, `scripts/build-all-examples.bash` or
   the Storybook build. They saturate the machine of whoever runs the review. When a finding needs one of them, name
   the command that would settle it instead. One test file is fine: `npm test -w packages/core -- <path>`, after
@@ -73,7 +73,8 @@ Rules that apply to every finding:
   change caused it or merely sits near it.
 - **Read the conventions before flagging style.** `CLAUDE.md` and `.claude/rules/` state deliberate choices for
   this project. Do not report a convention as a defect.
-- **Verify, or label it a suspicion.** If you did not confirm it by reading the code around it, say so. A
-  confident wrong finding costs more review time than no finding.
+- **Verify, or drop the finding.** Confirm it by reading the code around it before reporting it. A finding you did
+  not confirm is not a suspicion to be labelled, it is work left undone, and a confident wrong finding costs more
+  review time than no finding.
 
 Report nothing rather than padding. An empty result is a legitimate answer.
