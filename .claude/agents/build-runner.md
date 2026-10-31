@@ -39,12 +39,16 @@ An error about a compiler or bundler option, a flag, a syntax or an API the tool
 then describes the symptom and not the cause. A `TS5095` on `moduleResolution` once came from TypeScript 5.9.3 still
 installed while the lock file pinned 6.0.3.
 
-Before reporting such a failure, compare the installed version of the failing tool with the one the lock file pins:
+Before reporting such a failure, compare the installed version of the failing tool with the one the lock file pins,
+both resolved from the workspace that failed. A workspace can pin its own version: `packages/ts-support` checks the
+types with TypeScript 3.9.10, while the root installs a recent one.
 
 ```bash
-node -p "require('<package>/package.json').version"
-node -p "require('./package-lock.json').packages['node_modules/<package>']?.version"
+node -p "require(require.resolve('<package>/package.json', { paths: ['<workspace>'] })).version"
+node -p "const p = require('./package-lock.json').packages; (p['<workspace>/node_modules/<package>'] ?? p['node_modules/<package>'])?.version"
 ```
+
+`<workspace>` is the directory of the failing workspace, such as `packages/ts-support`, or `.` for a root command.
 
 When they differ, report both versions as the probable cause and suggest `npm install`, without running it.
 
