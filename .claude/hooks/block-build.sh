@@ -1,31 +1,31 @@
 #!/bin/bash
-# PreToolUse hook: warns when build commands run in main agent context.
-# Suggests dedicated sub-agent skills instead.
+# PreToolUse hook: when a heavy build, test or lint command runs in the main agent context, tells the model to
+# delegate it to the build-runner agent instead. Never blocks the command.
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
+AGENT_ID=$(echo "$INPUT" | jq -r '.agent_id // empty')
 
-# Only check Bash commands
 [[ "$TOOL_NAME" != "Bash" ]] && exit 0
 
-# Skip if running in a sub-agent (sub-agents ARE the right place for builds)
-[[ -n "$CLAUDE_AGENT_NAME" ]] && exit 0
+# Sub-agents, build-runner included, are the right place for builds. Hooks firing in a sub-agent receive its agent_id.
+[[ -n "$AGENT_ID" ]] && exit 0
 
-# Skip lightweight commands
-if echo "$COMMAND" | grep -qE '(--help|list|ls|outdated|--version|node --version)'; then
+# The command may follow a prefix such as the nvm setup or a cd, so match after any command separator
+if ! echo "$COMMAND" | grep -qE '(^|[;&|(][[:space:]]*)npm[[:space:]]+(run[[:space:]]+(build|test|lint|check)|test)([[:space:]:]|$)'; then
   exit 0
 fi
 
-# Warn on heavy build/test/lint commands
-if echo "$COMMAND" | grep -qE '^\s*npm\s+(run\s+(build|test|lint|check)|test)'; then
-  echo "Build command detected in main agent context." >&2
-  echo "Consider using dedicated sub-agent skills instead:" >&2
-  echo "  /build  — Build core package" >&2
-  echo "  /test   — Run tests" >&2
-  echo "  /lint   — Run linting" >&2
-  echo "" >&2
-  echo "Sub-agents keep verbose build output out of your context window." >&2
+if echo "$COMMAND" | grep -qE '(^|[[:space:]])(--help|--version)([[:space:]]|$)'; then
+  exit 0
 fi
 
+# Claude never sees the stderr of a hook exiting 0, additionalContext is what reaches the model
+jq -n '{
+  hookSpecificOutput: {
+    hookEventName: "PreToolUse",
+    additionalContext: "A build, test or lint command ran in the main agent context. Delegate such commands to the build-runner agent, which reports only the verdict and the first error and keeps the log out of this context."
+  }
+}'
 exit 0
