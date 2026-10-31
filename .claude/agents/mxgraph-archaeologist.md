@@ -72,6 +72,17 @@ Three traps in `jgraph/drawio`:
 - A source file at `22.0.0` or `24.2.7` shows up as added by that commit: it marks the publication or the move of the
   source code, not the introduction of the code it contains.
 
+Both repositories keep a `ChangeLog` at their root, the only ones: the mxGraph source directories of draw.io have none.
+Grep them for the class or member name to find a version to check. Treat a hit as a lead, to confirm in the code at
+that release's tag, and the absence of a hit as proving nothing. `git log -S` and `-G` remain the method that answers.
+
+- `jgraph/mxgraph`, 2013 to `4.2.2` (2020-10-28): every entry is about mxGraph and names its classes and members, and
+  its versions are tags of that repository (`2.7.0.0` is `v2.7.0.0`). Search it first for anything before 2021.
+- `jgraph/drawio`, every draw.io release since 2011: until 2020 it names mxGraph classes often, and its
+  `Uses mxGraph <version>` lines tie draw.io releases to mxGraph releases. From 2021 to 2025, the years mxGraph only
+  evolved inside draw.io, it names them 3 to 6 times a year: the fix resetting `isMouseDown` in
+  `mxPanningHandler.reset()` shipped in `14.1.3`, whose whole entry reads `Internal release`.
+
 ## Mapping maxGraph to mxGraph
 
 - Classes lost their prefix: `mxPanningHandler` became `PanningHandler`, `mxCellRenderer` became `CellRenderer`.
