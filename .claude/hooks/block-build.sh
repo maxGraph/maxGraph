@@ -12,12 +12,16 @@ AGENT_ID=$(echo "$INPUT" | jq -r '.agent_id // empty')
 # Sub-agents, build-runner included, are the right place for builds. Hooks firing in a sub-agent receive its agent_id.
 [[ -n "$AGENT_ID" ]] && exit 0
 
-# The command may follow a prefix such as the nvm setup or a cd, so match after any command separator
-if ! echo "$COMMAND" | grep -qE '(^|[;&|(][[:space:]]*)npm[[:space:]]+(run[[:space:]]+(build|test|lint|check)|test)([[:space:]:]|$)'; then
+# The command may follow a prefix such as the nvm setup or a cd, so match after any command separator. npm options
+# such as -w may come before the subcommand, and the run scripts have variants such as test-check or lint:fix.
+NPM_HEAVY='(^|[;&|(][[:space:]]*)npm([[:space:]]+[^;&|[:space:]]+)*[[:space:]]+(run[[:space:]]+(build|test|lint|check)[[:alnum:]:-]*|test|t)([[:space:]]|$)'
+EXAMPLES_BUILD='(^|[;&|(/[:space:]])build-all-examples\.bash([[:space:]]|$)'
+if ! echo "$COMMAND" | grep -qE "$NPM_HEAVY|$EXAMPLES_BUILD"; then
   exit 0
 fi
 
-if echo "$COMMAND" | grep -qE '(^|[[:space:]])(--help|--version)([[:space:]]|$)'; then
+# A lone command asking for help or a version runs nothing heavy. In a chain, the other commands still may.
+if ! echo "$COMMAND" | grep -qE '[;&|]' && echo "$COMMAND" | grep -qE '(^|[[:space:]])(--help|--version)([[:space:]]|$)'; then
   exit 0
 fi
 
