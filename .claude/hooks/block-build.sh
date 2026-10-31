@@ -15,7 +15,8 @@ AGENT_ID=$(echo "$INPUT" | jq -r '.agent_id // empty')
 # The command may follow a prefix such as the nvm setup or a cd, so match after any command separator. npm options
 # such as -w may come before the subcommand, and the run scripts have variants such as test-check or lint:fix.
 NPM_HEAVY='(^|[;&|(][[:space:]]*)npm([[:space:]]+[^;&|[:space:]]+)*[[:space:]]+(run[[:space:]]+(build|test|lint|check)[[:alnum:]:-]*|test|t)([[:space:]]|$)'
-EXAMPLES_BUILD='(^|[;&|(/[:space:]])build-all-examples\.bash([[:space:]]|$)'
+# The script only as the command run, directly or through bash or sh, so that reading it with cat or grep is ignored.
+EXAMPLES_BUILD='(^|[;&|(][[:space:]]*)((ba)?sh[[:space:]]+)?[^;&|[:space:]]*build-all-examples\.bash([[:space:])]|$)'
 if ! echo "$COMMAND" | grep -qE "$NPM_HEAVY|$EXAMPLES_BUILD"; then
   exit 0
 fi
