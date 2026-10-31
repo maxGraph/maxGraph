@@ -44,7 +44,9 @@ Checked against the documentation linked above on 2026-10-14, then in practice.
   does not see the conversation, so the skill text must be self-contained, and it runs in the background.
 - **`tools:` is an allowlist**, and it also excludes the MCP tools. Tool schemas are the largest part of the startup
   cost of an agent, which every one of its calls pays again, so a small toolset makes each call cheaper.
-- **The agents directory is read when `claude` starts.** A new or renamed agent needs a restart to be listed.
+- **Claude Code watches `.claude/agents/`.** An added or edited agent is used at the next delegation, with no
+  restart. A restart is still needed when the directory did not exist when the session started, for the `agents`
+  directory of a folder added with `--add-dir`, and in a session started with `--disable-slash-commands`.
 - **A subagent is not allowed to write a report file.** The harness refuses it with "Subagents should return findings
   as text, not write report files". An agent producing a document returns it as text, and the caller writes it.
 - **Hooks**: Claude never sees the stderr of a `PreToolUse` hook exiting 0; `hookSpecificOutput.additionalContext` is
@@ -63,7 +65,7 @@ that can produce the part of its output that matters.
 | Agent | Model | What the output needs | Cost per run, measured |
 |---|---|---|---|
 | `build-runner` | Haiku | run a command, then report a verdict and the first error | about 30k tokens per command, 47k for the 9 steps of `/ci` |
-| review lenses | Sonnet | read a whole diff and its context, judge what is a defect | 36k to 38k tokens per lens, about 25 s |
+| review lenses | Sonnet | read a whole diff and its context, judge what is a defect | 36k to 38k tokens per lens, about 25 s per lens, measured |
 | `mixin-extraction-analyst` | Opus | options, risks and a recommendation weighed against three ADRs | 156k tokens, 48 tool calls, 8.5 min |
 
 - **Haiku for `build-runner`.** The work is mechanical, and the only risk is a bad summary of a compiler or test
@@ -89,7 +91,7 @@ a `/build` run which failed with `TS5095` because `node_modules` held TypeScript
 the agent reported the error correctly, but could not name the stale install as the cause.
 
 Validation: `/lint`, `/test <file>`, `/build` and `/ci` all ran through the agent; the 9 steps of `/ci` passed, the
-longest being the Jest run with coverage at 287 s, under the timeout.
+longest being the Jest run with coverage at 287 s, measured, under the timeout.
 
 ### Five review lenses
 
@@ -99,7 +101,7 @@ section of 4 or 5 checks phrased as things to hunt, each pointing at the rule th
 | Lens | maxGraph checks |
 |---|---|
 | correctness | truthiness on a value that can be `0` or `''`, missing `batchUpdate`, `destroy()` cleanup, a plugin assumed to be present although `BaseGraph` registers none, divergence from mxGraph in ported code |
-| architecture | eager imports pulled into `AbstractGraph`, `import type`, zero runtime dependency, public API and `@since`, plugin id naming, TypeScript 3.9 compatibility |
+| architecture | eager imports pulled into `AbstractGraph`, `import type`, zero runtime dependency, public API and `@since`, plugin id naming, TypeScript 3.9 compatibility, shared utilities bypassed (`log()`, `translate()`, `parseXml()`) |
 | tests | regression test for a fix, `test.each`, `ts-support`, object form of `insertVertex` |
 | docs | Storybook demo id and `/demo/` segment, repository links pinned to a branch, `@since`, CHANGELOG policy, guide structure |
 | security | labels rendered as HTML and `htmlEntities`, `parseXml`, `allowEval`, runtime dependencies |
@@ -132,7 +134,8 @@ broken sentence.
 `tools: Glob, Grep, Read, Bash`, read-only. For one mixin of `AbstractGraph`, it inventories the members and their
 callers in the core package, tests, stories, examples and website, reads ADR 0001 to 0003, compares the shapes of
 analysis 001, and returns an analysis in the conventions of this directory. It sets the analysis basis to the full
-SHA of `HEAD`, states the command behind every count, and checks the state of every issue it cites.
+SHA of `origin/main` and reads the code at that commit, states the command behind every count, and checks the state
+of every issue it cites.
 
 It does not measure bundle sizes: that means patching the sources and rebuilding the core package and an example,
 which loads the machine. It writes the protocol and the patch of each variant, and leaves the figures as
@@ -153,8 +156,8 @@ method with the mxGraph original and with its later version in draw.io, and trac
 
 - `jgraph/mxgraph` was archived on 2020-11-13, and jgraph kept developing mxGraph inside `jgraph/drawio`. That
   repository held only the minified mxGraph bundle `mxClient.js` until 22.0.0 (2023-09-28), when the mxGraph source
-  code was first published; the source code was removed in 24.8.6 (2024-11-19) and came back in 28.2.0 (2025-09-05),
-  under `src/main/webapp/mxgraph/src/`;
+  code was first published under `src/main/mxgraph/`. It moved to `src/main/webapp/mxgraph/src/` in 24.2.7
+  (2024-04-19), was removed in 24.8.6 (2024-11-19) and came back at that path in 28.2.0 (2025-09-05);
 - the draw.io history is split around November 2024, and `git replace --graft` joins the two parts so that `git log`
   and `git blame` reach back to 2016. To verify before writing the agent: that both commits of the graft are reachable
   from public tags of `jgraph/drawio`;
@@ -177,7 +180,7 @@ it is mostly a skill-shaped workflow, and an agent only pays off when several is
 
 ### `call-site-migrator`
 
-Mechanical sweeps keep coming: the `for...of` migration took six pull requests, and
+Mechanical sweeps keep coming: the `for...of` migration was split over several pull requests, and
 [issue #856](https://github.com/maxGraph/maxGraph/issues/856) still covers the positional `insertVertex` calls of the
 stories. The agent would edit files, fanned out per folder. `isolation: worktree` branches from the default branch,
 not from the current one, so the results would have to be gathered onto the sweep branch. Probably better as a skill
