@@ -86,8 +86,21 @@ the repository URL from the clone, `git -C <clone> remote get-url origin`, conve
 `https://github.com/owner/repo`, and build permalinks pinned to a full commit SHA:
 `https://github.com/owner/repo/blob/<full-sha>/<path>#L<start>-L<end>`. Never link to a branch.
 
+**Pin every link to a full SHA, a tag included.** Resolve a tag with `git rev-parse <tag>^{commit}` and link the
+SHA, so the link cannot drift if the tag ever moves.
+
+**Cite maxGraph code at `origin/main`, not at the checkout.** The branch you run on is often unpushed, so its line
+numbers cannot be linked. Read the file with `git show origin/main:<path>`, take the lines there, and link
+`https://github.com/maxGraph/maxGraph/blob/<full sha of origin/main>/<path>#L<start>-L<end>`. When the code differs on
+the current branch, say so.
+
 **Confirm a commit is public before citing it.** A commit reachable from no public ref gives a link that 404s for
-everyone else. `git tag --contains <sha>` and `git branch -r --contains <sha>` tell you.
+everyone else. `git tag --contains <sha>` and `git branch -r --contains <sha>` tell you. Never mention a local-only
+branch or commit at all, not even to say it should not be cited.
+
+**Look for an existing report.** Before concluding, search the maxGraph issues and pull requests for the class or
+member, read-only: `gh issue list --repo maxGraph/maxGraph --state all --search '<term>'`, and the same with
+`gh pr list`. Cite what you find, or say that nothing matched.
 
 Every claim states the repository as a URL, the **full** commit SHA, the version or tag containing it, the pull
 request number when the change came through one, and the file path and lines. "It was changed in 2021" is not a
