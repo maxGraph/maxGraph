@@ -39,22 +39,38 @@ A history question cannot: report that it needs the clone.
 
 ## Where each era lives
 
-| Period | Repository | Where to read |
-|---|---|---|
-| until 2020-11-13 | `jgraph/mxgraph`, archived | `javascript/src/js/`, last commit `ff141aab158417bd866e2dfebd06c61d40773cd2`; examples in `javascript/examples/` |
-| 2016 to 2024-10-01 | `jgraph/drawio` | tag `v24.7.17`, under `src/main/webapp/mxgraph/` |
-| 2024-11 to 2025-09 | none | the client was removed from `jgraph/drawio` |
-| since 2025-09-05 | `jgraph/drawio` | `HEAD`, under `src/main/webapp/mxgraph/`, re-added in `947271f1a` (`28.2.0`) |
+Public mxGraph development stopped on 2020-11-13, and jgraph kept developing mxGraph inside draw.io, so behaviour
+after 2020 is read in `jgraph/drawio`, not in `jgraph/mxgraph`. draw.io does not always hold mxGraph in the same
+form, so first check which form exists for the period you need:
 
-Public mxGraph development stopped on 2020-11-13, and jgraph kept the client evolving inside draw.io, so behaviour
-after 2020 is read in draw.io, not in `jgraph/mxgraph`.
+- the **source code**, readable files, one per class, such as `mxPanningHandler.js`;
+- the **minified mxGraph bundle**, `mxClient.js`, a single minified file holding all of mxGraph;
+- draw.io's **own minified bundles**, such as `src/main/webapp/js/app.min.js`, which embed a minified mxGraph.
 
-Two traps in `jgraph/drawio`:
+| Period | Repository and ref | mxGraph source code | Minified mxGraph |
+|---|---|---|---|
+| until 2020-11-13 | `jgraph/mxgraph`, last commit `ff141aab158417bd866e2dfebd06c61d40773cd2` | `javascript/src/js/`, examples in `javascript/examples/` | |
+| 2016 to 2023-09 | `jgraph/drawio`, up to `21.8.2` | none | `mxClient.js` (`etc/mxgraph/`, `war/mxgraph/`, then `src/main/webapp/mxgraph/` since `13.1.4`) and `app.min.js` (`war/js/`, then `src/main/webapp/js/` since `8.0.0`) |
+| 2023-09-28 to 2024-04 | `jgraph/drawio`, `22.0.0` (`8906f90ac0cc50a0c6da77c28cf9b2b2339277b1`) to `24.2.5` | `src/main/mxgraph/` | `src/main/webapp/mxgraph/mxClient.js` and `app.min.js` |
+| 2024-04-19 to 2024-10-01 | `jgraph/drawio`, `24.2.7` (`d3b22b0655c0a4d973f135811dfac93404c56229`) to tag `v24.7.17` | `src/main/webapp/mxgraph/src/` | `src/main/webapp/mxgraph/mxClient.js` and `app.min.js` |
+| 2024-11-19 to 2025-09 | `jgraph/drawio`, `24.8.6` to `28.1.x` | none | `app.min.js` only, `mxClient.js` removed too |
+| since 2025-09-05 | `jgraph/drawio`, `28.2.0` (`947271f1a0250bd05d61fd5cda2bcbf5f40ce16c`) to `HEAD` | `src/main/webapp/mxgraph/src/` | `src/main/webapp/mxgraph/mxClient.js` and `app.min.js` |
+
+So a change made by jgraph before 2023-09-28 never appears as a readable diff: the source code was not published yet.
+Find it in the minified mxGraph bundle instead, with `git log -S` on `mxClient.js`. Minification keeps the names of
+prototype members, `mxPanningHandler.prototype.isActive`, but rewrites the rest: locals are renamed, `false` becomes
+`!1`, statements are merged. Search a member name first, then read the surrounding minified text. Then say in the
+report that the change is only visible in minified form, and from which release the source code shows it.
+
+Three traps in `jgraph/drawio`:
 
 - `git log` from `HEAD` stops at the re-rooted `24.8.6` (2024-11-19). The older history is still in the repository,
-  reachable from older tags: use `git log v24.7.17 -- src/main/webapp/mxgraph/<file>`.
-- `git blame` on `HEAD` stops at `947271f1a`, where the client came back. It looks complete while being at most a
-  year deep. Blame at `v24.7.17` for anything older.
+  reachable from older tags: use `git log v24.7.17 -- <path>`.
+- `git blame` on the source code at `HEAD` stops at `947271f1a`, where the source code came back. It looks complete
+  while being at most a year deep. Blame at `v24.7.17` for anything older, with `--follow` or the older path
+  `src/main/mxgraph/` before `24.2.7`.
+- A source file at `22.0.0` or `24.2.7` shows up as added by that commit: it marks the publication or the move of the
+  source code, not the introduction of the code it contains.
 
 ## Mapping maxGraph to mxGraph
 
