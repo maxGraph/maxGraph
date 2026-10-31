@@ -21,8 +21,13 @@ number. You return the analysis; the caller writes it to a file, since a sub-age
 
 ## Inventory
 
-Set the **analysis basis** first: `git rev-parse HEAD`, written in full. Every `file:line` of the analysis points to
-that commit.
+Set the **analysis basis** first: `git rev-parse origin/main`, written in full. Every `file:line` of the analysis
+points to that commit, so a reader can open it on GitHub. Not `HEAD`: the branch you run on is often unpushed, and
+its working tree may hold uncommitted changes.
+
+Read the code **at the basis, never from the working tree**: `git show <basis>:<path>` to read a file,
+`git grep <pattern> <basis> -- <paths>` to search, `git show <basis>:<path> | wc -l` to count lines. The figures and
+line numbers then match the basis whatever the state of the checkout.
 
 1. **The pieces**: the mixin file, its `.type.ts`, the collaborators and changes it relies on, with their line counts
    (`wc -l`) and the members they declare.
@@ -44,7 +49,9 @@ Counting rules:
 
 - A count comes from a command whose output listed the whole set. Grep the call form (`.memberName(`), not the bare
   name, and read the hits of short or common names (`getLabel`, `isEnabled`) to drop those on another receiver.
-- State the command behind each total in the Method section, so a reader can rerun it at the basis commit.
+- State the command behind each total in the Method section, complete and runnable as written at the basis commit,
+  with the full SHA and every path spelled out. Never abbreviate it with `...`: a reader must get the same figure by
+  pasting it.
 
 ## Options, risks and recommendation
 
