@@ -75,8 +75,8 @@ The table has one row per example, named as in the CSV, with sizes in kB:
 
 ## 5. Report
 
-Print the table, ready to paste into the description of the pull request, followed by a short explanation that
-follows the reading rules of the shared README:
+Print the table, ready to paste into the pull request, followed by a short explanation that follows the reading rules
+of the shared README:
 
 - the changes, the largest first, in kB;
 - the toolchain changes found in step 3, if any, stated as facts: an upgrade of a bundler, a minifier or TypeScript is
@@ -84,8 +84,9 @@ follows the reading rules of the shared README:
 - the run links, `https://github.com/maxGraph/maxGraph/actions/runs/<run>`, for both sides;
 - a failed size budget, if any, with the example and the limit to update.
 
-Do not edit the pull request yourself. When the user asks to add the table to its description, follow
-`.claude/rules/git/pull-requests.md` to keep the blocks added by bots.
+Do not edit the pull request yourself. When the user asks to add the table to it, follow
+`.claude/rules/git/pull-requests.md`: it goes in the description, keeping the blocks added by bots, except on a pull
+request opened by a bot, such as Dependabot, where it goes in a comment.
 
 ## Local branch
 
