@@ -151,8 +151,10 @@ report file, so the agent was changed to return the analysis as text.
 A porting regression usually starts with "what did mxGraph do here?". This agent would compare a maxGraph class or
 method with the mxGraph original and with its later version in draw.io, and trace when a behaviour changed:
 
-- `jgraph/mxgraph` was archived on 2020-11-13; the client kept evolving in `jgraph/drawio` under
-  `src/main/webapp/mxgraph/`;
+- `jgraph/mxgraph` was archived on 2020-11-13, and jgraph kept developing mxGraph inside `jgraph/drawio`. That
+  repository held only the minified mxGraph bundle `mxClient.js` until 22.0.0 (2023-09-28), when the mxGraph source
+  code was first published; the source code was removed in 24.8.6 (2024-11-19) and came back in 28.2.0 (2025-09-05),
+  under `src/main/webapp/mxgraph/src/`;
 - the draw.io history is split around November 2024, and `git replace --graft` joins the two parts so that `git log`
   and `git blame` reach back to 2016. To verify before writing the agent: that both commits of the graft are reachable
   from public tags of `jgraph/drawio`;
