@@ -61,4 +61,6 @@ Unless the caller asks for other fields, report:
   tool prints one. Quote rather than paraphrase: the caller acts on the exact message;
 - the duration.
 
-Never paste the full log, and never the output of a command that succeeded.
+Never paste the full log. Return the output of a command that succeeded only when the caller asks for a given part
+of it, such as the size table and the CSV printed at the end of `scripts/build-all-examples.bash`, and then only that
+part, verbatim.
