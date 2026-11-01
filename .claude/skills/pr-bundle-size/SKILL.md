@@ -84,6 +84,10 @@ of the shared README:
 - the run links, `https://github.com/maxGraph/maxGraph/actions/runs/<run>`, for both sides;
 - a failed size budget, if any, with the example and the limit to update.
 
+The table says how much each example changed, not why. When the user asks why, delegate to the `bundle-impact-analyst`
+agent, which builds both sides and names the modules that changed and the imports that pulled them in. It installs and
+builds for several minutes, so ask the user first.
+
 Do not edit the pull request yourself. When the user asks to add the table to it, follow
 `.claude/rules/git/pull-requests.md`: it goes in the description, keeping the blocks added by bots, except on a pull
 request opened by a bot, such as Dependabot, where it goes in a comment.

@@ -41,3 +41,10 @@ Apply them to any explanation of a size change, in a pull request or in the rele
   attributed to `maxGraph` alone. TypeScript belongs to it: it compiles `packages/core/lib`, which every example
   bundles, so a new version can change the sizes without any change in `maxGraph`. The `toolchain` command lists the
   bundlers, minifiers, compiler and Node versions that differ between two commits.
+
+## Explaining a change
+
+The sizes say how much an example changed, not why. The `bundle-impact-analyst` agent explains it: it builds the
+example on both refs with `ANALYZE=json`, then compares the two `dist/bundle-analysis.json` files with
+[`compare-bundle-analyses.mjs`](./compare-bundle-analyses.mjs), which lists the modules added, removed or resized and
+the chain of imports that pulled each new module in. Its explanation follows the reading rules above.

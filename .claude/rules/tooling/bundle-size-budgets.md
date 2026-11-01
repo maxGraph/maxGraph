@@ -89,4 +89,6 @@ analyzer is a post plugin, so the guard's error would abort the build before any
 
 When an increase is intended, rebuild, read the new size, round up to the next kB and update the value in the same
 commit as the change that caused it, explaining in the commit body why the bundle grew. `npm run build:analyze`, which
-every bundled example provides, shows what was added.
+every bundled example provides, shows what was added. To explain the difference between two refs, the
+`bundle-impact-analyst` agent builds both with `ANALYZE=json` and names the modules that changed and the imports that
+pulled them in.
