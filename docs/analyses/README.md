@@ -25,3 +25,4 @@ An analysis is not a decision. When it leads to one, the decision is recorded in
 |---|---|---|---|
 | [001](001-extract-SelectionMixin-to-plugin.md) | Extract `SelectionMixin` into a plugin | 2026-10-03 | Not as a standalone project, only as part of the mixin to plugin conversion |
 | [002](002-extract-PanningMixin-to-plugin.md) | Extract `PanningMixin` into a plugin | 2026-10-26 | Not as a standalone project; keep the pan offset and `setPanning` on the graph, extract only the programmatic scroll family |
+| [003](003-claude-code-project-agents.md) | Claude Code subagents for the repository | 2026-10-27 | Keep `build-runner`, the review lenses and the mixin analyst; add the other candidates one at a time |
