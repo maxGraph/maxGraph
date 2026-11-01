@@ -130,7 +130,7 @@ of `main`, the other side from a local build. This is the local fallback that th
    `toolchain` reads the commits from git when they are local, so the unpushed head works.
 5. **Build the table** as in step 4 above, with `<scratchpad>/local.csv` as the second file, and report as in step 5,
    with the run link of `main` only. The column keeps its `PR` header so the table can be pasted unchanged into the
-   description of the pull request.
+   pull request, where step 5 says.
 
 **Check the local build against the CI.** Examples whose dependencies the branch does not change must give exactly
 the CI size. When they do, the local build reproduces the CI and the other rows can be trusted. When they do not,
