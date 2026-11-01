@@ -14,12 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import process from 'node:process';
 import { defineConfig } from 'vite';
 
-import { analyzer } from 'vite-bundle-analyzer';
-
-import { failOnChunkSizeExceeded } from '../../scripts/vite/chunk-size-limit.mjs';
+import { bundleAnalysisOrSizeLimit } from '../../scripts/vite/bundle-analysis.mjs';
 import { maxGraphCodeSplitting } from '../../scripts/vite/maxgraph-chunk.mjs';
 
 // The maximum size of the maxgraph chunk, in kB. Declared once and passed to both the Vite warning and the blocking
@@ -27,24 +24,13 @@ import { maxGraphCodeSplitting } from '../../scripts/vite/maxgraph-chunk.mjs';
 const chunkSizeLimitInKB = 360;
 
 export default defineConfig(({ mode }) => {
-  // The analyzer slows the build down and starts a report server, so only analyze the production bundle when
-  // explicitly asked for it: see the 'build:analyze' script.
-  const isBundleAnalysisEnabled = mode === 'production' && process.env.ANALYZE === 'true';
+  // The analysis only runs when explicitly asked for, see 'build:analyze' and the documentation of the helper
+  const { plugins, sourcemap } = bundleAnalysisOrSizeLimit(mode, chunkSizeLimitInKB);
 
   return {
-    plugins: [
-      // The analyzer runs after the size check, which aborts the build, so an oversized chunk would leave no report at
-      // all: exactly the case where the report is needed to find out what grew. Only one of the two is registered, and
-      // the plain 'npm run build' remains the one that enforces the limit.
-      ...(isBundleAnalysisEnabled
-        ? [analyzer()]
-        : [failOnChunkSizeExceeded(chunkSizeLimitInKB)]),
-    ],
+    plugins,
     build: {
-      // The analyzer relies on the source map to report how much each module contributes to the bundle. 'hidden' emits
-      // the map without appending a sourceMappingURL comment, so what gets analyzed is byte for byte what the regular
-      // build produces. false is the Vite default, restated here to make the analysis-only nature explicit.
-      sourcemap: isBundleAnalysisEnabled ? 'hidden' : false,
+      sourcemap,
       rolldownOptions: {
         output: {
           codeSplitting: maxGraphCodeSplitting(),
