@@ -86,8 +86,13 @@ Follow the reading rules of `.claude/shared/bundle-sizes/README.md`: sizes in kB
 the largest changes first, in kB; a toolchain change is part of the difference, never hidden.
 
 - Attribute a change to a module only when the comparison shows it, and to an import only when the chain shows it.
-- A resized module of `@maxgraph/core` is a change of its code between the refs: name the module, the caller reads its
-  diff.
+- A resized module of `@maxgraph/core` has one of two causes. Check which with
+  `git diff --stat <reference> HEAD -- packages/core/src/<path of the module>`:
+  - its source changed between the refs: name the module, the caller reads its diff;
+  - its source did not change: tree shaking keeps more or fewer of its exports, because an added or removed module
+    imports from it. Find that module in the imports of the added ones and name the exports. Adding `TooltipHandler`
+    grew `util/styleUtils.js` by 467 bytes this way, through its import of `fit` and `getScrollOrigin`. A change of a
+    few bytes with no such import is the minifier renaming variables, and needs no explanation.
 - When the chain of an added module is not conclusive, read the imports of the modules it names, `git show
   <ref>:<path>` for the reference, rather than guessing.
 
