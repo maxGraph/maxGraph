@@ -45,6 +45,7 @@ fetch.
 
 ```bash
 git -C <clone> fetch --quiet origin
+git fetch --quiet origin
 git -C <clone> rev-parse origin/HEAD; git ls-remote https://github.com/jgraph/drawio HEAD
 git rev-parse origin/main; git ls-remote https://github.com/maxGraph/maxGraph refs/heads/main
 ```
@@ -91,10 +92,14 @@ keeps the names of prototype members, `mxPanningHandler.prototype.isActive`, but
 `false` becomes `!1`, statements are merged. Search a member name first, then read the surrounding minified text. Then
 say in the report that the change is only visible in minified form, and from which release the source code shows it.
 
+Its tags carry a `v` prefix: version `22.0.0` is the tag `v22.0.0`, in the table above as in any command.
+
 Three traps in `jgraph/drawio`:
 
-- `git log` from `HEAD` stops at the re-rooted `24.8.6` (2024-11-19). The older history is still in the repository,
-  reachable from older tags: use `git log v24.7.17 -- <path>`.
+- `git log` from `HEAD` stops at the re-rooted `24.8.6` (2024-11-19), unless the clone carries a `git replace` graft
+  joining it to the older history: `git replace -l` lists it. Without it, the older history is still in the
+  repository, reachable from older tags: use `git log v24.7.17 -- <path>`. Never create the graft, and say which of
+  the two cases applied.
 - `git blame` on the source code at `HEAD` stops at `947271f1a`, where the source code came back. It looks complete
   while being at most a year deep. Blame at `v24.7.17` for anything older, with `--follow` or the older path
   `src/main/mxgraph/` before `24.2.7`.
@@ -109,8 +114,9 @@ that release's tag, and the absence of a hit as proving nothing. `git log -S` an
   its versions are tags of that repository (`2.7.0.0` is `v2.7.0.0`). Search it first for anything before 2021.
 - `jgraph/drawio`, every draw.io release since 2011: until 2020 it names mxGraph classes often, and its
   `Uses mxGraph <version>` lines tie draw.io releases to mxGraph releases. From 2021 to 2025, the years mxGraph only
-  evolved inside draw.io, it names them 3 to 6 times a year: the fix resetting `isMouseDown` in
-  `mxPanningHandler.reset()` shipped in `14.1.3`, whose whole entry reads `Internal release`.
+  evolved inside draw.io, it names them only 3 to 6 times a year, so most mxGraph changes of that period are missing
+  from it: the fix resetting `isMouseDown` in `mxPanningHandler.reset()` shipped in `14.1.3`, whose whole entry reads
+  `Internal release`.
 
 ## Mapping maxGraph to mxGraph
 
@@ -167,9 +173,8 @@ git -C <clone> for-each-ref --contains <full-sha> --format='%(refname:lstrip=3)'
 ```
 
 Never pass an `origin/<branch>` name or `origin/HEAD` to the compare API, which knows neither. The commit is public as
-soon as one of the candidates confirms it, and not public when none does. A 404 from the compare call means GitHub does not know the
-commit at all. Never mention a
-local-only branch or commit at all, not even to say it should not be cited.
+soon as one of the candidates confirms it, and not public when none does. A 404 from the compare call means GitHub does
+not know the commit at all. Never mention a local-only branch or commit at all, not even to say it should not be cited.
 
 **Look for an existing report.** Before concluding, search the maxGraph issues and pull requests for the class or
 member, read-only: `gh issue list --repo maxGraph/maxGraph --state all --search '<term>'`, and the same with
