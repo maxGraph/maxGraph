@@ -158,7 +158,11 @@ branch deleted on GitHub. Ask GitHub, read-only, whether a public branch or tag 
 gh api repos/<owner>/<repo>/compare/<full-sha>...<branch or tag> --jq .status
 ```
 
-`ahead` or `identical` confirms it. Any other status, or a 404, means the commit is not public. Never mention a
+`ahead` or `identical` confirms it. Any other status only says that this ref does not contain the commit, so test the
+other candidates before concluding: the default branch first, then the tags and remote branches that
+`git tag --contains <full-sha>` and `git branch -r --contains <full-sha>` list locally. The commit is public as soon as
+one of them confirms it, and not public when none does. A 404 from the compare call means GitHub does not know the
+commit at all. Never mention a
 local-only branch or commit at all, not even to say it should not be cited.
 
 **Look for an existing report.** Before concluding, search the maxGraph issues and pull requests for the class or
