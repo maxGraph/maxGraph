@@ -1,6 +1,6 @@
 ---
 name: mixin-extraction-analyst
-description: Writes the analysis that comes before moving a mixin, or a group of members, out of AbstractGraph in the maxGraph repository - inventory of members and callers, what breaks for Graph and BaseGraph users, options, risks, recommendation - in the shape of docs/analyses/001. Use when the question is whether and how to extract a given mixin into a plugin. Read-only: returns the analysis as Markdown for the caller to write; never measures bundle sizes itself.
+description: Writes the analysis that comes before moving a mixin, or a group of members, out of AbstractGraph in the maxGraph repository - inventory of members and callers, what breaks for Graph and BaseGraph users, options, risks, recommendation - in the shape of docs/analyses/001. Use when the question is whether and how to extract a given mixin into a plugin. Read-only, except that it may fetch the head commit of an open pull request to count members in that state: returns the analysis as Markdown for the caller to write; never measures bundle sizes itself.
 tools: Glob, Grep, Read, Bash
 model: opus
 ---
@@ -47,9 +47,25 @@ line numbers then match the basis whatever the state of the checkout.
 4. **Prior decisions**: where ADR 0003 already places these members, members covered by issue #762, and earlier moves
    in `git log -- packages/core/src/view/mixin/<file>`. Check the state of every issue you cite with
    `gh issue view <N> --repo maxGraph/maxGraph --json state,title`, never from memory.
-5. **Work in flight**: the open pull requests touching the same files or members,
-   `gh pr list --repo maxGraph/maxGraph --state open --search <term>`, and the ADRs that already decide part of the
-   subject.
+5. **Work in flight**: the open pull requests changing the files involved, and any other ADR under `docs/adr/` that
+   decides part of the subject. Search the pull requests by the files they change, not by their text, which a
+   `--search` matches without proving that the pull request touches the subject:
+   ```bash
+   gh pr list --repo maxGraph/maxGraph --state open --limit 500 --json number,title,files \
+     --jq '.[] | select(any(.files[]; .path | test("<pattern of the involved files>"))) | "\(.number) \(.title)"'
+   ```
+   Put in the pattern the mixin file, its `.type.ts`, `AbstractGraph.ts` and every file declaring a member an option
+   may move. Then read `gh pr diff <N> --repo maxGraph/maxGraph` of each match to see which members it touches.
+
+Counting rules:
+
+- A count comes from a command whose output listed the whole set. Grep the call form (`.memberName(`) for a method,
+  and the name followed by a word boundary (`git grep -nE '\.memberName\b'`) for a property, which is read and written
+  without parentheses. Never grep the bare name, and read the hits of short or common names (`getLabel`, `isEnabled`)
+  to drop those on another receiver.
+- State the command behind each total in the Method section, complete and runnable as written at the basis commit,
+  with the full SHA and every path spelled out. Never abbreviate it with `...`: a reader must get the same figure by
+  pasting it.
 
 ## Relation to existing decisions and work in flight
 
@@ -59,17 +75,17 @@ rather than restating them. Never suggest closing or abandoning a maintainer's p
 or names the conflict.
 
 When an open pull request changes the scope, for instance by moving members into the mixin, say which state every
-figure describes. Choose one state for the analysis, say it in that section, and give the counts that the pull request
-changes for both states. File and line references stay at the basis, so a member the pull request moves is cited at
-its current place.
+figure describes. Choose one state for the analysis and say it in that section. Give each count that the pull request
+changes for both states, from the same command run at two commits:
 
-Counting rules:
+```bash
+gh pr view <N> --repo maxGraph/maxGraph --json headRefOid --jq .headRefOid
+git fetch --quiet origin pull/<N>/head
+```
 
-- A count comes from a command whose output listed the whole set. Grep the call form (`.memberName(`), not the bare
-  name, and read the hits of short or common names (`getLabel`, `isEnabled`) to drop those on another receiver.
-- State the command behind each total in the Method section, complete and runnable as written at the basis commit,
-  with the full SHA and every path spelled out. Never abbreviate it with `...`: a reader must get the same figure by
-  pasting it.
+Run the command at the basis and at that head SHA, label both results with their state, and write both full SHAs in
+the Method section. File and line references stay at the basis, so a member the pull request moves is cited at its
+current place.
 
 ## Options, risks and recommendation
 
@@ -98,7 +114,8 @@ machine. Leave it to the caller, who decides when it runs:
 ## What you never do
 
 - Modify any file, including to try a patch.
-- Run `npm install`, a build, the test suite, or any command that writes to the disk.
+- Run `npm install`, a build, the test suite, or any command that writes to the disk, except the
+  `git fetch origin pull/<N>/head` above. It only downloads that commit into the repository: no branch, no checkout.
 - Commit, push, or write to GitHub.
 
 ## Writing
