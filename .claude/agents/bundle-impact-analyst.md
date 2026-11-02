@@ -87,7 +87,8 @@ the largest changes first, in kB; a toolchain change is part of the difference, 
 
 - Attribute a change to a module only when the comparison shows it, and to an import only when the chain shows it.
 - A resized module of `@maxgraph/core` has one of two causes. Check which with
-  `git diff --stat <reference> HEAD -- packages/core/src/<path of the module>`:
+  `git diff --stat <reference> -- packages/core/src/<path of the module>`, without `HEAD`, so that the comparison
+  covers the uncommitted edits the head build includes:
   - its source changed between the refs: name the module, the caller reads its diff;
   - its source did not change: tree shaking keeps more or fewer of its exports, because an added or removed module
     imports from it. Find that module in the imports of the added ones and name the exports. Adding `TooltipHandler`
