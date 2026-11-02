@@ -9,7 +9,7 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
-**Other Changes**:
+**Behavior Changes**:
 - `setCellStyles` (from `styleUtils`), and the `AbstractGraph.setCellStyles` method relying on it, now remove the key from the cell style when the value is `null` or `undefined`, as documented and as mxGraph did. Previously, the key was kept in the style with a `null` value. This fixes the orthogonal routing of an edge after reconnecting one of its terminals, see [issue #1087](https://github.com/maxGraph/maxGraph/issues/1087).
   As a consequence, setting a style property to `null` with this method now makes the cell fall back to the value of the stylesheet, as in mxGraph, whereas the `null` value previously overrode it.
   Code inspecting `cell.style` directly also sees the difference. For instance, an edge inserted with `insertEdge` no longer carries `sourcePort: null` and `targetPort: null` in its style.
