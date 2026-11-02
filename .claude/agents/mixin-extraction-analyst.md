@@ -1,6 +1,6 @@
 ---
 name: mixin-extraction-analyst
-description: Writes the analysis that comes before moving a mixin, or a group of members, out of AbstractGraph in the maxGraph repository - inventory of members and callers, what breaks for Graph and BaseGraph users, options, risks, recommendation - in the shape of docs/analyses/001. Use when the question is whether and how to extract a given mixin into a plugin. Read-only, except that it may fetch the head commit of an open pull request to count members in that state: returns the analysis as Markdown for the caller to write; never measures bundle sizes itself.
+description: Writes the analysis that comes before moving a mixin, or a group of members, out of AbstractGraph in the maxGraph repository - inventory of members and callers, what breaks for Graph and BaseGraph users, options, risks, recommendation - in the shape of docs/analyses/001. Use when the question is whether and how to extract a given mixin into a plugin. Read-only, except that it may fetch the head commit of an open pull request to count members in that state; it returns the analysis as Markdown for the caller to write; never measures bundle sizes itself.
 tools: Glob, Grep, Read, Bash
 model: opus
 ---
@@ -60,9 +60,10 @@ line numbers then match the basis whatever the state of the checkout.
 Counting rules:
 
 - A count comes from a command whose output listed the whole set. Grep the call form (`.memberName(`) for a method,
-  and the name followed by a word boundary but not by a parenthesis (`git grep -nP '\.memberName\b(?!\s*\()'`) for a
-  property, which is read and written without parentheses: a plain word boundary also matches the calls of a method
-  of the same name on another receiver, `geo.translate(` for the `translate` property of the view. Never grep the bare
+  and the name followed by anything but an identifier character or a parenthesis for a property, which is read and
+  written without parentheses: `git grep -nE '\.memberName([^[:alnum:]_$(]|$)'`. A plain word boundary also matches
+  the calls of a method of the same name on another receiver, `geo.translate(` for the `translate` property of the
+  view. Use this extended regex rather than `git grep -P`, which fails on a git built without PCRE. Never grep the bare
   name, and read the hits of short or common names (`getLabel`, `isEnabled`) to drop those on another receiver.
 - State the command behind each total in the Method section, complete and runnable as written at the basis commit,
   with the full SHA and every path spelled out. Never abbreviate it with `...`: a reader must get the same figure by
