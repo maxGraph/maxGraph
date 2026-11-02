@@ -27,10 +27,12 @@ once: it explains the two formats.
 
 - **webpack** gives the size of each module **before minification**, so module deltas do not add up to the change of
   the minified file. Use them to rank the modules, and the output file table for the real change.
-- **Vite** gives the bytes of each module in the minified chunk. An import of `@maxgraph/core` points at its entry
-  point, which is not in the bundle, so a chain starting with `src/main.ts (through the @maxgraph/core entry point)`
-  means the example imports something from `@maxgraph/core` that leads there: read the imports of the example to name
-  it.
+- **Vite** gives the bytes of each module in the minified chunk, attributed through the source map. The size of an
+  output file in the table is the sum of its modules, so the bytes mapped to no module, a few hundred per chunk, are
+  counted nowhere: compare with the file on disk when that gap matters. An import of `@maxgraph/core` points at its
+  entry point, which is not in the bundle, so a chain starting with
+  `src/main.ts (through the @maxgraph/core entry point)` means the example imports something from `@maxgraph/core` that
+  leads there: read the imports of the example to name it.
 
 ## Procedure
 
@@ -44,9 +46,11 @@ export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; n
 
 1. **Check the reference supports the JSON mode.** Before that mode existed, nothing writes the file:
    ```bash
-   git grep -q "'json'" <reference> -- scripts/vite/bundle-analysis.mjs scripts/webpack/bundle-analysis.cjs
+   git grep -q "'json'" <reference> -- scripts/vite/bundle-analysis.mjs
+   git grep -q "'json'" <reference> -- scripts/webpack/bundle-analysis.cjs
    ```
-   When it fails, report that the reference predates `ANALYZE=json` and stop. Do not patch the reference.
+   Run both, a single call on the two files passes as soon as one of them matches. When either fails, report that the
+   reference predates `ANALYZE=json` and stop. Do not patch the reference.
 2. **Create a work directory outside the repository**, so that no IDE indexes the second install:
    `mktemp -d`. Note its path, you need it in every later call.
 3. **Head, in the current checkout.** Check that the installed toolchain matches the lock file, then build core and
@@ -54,9 +58,12 @@ export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; n
    ```bash
    .claude/shared/bundle-sizes/ci-bundle-sizes.sh local-toolchain
    npm run build -w packages/core
-   ANALYZE=json npm run build -w packages/<example>
-   cp packages/<example>/dist/bundle-analysis.json <work dir>/head-<example>.json
+   rm -f packages/<example>/dist/bundle-analysis.json && ANALYZE=json npm run build -w packages/<example> \
+     && test -s packages/<example>/dist/bundle-analysis.json \
+     && cp packages/<example>/dist/bundle-analysis.json <work dir>/head-<example>.json
    ```
+   The report is removed first and copied only when the build succeeded and wrote a new one, so that a failed build
+   never passes off the report of an earlier one. When a build fails, go to step 7 and report the error.
    When `local-toolchain` prints a mismatch, stop and report it: the head would be measured with another toolchain
    than its lock file. Never run `npm install` in the current checkout.
 4. **Reference, in a temporary worktree:**
@@ -64,8 +71,9 @@ export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; n
    git worktree add --detach <work dir>/reference <reference>
    cd <work dir>/reference && npm ci
    cd <work dir>/reference && npm run build -w packages/core
-   cd <work dir>/reference && ANALYZE=json npm run build -w packages/<example>
-   cp <work dir>/reference/packages/<example>/dist/bundle-analysis.json <work dir>/reference-<example>.json
+   cd <work dir>/reference && ANALYZE=json npm run build -w packages/<example> \
+     && test -s packages/<example>/dist/bundle-analysis.json \
+     && cp packages/<example>/dist/bundle-analysis.json <work dir>/reference-<example>.json
    ```
    Use the Node version of the reference's `.nvmrc`, with `nvm use` run inside the worktree.
 5. **Compare**, for each example:
