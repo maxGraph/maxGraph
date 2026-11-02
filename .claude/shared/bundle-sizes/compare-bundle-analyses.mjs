@@ -24,7 +24,9 @@ limitations under the License.
 // The two formats differ, see scripts/webpack/bundle-analysis.cjs and scripts/vite/bundle-analysis.mjs:
 // - webpack, '{ assets, modules }': each module has its size before minification and its importers;
 // - Vite, an array of output files: the modules of a chunk are the leaves of its 'source' tree, each with its size in
-//   the minified chunk, 'parsedSize'. Their 'importedBy' field lists, despite its name, the modules they import, so the
+//   the minified chunk, 'parsedSize', attributed through the source map. A file's 'parsedSize' is the sum of its
+//   modules', so the few bytes mapped to no module, such as the glue between modules, are counted nowhere: up to a few
+//   hundred bytes per chunk. Their 'importedBy' field lists, despite its name, the modules they import, so the
 //   importers are found by inverting it. An import of '@maxgraph/core' points at its entry point, which is not a module
 //   of the bundle, so a module the example imports from it has no importer: the chain ends at the example's module.
 
@@ -57,7 +59,12 @@ const readWebpack = (json) => {
       ]),
     });
   }
-  const files = json.assets.map(({ name, size }) => ({ name, size }));
+  // 'main.<contenthash>.js' changes name with its content, so it is matched without the hash. Images named by their
+  // hash alone have no name left without it: they keep theirs, and a changed image shows up as removed and added.
+  const files = json.assets.map(({ name, size }) => ({
+    name: name.replace(/(.)\.[\da-f]{16,}(\.\w+)$/, '$1$2'),
+    size,
+  }));
   return {
     bundler: 'webpack',
     sizeUnit: 'bytes before minification',
@@ -107,7 +114,8 @@ const readVite = (json) => {
   }));
   return {
     bundler: 'vite',
-    sizeUnit: 'bytes in the minified chunk',
+    sizeUnit:
+      'bytes of the minified chunk, attributed to each module through the source map',
     modules,
     files,
     entryPointImporters,
