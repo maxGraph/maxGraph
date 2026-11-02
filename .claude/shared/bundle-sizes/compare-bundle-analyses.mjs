@@ -81,10 +81,11 @@ const readVite = (json) => {
         size: (modules.get(name)?.size ?? 0) + node.parsedSize,
         importers: new Set(),
       });
-      imports.set(
-        name,
-        (node.importedBy ?? []).map(({ id }) => normalizeName(id))
-      );
+      // A module found in several output files keeps the imports of all of them, any of which may explain its chain
+      imports.set(name, [
+        ...(imports.get(name) ?? []),
+        ...(node.importedBy ?? []).map(({ id }) => normalizeName(id)),
+      ]);
     }
   };
   for (const file of json) {
@@ -131,10 +132,12 @@ const kB = (bytes) => (bytes / 1000).toFixed(2);
 const signedKB = (bytes) => `${bytes > 0 ? '+' : ''}${kB(bytes)}`;
 
 // The shortest chain of imports from a module of the example down to the given module, each importing the next. A chain
-// starting at a module of @maxgraph/core that nothing in the bundle imports says so, rather than looking complete.
+// starting at a module of @maxgraph/core that nothing in the bundle imports says so, rather than looking complete. Such
+// a chain is only the fallback: another path may still reach a module of the example, so the search goes on.
 const importChain = (name) => {
   const previous = new Map([[name, null]]);
   const queue = [name];
+  let importerFreeChain;
   const chainTo = (last) => {
     const chain = [];
     for (let step = last; step !== null; step = previous.get(step)) {
@@ -153,7 +156,8 @@ const importChain = (name) => {
         head.entryPointImporters.length > 0
           ? `${head.entryPointImporters.join(', ')} (through the @maxgraph/core entry point)`
           : '(no importer in the bundle)';
-      return [origin, ...chainTo(current)];
+      importerFreeChain ??= [origin, ...chainTo(current)];
+      continue;
     }
     for (const importer of importers) {
       if (!previous.has(importer)) {
@@ -162,7 +166,7 @@ const importChain = (name) => {
       }
     }
   }
-  return ['(no importer in the bundle)', name];
+  return importerFreeChain ?? ['(no importer in the bundle)', name];
 };
 
 console.log(`Bundler: ${head.bundler}. Module sizes are ${head.sizeUnit}.\n`);
