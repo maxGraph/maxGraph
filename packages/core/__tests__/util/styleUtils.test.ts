@@ -324,6 +324,28 @@ test.each([
   expect(graph.getView().getState(cell)?.style?.strokeColor).toBe('chartreuse');
 });
 
+test.each([
+  ['BaseGraph', createBaseGraph],
+  ['Graph', createGraphWithoutPlugins],
+])(
+  'setCellStyles removes the key when the value is null using %s',
+  (_name, createGraph) => {
+    const graph = createGraph();
+    const cell = graph.insertVertex({
+      position: [10, 20],
+      size: [110, 120],
+      style: { strokeColor: 'yellow', labelWidth: 100 },
+    });
+
+    setCellStyles(graph.getDataModel(), [cell], 'strokeColor', null);
+
+    expect(cell.style).toStrictEqual({ labelWidth: 100 });
+    expect(graph.getView().getState(cell)?.style?.strokeColor).toBe(
+      graph.getStylesheet().getDefaultVertexStyle().strokeColor
+    );
+  }
+);
+
 describe('update several cells at once', () => {
   const insertVertices = (graph: BaseGraph): Cell[] =>
     [1, 2].map(() =>
