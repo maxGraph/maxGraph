@@ -86,9 +86,12 @@ Follow the reading rules of `.claude/shared/bundle-sizes/README.md`: sizes in kB
 the largest changes first, in kB; a toolchain change is part of the difference, never hidden.
 
 - Attribute a change to a module only when the comparison shows it, and to an import only when the chain shows it.
-- A resized module of `@maxgraph/core` has one of two causes. Check which with
-  `git diff --stat <reference> -- packages/core/src/<path of the module>`, without `HEAD`, so that the comparison
-  covers the uncommitted edits the head build includes:
+- A resized module of `@maxgraph/core` has one of two causes. The comparison names it by its compiled file,
+  `core/lib/esm/util/styleUtils.js`, while its source is `packages/core/src/util/styleUtils.ts`: replace the
+  `core/lib/esm/` prefix with `packages/core/src/` and `.js` with `.ts`. Check that this file exists, a `git diff` on a
+  missing path prints nothing and looks like an unchanged source. Then check which cause applies with
+  `git diff --stat <reference> -- packages/core/src/<path>.ts`, without `HEAD`, so that the comparison covers the
+  uncommitted edits the head build includes:
   - its source changed between the refs: name the module, the caller reads its diff;
   - its source did not change: tree shaking keeps more or fewer of its exports, because an added or removed module
     imports from it. Find that module in the imports of the added ones and name the exports. Adding `TooltipHandler`
