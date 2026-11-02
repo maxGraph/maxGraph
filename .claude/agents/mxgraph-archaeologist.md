@@ -159,9 +159,15 @@ gh api repos/<owner>/<repo>/compare/<full-sha>...<branch or tag> --jq .status
 ```
 
 `ahead` or `identical` confirms it. Any other status only says that this ref does not contain the commit, so test the
-other candidates before concluding: the default branch first, then the tags and remote branches that
-`git tag --contains <full-sha>` and `git branch -r --contains <full-sha>` list locally. The commit is public as soon as
-one of them confirms it, and not public when none does. A 404 from the compare call means GitHub does not know the
+other candidates before concluding: the default branch first, then the tags that `git tag --contains <full-sha>` lists
+and the branches of the remote pointing at that repository, `origin` for the clones, named as GitHub knows them:
+
+```bash
+git -C <clone> for-each-ref --contains <full-sha> --format='%(refname:lstrip=3)' refs/remotes/origin/ | grep -vx HEAD
+```
+
+Never pass an `origin/<branch>` name or `origin/HEAD` to the compare API, which knows neither. The commit is public as
+soon as one of the candidates confirms it, and not public when none does. A 404 from the compare call means GitHub does not know the
 commit at all. Never mention a
 local-only branch or commit at all, not even to say it should not be cited.
 
