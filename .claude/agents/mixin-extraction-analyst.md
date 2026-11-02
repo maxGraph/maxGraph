@@ -60,9 +60,10 @@ line numbers then match the basis whatever the state of the checkout.
 Counting rules:
 
 - A count comes from a command whose output listed the whole set. Grep the call form (`.memberName(`) for a method,
-  and the name followed by a word boundary (`git grep -nE '\.memberName\b'`) for a property, which is read and written
-  without parentheses. Never grep the bare name, and read the hits of short or common names (`getLabel`, `isEnabled`)
-  to drop those on another receiver.
+  and the name followed by a word boundary but not by a parenthesis (`git grep -nP '\.memberName\b(?!\s*\()'`) for a
+  property, which is read and written without parentheses: a plain word boundary also matches the calls of a method
+  of the same name on another receiver, `geo.translate(` for the `translate` property of the view. Never grep the bare
+  name, and read the hits of short or common names (`getLabel`, `isEnabled`) to drop those on another receiver.
 - State the command behind each total in the Method section, complete and runnable as written at the basis commit,
   with the full SHA and every path spelled out. Never abbreviate it with `...`: a reader must get the same figure by
   pasting it.
