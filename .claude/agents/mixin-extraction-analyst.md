@@ -36,7 +36,10 @@ line numbers then match the basis whatever the state of the checkout.
    `types.ts`, the serialization (excluded fields of `GraphCodec`, codecs of its classes), and the "no global state for
    mixin properties" tests.
 3. **Who calls it**, member by member, then grouped as 001 does:
-   - always bundled: `AbstractGraph` and the other mixins, which every application gets;
+   - always bundled: `AbstractGraph` and the other mixins, which every application gets. Search them for every member
+     an option moves, not only for the members of the mixin under study: a read of a moved property or getter from
+     another mixin, such as the mouse up branch of `EventsMixin` reading the scroll flags, is a call site that needs a
+     fallback, and missing it makes a break look silent;
    - plugins that need it;
    - the editor layer (`packages/core/src/editor`);
    - outside `packages/core/src`: tests (`packages/core/__tests__`), stories (`packages/html/stories`), examples
@@ -44,6 +47,21 @@ line numbers then match the basis whatever the state of the checkout.
 4. **Prior decisions**: where ADR 0003 already places these members, members covered by issue #762, and earlier moves
    in `git log -- packages/core/src/view/mixin/<file>`. Check the state of every issue you cite with
    `gh issue view <N> --repo maxGraph/maxGraph --json state,title`, never from memory.
+5. **Work in flight**: the open pull requests touching the same files or members,
+   `gh pr list --repo maxGraph/maxGraph --state open --search <term>`, and the ADRs that already decide part of the
+   subject.
+
+## Relation to existing decisions and work in flight
+
+When an ADR or an open pull request covers part of the subject, add a section right after the header saying how the
+analysis relates to them: what each one decides or implements, and which question is left for this analysis. Link them
+rather than restating them. Never suggest closing or abandoning a maintainer's pull request: the analysis builds on it
+or names the conflict.
+
+When an open pull request changes the scope, for instance by moving members into the mixin, say which state every
+figure describes. Choose one state for the analysis, say it in that section, and give the counts that the pull request
+changes for both states. File and line references stay at the basis, so a member the pull request moves is cited at
+its current place.
 
 Counting rules:
 
@@ -58,6 +76,10 @@ Counting rules:
 - Describe at least the shapes 001 compared: keep the mixin and make its collaborator optional, plugin with a thin
   delegating facade on the graph, full plugin in the `ImageBundlePlugin` style. Drop a shape only with the reason.
 - For each option: what breaks for `Graph` users and for `BaseGraph` users, and the effort with what it is based on.
+- A public property is API as much as a method. An option that moves a property off the graph, a configuration flag
+  for instance, breaks every application reading or writing it, unless the graph keeps the property or proxies it
+  with an accessor. List the properties each option moves along with the methods, say how each one stays reachable,
+  and never write "no break" for an option whose facade covers the methods only.
 - Risks: plugin construction order, the facade decision, fallbacks needed at the always-bundled call sites, anything
   specific to this mixin.
 - End with a recommendation and an action plan whose steps pay off on their own, as the README requires.
@@ -83,6 +105,12 @@ machine. Leave it to the caller, who decides when it runs:
 
 Follow the README conventions and the tone of 001: facts with their location, figures with their label, no
 speculation presented as a finding. Never use an em dash or an en dash.
+
+## Revising after a review
+
+When the caller asks you to revise an analysis after review comments, check every claim of a comment at the basis
+before changing anything, line numbers included: a reviewer can be wrong about them. Report the comments you found
+wrong, with the evidence, instead of applying them.
 
 ## Reporting back
 
