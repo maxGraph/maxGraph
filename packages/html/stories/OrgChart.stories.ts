@@ -26,7 +26,6 @@ import {
   ImageBox,
   InternalEvent,
   type KeyboardEventListener,
-  KeyHandler,
   LayoutManager,
   type MaxPopupMenu,
   MaxToolbar,
@@ -69,31 +68,22 @@ const promptForPageCount = (): number => {
 const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
   div.style.display = 'flex';
+  div.style.flexDirection = 'column';
 
-  // Creates the div for the toolbar
+  // The mxGraph example displays the toolbar in a floating MaxWindow, it is displayed above the graph here
   const tbContainer = document.createElement('div');
-  // tbContainer.style.display = 'flex';
-  // tbContainer.style.flexDirection = 'column';
-  // tbContainer.style.marginRight = '.5rem';
+  tbContainer.style.padding = '4px';
   div.appendChild(tbContainer);
 
-  // const mainDiv = document.createElement('div');
-  //
-  // const div = document.createElement('div');
-  // mainDiv.appendChild(div);
-  // div.style.display = 'flex';
-  // div.style.gap = '2rem';
+  // Positioned area holding the graph container and the outline displayed in its top right corner
+  const graphArea = document.createElement('div');
+  graphArea.style.position = 'relative';
+  graphArea.style.width = `${args.width}px`;
+  div.appendChild(graphArea);
 
   const container = createGraphContainer(args);
   container.style.cursor = 'unset'; // TODO not enough to make the editing work
-  // TODO use a main flex container
-  container.style.position = 'absolute';
-  container.style.left = '0px';
-  container.style.top = '0px';
-  container.style.right = '0px';
-  container.style.bottom = '0px';
-
-  div.appendChild(container);
+  graphArea.appendChild(container);
 
   // Makes the shadow brighter
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
@@ -109,7 +99,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   outlineContainerStyle.background = 'transparent';
   outlineContainerStyle.borderStyle = 'solid';
   outlineContainerStyle.borderColor = 'lightgray';
-  div.appendChild(outlineContainer);
+  graphArea.appendChild(outlineContainer);
 
   // TODO manage image path when not served in the root context
   // Client.imageBasePath = '/images'
@@ -118,14 +108,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Sets a gradient background
-  // TODO this should be set in the flex main container
-  // TODO use new props for gradient https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient
-  if (Client.IS_GC || Client.IS_SF) {
-    container.style.background =
-      '-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#E7E7E7))';
-  } else if (Client.IS_NS) {
-    container.style.background = '-moz-linear-gradient(top, #FFFFFF, #E7E7E7)';
-  }
+  container.style.background = 'linear-gradient(#FFFFFF, #E7E7E7)';
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
@@ -194,11 +177,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Disable the following for straight lines
   style.edgeStyle = EdgeStyle.TopToBottom;
-
-  // Stops editing on enter or escape keypress
-  // TODO do we need to keep the constant?
-  // const keyHandler = new KeyHandler(graph);
-  new KeyHandler(graph);
 
   // Enables automatic layout on the graph and installs
   // a tree layout for all groups whose children are
@@ -285,11 +263,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     addOverlays(graph, v1, false);
   });
 
-  // const content = document.createElement('div');
-  tbContainer.id = 'toolbar'; // TODO temp to debug, not in the mxGraph example
-  tbContainer.style.padding = '4px';
-  // TODO remove this commented code when we are sure this works
-  // div.appendChild(content);
   const tb = new MaxToolbar(tbContainer);
 
   // TODO should accept a function without event
