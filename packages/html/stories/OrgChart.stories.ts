@@ -39,23 +39,20 @@ import {
   treeTraversalUtils,
   StyleDefaultsConfig,
 } from '@maxgraph/core';
-import {
-  contextMenuTypes,
-  contextMenuValues,
-  globalTypes,
-  globalValues,
-} from './shared/args.js';
+import { contextMenuTypes, contextMenuValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Layouts/OrgChart',
+  // The graph container takes all the available space, as in the mxGraph example
+  parameters: {
+    layout: 'fullscreen',
+  },
   argTypes: {
     ...contextMenuTypes,
-    ...globalTypes,
   },
   args: {
     ...contextMenuValues,
-    ...globalValues,
   },
 };
 
@@ -69,6 +66,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
   div.style.display = 'flex';
   div.style.flexDirection = 'column';
+  div.style.height = '100vh';
 
   // The mxGraph example displays the toolbar in a floating MaxWindow, it is displayed above the graph here
   const tbContainer = document.createElement('div');
@@ -78,11 +76,14 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Positioned area holding the graph container and the outline displayed in its top right corner
   const graphArea = document.createElement('div');
   graphArea.style.position = 'relative';
-  graphArea.style.width = `${args.width}px`;
+  graphArea.style.flex = '1';
+  graphArea.style.minHeight = '0';
   div.appendChild(graphArea);
 
   const container = createGraphContainer(args);
   container.style.cursor = 'unset'; // TODO not enough to make the editing work
+  container.style.width = '100%';
+  container.style.height = '100%';
   graphArea.appendChild(container);
 
   // Makes the shadow brighter
@@ -246,21 +247,24 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
-  // Adds the root vertex of the tree
-  graph.batchUpdate(() => {
-    const w = graph.container.offsetWidth;
-    const v1 = graph.insertVertex(
-      parent,
-      'treeRoot',
-      'Organization',
-      w / 2 - 30,
-      20,
-      140,
-      60,
-      { image: 'images/house.png' }
-    );
-    graph.updateCellSize(v1);
-    addOverlays(graph, v1, false);
+  // Adds the root vertex of the tree, centered horizontally.
+  // The story element is attached to the page after this function returns, so the container has no size yet.
+  requestAnimationFrame(() => {
+    graph.batchUpdate(() => {
+      const w = graph.container.offsetWidth;
+      const v1 = graph.insertVertex(
+        parent,
+        'treeRoot',
+        'Organization',
+        w / 2 - 30,
+        20,
+        140,
+        60,
+        { image: 'images/house.png' }
+      );
+      graph.updateCellSize(v1);
+      addOverlays(graph, v1, false);
+    });
   });
 
   const tb = new MaxToolbar(tbContainer);
