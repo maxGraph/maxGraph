@@ -173,7 +173,11 @@ export const ConnectionsMixin: PartialType = {
     let dy = 0;
 
     if (point) {
-      perimeter = edge.style[source ? 'exitPerimeter' : 'entryPerimeter'] ?? true;
+      // The style is typed as boolean, but the XML codecs currently store the numbers 0 and 1. Convert them, since
+      // ConnectionHandler.checkConstraints compares the perimeter with a strict equality.
+      perimeter = Boolean(
+        edge.style[source ? 'exitPerimeter' : 'entryPerimeter'] ?? true
+      );
 
       // Add entry/exit offset
       dx = <number>edge.style[source ? 'exitDx' : 'entryDx'];

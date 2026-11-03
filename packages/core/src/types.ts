@@ -267,7 +267,7 @@ export interface CellStateStyle {
   /**
    * Defines if the perimeter should be used to find the exact entry point along the perimeter of the target.
    *
-   * When `false`, the target behaves as if it has no {@link perimeter}: the connection point is located at the center of the terminal.
+   * When `false`, the connection point is not projected on the perimeter: it stays at the fixed position defined by {@link entryX} and {@link entryY}, inside the bounds of the terminal.
    *
    * Only applies when a fixed connection point is set, i.e. when both {@link entryX} and {@link entryY} are defined. Otherwise, the connection point always uses the perimeter.
    *
@@ -326,7 +326,7 @@ export interface CellStateStyle {
   /**
    * Defines if the perimeter should be used to find the exact exit point along the perimeter of the source.
    *
-   * When `false`, the source behaves as if it has no {@link perimeter}: the connection point is located at the center of the terminal.
+   * When `false`, the connection point is not projected on the perimeter: it stays at the fixed position defined by {@link exitX} and {@link exitY}, inside the bounds of the terminal.
    *
    * Only applies when a fixed connection point is set, i.e. when both {@link exitX} and {@link exitY} are defined. Otherwise, the connection point always uses the perimeter.
    *

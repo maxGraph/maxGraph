@@ -238,13 +238,13 @@ describe('getConnectionConstraint', () => {
     test.each([
       [1, true],
       [0, false],
-    ])('perimeter set to the number %s behaves as %s', (styleValue, expected) => {
+    ])('perimeter set to the number %s is converted to %s', (styleValue, expected) => {
       const constraint = constraintFor({
         x: 0.25,
         y: 0.75,
         perimeter: styleValue as unknown as boolean,
       });
-      expect(Boolean(constraint.perimeter)).toBe(expected);
+      expect(constraint.perimeter).toBe(expected);
     });
 
     test('offsets are applied when a fixed connection point is set', () => {
