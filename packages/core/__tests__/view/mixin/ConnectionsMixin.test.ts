@@ -18,8 +18,9 @@ import { describe, expect, test } from '@jest/globals';
 import { createGraphWithoutPlugins } from '../../utils';
 import {
   type Cell,
-  type CellStyle,
   CellState,
+  type CellStateStyle,
+  type CellStyle,
   ConnectionConstraint,
   type Graph,
   Point,
@@ -35,19 +36,21 @@ test('The "ConnectionHandler" plugin is not available', () => {
 });
 
 describe('getAllConnectionConstraints', () => {
-  const graph = createGraphWithoutPlugins();
+  const getAllConnectionConstraints = (state: CellState | null) =>
+    createGraphWithoutPlugins().getAllConnectionConstraints(state, true);
+
   test('null CellState', () => {
-    expect(graph.getAllConnectionConstraints(null, true)).toBeNull();
+    expect(getAllConnectionConstraints(null)).toBeNull();
   });
 
   test('CellState with null shape', () => {
-    expect(graph.getAllConnectionConstraints(new CellState(), true)).toBeNull();
+    expect(getAllConnectionConstraints(new CellState())).toBeNull();
   });
 
   test('CellState with shape which is not a StencilShape', () => {
     const cellState = new CellState();
     cellState.shape = new Shape();
-    expect(graph.getAllConnectionConstraints(cellState, true)).toBeNull();
+    expect(getAllConnectionConstraints(cellState)).toBeNull();
   });
 
   test('CellState with shape which is a StencilShape', () => {
@@ -67,7 +70,7 @@ describe('getAllConnectionConstraints', () => {
     const cellState = new CellState();
     const constraints = [new ConnectionConstraint(null), new ConnectionConstraint(null)];
     cellState.shape = new Shape(new CustomStencilShape(constraints));
-    expect(graph.getAllConnectionConstraints(cellState, true)).toBe(constraints);
+    expect(getAllConnectionConstraints(cellState)).toBe(constraints);
   });
 });
 
@@ -128,6 +131,140 @@ describe('getConnectionConstraint', () => {
       expect(constraint.point).toBeNull();
     }
   );
+
+  /** The style properties of a single edge side, independently of the source/target naming. */
+  interface ConnectionStyleValues {
+    x?: number;
+    y?: number;
+    perimeter?: boolean;
+    dx?: number;
+    dy?: number;
+  }
+
+  const expectConstraint = (
+    constraint: ConnectionConstraint,
+    expected: { point: Point | null; perimeter: boolean; dx: number; dy: number }
+  ): void => {
+    // Compare all properties at once, so that a failure reports the whole constraint instead of
+    // the first property that differs.
+    expect({
+      point: constraint.point,
+      perimeter: constraint.perimeter,
+      dx: constraint.dx,
+      dy: constraint.dy,
+    }).toStrictEqual(expected);
+  };
+
+  describe.each([
+    {
+      side: 'source',
+      source: true,
+      toStyle: ({ x, y, perimeter, dx, dy }: ConnectionStyleValues): CellStateStyle => ({
+        exitX: x,
+        exitY: y,
+        exitPerimeter: perimeter,
+        exitDx: dx,
+        exitDy: dy,
+      }),
+    },
+    {
+      side: 'target',
+      source: false,
+      toStyle: ({ x, y, perimeter, dx, dy }: ConnectionStyleValues): CellStateStyle => ({
+        entryX: x,
+        entryY: y,
+        entryPerimeter: perimeter,
+        entryDx: dx,
+        entryDy: dy,
+      }),
+    },
+  ])('$side terminal', ({ source, toStyle }) => {
+    const constraintFor = (values: ConnectionStyleValues): ConnectionConstraint =>
+      createGraphWithoutPlugins().getConnectionConstraint(
+        new CellState(null, null, toStyle(values)),
+        null,
+        source
+      );
+
+    test('no fixed connection point', () => {
+      expectConstraint(constraintFor({}), {
+        point: null,
+        perimeter: false,
+        dx: 0,
+        dy: 0,
+      });
+    });
+
+    test.each([
+      ['x', { x: 0.25 }],
+      ['y', { y: 0.75 }],
+    ])(
+      'only the %s coordinate is set, which is not a fixed connection point',
+      (_desc, values) => {
+        expectConstraint(constraintFor(values), {
+          point: null,
+          perimeter: false,
+          dx: 0,
+          dy: 0,
+        });
+      }
+    );
+
+    // Regression test: the perimeter defaults to true in mxGraph, and the JSDoc of
+    // CellStyle.entryPerimeter and CellStyle.exitPerimeter documents the same default.
+    test('fixed connection point without explicit perimeter defaults to using the perimeter', () => {
+      expectConstraint(constraintFor({ x: 0.25, y: 0.75 }), {
+        point: new Point(0.25, 0.75),
+        perimeter: true,
+        dx: 0,
+        dy: 0,
+      });
+    });
+
+    test.each([true, false])(
+      'fixed connection point with perimeter explicitly set to %s',
+      (perimeter) => {
+        expectConstraint(constraintFor({ x: 0.25, y: 0.75, perimeter }), {
+          point: new Point(0.25, 0.75),
+          perimeter,
+          dx: 0,
+          dy: 0,
+        });
+      }
+    );
+
+    // The XML deserialization currently produces numbers instead of booleans, see the
+    // "Cell with baseStyleNames style attribute" test in serialization.xml.test.ts.
+    test.each([
+      [1, true],
+      [0, false],
+    ])('perimeter set to the number %s is converted to %s', (styleValue, expected) => {
+      const constraint = constraintFor({
+        x: 0.25,
+        y: 0.75,
+        perimeter: styleValue as unknown as boolean,
+      });
+      expect(constraint.perimeter).toBe(expected);
+    });
+
+    test('offsets are applied when a fixed connection point is set', () => {
+      expectConstraint(constraintFor({ x: 0.25, y: 0.75, dx: 3, dy: -4 }), {
+        point: new Point(0.25, 0.75),
+        perimeter: true,
+        dx: 3,
+        dy: -4,
+      });
+    });
+
+    test('offsets are ignored when no fixed connection point is set', () => {
+      expectConstraint(constraintFor({ dx: 3, dy: -4 }), {
+        point: null,
+        perimeter: false,
+        dx: 0,
+        dy: 0,
+      });
+    });
+  });
 });
 
 describe('setConnectionConstraint', () => {
