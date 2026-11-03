@@ -171,7 +171,7 @@ jobs:
             - **Fixed issues**: [milestone ${{ env.VERSION }}](https://github.com/maxGraph/maxGraph/milestone/${{ env.MILESTONE_NUMBER }}?closed=1)
             - **Documentation**: [maxgraph_${{ env.VERSION }}_website.zip](https://github.com/maxGraph/maxGraph/releases/download/v${{ env.VERSION }}/maxgraph_${{ env.VERSION }}_website.zip)
             - **Examples**: [maxgraph_${{ env.VERSION }}_examples.zip](https://github.com/maxGraph/maxGraph/releases/download/v${{ env.VERSION }}/maxgraph_${{ env.VERSION }}_examples.zip)
-            - **Changelog** (only includes a summary and breaking changes): [changelog](https://github.com/maxGraph/maxGraph/tree/v${{ env.VERSION }}/CHANGELOG.md)
+            - **Changelog** (a summary of each version, with its breaking changes and behavior changes): [changelog](https://github.com/maxGraph/maxGraph/tree/v${{ env.VERSION }}/CHANGELOG.md)
 
           draft: true
           generateReleaseNotes: true

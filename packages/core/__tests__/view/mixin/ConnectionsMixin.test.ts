@@ -267,6 +267,32 @@ describe('getConnectionConstraint', () => {
   });
 });
 
+describe('setConnectionConstraint', () => {
+  test.each([
+    ['exitPerimeter', true, true],
+    ['exitPerimeter', true, false],
+    ['entryPerimeter', false, true],
+    ['entryPerimeter', false, false],
+  ] as const)(
+    'stores %s from a constraint (source: %s) with perimeter %s',
+    (perimeterKey, isSource, perimeter) => {
+      const graph = createGraphWithoutPlugins();
+      const source = graph.insertVertex({ position: [0, 0], size: [20, 20] });
+      const target = graph.insertVertex({ position: [100, 0], size: [20, 20] });
+      const edge = graph.insertEdge({ source, target });
+
+      graph.setConnectionConstraint(
+        edge,
+        isSource ? source : target,
+        isSource,
+        new ConnectionConstraint(new Point(0.5, 1), perimeter)
+      );
+
+      expect(edge.style[perimeterKey]).toBe(perimeter);
+    }
+  );
+});
+
 describe('disconnectGraph', () => {
   test('keep the edges whose terminals are all in the given cells', () => {
     const graph = createGraphWithoutPlugins();

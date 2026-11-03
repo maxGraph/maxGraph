@@ -1,19 +1,20 @@
 # `maxGraph` Change Log
 
-All versions and breaking changes of [maxGraph](https://github.com/maxGraph/maxGraph) are documented here. We use [semantic versioning](http://semver.org/) for versions.
+All versions, breaking changes and behavior changes of [maxGraph](https://github.com/maxGraph/maxGraph) are documented here. We use [semantic versioning](http://semver.org/) for versions.
 
 For more details on the contents of a release, see [the GitHub release page] (https://github.com/maxGraph/maxGraph/releases).
 
 
 ## Unreleased
 
-_**Note:** Yet to be released breaking changes appear here._
+_**Note:** Yet to be released breaking changes and behavior changes appear here._
 
 **Behavior Changes**:
 - `setCellStyles` (from `styleUtils`), and the `AbstractGraph.setCellStyles` method relying on it, now remove the key from the cell style when the value is `null` or `undefined`, as documented and as mxGraph did. Previously, the key was kept in the style with a `null` value. This fixes the orthogonal routing of an edge after reconnecting one of its terminals, see [issue #1087](https://github.com/maxGraph/maxGraph/issues/1087).
   As a consequence, setting a style property to `null` with this method now makes the cell fall back to the value of the stylesheet, as in mxGraph, whereas the `null` value previously overrode it.
   Code inspecting `cell.style` directly also sees the difference. For instance, an edge inserted with `insertEdge` no longer carries `sourcePort: null` and `targetPort: null` in its style.
 - `GraphLayout.setEdgeStyleEnabled` and `GraphLayout.setOrthogonalEdge` now store a boolean in the `noEdgeStyle` and `orthogonal` styles, and their `value` parameter is typed as `boolean` instead of `any`. They previously stored the strings `'0'` and `'1'`, as mxGraph did. mxGraph parsed them back into numbers, but maxGraph reads them as they are, and both strings are truthy. So `setEdgeStyleEnabled(edge, true)` disabled the edge style, and `setOrthogonalEdge(edge, false)` made the edge orthogonal. The layouts of maxGraph only call these methods with the values that happened to work. Code calling them directly with the other values, or reading these styles in `cell.style`, sees the difference.
+- For TypeScript users, the `value` parameter of `setCellStyles` (from `styleUtils`) and of `AbstractGraph.setCellStyles` must now match the type of the given key in `CellStateStyle`, or be `null` or `undefined`. A call passing another type, such as the string `'1'` for a boolean property, no longer compiles. Such calls were already wrong at runtime, since maxGraph reads these properties with their declared type, so fix the value rather than casting it.
 - The `entryPerimeter` and `exitPerimeter` style properties now default to `true` instead of `false`, which restores the `mxGraph` behavior already documented by their JSDoc.
   The default only applies when a fixed connection point is set, that is when both `entryX` and `entryY` (respectively `exitX` and `exitY`) are defined. In that case, the connection point is now projected onto the perimeter of the terminal, as in `mxGraph`, instead of being placed at the exact relative position inside the shape.
   Diagrams imported from `mxGraph` or draw.io are the main beneficiaries. These tools only write `entryPerimeter=0` or `exitPerimeter=0` when the perimeter is disabled and rely on the default otherwise, so edges using fixed connection points were rendered differently by maxGraph.

@@ -346,6 +346,21 @@ test.each([
   }
 );
 
+test('setCellStyles only accepts a value matching the type of the key', () => {
+  const graph = createBaseGraph();
+  const cell = graph.insertVertex({ position: [0, 0], size: [10, 10] });
+  const model = graph.getDataModel();
+
+  // @ts-expect-error the value of a boolean key cannot be a string
+  setCellStyles(model, [cell], 'orthogonal', '1');
+  // @ts-expect-error the value of a numeric key cannot be a string
+  setCellStyles(model, [cell], 'labelWidth', '100');
+
+  setCellStyles(model, [cell], 'orthogonal', true);
+  setCellStyles(model, [cell], 'labelWidth', 100);
+  expect(cell.style).toStrictEqual({ orthogonal: true, labelWidth: 100 });
+});
+
 describe('update several cells at once', () => {
   const insertVertices = (graph: BaseGraph): Cell[] =>
     [1, 2].map(() =>

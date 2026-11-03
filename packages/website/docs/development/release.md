@@ -62,7 +62,7 @@ The skill analyzes the commits since the previous release and their linked pull 
 - select the significant documentation additions and changes to mention,
 - collect the bundle size of the examples of both repositories (`maxGraph` and `maxgraph-integration-examples`) from the CI logs, and compare them with the previous version recorded in the bundle size history of the `docs/examples-bundle-size` directory,
 - write the release notes body and the one-line summary,
-- write the `CHANGELOG.md` entry of the new version, adding the breaking changes missing from the `## Unreleased` section (the `CHANGELOG.md` only lists breaking changes, the deprecation notices are in the release notes),
+- write the `CHANGELOG.md` entry of the new version, adding the breaking changes and behavior changes missing from the `## Unreleased` section (the `CHANGELOG.md` lists breaking changes and the behavior changes users may have to adapt to, not the other features and fixes, and the deprecation notices are in the release notes),
 - append the sizes of the new version to the bundle size history,
 - tighten the size budgets of the examples whose bundle shrank, so that they match the sizes of the new version. The CI fails when a bundle exceeds its budget, but does not detect a budget left too loose after a bundle got smaller. The webpack examples are built locally for this, since their entrypoint size is not precise enough in the CI logs.
 
