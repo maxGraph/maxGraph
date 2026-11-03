@@ -243,25 +243,18 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     return result;
   };
 
-  // Gets the default parent for inserting new cells. This
-  // is normally the first child of the root (ie. layer 0).
-  const parent = graph.getDefaultParent();
-
   // Adds the root vertex of the tree, centered horizontally.
   // The story element is attached to the page after this function returns, so the container has no size yet.
   requestAnimationFrame(() => {
     graph.batchUpdate(() => {
       const w = graph.container.offsetWidth;
-      const v1 = graph.insertVertex(
-        parent,
-        'treeRoot',
-        'Organization',
-        w / 2 - 30,
-        20,
-        140,
-        60,
-        { image: 'images/house.png' }
-      );
+      const v1 = graph.insertVertex({
+        id: 'treeRoot',
+        value: 'Organization',
+        position: [w / 2 - 30, 20],
+        size: [140, 60],
+        style: { image: 'images/house.png' },
+      });
       graph.updateCellSize(v1);
       addOverlays(graph, v1, false);
     });
@@ -387,7 +380,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     model.beginUpdate();
     try {
-      vertex = graph.insertVertex({ parent, value: 'Double click to set name' });
+      vertex = graph.insertVertex({ value: 'Double click to set name' });
       const geometry = vertex.getGeometry()!;
 
       // Updates the geometry of the vertex with the
