@@ -193,7 +193,7 @@ of the draft release asks to validate it.
 - List the deprecations: the `@deprecated` tags added to the sources, which commit messages rarely mention:
   `git diff v<previous> origin/main -- packages/core/src | grep -E '^\+.*@deprecated'`. Find the commit of each one
   with `git log -S'@deprecated' v<previous>..origin/main -- <file>`.
-- Deprecations are not recorded in `CHANGELOG.md`, which only lists breaking changes and behavior changes. They go
+- Deprecations are not recorded in `CHANGELOG.md`, which lists breaking changes and behavior changes. They go
   to the "Deprecated APIs" section of the release notes only (see [step 7](#7-release-notes-body)).
 
 ### 3. Features (validate with the user first)
