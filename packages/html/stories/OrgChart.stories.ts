@@ -95,7 +95,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   outlineContainerStyle.position = 'absolute';
   outlineContainerStyle.overflow = 'hidden';
   outlineContainerStyle.top = '0px';
-  outlineContainerStyle.right = '0px';
+  outlineContainerStyle.right = '10px';
   outlineContainerStyle.width = '160px';
   outlineContainerStyle.height = '120px';
   outlineContainerStyle.background = 'transparent';
@@ -118,6 +118,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Enables automatic sizing for vertices after editing and
   // panning by using the left mouse button.
   graph.setCellsMovable(false);
+
+  // Edges cannot be selected, there is no action available on them
+  const isCellSelectable = graph.isCellSelectable;
+  graph.isCellSelectable = function (cell: Cell): boolean {
+    return cell.isVertex() && isCellSelectable.call(this, cell);
+  };
   graph.setAutoSizeCells(true);
   graph.setPanning(true);
   graph.centerZoom = false;
@@ -168,7 +174,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Sets the default style for edges
   style = graph.getStylesheet().getDefaultEdgeStyle();
   style.rounded = true;
-  style.editable = true; // FIXME in Graph.isCellEditable the default value is not correctly managed
+  style.editable = false; // edges have no label
   style.strokeWidth = 3;
   style.exitX = 0.5; // center
   style.exitY = 1.0; // bottom
@@ -303,11 +309,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         menu.addItem('Add child', 'images/overlays/check.png', function () {
           addChild(graph, cell);
         });
-      }
 
-      menu.addItem('Edit label', 'images/text.gif', function () {
-        graph.startEditingAtCell(cell);
-      });
+        menu.addItem('Edit label', 'images/text.gif', function () {
+          graph.startEditingAtCell(cell);
+        });
+      }
 
       if (cell.id != 'treeRoot' && cell.isVertex()) {
         menu.addItem('Delete', 'images/delete.gif', function () {
