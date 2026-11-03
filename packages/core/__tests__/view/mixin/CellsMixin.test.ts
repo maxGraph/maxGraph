@@ -49,6 +49,20 @@ test('setCellStyles on vertex', () => {
   expect(graph.getView().getState(cell)?.style?.fillColor).toBe('blue');
 });
 
+test('setCellStyles only accepts a value matching the type of the key', () => {
+  const graph = createGraphWithoutPlugins();
+  const cell = graph.insertVertex({ position: [0, 0], size: [10, 10] });
+
+  // @ts-expect-error the value of a boolean key cannot be a string
+  graph.setCellStyles('orthogonal', '1', [cell]);
+  // @ts-expect-error the value of a numeric key cannot be a string
+  graph.setCellStyles('labelWidth', '100', [cell]);
+
+  graph.setCellStyles('orthogonal', true, [cell]);
+  graph.setCellStyles('labelWidth', 100, [cell]);
+  expect(cell.style).toStrictEqual({ orthogonal: true, labelWidth: 100 });
+});
+
 test('setCellStyleFlags on vertex', () => {
   const graph = createGraphWithoutPlugins();
 
