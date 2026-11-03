@@ -21,6 +21,7 @@ import {
   Client,
   CompactTreeLayout,
   EdgeStyle,
+  type FitPlugin,
   Graph,
   ImageBox,
   InternalEvent,
@@ -136,7 +137,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setPanning(true);
   graph.centerZoom = false;
 
-  const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler');
+  const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler')!;
   panningHandler.useLeftButtonForPanning = true;
   // Displays a popupmenu when the user clicks
   // on a cell (using the left mouse button) but
@@ -218,7 +219,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     return cell && cell.getChildCount() > 0 ? layout : null;
   };
 
-  const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
+  const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler')!;
   // Installs a popupmenu handler using local function (see below).
   popupMenuHandler.factoryMethod = function (
     menu: MaxPopupMenu,
@@ -347,7 +348,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
 
     menu.addItem('Fit', 'images/zoom.gif', function () {
-      graph.getPlugin('fit')?.fit();
+      graph.getPlugin<FitPlugin>('fit')?.fit();
     });
 
     menu.addItem('Actual', 'images/zoomactual.gif', function () {
