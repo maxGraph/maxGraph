@@ -30,7 +30,6 @@ import {
   LayoutManager,
   type MaxPopupMenu,
   MaxToolbar,
-  // MaxWindow,
   Outline,
   type PanningHandler,
   Point,
@@ -57,10 +56,10 @@ export default {
   },
 };
 
-// TODO should returns null if the user cancels the prompt
-const promptForPageCount = (): number => {
-  const pageCount = window.prompt('Enter maximum page count', '1');
-  return pageCount ? parseInt(pageCount) : 1;
+// Returns null when the user cancels the prompt or does not enter a number
+const promptForPageCount = (): number | null => {
+  const pageCount = Number.parseInt(window.prompt('Enter maximum page count', '1') ?? '');
+  return Number.isNaN(pageCount) ? null : pageCount;
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
@@ -82,7 +81,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   div.appendChild(graphArea);
 
   const container = createGraphContainer(args);
-  container.style.cursor = 'unset'; // TODO not enough to make the editing work
+  container.style.cursor = 'unset';
   container.style.width = '100%';
   container.style.height = '100%';
   graphArea.appendChild(container);
@@ -138,8 +137,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // panningHandler.popupMenuHandler = false;
 
   // Creates the outline (navigator, overview) for moving around the graph in the top, right corner of the window.
-  // TODO do we need to keep the constant?
-  // const outln = new Outline(graph, outline);
   new Outline(graph, outlineContainer);
 
   // Disables tooltips on touch devices
@@ -348,12 +345,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         preview.open();
       }
     });
-
-    // const wnd = new MaxWindow('Tools', content, 0, 0, 200, 66, false);
-    // wnd.setMaximizable(false);
-    // wnd.setScrollable(false);
-    // wnd.setResizable(false);
-    // wnd.setVisible(true);
   }
 
   function addOverlays(graph: AbstractGraph, cell: Cell, addDeleteIcon: boolean) {
@@ -417,23 +408,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // in mxGraph, the implementation in Graph is almost the same as in GraphLayout. It has a "inverse" parameter at the end
     // https://github.com/jgraph/mxgraph/blob/master/javascript/src/js/view/mxGraph.js#L12046
     // https://github.com/jgraph/mxgraph/blob/master/javascript/src/js/layout/mxGraphLayout.js#L160
-    // graph.traverse(cell, true, function (vertex: Cell) {
     treeTraversalUtils.traverse(cell, true, function (vertex: Cell) {
       cells.push(vertex);
       return true;
     });
-
-    // layout.traverse({
-    //   vertex: cell,
-    //   directed: true,
-    //   func: function (vertex: Cell) {
-    //     cells.push(vertex);
-    //
-    //     return true;
-    //   },
-    //   edge: null,
-    //   visited: null,
-    // });
 
     graph.removeCells(cells);
   }
