@@ -199,14 +199,11 @@ export const ConnectionsMixin: PartialType = {
           this.setCellStyles(source ? 'exitY' : 'entryY', constraint.point.y, [edge]);
           this.setCellStyles(source ? 'exitDx' : 'entryDx', constraint.dx, [edge]);
           this.setCellStyles(source ? 'exitDy' : 'entryDy', constraint.dy, [edge]);
-
-          if (!constraint.perimeter) {
-            this.setCellStyles(source ? 'exitPerimeter' : 'entryPerimeter', false, [
-              edge,
-            ]);
-          } else {
-            this.setCellStyles(source ? 'exitPerimeter' : 'entryPerimeter', true, [edge]);
-          }
+          this.setCellStyles(
+            source ? 'exitPerimeter' : 'entryPerimeter',
+            constraint.perimeter,
+            [edge]
+          );
         }
       });
     }
