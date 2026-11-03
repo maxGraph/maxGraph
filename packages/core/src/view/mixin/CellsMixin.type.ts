@@ -207,8 +207,8 @@ declare module '../AbstractGraph' {
      *
      * If no value is specified, then the respective key is removed from the styles.
      *
-     * @param key String representing the key to be assigned.
-     * @param value String representing the new value for the key.
+     * @param key The key of the style to be assigned.
+     * @param value The new value for the key, whose type must match the type of the key in {@link CellStateStyle}.
      * @param cells Optional array of {@link Cell} to change the style for. Default is the selection cells.
      */
     setCellStyles: <K extends keyof CellStateStyle>(
