@@ -36,19 +36,21 @@ test('The "ConnectionHandler" plugin is not available', () => {
 });
 
 describe('getAllConnectionConstraints', () => {
-  const graph = createGraphWithoutPlugins();
+  const getAllConnectionConstraints = (state: CellState | null) =>
+    createGraphWithoutPlugins().getAllConnectionConstraints(state, true);
+
   test('null CellState', () => {
-    expect(graph.getAllConnectionConstraints(null, true)).toBeNull();
+    expect(getAllConnectionConstraints(null)).toBeNull();
   });
 
   test('CellState with null shape', () => {
-    expect(graph.getAllConnectionConstraints(new CellState(), true)).toBeNull();
+    expect(getAllConnectionConstraints(new CellState())).toBeNull();
   });
 
   test('CellState with shape which is not a StencilShape', () => {
     const cellState = new CellState();
     cellState.shape = new Shape();
-    expect(graph.getAllConnectionConstraints(cellState, true)).toBeNull();
+    expect(getAllConnectionConstraints(cellState)).toBeNull();
   });
 
   test('CellState with shape which is a StencilShape', () => {
@@ -68,7 +70,7 @@ describe('getAllConnectionConstraints', () => {
     const cellState = new CellState();
     const constraints = [new ConnectionConstraint(null), new ConnectionConstraint(null)];
     cellState.shape = new Shape(new CustomStencilShape(constraints));
-    expect(graph.getAllConnectionConstraints(cellState, true)).toBe(constraints);
+    expect(getAllConnectionConstraints(cellState)).toBe(constraints);
   });
 });
 
