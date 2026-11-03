@@ -193,8 +193,8 @@ of the draft release asks to validate it.
 - List the deprecations: the `@deprecated` tags added to the sources, which commit messages rarely mention:
   `git diff v<previous> origin/main -- packages/core/src | grep -E '^\+.*@deprecated'`. Find the commit of each one
   with `git log -S'@deprecated' v<previous>..origin/main -- <file>`.
-- Deprecations are not recorded in `CHANGELOG.md`, which only lists breaking changes. They go to the "Deprecated
-  APIs" section of the release notes only (see [step 7](#7-release-notes-body)).
+- Deprecations are not recorded in `CHANGELOG.md`, which only lists breaking changes and behavior changes. They go
+  to the "Deprecated APIs" section of the release notes only (see [step 7](#7-release-notes-body)).
 
 ### 3. Features (validate with the user first)
 
@@ -481,8 +481,9 @@ website, such as ADRs, with a permalink pinned to a commit SHA.
 ### 10. CHANGELOG entry
 
 Turn the `## Unreleased` section into the entry of the new version, as previous releases did: insert the version
-heading right after the `_**Note:** Yet to be released breaking changes appear here._` line, so that the pending
-entries become those of the new version, and keep the `## Unreleased` heading and its note above it.
+heading right after the `_**Note:** Yet to be released breaking changes and behavior changes appear here._` line,
+so that the pending entries become those of the new version, and keep the `## Unreleased` heading and its note above
+it.
 
 ```markdown
 ## <target>
@@ -507,7 +508,7 @@ For more details, see the [<target> Changelog](https://github.com/maxGraph/maxGr
   hand if needed.
 - **No breaking change**: write it explicitly, `**Breaking Changes**: none.`, since the entry details nothing else
   than the summary and the breaking changes.
-- Keep an existing `**Other Changes**:` section as is.
+- Keep an existing `**Behavior Changes**:` or `**Other Changes**:` section as is.
 - `CHANGELOG.md` is not a release notes body: keep its existing wrapping style.
 
 ### 11. Bundle size history

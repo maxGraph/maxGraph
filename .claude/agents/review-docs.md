@@ -56,8 +56,9 @@ pages the build does not own.
   Rule: `.claude/rules/documentation/website.md`.
 - **New public API without `@since`.** The JSDoc of the sources carries `@since <version>`, the next version to be
   released.
-- **A changelog entry for something that is not a breaking change.** `CHANGELOG.md` lists breaking changes only, under
-  `## Unreleased`; features and fixes go to the GitHub release notes.
+- **A changelog entry for something that is neither a breaking change nor a behavior change.** `CHANGELOG.md` lists,
+  under `## Unreleased`, breaking changes and the behavior changes of a fix that users may have to adapt to (the
+  documented behavior restored after being wrong); other features and fixes go to the GitHub release notes.
 - **A page or guide breaking the structure rules**: file name, title, the `## Before you start` block of a guide,
   a speculative claim about earlier versions. Rules: `.claude/rules/documentation/website.md` and
   `.claude/rules/documentation/guides-structure.md`.
