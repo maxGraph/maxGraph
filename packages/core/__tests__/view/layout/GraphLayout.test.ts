@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { GraphLayout, Point } from '../../../src';
+import { type CellStyle, type Graph, GraphLayout, Point } from '../../../src';
 import { createGraphWithoutContainer } from '../../utils';
 import { getPositions, insertCells } from './utils';
 
@@ -38,4 +38,43 @@ describe('setEdgePoints', () => {
       [30, 30],
     ]);
   });
+});
+
+const insertEdgeWithView = (graph: Graph, style?: CellStyle) => {
+  const source = graph.insertVertex({ position: [0, 0], size: [20, 20] });
+  const target = graph.insertVertex({ position: [100, 50], size: [20, 20] });
+  const edge = graph.insertEdge({ source, target, style });
+  return { edge, getEdgeState: () => graph.getView().getState(edge)! };
+};
+
+describe('setEdgeStyleEnabled', () => {
+  test.each([
+    ['uses', true, false],
+    ['ignores', false, true],
+  ])('%s the edge style when called with %s', (_name, value, expectedNoEdgeStyle) => {
+    const graph = createGraphWithoutContainer();
+    const { edge, getEdgeState } = insertEdgeWithView(graph, {
+      edgeStyle: 'orthogonalEdgeStyle',
+    });
+
+    new GraphLayout(graph).setEdgeStyleEnabled(edge, value);
+
+    expect(edge.style.noEdgeStyle).toBe(expectedNoEdgeStyle);
+    expect(graph.getView().getEdgeStyle(getEdgeState()) !== null).toBe(value);
+  });
+});
+
+describe('setOrthogonalEdge', () => {
+  test.each([true, false])(
+    'makes the edge orthogonal or not when called with %s',
+    (value) => {
+      const graph = createGraphWithoutContainer();
+      const { edge, getEdgeState } = insertEdgeWithView(graph);
+
+      new GraphLayout(graph).setOrthogonalEdge(edge, value);
+
+      expect(edge.style.orthogonal).toBe(value);
+      expect(graph.isOrthogonal(getEdgeState())).toBe(value);
+    }
+  );
 });
