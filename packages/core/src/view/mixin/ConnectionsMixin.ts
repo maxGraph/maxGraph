@@ -22,6 +22,7 @@ import EventObject from '../event/EventObject.js';
 import InternalEvent from '../event/InternalEvent.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import type ConnectionHandler from '../plugin/ConnectionHandler.js';
+import { isNullish } from '../../internal/utils.js';
 
 type PartialGraph = Pick<AbstractGraph, 'getView' | 'getDataModel' | 'isPortsEnabled'>;
 type PartialConnections = Pick<
@@ -159,10 +160,10 @@ export const ConnectionsMixin: PartialType = {
     let point: Point | null = null;
     const x = edge.style[source ? 'exitX' : 'entryX'];
 
-    if (x !== undefined) {
+    if (!isNullish(x)) {
       const y = edge.style[source ? 'exitY' : 'entryY'];
 
-      if (y !== undefined) {
+      if (!isNullish(y)) {
         point = new Point(x, y);
       }
     }

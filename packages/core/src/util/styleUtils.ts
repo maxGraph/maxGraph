@@ -333,7 +333,7 @@ export const convertPoint = (container: HTMLElement, x: number, y: number) => {
 };
 
 /**
- * Assigns the value for the given key in the styles of the given cells, or removes the key from the styles if the value is `null`.
+ * Assigns the value for the given key in the styles of the given cells, or removes the key from the styles if the value is `null` or `undefined`.
  *
  * @param model {@link GraphDataModel} to execute the transaction in.
  * @param cells Array of {@link Cell}s to be updated.
@@ -352,7 +352,11 @@ export const setCellStyles = (
         if (cell) {
           // Currently, the style object must be cloned, otherwise model.setStyle does not trigger the change event and the cell state in the view is not updated
           const style = cell.getClonedStyle();
-          style[key] = value;
+          if (isNullish(value)) {
+            delete style[key];
+          } else {
+            style[key] = value;
+          }
 
           model.setStyle(cell, style);
         }
