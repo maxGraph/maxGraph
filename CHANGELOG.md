@@ -1,13 +1,13 @@
 # `maxGraph` Change Log
 
-All versions and breaking changes of [maxGraph](https://github.com/maxGraph/maxGraph) are documented here. We use [semantic versioning](http://semver.org/) for versions.
+All versions, breaking changes and behavior changes of [maxGraph](https://github.com/maxGraph/maxGraph) are documented here. We use [semantic versioning](http://semver.org/) for versions.
 
 For more details on the contents of a release, see [the GitHub release page] (https://github.com/maxGraph/maxGraph/releases).
 
 
 ## Unreleased
 
-_**Note:** Yet to be released breaking changes appear here._
+_**Note:** Yet to be released breaking changes and behavior changes appear here._
 
 **Behavior Changes**:
 - `setCellStyles` (from `styleUtils`), and the `AbstractGraph.setCellStyles` method relying on it, now remove the key from the cell style when the value is `null` or `undefined`, as documented and as mxGraph did. Previously, the key was kept in the style with a `null` value. This fixes the orthogonal routing of an edge after reconnecting one of its terminals, see [issue #1087](https://github.com/maxGraph/maxGraph/issues/1087).
