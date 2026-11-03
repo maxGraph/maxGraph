@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import {
+  type AbstractGraph,
   Cell,
   CellOverlay,
   Client,
@@ -292,7 +293,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Function to create the entries in the popupmenu
   function createPopupMenu(
-    graph: Graph,
+    graph: AbstractGraph,
     menu: MaxPopupMenu,
     cell: Cell | null,
     _evt: MouseEvent
@@ -349,7 +350,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // wnd.setVisible(true);
   }
 
-  function addOverlays(graph: Graph, cell: Cell, addDeleteIcon: boolean) {
+  function addOverlays(graph: AbstractGraph, cell: Cell, addDeleteIcon: boolean) {
     let overlay = new CellOverlay(new ImageBox('images/add.png', 24, 24), 'Add child');
     overlay.cursor = 'hand';
     overlay.align = 'center';
@@ -373,14 +374,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
-  function addChild(graph: Graph, cell: Cell) {
-    const model = graph.getDataModel();
-    const parent = graph.getDefaultParent();
-    let vertex;
-
-    model.beginUpdate();
-    try {
-      vertex = graph.insertVertex({ value: 'Double click to set name' });
+  function addChild(graph: AbstractGraph, cell: Cell): void {
+    graph.batchUpdate(() => {
+      const vertex = graph.insertVertex({ value: 'Double click to set name' });
       const geometry = vertex.getGeometry()!;
 
       // Updates the geometry of the vertex with the
@@ -392,7 +388,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       // Adds the edge between the existing cell
       // and the new vertex and executes the
       // automatic layout on the parent
-      const edge = graph.insertEdge(parent, null, '', cell, vertex);
+      const edge = graph.insertEdge({ source: cell, target: vertex });
 
       // Configures the edge label "in-place" to reside
       // at the end of the edge (x = 1) and with an offset
@@ -403,14 +399,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       edgeGeometry.offset = new Point(0, -20);
 
       addOverlays(graph, vertex, true);
-    } finally {
-      model.endUpdate();
-    }
-
-    return vertex;
+    });
   }
 
-  function deleteSubtree(graph: Graph, cell: Cell) {
+  function deleteSubtree(graph: AbstractGraph, cell: Cell) {
     // Gets the subtree from cell downwards
     const cells: Cell[] = [];
 
