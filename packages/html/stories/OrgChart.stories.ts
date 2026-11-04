@@ -26,7 +26,6 @@ import {
   Graph,
   ImageBox,
   InternalEvent,
-  type KeyboardEventListener,
   LayoutManager,
   type MaxPopupMenu,
   MaxToolbar,
@@ -102,9 +101,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   outlineContainerStyle.borderColor = 'lightgray';
   graphArea.appendChild(outlineContainer);
 
-  // TODO manage image path when not served in the root context
-  // Client.imageBasePath = '/images'
-
   if (!args.contextMenu) InternalEvent.disableContextMenu(div);
   // if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
@@ -129,13 +125,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler')!;
   panningHandler.useLeftButtonForPanning = true;
-  // Displays a popupmenu when the user clicks
-  // on a cell (using the left mouse button) but
-  // do not select the cell when the popup menu
-  // is displayed
-  // TODO doesn't work, check the mxGraph code
-  // panningHandler.popupMenuHandler = false;
-
   // Creates the outline (navigator, overview) for moving around the graph in the top, right corner of the window.
   new Outline(graph, outlineContainer);
 
@@ -266,25 +255,24 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const tb = new MaxToolbar(tbContainer);
 
-  // TODO should accept a function without event
-  tb.addItem('Zoom In', 'images/zoom_in32.png', function (_evt) {
+  tb.addItem('Zoom In', 'images/zoom_in32.png', () => {
     graph.zoomIn();
-  } as KeyboardEventListener);
+  });
 
-  tb.addItem('Zoom Out', 'images/zoom_out32.png', function (_evt) {
+  tb.addItem('Zoom Out', 'images/zoom_out32.png', () => {
     graph.zoomOut();
-  } as KeyboardEventListener);
+  });
 
-  tb.addItem('Actual Size', 'images/view_1_132.png', function (_evt) {
+  tb.addItem('Actual Size', 'images/view_1_132.png', () => {
     graph.zoomActual();
-  } as KeyboardEventListener);
+  });
 
-  tb.addItem('Print', 'images/print32.png', function (_evt) {
+  tb.addItem('Print', 'images/print32.png', () => {
     const preview = new PrintPreview(graph, 1);
     preview.open();
-  } as KeyboardEventListener);
+  });
 
-  tb.addItem('Poster Print', 'images/press32.png', function (_evt) {
+  tb.addItem('Poster Print', 'images/press32.png', () => {
     const pageCount = promptForPageCount();
 
     if (pageCount != null) {
@@ -292,7 +280,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       const preview = new PrintPreview(graph, scale);
       preview.open();
     }
-  } as KeyboardEventListener);
+  });
 
   // Function to create the entries in the popupmenu
   function createPopupMenu(
@@ -403,11 +391,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // Gets the subtree from cell downwards
     const cells: Cell[] = [];
 
-    // TODO Graph.traverse is not implemented in maxGraph, check when and why it has been removed
-    // TODO the signature of the Layout method also changed, from multiple parameters to a single object --> to document in the migration guide
-    // in mxGraph, the implementation in Graph is almost the same as in GraphLayout. It has a "inverse" parameter at the end
-    // https://github.com/jgraph/mxgraph/blob/master/javascript/src/js/view/mxGraph.js#L12046
-    // https://github.com/jgraph/mxgraph/blob/master/javascript/src/js/layout/mxGraphLayout.js#L160
     treeTraversalUtils.traverse(cell, true, function (vertex: Cell) {
       cells.push(vertex);
       return true;
