@@ -125,8 +125,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler')!;
   panningHandler.useLeftButtonForPanning = true;
+  // The right button opens the popup menu, so it must not start panning
+  panningHandler.usePopupTrigger = false;
   // Creates the outline (navigator, overview) for moving around the graph in the top, right corner of the window.
-  new Outline(graph, outlineContainer);
+  const outline = new Outline(graph, outlineContainer);
+  outline.outline!.labelsVisible = true; // disabled by default for performance reasons, but enabled here to demonstrate the feature.
+  outline.updateOnPan = true;
 
   // Disables tooltips on touch devices
   graph.setTooltips(!Client.IS_TOUCH);
