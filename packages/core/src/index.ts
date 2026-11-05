@@ -181,6 +181,10 @@ export * as styleUtils from './util/styleUtils.js';
 /**
  * @category Utils
  */
+export * as treeTraversalUtils from './util/treeTraversal.js';
+/**
+ * @category Utils
+ */
 export * as xmlUtils from './util/xmlUtils.js';
 /**
  * @category Utils
