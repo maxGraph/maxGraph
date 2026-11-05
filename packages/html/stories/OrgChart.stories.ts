@@ -73,29 +73,41 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   container.style.height = '100%';
   div.appendChild(container);
 
+  // The toolbar and the outline are displayed over the graph, with the same border color. Their background has the color
+  // of the top of the container gradient, slightly transparent, to show when the graph goes under them.
+  // The transparency is in the color rather than in the opacity property, which would also fade the outline content.
+  const createOverlayElement = (): HTMLDivElement => {
+    const element = document.createElement('div');
+    const style = element.style;
+    style.position = 'absolute';
+    style.background = 'rgba(255, 255, 255, 0.8)';
+    style.borderStyle = 'solid';
+    style.borderColor = 'lightgray';
+    div.appendChild(element);
+    return element;
+  };
+
   // The mxGraph example displays the toolbar in a floating MaxWindow, it is fixed in the top left corner here
-  const tbContainer = document.createElement('div');
-  tbContainer.style.position = 'absolute';
+  const tbContainer = createOverlayElement();
   tbContainer.style.top = '10px';
   tbContainer.style.left = '10px';
   tbContainer.style.cursor = 'pointer';
-  div.appendChild(tbContainer);
+  tbContainer.style.borderWidth = '1px';
+  // Centers the items, the 16x16 "Fit Center" icon included, instead of aligning them on the text baseline
+  tbContainer.style.display = 'flex';
+  tbContainer.style.alignItems = 'center';
+  tbContainer.style.padding = '4px';
 
   // Makes the shadow brighter
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
 
-  const outlineContainer = document.createElement('div');
+  const outlineContainer = createOverlayElement();
   const outlineContainerStyle = outlineContainer.style;
-  outlineContainerStyle.position = 'absolute';
   outlineContainerStyle.overflow = 'hidden';
   outlineContainerStyle.top = '0px';
   outlineContainerStyle.right = '10px';
   outlineContainerStyle.width = '160px';
   outlineContainerStyle.height = '120px';
-  outlineContainerStyle.background = 'transparent';
-  outlineContainerStyle.borderStyle = 'solid';
-  outlineContainerStyle.borderColor = 'lightgray';
-  div.appendChild(outlineContainer);
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(div);
   // if (!args.contextMenu) InternalEvent.disableContextMenu(container);
