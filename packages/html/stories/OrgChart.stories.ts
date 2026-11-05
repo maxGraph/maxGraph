@@ -62,28 +62,24 @@ const promptForPageCount = (): number | null => {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
+  // Positioned area holding the graph container, with the toolbar and the outline displayed over it
   const div = document.createElement('div');
-  div.style.display = 'flex';
-  div.style.flexDirection = 'column';
+  div.style.position = 'relative';
   div.style.height = '100vh';
-
-  // The mxGraph example displays the toolbar in a floating MaxWindow, it is displayed above the graph here
-  const tbContainer = document.createElement('div');
-  tbContainer.style.padding = '4px';
-  div.appendChild(tbContainer);
-
-  // Positioned area holding the graph container and the outline displayed in its top right corner
-  const graphArea = document.createElement('div');
-  graphArea.style.position = 'relative';
-  graphArea.style.flex = '1';
-  graphArea.style.minHeight = '0';
-  div.appendChild(graphArea);
 
   const container = createGraphContainer(args);
   container.style.cursor = 'unset';
   container.style.width = '100%';
   container.style.height = '100%';
-  graphArea.appendChild(container);
+  div.appendChild(container);
+
+  // The mxGraph example displays the toolbar in a floating MaxWindow, it is fixed in the top left corner here
+  const tbContainer = document.createElement('div');
+  tbContainer.style.position = 'absolute';
+  tbContainer.style.top = '10px';
+  tbContainer.style.left = '10px';
+  tbContainer.style.cursor = 'pointer';
+  div.appendChild(tbContainer);
 
   // Makes the shadow brighter
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
@@ -99,7 +95,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   outlineContainerStyle.background = 'transparent';
   outlineContainerStyle.borderStyle = 'solid';
   outlineContainerStyle.borderColor = 'lightgray';
-  graphArea.appendChild(outlineContainer);
+  div.appendChild(outlineContainer);
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(div);
   // if (!args.contextMenu) InternalEvent.disableContextMenu(container);
@@ -114,10 +110,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // panning by using the left mouse button.
   graph.setCellsMovable(false);
 
-  // Edges cannot be selected, there is no action available on them
+  // Edges and the root vertex cannot be selected: there is no action available on edges, and the root cannot be changed
   const isCellSelectable = graph.isCellSelectable;
   graph.isCellSelectable = function (cell: Cell): boolean {
-    return cell.isVertex() && isCellSelectable.call(this, cell);
+    return cell.isVertex() && cell.id !== 'treeRoot' && isCellSelectable.call(this, cell);
   };
   graph.setAutoSizeCells(true);
   graph.setPanning(true);
@@ -250,7 +246,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         value: 'Organization',
         position: [w / 2 - 30, 20],
         size: [140, 60],
-        style: { image: 'images/house.png' },
+        // The root can neither be resized nor have its label changed
+        style: { image: 'images/house.png', editable: false, resizable: false },
       });
       graph.updateCellSize(v1);
       addOverlays(graph, v1, false);
@@ -271,10 +268,16 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     graph.zoomActual();
   });
 
-  tb.addItem('Print', 'images/print32.png', () => {
+  tb.addItem('Fit Center', 'images/fit_to_size.png', () => {
+    graph.getPlugin<FitPlugin>('fit')?.fitCenter({ margin: 50 });
+  });
+
+  const printItem = tb.addItem('Print', 'images/print32.png', () => {
     const preview = new PrintPreview(graph, 1);
     preview.open();
   });
+  // Separates the print items from the zoom items
+  printItem.style.marginLeft = '16px';
 
   tb.addItem('Poster Print', 'images/press32.png', () => {
     const pageCount = promptForPageCount();
@@ -298,7 +301,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         menu.addItem('Add child', 'images/overlays/check.png', function () {
           addChild(graph, cell);
         });
+      }
 
+      // startEditingAtCell does not check if the cell is editable when the cell is passed
+      if (graph.isCellEditable(cell)) {
         menu.addItem('Edit label', 'images/text.gif', function () {
           graph.startEditingAtCell(cell);
         });
