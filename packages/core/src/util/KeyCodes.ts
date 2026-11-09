@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 /**
- * Values of {@link KeyboardEvent.keyCode} for the keys handled by maxGraph.
+ * Values of `KeyboardEvent.keyCode` for the keys handled by maxGraph.
  *
  * Use them instead of magic numbers when comparing `evt.keyCode` or when binding keys with {@link KeyHandler.bindKey} and its siblings.
  *
@@ -56,4 +56,4 @@ export const KeyCodes = {
    * On Windows, this code is the ContextMenu key.
    */
   MetaRight: 93,
-};
+} as const;
