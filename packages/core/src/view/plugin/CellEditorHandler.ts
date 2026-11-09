@@ -52,6 +52,7 @@ import type { AbstractGraph } from '../AbstractGraph.js';
 import type { AlignValue, GraphPlugin } from '../../types.js';
 import type TooltipHandler from './TooltipHandler.js';
 import { StyleDefaultsConfig } from '../../util/config.js';
+import { KeyCodes } from '../../util/KeyCodes.js';
 
 /**
  * In-place editor for the graph.
@@ -373,7 +374,7 @@ class CellEditorHandler implements GraphPlugin {
         if (this.isStopEditingEvent(evt)) {
           this.graph.stopEditing(false);
           InternalEvent.consume(evt);
-        } else if (evt.keyCode === 27 /* Escape */) {
+        } else if (evt.keyCode === KeyCodes.Escape) {
           this.graph.stopEditing(this.isCancelEditingKeyEvent(evt));
           InternalEvent.consume(evt);
         }
@@ -389,7 +390,7 @@ class CellEditorHandler implements GraphPlugin {
           this.clearOnChange &&
           elt.innerHTML === this.getEmptyLabelText() &&
           (!Client.IS_FF ||
-            (evt.keyCode !== 8 /* Backspace */ && evt.keyCode !== 46)) /* Delete */
+            (evt.keyCode !== KeyCodes.Backspace && evt.keyCode !== KeyCodes.Delete))
         ) {
           this.clearOnChange = false;
           elt.innerHTML = '';
@@ -453,9 +454,9 @@ class CellEditorHandler implements GraphPlugin {
    */
   isStopEditingEvent(evt: KeyboardEvent) {
     return (
-      evt.keyCode === 113 /* F2 */ ||
+      evt.keyCode === KeyCodes.F2 ||
       (this.graph.isEnterStopsCellEditing() &&
-        evt.keyCode === 13 /* Enter */ &&
+        evt.keyCode === KeyCodes.Enter &&
         !isControlDown(<MouseEvent>(<unknown>evt)) &&
         !isShiftDown(<MouseEvent>(<unknown>evt)))
     );
