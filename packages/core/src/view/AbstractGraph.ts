@@ -26,7 +26,7 @@ import type PanningHandler from './plugin/PanningHandler.js';
 import GraphView from './GraphView.js';
 import CellRenderer from './cell/CellRenderer.js';
 import Point from './geometry/Point.js';
-import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils.js';
+import { getCurrentStyle, parseCssNumber } from '../util/styleUtils.js';
 import Cell from './cell/Cell.js';
 import GraphDataModel from './GraphDataModel.js';
 import { Stylesheet } from './style/Stylesheet.js';
@@ -281,22 +281,6 @@ export abstract class AbstractGraph extends EventSource {
   importEnabled = true;
 
   /**
-   * Specifies if the graph should automatically scroll regardless of the
-   * scrollbars. This will scroll the container using positive values for
-   * scroll positions (ie usually only rightwards and downwards). To avoid
-   * possible conflicts with panning, set {@link translateToScrollPosition} to `true`.
-   */
-  ignoreScrollbars = false;
-
-  /**
-   * Specifies if the graph should automatically convert the current scroll
-   * position to a translate in the graph view when a mouseUp event is received.
-   * This can be used to avoid conflicts when using {@link autoScroll} and
-   * {@link ignoreScrollbars} with no scrollbars in the container.
-   */
-  translateToScrollPosition = false;
-
-  /**
    * {@link Rectangle} that specifies the area in which all cells in the diagram
    * should be placed. Uses in {@link getMaximumGraphBounds}. Use a width or height of
    * `0` if you only want to give a upper, left corner.
@@ -473,8 +457,6 @@ export abstract class AbstractGraph extends EventSource {
   getPageScale = () => this.pageScale;
   isExportEnabled = () => this.exportEnabled;
   isImportEnabled = () => this.importEnabled;
-  isIgnoreScrollbars = () => this.ignoreScrollbars;
-  isTranslateToScrollPosition = () => this.translateToScrollPosition;
 
   getMinimumGraphSize = () => this.minimumGraphSize;
   setMinimumGraphSize = (size: Rectangle | null) => (this.minimumGraphSize = size);
@@ -641,89 +623,6 @@ export abstract class AbstractGraph extends EventSource {
     // Removes the state from the cache by default
     else if (change.cell != null && change.cell instanceof Cell) {
       this.removeStateForCell(change.cell);
-    }
-  }
-
-  /**
-   * Scrolls the graph to the given point, extending the graph container if
-   * specified.
-   */
-  scrollPointToVisible(x: number, y: number, extend = false, border = 20) {
-    const panningHandler = this.getPlugin<PanningHandler>('PanningHandler');
-
-    if (
-      !this.isTimerAutoScroll() &&
-      (this.ignoreScrollbars || hasScrollbars(this.container))
-    ) {
-      const c = <HTMLElement>this.container;
-
-      if (
-        x >= c.scrollLeft &&
-        y >= c.scrollTop &&
-        x <= c.scrollLeft + c.clientWidth &&
-        y <= c.scrollTop + c.clientHeight
-      ) {
-        let dx = c.scrollLeft + c.clientWidth - x;
-
-        if (dx < border) {
-          const old = c.scrollLeft;
-          c.scrollLeft += border - dx;
-
-          // Automatically extends the canvas size to the bottom, right
-          // if the event is outside of the canvas and the edge of the
-          // canvas has been reached. Notes: Needs fix for IE.
-          if (extend && old === c.scrollLeft) {
-            // @ts-ignore
-            const root = this.view.getDrawPane().ownerSVGElement;
-            const width = c.scrollWidth + border - dx;
-
-            // Updates the clipping region. This is an expensive
-            // operation that should not be executed too often.
-            // @ts-ignore
-            root.style.width = `${width}px`;
-
-            c.scrollLeft += border - dx;
-          }
-        } else {
-          dx = x - c.scrollLeft;
-
-          if (dx < border) {
-            c.scrollLeft -= border - dx;
-          }
-        }
-
-        let dy = c.scrollTop + c.clientHeight - y;
-
-        if (dy < border) {
-          const old = c.scrollTop;
-          c.scrollTop += border - dy;
-
-          if (old == c.scrollTop && extend) {
-            // @ts-ignore
-            const root = this.view.getDrawPane().ownerSVGElement;
-            const height = c.scrollHeight + border - dy;
-
-            // Updates the clipping region. This is an expensive
-            // operation that should not be executed too often.
-            // @ts-ignore
-            root.style.height = `${height}px`;
-
-            c.scrollTop += border - dy;
-          }
-        } else {
-          dy = y - c.scrollTop;
-
-          if (dy < border) {
-            c.scrollTop -= border - dy;
-          }
-        }
-      }
-    } else if (
-      this.isAllowAutoPanning() &&
-      panningHandler &&
-      !panningHandler.isActive()
-    ) {
-      panningHandler.getPanningManager().panTo(x + this.getPanDx(), y + this.getPanDy());
     }
   }
 
@@ -907,59 +806,6 @@ export abstract class AbstractGraph extends EventSource {
     this.view.validate();
     this.sizeDidChange();
     this.fireEvent(new EventObject(InternalEvent.REFRESH));
-  }
-
-  /**
-   * Centers the graph in the container.
-   *
-   * @param horizontal Optional boolean that specifies if the graph should be centered
-   * horizontally. Default is `true`.
-   * @param vertical Optional boolean that specifies if the graph should be centered
-   * vertically. Default is `true`.
-   * @param cx Optional float that specifies the horizontal center. Default is `0.5`.
-   * @param cy Optional float that specifies the vertical center. Default is `0.5`.
-   */
-  center(horizontal = true, vertical = true, cx = 0.5, cy = 0.5): void {
-    const container = <HTMLElement>this.container;
-    const _hasScrollbars = hasScrollbars(this.container);
-    const padding = 2 * this.getBorder();
-    const cw = container.clientWidth - padding;
-    const ch = container.clientHeight - padding;
-    const bounds = this.getGraphBounds();
-
-    const t = this.view.translate;
-    const s = this.view.scale;
-
-    let dx = horizontal ? cw - bounds.width : 0;
-    let dy = vertical ? ch - bounds.height : 0;
-
-    if (!_hasScrollbars) {
-      this.view.setTranslate(
-        horizontal ? Math.floor(t.x - bounds.x / s + (dx * cx) / s) : t.x,
-        vertical ? Math.floor(t.y - bounds.y / s + (dy * cy) / s) : t.y
-      );
-    } else {
-      bounds.x -= t.x;
-      bounds.y -= t.y;
-
-      const sw = container.scrollWidth;
-      const sh = container.scrollHeight;
-
-      if (sw > cw) {
-        dx = 0;
-      }
-
-      if (sh > ch) {
-        dy = 0;
-      }
-
-      this.view.setTranslate(
-        Math.floor(dx / 2 - bounds.x),
-        Math.floor(dy / 2 - bounds.y)
-      );
-      container.scrollLeft = (sw - cw) / 2;
-      container.scrollTop = (sh - ch) / 2;
-    }
   }
 
   /**
