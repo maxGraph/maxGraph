@@ -23,6 +23,7 @@ import {
   EdgeStyle,
   RubberBandHandler,
   KeyHandler,
+  KeyCodes,
   getDefaultPlugins,
 } from '@maxgraph/core';
 
@@ -124,13 +125,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       let dx = 0;
       let dy = 0;
 
-      if (keyCode === 37) {
+      if (keyCode === KeyCodes.ArrowLeft) {
         dx = -1;
-      } else if (keyCode === 38) {
+      } else if (keyCode === KeyCodes.ArrowUp) {
         dy = -1;
-      } else if (keyCode === 39) {
+      } else if (keyCode === KeyCodes.ArrowRight) {
         dx = 1;
-      } else if (keyCode === 40) {
+      } else if (keyCode === KeyCodes.ArrowDown) {
         dy = 1;
       }
 
@@ -149,8 +150,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Ignores enter keystroke. Remove this line if you want the enter keystroke to stop editing
   // keyHandler.enter = function () {};
 
-  [37, 38, 39, 40].forEach((key) =>
-    keyHandler.bindKey(key, () => moveSelectedCellsWithKeyboard(key))
+  [KeyCodes.ArrowLeft, KeyCodes.ArrowUp, KeyCodes.ArrowRight, KeyCodes.ArrowDown].forEach(
+    (key) => keyHandler.bindKey(key, () => moveSelectedCellsWithKeyboard(key))
   );
 
   return div;

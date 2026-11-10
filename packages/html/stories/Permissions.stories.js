@@ -20,6 +20,7 @@ import {
   ImageBox,
   RubberBandHandler,
   KeyHandler,
+  KeyCodes,
   DomHelpers,
   Client,
 } from '@maxgraph/core';
@@ -72,7 +73,7 @@ const Template = ({ label, ...args }) => {
   const keyHandler = new KeyHandler(graph);
 
   // Assigns the delete key
-  keyHandler.bindKey(46, function (evt) {
+  keyHandler.bindKey(KeyCodes.Delete, function (evt) {
     if (graph.isEnabled()) {
       graph.removeCells();
     }

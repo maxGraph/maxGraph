@@ -24,6 +24,7 @@ import {
   eventUtils,
   Client,
   GraphDataModel,
+  KeyCodes,
   styleUtils,
   stringUtils,
   cellArrayUtils,
@@ -109,10 +110,10 @@ const Template = ({ label, ...args }) => {
       source.nodeName !== 'INPUT'
     ) {
       if (
-        evt.keyCode === 224 /* FF */ ||
-        (!Client.IS_MAC && evt.keyCode === 17) /* Control */ ||
+        evt.keyCode === KeyCodes.FirefoxMeta ||
+        (!Client.IS_MAC && evt.keyCode === KeyCodes.Control) ||
         (Client.IS_MAC &&
-          (evt.keyCode === 91 || evt.keyCode === 93)) /* Left/Right Meta */
+          (evt.keyCode === KeyCodes.MetaLeft || evt.keyCode === KeyCodes.MetaRight))
       ) {
         // Cannot use parentNode for check in IE
         if (!restoreFocus) {
@@ -134,10 +135,10 @@ const Template = ({ label, ...args }) => {
   InternalEvent.addListener(document, 'keyup', function (evt) {
     if (
       restoreFocus &&
-      (evt.keyCode === 224 /* FF */ ||
-        evt.keyCode === 17 /* Control */ ||
-        evt.keyCode === 91 ||
-        evt.keyCode === 93) /* Meta */
+      (evt.keyCode === KeyCodes.FirefoxMeta ||
+        evt.keyCode === KeyCodes.Control ||
+        evt.keyCode === KeyCodes.MetaLeft ||
+        evt.keyCode === KeyCodes.MetaRight)
     ) {
       restoreFocus = false;
 
