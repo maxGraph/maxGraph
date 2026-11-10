@@ -15,17 +15,16 @@ limitations under the License.
 */
 
 import type { AbstractGraph } from '../AbstractGraph.js';
+import { isNode } from '../../util/domUtils.js';
 
 type PartialGraph = Pick<
   AbstractGraph,
-  | 'convertValueToString'
-  | 'getCurrentCellStyle'
-  | 'isCellLocked'
-  | 'isEdgeLabelsMovable'
-  | 'isVertexLabelsMovable'
+  'getCurrentCellStyle' | 'isCellLocked' | 'isEdgeLabelsMovable' | 'isVertexLabelsMovable'
 >;
 type PartialLabel = Pick<
   AbstractGraph,
+  | 'convertValueToString'
+  | 'getLinkForCell'
   | 'labelsVisible'
   | 'htmlLabels'
   | 'getLabel'
@@ -41,6 +40,24 @@ type PartialType = PartialGraph & PartialLabel;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 export const LabelMixin: PartialType = {
+  convertValueToString(cell) {
+    const value = cell.getValue();
+
+    if (value != null) {
+      if (isNode(value)) {
+        return value.nodeName;
+      }
+      if (typeof value.toString === 'function') {
+        return value.toString();
+      }
+    }
+    return '';
+  },
+
+  getLinkForCell(_cell) {
+    return null;
+  },
+
   getLabel(cell) {
     let result: string | null = '';
 
