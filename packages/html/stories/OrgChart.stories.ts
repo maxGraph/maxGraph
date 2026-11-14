@@ -26,6 +26,7 @@ import {
   Graph,
   ImageBox,
   InternalEvent,
+  KeyHandler,
   LayoutManager,
   type MaxPopupMenu,
   MaxToolbar,
@@ -71,6 +72,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   container.style.cursor = 'unset';
   container.style.width = '100%';
   container.style.height = '100%';
+  // Storybook captures the keystrokes while the focus is outside the story, so focus the container on click to let
+  // the KeyHandler receive Escape
+  container.addEventListener('click', () => {
+    container.focus();
+  });
+  container.setAttribute('tabindex', '0');
   div.appendChild(container);
 
   // The toolbar and the outline are displayed over the graph, with the same border color. Their background has the color
@@ -135,6 +142,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   panningHandler.useLeftButtonForPanning = true;
   // The right button opens the popup menu, so it must not start panning
   panningHandler.usePopupTrigger = false;
+
+  // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
+  // which cancels a resize in progress. Escape during label editing is handled by the cell editor, without it.
+  new KeyHandler(graph);
   // Creates the outline (navigator, overview) for moving around the graph in the top, right corner of the window.
   const outline = new Outline(graph, outlineContainer);
   outline.outline!.labelsVisible = true; // disabled by default for performance reasons, but enabled here to demonstrate the feature.
