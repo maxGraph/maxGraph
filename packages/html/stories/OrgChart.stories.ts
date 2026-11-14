@@ -100,7 +100,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   tbContainer.style.left = '10px';
   tbContainer.style.cursor = 'pointer';
   tbContainer.style.borderWidth = '1px';
-  // Centers the items, the 16x16 "Fit Center" icon included, instead of aligning them on the text baseline
+  // Centers the items instead of aligning them on the text baseline
   tbContainer.style.display = 'flex';
   tbContainer.style.alignItems = 'center';
   tbContainer.style.padding = '4px';
@@ -291,9 +291,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     graph.zoomActual();
   });
 
-  tb.addItem('Fit Center', 'images/fit_to_size.png', () => {
+  const fitCenterItem = tb.addItem('Fit Center', 'images/zoom_fit32.png', () => {
     graph.getPlugin<FitPlugin>('fit')?.fitCenter({ margin: 50 });
   });
+  // The icon fills its whole image, unlike the magnifiers of the zoom items, so it needs some space to not touch them
+  fitCenterItem.style.marginLeft = '6px';
 
   const printItem = tb.addItem('Print', 'images/print32.png', () => {
     const preview = new PrintPreview(graph, 1);
