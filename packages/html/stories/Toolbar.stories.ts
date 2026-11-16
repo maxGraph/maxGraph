@@ -126,7 +126,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
 
   // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
   // which cancels a move, a resize, a connection or a bend in progress. Escape during label editing is handled by the cell editor, without it.
-  new KeyHandler(graph);
+  new KeyHandler(graph); // NOSONAR: instantiated for its side effect, see the comment above
 
   function addCell(
     isVertex: boolean,

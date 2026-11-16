@@ -205,7 +205,7 @@ const Template = ({ label, ...args }) => {
 
   // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
   // which cancels a move in progress. Escape during label editing is handled by the cell editor, without it.
-  new KeyHandler(graph);
+  new KeyHandler(graph); // NOSONAR: instantiated for its side effect, see the comment above
 
   // Enables automatic layout on the graph and installs
   // a tree layout for all groups who's children are
