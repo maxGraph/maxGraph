@@ -1,0 +1,23 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import * as story from './OrgChart.stories';
+
+<Meta of={story} />
+
+# OrgChart
+
+This example demonstrates using automatic layouts, fit to page zoom and poster print (across multiple pages).
+
+The graph is a tree, laid out automatically with a `CompactTreeLayout` each time a vertex is added or removed.
+
+## What you can do
+
+- **Pan** the graph by dragging the background with the left mouse button.
+- **Navigate** with the outline displayed in the top right corner, which shows the whole graph and the visible area.
+- **Add a child** to a vertex with its `+` overlay icon.
+- **Delete a vertex** and its whole subtree with its close overlay icon. The root vertex cannot be deleted.
+- **Resize a vertex** with its handles, once selected. Press `Escape` during the resize to cancel it. The root vertex cannot be resized.
+- **Edit a label** by double-clicking a vertex, or from the popup menu. See the Introduction page for how to validate or cancel the change. The label of the root vertex cannot be changed.
+- **Zoom** with the toolbar. When zooming in, the labels display more details, without changing the size of the vertices.
+- **Fit** the whole graph in the visible area, centered, with the `Fit Center` item of the toolbar.
+- **Print** the graph at actual size, or as a poster on a chosen number of pages (enter 1 to fit it on a single page), from the toolbar.
+- Open the **popup menu** with a right click: on a vertex for the actions related to it, or on the background to fit, reset the zoom and print.
