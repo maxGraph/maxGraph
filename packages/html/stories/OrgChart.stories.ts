@@ -187,7 +187,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Storybook captures the keystrokes while the focus is outside the story, so focus the container on click to let
   // the KeyHandler receive Escape
   container.addEventListener('click', () => {
-    container.focus();
+    // Keep the focus on the label editor, which is inside the container
+    if (!container.contains(document.activeElement)) {
+      container.focus();
+    }
   });
   container.setAttribute('tabindex', '0');
   div.appendChild(container);
