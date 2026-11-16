@@ -28,6 +28,7 @@ import {
   Graph,
   GraphDataModel,
   ImageBox,
+  KeyHandler,
   MaxToolbar,
   Point,
   RubberBandHandler,
@@ -83,7 +84,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
 
   // Creates the model and the graph inside the container
   // using the fastest rendering available on the browser
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
   toolbarAndGraphParentContainer.appendChild(container);
 
   // Enables rubberband selection
@@ -123,8 +124,9 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
   graph.setConnectable(true);
   graph.setMultigraph(false);
 
-  // Stops editing on enter or escape keypress (TODO not working, do we want to keep this here?)
-  // const keyHandler = new KeyHandler(graph);
+  // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
+  // which cancels a move, a resize, a connection or a bend in progress. Escape during label editing is handled by the cell editor, without it.
+  new KeyHandler(graph); // NOSONAR: instantiated for its side effect, see the comment above
 
   function addCell(
     isVertex: boolean,

@@ -43,7 +43,7 @@ const Template = ({ label, ...args }) => {
     of the user object.
   `;
 
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
   div.appendChild(container);
 
   class MyCustomGraph extends Graph {
@@ -131,8 +131,9 @@ const Template = ({ label, ...args }) => {
   const graph = new MyCustomGraph(container);
   graph.setHtmlLabels(true);
 
-  // Adds handling of return and escape keystrokes for editing
-  const keyHandler = new KeyHandler(graph);
+  // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
+  // which cancels a move or a resize in progress. Escape during label editing is handled by the cell editor, without it.
+  new KeyHandler(graph); // NOSONAR: instantiated for its side effect, see the comment above
 
   // Sample user objects with 2 fields
   const value = {};

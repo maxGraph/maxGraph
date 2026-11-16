@@ -48,7 +48,7 @@ const Template = ({ label, ...args }) => {
   configureImagesBasePath();
 
   const div = document.createElement('div');
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
   div.appendChild(container);
 
   // Creates the graph inside the given container

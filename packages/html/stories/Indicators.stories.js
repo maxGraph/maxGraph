@@ -30,11 +30,13 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
   graph.setConnectable(true);
+  // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
+  // which cancels a move, a resize, a connection or a bend in progress. Escape during label editing is handled by the cell editor, without it.
   new KeyHandler(graph);
 
   // Enables moving of vertex labels

@@ -45,7 +45,7 @@ export default {
 
 const Template = ({ label, ...args }) => {
   configureImagesBasePath();
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
 
   /*
     Defines a custom shape for the tree node that includes the
@@ -203,8 +203,9 @@ const Template = ({ label, ...args }) => {
   const panningHandler = graph.getPlugin('PanningHandler');
   panningHandler.useLeftButtonForPanning = true;
 
-  // Stops editing on enter or escape keypress
-  const keyHandler = new KeyHandler(graph);
+  // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
+  // which cancels a move in progress. Escape during label editing is handled by the cell editor, without it.
+  new KeyHandler(graph); // NOSONAR: instantiated for its side effect, see the comment above
 
   // Enables automatic layout on the graph and installs
   // a tree layout for all groups who's children are

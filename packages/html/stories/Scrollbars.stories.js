@@ -111,7 +111,7 @@ const Template = ({ label, ...args }) => {
   const div = createMainDiv(
     `This example demonstrates using a scrollable table with different sections in a cell label.`
   );
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
   div.appendChild(container);
 
   // Disables foreignObjects
@@ -528,7 +528,8 @@ const Template = ({ label, ...args }) => {
   relation.setAttribute('sourceRow', '4');
   relation.setAttribute('targetRow', '6');
 
-  // Enables key handling (eg. escape)
+  // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
+  // which cancels a move, a resize, a connection or a bend in progress. Escape during label editing is handled by the cell editor, without it.
   new KeyHandler(graph);
 
   // Gets the default parent for inserting new cells. This
