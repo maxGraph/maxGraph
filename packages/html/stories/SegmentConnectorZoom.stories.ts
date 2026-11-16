@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { type Cell, DomHelpers, Graph, Point } from '@maxgraph/core';
+import { type Cell, DomHelpers, Graph, InternalEvent, Point } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createMainDiv } from './shared/configure.js';
 
@@ -309,9 +309,37 @@ const createZoomSection = (args: Record<string, string>): HTMLElement => {
 
     const graph = new Graph(graphContainer);
     const edge = insertCase(graph, routingCase);
-    const referenceCount = countEdgePoints(graph, edge);
-    return { routingCase, graphContainer, caption, graph, edge, referenceCount };
+    return { routingCase, graphContainer, caption, graph, edge };
   });
+  type InteractiveView = (typeof views)[number];
+
+  // The waypoints and the vertices can be moved, so the reference is the route of the current geometry at scale 1,
+  // not the initial one. view.setScale keeps the translate, so the route at the current scale is restored unchanged.
+  const countEdgePointsAtScale1 = ({ graph, edge }: InteractiveView): number => {
+    const scale = graph.view.scale;
+    if (scale === 1) {
+      return countEdgePoints(graph, edge);
+    }
+    graph.view.setScale(1);
+    const referenceCount = countEdgePoints(graph, edge);
+    graph.view.setScale(scale);
+    return referenceCount;
+  };
+
+  const refreshCaption = (view: InteractiveView): void => {
+    const { text, color } = describePointCount(
+      countEdgePoints(view.graph, view.edge),
+      countEdgePointsAtScale1(view)
+    );
+    view.caption.textContent = text;
+    view.caption.style.color = color;
+  };
+
+  for (const view of views) {
+    view.graph
+      .getDataModel()
+      .addListener(InternalEvent.CHANGE, () => refreshCaption(view));
+  }
 
   // view.setScale keeps the translate, unlike graph.zoomIn which can change it to keep the center
   // Bounded by the slider range, which otherwise stays at its end while the zoom buttons go further
@@ -322,13 +350,7 @@ const createZoomSection = (args: Record<string, string>): HTMLElement => {
     for (const view of views) {
       view.graph.view.setScale(scale);
       placeGraphContainer(view.graphContainer, view.routingCase, scale);
-      // Counted at each scale since the waypoints can be moved interactively
-      const { text, color } = describePointCount(
-        countEdgePoints(view.graph, view.edge),
-        view.referenceCount
-      );
-      view.caption.textContent = text;
-      view.caption.style.color = color;
+      refreshCaption(view);
     }
   };
 

@@ -20,6 +20,9 @@ git -C <clone> show origin/HEAD:<path>
 git -C <clone> grep <pattern> origin/HEAD -- <path>
 ```
 
+Compare the two SHAs before reading. When the fetch fails, or `origin/HEAD` still differs from the SHA `git ls-remote`
+prints, the remote ref is stale too: stop and say so, rather than describing that state as the current one.
+
 Do not use the Read and Grep tools on the files of a clone to describe its current behaviour. They read the working
 tree. `jgraph/mxgraph` is archived and needs no fetch.
 
