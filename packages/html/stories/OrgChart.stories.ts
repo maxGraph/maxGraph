@@ -180,19 +180,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   div.style.position = 'relative';
   div.style.height = '100vh';
 
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
   container.style.cursor = 'unset';
   container.style.width = '100%';
   container.style.height = '100%';
-  // Storybook captures the keystrokes while the focus is outside the story, so focus the container on click to let
-  // the KeyHandler receive Escape
-  container.addEventListener('click', () => {
-    // Keep the focus on the label editor, which is inside the container
-    if (!container.contains(document.activeElement)) {
-      container.focus();
-    }
-  });
-  container.setAttribute('tabindex', '0');
   div.appendChild(container);
 
   // The toolbar and the outline are displayed over the graph, with the same border color. Their background has the color

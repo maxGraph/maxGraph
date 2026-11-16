@@ -59,11 +59,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   <br>You can also remove cells by selecting them and pressing the [DELETE] key.
   `);
 
-  const container = createGraphContainer(args);
-  container.addEventListener('click', () => {
-    container.focus();
-  });
-  container.setAttribute('tabindex', '0');
+  const container = createGraphContainer(args, { captureKeystrokes: true });
   div.appendChild(container);
 
   const xmlDocument = xmlUtils.createXmlDocument();

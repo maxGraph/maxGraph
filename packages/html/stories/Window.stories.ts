@@ -54,7 +54,7 @@ export default {
 
 const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
 
   GlobalConfig.logger = new MaxLogAsLogger();
   GlobalConfig.logger.info('Starting the Window story...');
@@ -79,10 +79,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Creates the graph inside the given container
   const graph = new Graph(container, undefined, plugins);
 
-  // Adds rubberband selection and keystrokes
   graph.setTooltips(true);
   graph.setPanning(true);
 
+  // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
+  // which cancels a move, a resize or a bend in progress. Escape during label editing is handled by the cell editor, without it.
   new KeyHandler(graph);
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);

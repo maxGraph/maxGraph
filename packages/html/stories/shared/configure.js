@@ -22,9 +22,12 @@ export const configureImagesBasePath = () => {
 
 /**
  * @param args {Record<string, string>}
+ * @param [options] {{captureKeystrokes?: boolean}} `captureKeystrokes`: make the container focusable and focus it on click.
+ * Storybook captures the keystrokes while the focus is outside the story, so a `KeyHandler` only receives them once the
+ * container has the focus. Defaults to `false`.
  * @return {HTMLDivElement}
  */
-export const createGraphContainer = (args) => {
+export const createGraphContainer = (args, options = {}) => {
   const container = document.createElement('div');
   const style = container.style;
   style.position = 'relative';
@@ -33,6 +36,16 @@ export const createGraphContainer = (args) => {
   style.height = `${args.height}px`;
   style.background = 'url(./images/grid.gif)';
   style.cursor = 'default';
+
+  if (options.captureKeystrokes) {
+    container.setAttribute('tabindex', '0');
+    container.addEventListener('click', () => {
+      // Keep the focus on the label editor, which is inside the container
+      if (!container.contains(document.activeElement)) {
+        container.focus();
+      }
+    });
+  }
   return container;
 };
 

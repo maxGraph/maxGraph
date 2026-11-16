@@ -30,6 +30,7 @@ import {
   type HTMLImageElementWithProps,
   ImageBox,
   InternalEvent,
+  KeyHandler,
   MaxToolbar,
   RubberBandHandler,
   styleUtils,
@@ -76,7 +77,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   toolbar.enabled = false;
 
   // Creates the div for the graph
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
   div.appendChild(container);
 
   // Enables rubberband selection
@@ -99,8 +100,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setConnectable(true);
   graph.setMultigraph(false);
 
-  // Stops editing on enter or escape keypress (TODO not working, do we want to keep this here?)
-  // const keyHandler = new KeyHandler(graph);
+  // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
+  // which cancels a move, a resize, a connection or a bend in progress. Escape during label editing is handled by the cell editor, without it.
+  new KeyHandler(graph);
 
   addVertex('images/rectangle.gif', 100, 40, {});
   addVertex('images/rounded.gif', 100, 40, { rounded: true });

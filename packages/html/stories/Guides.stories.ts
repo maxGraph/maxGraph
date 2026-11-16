@@ -59,7 +59,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   Creating a grid using a canvas and installing a key handler for cursor keys is also demonstrated here, as well as snapping waypoints to terminals.
   `);
 
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
   div.appendChild(container);
 
   // TODO provide a change default value of GUIDE_COLOR and GUIDE_STROKEWIDTH, see https://github.com/maxGraph/maxGraph/issues/192
@@ -138,11 +138,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   };
 
-  // Transfer initial focus to graph container for keystroke handling
-  graph.container.focus();
-
-  // TODO not working in storybook, work in vanilla example. This is probably due to events already installed by storybook
-  // See https://github.com/maxGraph/maxGraph/issues/910
   // Handles keystroke events
   const keyHandler = new KeyHandler(graph);
 

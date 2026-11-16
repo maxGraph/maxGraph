@@ -64,7 +64,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   div.style.display = 'flex';
   div.style.gap = '2rem';
 
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
   container.style.background = 'none'; // no grid
   container.style.border = 'solid 1px black';
   div.appendChild(container);
@@ -104,7 +104,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.minimumContainerSize = new Rectangle(0, 0, 500, 380);
   graph.setBorder(60);
 
-  // Stops editing on enter key, handles escape
+  // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
+  // which cancels a move or a bend in progress. Escape during label editing is handled by the cell editor, without it.
   new KeyHandler(graph);
 
   // Overrides method to disallow edge label editing

@@ -45,7 +45,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  const container = createGraphContainer(args);
+  const container = createGraphContainer(args, { captureKeystrokes: true });
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
@@ -55,6 +55,8 @@ const Template = ({ label, ...args }) => {
 
   if (args.rubberBand) new RubberBandHandler(graph);
 
+  // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
+  // which cancels a move, a resize or a bend in progress. Escape during label editing is handled by the cell editor, without it.
   new KeyHandler(graph);
 
   const selectionHandler = graph.getPlugin('SelectionHandler');
