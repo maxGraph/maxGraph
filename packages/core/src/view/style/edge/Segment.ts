@@ -63,7 +63,16 @@ export const SegmentConnector: EdgeStyleFunction = (
   let horizontal = true;
   let hint: Point;
 
-  // Adds waypoints only if outside of tolerance
+  // Adds translated unscaled points for precise collision checks
+  const tempPoints: Point[] = [];
+  function addPoint(pt: Point) {
+    tempPoints.push(pt);
+  }
+
+  // Scales the point and adds it only if outside of tolerance of the last added point.
+  // The tolerance is in view coordinates: 1 pixel on x, and on y the scale when above 1 (an asymmetry inherited from
+  // mxGraph). So below a scale of about 0.15, a segment of a few units in the model is dropped. It cannot be seen at
+  // that scale, but the route then depends on the scale: https://github.com/maxGraph/maxGraph/issues/1322
   function pushPoint(pt: Point) {
     pt.x = Math.round(pt.x * state.view.scale * 10) / 10;
     pt.y = Math.round(pt.y * state.view.scale * 10) / 10;
@@ -76,8 +85,6 @@ export const SegmentConnector: EdgeStyleFunction = (
       result.push(pt);
       lastPushed = pt;
     }
-
-    return lastPushed;
   }
 
   // Adds the first point
@@ -207,7 +214,7 @@ export const SegmentConnector: EdgeStyleFunction = (
           source != null &&
           (hint.y < source.y || hint.y > source.y + source.height)))
     ) {
-      pushPoint(new Point(pt.x, hint.y));
+      addPoint(new Point(pt.x, hint.y));
     } else if (
       !horizontal &&
       ((pts[0] != null && pts[0].x !== hint.x) ||
@@ -215,7 +222,7 @@ export const SegmentConnector: EdgeStyleFunction = (
           source != null &&
           (hint.x < source.x || hint.x > source.x + source.width)))
     ) {
-      pushPoint(new Point(hint.x, pt.y));
+      addPoint(new Point(hint.x, pt.y));
     }
 
     if (horizontal) {
@@ -234,7 +241,7 @@ export const SegmentConnector: EdgeStyleFunction = (
         pt.x = hint.x;
       }
 
-      pushPoint(pt.clone());
+      addPoint(pt.clone());
     }
   } else {
     hint = pt;
@@ -261,7 +268,7 @@ export const SegmentConnector: EdgeStyleFunction = (
             target != null &&
             (hint.y < target.y || hint.y > target.y + target.height)))
       ) {
-        pushPoint(new Point(pt.x, hint.y));
+        addPoint(new Point(pt.x, hint.y));
       } else if (
         !horizontal &&
         ((pts[lastInx] != null && pts[lastInx].x !== hint.x) ||
@@ -269,7 +276,7 @@ export const SegmentConnector: EdgeStyleFunction = (
             target != null &&
             (hint.x < target.x || hint.x > target.x + target.width)))
       ) {
-        pushPoint(new Point(hint.x, pt.y));
+        addPoint(new Point(hint.x, pt.y));
       }
     }
   }
@@ -277,23 +284,32 @@ export const SegmentConnector: EdgeStyleFunction = (
   // Removes bends inside the source terminal for floating ports
   if (pts[0] == null && source != null) {
     while (
-      result.length > 1 &&
-      result[1] != null &&
-      contains(source, result[1].x, result[1].y)
+      tempPoints.length > 0 &&
+      tempPoints[0] != null &&
+      contains(source, tempPoints[0].x, tempPoints[0].y)
     ) {
-      result.splice(1, 1);
+      tempPoints.splice(0, 1);
     }
   }
 
   // Removes bends inside the target terminal
   if (pts[lastInx] == null && target != null) {
     while (
-      result.length > 1 &&
-      result[result.length - 1] != null &&
-      contains(target, result[result.length - 1].x, result[result.length - 1].y)
+      tempPoints.length > 0 &&
+      tempPoints[tempPoints.length - 1] != null &&
+      contains(
+        target,
+        tempPoints[tempPoints.length - 1].x,
+        tempPoints[tempPoints.length - 1].y
+      )
     ) {
-      result.splice(result.length - 1, 1);
+      tempPoints.splice(tempPoints.length - 1, 1);
     }
+  }
+
+  // Scales and smoothens edges
+  for (const tempPoint of tempPoints) {
+    pushPoint(tempPoint);
   }
 
   // Removes last point if inside tolerance with end point
