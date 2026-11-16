@@ -36,6 +36,13 @@ import type CellEditorHandler from '../plugin/CellEditorHandler.js';
  * This handler installs a key event listener in the topmost DOM node and processes all events that originate from descendants of {@link AbstractGraph.container} or from the topmost DOM node.
  * The latter means that all unhandled keystrokes are handled by this object regardless of the focused state of the {@link graph}.
  *
+ * ### Escape keystroke
+ *
+ * An instance handles the Escape keystroke even when no key is bound to it: it calls {@link escape}, which cancels the gesture in progress,
+ * such as moving cells, creating a connection or resizing a cell.
+ * Nothing else in maxGraph calls {@link AbstractGraph.escape}, so without an instance, the Escape keystroke cancels none of these gestures.
+ * The in-place editing of a label is not concerned: the {@link CellEditorHandler} plugin cancels it, whether an instance exists or not.
+ *
  * ### Example
  *
  * The following example creates a key handler that listens to the delete key and deletes the selection cells if the graph is enabled.
@@ -256,7 +263,7 @@ class KeyHandler {
    */
   keyDown(evt: KeyboardEvent) {
     if (this.isEnabledForEvent(evt)) {
-      // Cancels the editing if escape is pressed
+      // Cancels the gesture in progress if escape is pressed, see escape()
       if (evt.keyCode === KeyCodes.Escape) {
         this.escape(evt);
       }
