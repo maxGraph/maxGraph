@@ -408,6 +408,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     graph.zoomActual();
   });
 
+  // The icon is "view-fullscreen" from the Tango Desktop Project (http://tango.freedesktop.org/Tango_Desktop_Project),
+  // released into the public domain, rendered at 28x28 and centered in a 32x32 image. Original SVG and license:
+  // https://commons.wikimedia.org/wiki/File:View-fullscreen.svg
   const fitCenterItem = tb.addItem('Fit Center', 'images/zoom_fit32.png', () => {
     graph.getPlugin<FitPlugin>('fit')?.fitCenter({ margin: 50 });
   });
