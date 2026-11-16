@@ -117,7 +117,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   outlineContainerStyle.height = '120px';
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(div);
-  // if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Sets a gradient background
   container.style.background = 'linear-gradient(#FFFFFF, #E7E7E7)';
@@ -125,8 +124,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Creates the graph inside the given container
   const graph = new Graph(container);
 
-  // Enables automatic sizing for vertices after editing and
-  // panning by using the left mouse button.
+  // The layout positions the cells, so they cannot be moved by the user
   graph.setCellsMovable(false);
 
   // Edges and the root vertex cannot be selected: there is no action available on edges, and the root cannot be changed
@@ -146,6 +144,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // No key is bound, this instance is still needed: KeyHandler is what calls graph.escape() when Escape is pressed,
   // which cancels a resize in progress. Escape during label editing is handled by the cell editor, without it.
   new KeyHandler(graph);
+
   // Creates the outline (navigator, overview) for moving around the graph in the top, right corner of the window.
   const outline = new Outline(graph, outlineContainer);
   outline.outline!.labelsVisible = true; // disabled by default for performance reasons, but enabled here to demonstrate the feature.
@@ -263,16 +262,19 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // The story element is attached to the page after this function returns, so the container has no size yet.
   requestAnimationFrame(() => {
     graph.batchUpdate(() => {
-      const w = graph.container.offsetWidth;
       const v1 = graph.insertVertex({
         id: 'treeRoot',
         value: 'Organization',
-        position: [w / 2 - 30, 20],
+        position: [0, 20],
         size: [140, 60],
         // The root can neither be resized nor have its label changed
         style: { image: 'images/house.png', editable: false, resizable: false },
       });
       graph.updateCellSize(v1);
+      // The width is only known once the size is updated, so center the vertex afterwards
+      const geometry = v1.getGeometry()!.clone();
+      geometry.x = (graph.container.offsetWidth - geometry.width) / 2;
+      graph.getDataModel().setGeometry(v1, geometry);
       addOverlays(graph, v1, false);
     });
   });
@@ -335,7 +337,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         });
       }
 
-      if (cell.id != 'treeRoot' && cell.isVertex()) {
+      if (cell.id !== 'treeRoot' && cell.isVertex()) {
         menu.addItem('Delete', 'images/delete.gif', function () {
           deleteSubtree(graph, cell);
         });
@@ -408,15 +410,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       // Adds the edge between the existing cell
       // and the new vertex and executes the
       // automatic layout on the parent
-      const edge = graph.insertEdge({ source: cell, target: vertex });
-
-      // Configures the edge label "in-place" to reside
-      // at the end of the edge (x = 1) and with an offset
-      // of 20 pixels in negative, vertical direction.
-      const edgeGeometry = edge.geometry!;
-      edgeGeometry.x = 1;
-      edgeGeometry.y = 0;
-      edgeGeometry.offset = new Point(0, -20);
+      graph.insertEdge({ source: cell, target: vertex });
 
       addOverlays(graph, vertex, true);
     });
