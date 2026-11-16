@@ -62,6 +62,118 @@ const promptForPageCount = (): number | null => {
   return Number.isNaN(pageCount) ? null : pageCount;
 };
 
+// Function to create the entries in the popupmenu
+function createPopupMenu(
+  graph: AbstractGraph,
+  menu: MaxPopupMenu,
+  cell: Cell | null,
+  _evt: MouseEvent
+) {
+  if (cell != null) {
+    if (cell.isVertex()) {
+      menu.addItem('Add child', 'images/overlays/check.png', function () {
+        addChild(graph, cell);
+      });
+    }
+
+    // startEditingAtCell does not check if the cell is editable when the cell is passed
+    if (graph.isCellEditable(cell)) {
+      menu.addItem('Edit label', 'images/text.gif', function () {
+        graph.startEditingAtCell(cell);
+      });
+    }
+
+    if (cell.id !== 'treeRoot' && cell.isVertex()) {
+      menu.addItem('Delete', 'images/delete.gif', function () {
+        deleteSubtree(graph, cell);
+      });
+    }
+
+    menu.addSeparator();
+  }
+
+  menu.addItem('Fit', 'images/zoom.gif', function () {
+    graph.getPlugin<FitPlugin>('fit')?.fit();
+  });
+
+  menu.addItem('Actual', 'images/zoomactual.gif', function () {
+    graph.zoomActual();
+  });
+
+  menu.addSeparator();
+
+  menu.addItem('Print', 'images/print.gif', function () {
+    const preview = new PrintPreview(graph, 1);
+    preview.open();
+  });
+
+  menu.addItem('Poster Print', 'images/print.gif', function () {
+    const pageCount = promptForPageCount();
+
+    if (pageCount != null) {
+      const scale = printUtils.getScaleForPageCount(pageCount, graph);
+      const preview = new PrintPreview(graph, scale);
+      preview.open();
+    }
+  });
+}
+
+function addOverlays(graph: AbstractGraph, cell: Cell, addDeleteIcon: boolean) {
+  let overlay = new CellOverlay(new ImageBox('images/add.png', 24, 24), 'Add child');
+  overlay.cursor = 'hand';
+  overlay.align = 'center';
+  overlay.addListener(InternalEvent.CLICK, () => {
+    addChild(graph, cell);
+  });
+
+  graph.addCellOverlay(cell, overlay);
+
+  if (addDeleteIcon) {
+    overlay = new CellOverlay(new ImageBox('images/close.png', 30, 30), 'Delete');
+    overlay.cursor = 'hand';
+    overlay.offset = new Point(-4, 8);
+    overlay.align = 'right';
+    overlay.verticalAlign = 'top';
+    overlay.addListener(InternalEvent.CLICK, () => {
+      deleteSubtree(graph, cell);
+    });
+
+    graph.addCellOverlay(cell, overlay);
+  }
+}
+
+function addChild(graph: AbstractGraph, cell: Cell): void {
+  graph.batchUpdate(() => {
+    const vertex = graph.insertVertex({ value: 'Double click to set name' });
+    const geometry = vertex.getGeometry()!;
+
+    // Updates the geometry of the vertex with the
+    // preferred size computed in the graph
+    const size = graph.getPreferredSizeForCell(vertex)!;
+    geometry.width = size.width;
+    geometry.height = size.height;
+
+    // Adds the edge between the existing cell
+    // and the new vertex and executes the
+    // automatic layout on the parent
+    graph.insertEdge({ source: cell, target: vertex });
+
+    addOverlays(graph, vertex, true);
+  });
+}
+
+function deleteSubtree(graph: AbstractGraph, cell: Cell) {
+  // Gets the subtree from cell downwards
+  const cells: Cell[] = [];
+
+  treeTraversalUtils.traverse(cell, true, function (vertex: Cell) {
+    cells.push(vertex);
+    return true;
+  });
+
+  graph.removeCells(cells);
+}
+
 const Template = ({ label, ...args }: Record<string, string>) => {
   // Positioned area holding the graph container, with the toolbar and the outline displayed over it
   const div = document.createElement('div');
@@ -315,118 +427,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       preview.open();
     }
   });
-
-  // Function to create the entries in the popupmenu
-  function createPopupMenu(
-    graph: AbstractGraph,
-    menu: MaxPopupMenu,
-    cell: Cell | null,
-    _evt: MouseEvent
-  ) {
-    if (cell != null) {
-      if (cell.isVertex()) {
-        menu.addItem('Add child', 'images/overlays/check.png', function () {
-          addChild(graph, cell);
-        });
-      }
-
-      // startEditingAtCell does not check if the cell is editable when the cell is passed
-      if (graph.isCellEditable(cell)) {
-        menu.addItem('Edit label', 'images/text.gif', function () {
-          graph.startEditingAtCell(cell);
-        });
-      }
-
-      if (cell.id !== 'treeRoot' && cell.isVertex()) {
-        menu.addItem('Delete', 'images/delete.gif', function () {
-          deleteSubtree(graph, cell);
-        });
-      }
-
-      menu.addSeparator();
-    }
-
-    menu.addItem('Fit', 'images/zoom.gif', function () {
-      graph.getPlugin<FitPlugin>('fit')?.fit();
-    });
-
-    menu.addItem('Actual', 'images/zoomactual.gif', function () {
-      graph.zoomActual();
-    });
-
-    menu.addSeparator();
-
-    menu.addItem('Print', 'images/print.gif', function () {
-      const preview = new PrintPreview(graph, 1);
-      preview.open();
-    });
-
-    menu.addItem('Poster Print', 'images/print.gif', function () {
-      const pageCount = promptForPageCount();
-
-      if (pageCount != null) {
-        const scale = printUtils.getScaleForPageCount(pageCount, graph);
-        const preview = new PrintPreview(graph, scale);
-        preview.open();
-      }
-    });
-  }
-
-  function addOverlays(graph: AbstractGraph, cell: Cell, addDeleteIcon: boolean) {
-    let overlay = new CellOverlay(new ImageBox('images/add.png', 24, 24), 'Add child');
-    overlay.cursor = 'hand';
-    overlay.align = 'center';
-    overlay.addListener(InternalEvent.CLICK, () => {
-      addChild(graph, cell);
-    });
-
-    graph.addCellOverlay(cell, overlay);
-
-    if (addDeleteIcon) {
-      overlay = new CellOverlay(new ImageBox('images/close.png', 30, 30), 'Delete');
-      overlay.cursor = 'hand';
-      overlay.offset = new Point(-4, 8);
-      overlay.align = 'right';
-      overlay.verticalAlign = 'top';
-      overlay.addListener(InternalEvent.CLICK, () => {
-        deleteSubtree(graph, cell);
-      });
-
-      graph.addCellOverlay(cell, overlay);
-    }
-  }
-
-  function addChild(graph: AbstractGraph, cell: Cell): void {
-    graph.batchUpdate(() => {
-      const vertex = graph.insertVertex({ value: 'Double click to set name' });
-      const geometry = vertex.getGeometry()!;
-
-      // Updates the geometry of the vertex with the
-      // preferred size computed in the graph
-      const size = graph.getPreferredSizeForCell(vertex)!;
-      geometry.width = size.width;
-      geometry.height = size.height;
-
-      // Adds the edge between the existing cell
-      // and the new vertex and executes the
-      // automatic layout on the parent
-      graph.insertEdge({ source: cell, target: vertex });
-
-      addOverlays(graph, vertex, true);
-    });
-  }
-
-  function deleteSubtree(graph: AbstractGraph, cell: Cell) {
-    // Gets the subtree from cell downwards
-    const cells: Cell[] = [];
-
-    treeTraversalUtils.traverse(cell, true, function (vertex: Cell) {
-      cells.push(vertex);
-      return true;
-    });
-
-    graph.removeCells(cells);
-  }
 
   return div;
 };
