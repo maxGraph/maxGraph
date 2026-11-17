@@ -17,7 +17,12 @@ const exitWithSetupError = (message) => {
 // Playwright is the fallback, when it was already downloaded.
 const launchBrowser = async () => {
   const candidates = process.env.CHROMIUM_PATH
-    ? [{ label: `CHROMIUM_PATH ${process.env.CHROMIUM_PATH}`, options: { executablePath: process.env.CHROMIUM_PATH } }]
+    ? [
+        {
+          label: `CHROMIUM_PATH ${process.env.CHROMIUM_PATH}`,
+          options: { executablePath: process.env.CHROMIUM_PATH },
+        },
+      ]
     : [
         { label: 'local Google Chrome', options: { channel: 'chrome' } },
         { label: 'Playwright Chromium', options: {} },
@@ -38,7 +43,9 @@ const launchBrowser = async () => {
 
 const indexResponse = await fetch(`${baseUrl}/index.json`).catch((error) => error);
 if (!indexResponse.ok) {
-  exitWithSetupError(`cannot read ${baseUrl}/index.json: ${indexResponse.status ?? indexResponse.message}`);
+  exitWithSetupError(
+    `cannot read ${baseUrl}/index.json: ${indexResponse.status ?? indexResponse.message}`
+  );
 }
 const storyIds = Object.values((await indexResponse.json()).entries)
   .filter((entry) => entry.type === 'story')
@@ -51,23 +58,32 @@ const problems = [];
 const openPage = async (label) => {
   const context = await browser.newContext();
   const page = await context.newPage();
-  page.on('pageerror', (error) => problems.push(`${label} uncaught error: ${error.message}`));
+  page.on('pageerror', (error) =>
+    problems.push(`${label} uncaught error: ${error.message}`)
+  );
   page.on('console', (message) => {
     // Failed requests are reported by the listeners below with their URL, the console message does not carry it.
-    if (message.type() === 'error' && !message.text().startsWith('Failed to load resource')) {
+    if (
+      message.type() === 'error' &&
+      !message.text().startsWith('Failed to load resource')
+    ) {
       problems.push(`${label} console error: ${message.text()}`);
     }
   });
   page.on('response', (response) => {
     if (response.status() >= 400 && !response.url().endsWith('/favicon.ico')) {
-      problems.push(`${label} HTTP ${response.status()}: ${response.url().replace(baseUrl, '')}`);
+      problems.push(
+        `${label} HTTP ${response.status()}: ${response.url().replace(baseUrl, '')}`
+      );
     }
   });
   page.on('requestfailed', (request) => {
     // Aborted requests are the ones cut by a navigation or by closing the page, not failures of the story
     const errorText = request.failure()?.errorText ?? '';
     if (!errorText.includes('ERR_ABORTED')) {
-      problems.push(`${label} request failed: ${request.url().replace(baseUrl, '')} ${errorText}`);
+      problems.push(
+        `${label} request failed: ${request.url().replace(baseUrl, '')} ${errorText}`
+      );
     }
   });
   return page;
