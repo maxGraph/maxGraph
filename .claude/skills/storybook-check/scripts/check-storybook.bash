@@ -3,9 +3,10 @@
 # statically). Logs go to the work directory, the console only gets the summary of each mode.
 # Usage: check-storybook.bash [dev|prod|all] [--skip-build]
 # Environment:
-#   STORYBOOK_CHECK_DIR  work directory holding playwright-core and the logs, outside the repository
-#   CHROMIUM_PATH        browser executable to use instead of the local Google Chrome
-#   STORYBOOK_CHECK_DEV_PORT, STORYBOOK_CHECK_PROD_PORT  ports of the servers, 8901 and 8902 by default
+#   STORYBOOK_CHECK_DIR           work directory holding playwright-core and the logs, outside the repository
+#   STORYBOOK_CHECK_BROWSER_PATH  browser executable to use instead of the local Google Chrome
+#   STORYBOOK_CHECK_DEV_PORT      port of the dev server, 8901 by default
+#   STORYBOOK_CHECK_PROD_PORT     port of the prod server, 8902 by default
 set -uo pipefail
 
 mode=all

@@ -23,8 +23,9 @@ Run the script from the repository root, passing the arguments unchanged (none m
 - Ports 8901 (dev) and 8902 (prod) must be free: the mode fails if something already listens there, such as a running
   `npm run dev -w packages/html`, possibly from another worktree. Never stop a server you did not start: choose other
   ports with `STORYBOOK_CHECK_DEV_PORT` and `STORYBOOK_CHECK_PROD_PORT`.
-- The browser is the local Google Chrome, or `CHROMIUM_PATH` when set. Without either, an already downloaded
-  Playwright Chromium is used, otherwise the script names the command installing one.
+- The browser is the local Google Chrome, or `STORYBOOK_CHECK_BROWSER_PATH` when set, any Chromium based executable.
+  Without either, an already downloaded Playwright Chromium is used, otherwise the script names the command installing
+  one.
 - `playwright-core`, pinned in the script, and the logs go to `STORYBOOK_CHECK_DIR`, by default
   `~/.cache/maxgraph-storybook-check`, never into the repository.
 
@@ -32,7 +33,8 @@ Run the script from the repository root, passing the arguments unchanged (none m
 
 For each mode, the browser used, the number of stories, the stories rendering no SVG within 5 seconds, then the
 problems: navigation errors, uncaught errors, console errors, HTTP responses of 400 and above except `favicon.ico`, and
-requests failing at network level. The Storybook UI itself is checked once, with a 30 seconds timeout. Build and server log lines containing `error` or `warn` are listed too, with the path of the full log.
+requests failing at network level. The Storybook UI itself is checked once, with a 30 seconds timeout. Build and
+server log lines containing `error` or `warn` are listed too, with the path of the full log.
 
 Once the checks have run, the last line is `PASS` or `FAIL`, matching the exit code: a busy port or a server that did
 not start counts as a failed mode. A build failure exits with 1, naming its log. Exit code 2 means the check could not

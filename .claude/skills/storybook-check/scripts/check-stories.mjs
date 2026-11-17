@@ -1,6 +1,6 @@
-// Loads every story of a running Storybook in headless Chromium and reports the stories that render no SVG, the
-// uncaught errors, the console errors and the failed requests. Exits 1 when anything is reported, 2 when the check
-// cannot run.
+// Loads every story of a running Storybook in a headless Chrome or Chromium and reports the stories that render no
+// SVG, the uncaught errors, the console errors and the failed requests. Exits 1 when anything is reported, 2 when the
+// check cannot run.
 // Usage: node check-stories.mjs <storybook base url> <playwright-core version>
 import { chromium } from 'playwright-core';
 
@@ -16,11 +16,11 @@ const exitWithSetupError = (message) => {
 // The local Google Chrome needs no download and Playwright finds it on Linux, macOS and Windows. The Chromium of
 // Playwright is the fallback, when it was already downloaded.
 const launchBrowser = async () => {
-  const candidates = process.env.CHROMIUM_PATH
+  const candidates = process.env.STORYBOOK_CHECK_BROWSER_PATH
     ? [
         {
-          label: `CHROMIUM_PATH ${process.env.CHROMIUM_PATH}`,
-          options: { executablePath: process.env.CHROMIUM_PATH },
+          label: `STORYBOOK_CHECK_BROWSER_PATH ${process.env.STORYBOOK_CHECK_BROWSER_PATH}`,
+          options: { executablePath: process.env.STORYBOOK_CHECK_BROWSER_PATH },
         },
       ]
     : [
@@ -39,7 +39,7 @@ const launchBrowser = async () => {
   }
   exitWithSetupError(
     [
-      `No browser found: install Google Chrome, set CHROMIUM_PATH, or run "npx playwright-core@${playwrightVersion} install --only-shell chromium" outside the repository`,
+      `No browser found: install Google Chrome, set STORYBOOK_CHECK_BROWSER_PATH, or run "npx playwright-core@${playwrightVersion} install --only-shell chromium" outside the repository`,
       ...launchErrors,
     ].join('\n')
   );
