@@ -27,17 +27,21 @@ const launchBrowser = async () => {
         { label: 'local Google Chrome', options: { channel: 'chrome' } },
         { label: 'Playwright Chromium', options: {} },
       ];
+  const launchErrors = [];
   for (const candidate of candidates) {
     try {
       const browser = await chromium.launch(candidate.options);
       console.log(`browser: ${candidate.label} ${browser.version()}`);
       return browser;
-    } catch {
-      // try the next candidate
+    } catch (error) {
+      launchErrors.push(`  ${candidate.label}: ${error.message.split('\n')[0]}`);
     }
   }
   exitWithSetupError(
-    'No browser found: install Google Chrome, set CHROMIUM_PATH, or run "npx playwright-core install --only-shell chromium" outside the repository'
+    [
+      'No browser found: install Google Chrome, set CHROMIUM_PATH, or run "npx playwright-core install --only-shell chromium" outside the repository',
+      ...launchErrors,
+    ].join('\n')
   );
 };
 
@@ -54,7 +58,8 @@ const storyIds = Object.values((await indexResponse.json()).entries)
 const browser = await launchBrowser();
 const problems = [];
 
-// One browser context per page, so that the cache of a previous story never hides a failed request
+// One browser context per page: with a shared page, a request made by a story was reported on the next one, and the
+// cache of a previous story could hide a failed request
 const openPage = async (label) => {
   const context = await browser.newContext();
   const page = await context.newPage();

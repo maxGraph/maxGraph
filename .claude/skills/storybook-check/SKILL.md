@@ -6,7 +6,9 @@ argument-hint: "[dev|prod|all] [--skip-build]"
 
 # Storybook check
 
-Run the script from the repository root:
+Arguments: `$ARGUMENTS`
+
+Run the script from the repository root, passing the arguments unchanged (none means `all`):
 
 ```bash
 .claude/skills/storybook-check/scripts/check-storybook.bash [dev|prod|all] [--skip-build]
@@ -15,8 +17,9 @@ Run the script from the repository root:
 - Mode defaults to `all`. Set the Bash timeout to 600000: a full run takes several minutes.
 - Without `--skip-build`, it builds `packages/core` and, for the prod mode, `packages/html`. Pass `--skip-build` only
   when these builds are already fresh for the current checkout.
-- `node_modules` must match the lock file. After checking out a branch that changes `package-lock.json`, run
-  `npm ci` first, otherwise the check validates the previous versions.
+- `npm ci` must have been run for the current checkout, also after checking out a branch that changes
+  `package-lock.json`, otherwise the check validates the previous versions. The script also needs `curl`, and network
+  access on its first run to install `playwright-core`. It applies `.nvmrc` through nvm when nvm is installed.
 - Ports 8901 (dev) and 8902 (prod) must be free: the mode fails if something already listens there, such as a running
   `npm run dev -w packages/html`, possibly from another worktree. Never stop a server you did not start: choose other
   ports with `STORYBOOK_CHECK_DEV_PORT` and `STORYBOOK_CHECK_PROD_PORT`.
@@ -27,12 +30,14 @@ Run the script from the repository root:
 
 ## What it reports
 
-For each mode, the browser used, the number of stories and, per story: no SVG rendered within 5 seconds, navigation
-errors, uncaught errors, console errors, HTTP responses of 400 and above except `favicon.ico`, and requests failing at
-network level. Build and server log lines containing `error` or `warn` are listed too, with the path of the full log.
+For each mode, the browser used, the number of stories, the stories rendering no SVG within 5 seconds, then the
+problems: navigation errors, uncaught errors, console errors, HTTP responses of 400 and above except `favicon.ico`, and
+requests failing at network level. The Storybook UI itself is checked once, with a 30 seconds timeout. Build and server log lines containing `error` or `warn` are listed too, with the path of the full log.
 
-Once the checks have run, the last line is `PASS` or `FAIL`, matching the exit code. A build failure exits with 1 and a
-setup failure (argument, Node version, install) with 2, both naming the log to read.
+Once the checks have run, the last line is `PASS` or `FAIL`, matching the exit code: a busy port or a server that did
+not start counts as a failed mode. A build failure exits with 1, naming its log. Exit code 2 means the check could not
+run at all: unknown argument, no Node or wrong Node version, `playwright-core` install failed, no browser found, or
+`index.json` unreadable.
 
 ## Reading the result
 

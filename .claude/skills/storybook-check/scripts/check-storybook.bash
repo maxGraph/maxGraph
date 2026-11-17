@@ -25,15 +25,19 @@ work_dir=${STORYBOOK_CHECK_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/maxgraph-storybo
 playwright_version=1.65.1
 dev_port=${STORYBOOK_CHECK_DEV_PORT:-8901}
 prod_port=${STORYBOOK_CHECK_PROD_PORT:-8902}
-mkdir -p "$work_dir"
+mkdir -p "$work_dir" || exit 2
+[[ -z "${STORYBOOK_CHECK_DIR:-}" ]] && chmod 700 "$work_dir"
+# Resolved before leaving the caller's directory, which a relative STORYBOOK_CHECK_DIR refers to
+work_dir=$(cd "$work_dir" && pwd)
 cd "$repo_root" || exit 2
 
-export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
 if [[ -s "$NVM_DIR/nvm.sh" ]]; then
   # shellcheck disable=SC1091
   . "$NVM_DIR/nvm.sh"
   nvm use >/dev/null || { echo "nvm cannot use the Node version of .nvmrc" >&2; exit 2; }
 fi
+command -v node >/dev/null || { echo "node not found, install the Node version of .nvmrc" >&2; exit 2; }
 
 # playwright-core lives outside the repository, so that the IDE does not index it and the lock file stays untouched
 installed_version=$(node -p 'require(process.argv[1]).version' "$work_dir/node_modules/playwright-core/package.json" 2>/dev/null)
@@ -61,7 +65,7 @@ wait_for_server() {
   local url=$1
   for _ in $(seq 1 120); do
     kill -0 "$server_pid" 2>/dev/null || return 1
-    curl -sf -o /dev/null "$url" && return 0
+    curl -sf -o /dev/null --connect-timeout 2 --max-time 5 "$url" && return 0
     sleep 1
   done
   return 1
@@ -79,8 +83,10 @@ run_mode() {
   local name=$1 port=$2 log=$3
   shift 3
   echo "== $name mode"
-  # Otherwise the check would run against whatever already listens there, such as a running npm run dev
-  if curl -s -o /dev/null "http://localhost:$port/"; then
+  # Otherwise the check would run against whatever already listens there, such as a running npm run dev. Only a
+  # refused connection (curl exit code 7) proves the port free: a listener that never answers times out instead.
+  curl -s -o /dev/null --connect-timeout 2 --max-time 5 "http://localhost:$port/"
+  if [[ $? -ne 7 ]]; then
     echo "port $port is already in use, stop the server listening on it"
     failures=$((failures + 1))
     return
@@ -93,7 +99,11 @@ run_mode() {
     stop_server
     return
   fi
-  node "$work_dir/check-stories.mjs" "http://localhost:$port" || failures=$((failures + 1))
+  node "$work_dir/check-stories.mjs" "http://localhost:$port"
+  local check_status=$?
+  # The check could not run, for instance without a browser: the other mode would fail the same way
+  [[ $check_status -eq 2 ]] && exit 2
+  [[ $check_status -ne 0 ]] && failures=$((failures + 1))
   stop_server
   report_log_problems server "$log"
 }
