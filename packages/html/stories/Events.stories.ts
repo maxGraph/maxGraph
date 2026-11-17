@@ -41,11 +41,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import {
-  configureImagesBasePath,
-  createGraphContainer,
-  createMainDiv,
-} from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -64,8 +60,6 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  configureImagesBasePath();
-
   const div = createMainDiv(`
   Creating a graph container and using interaction on the graph, including marquee selection, custom tooltips, context menu.
   <p>

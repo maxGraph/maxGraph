@@ -64,6 +64,7 @@ We regularly add new examples that:
   - Within the demo via the "Code" tab in the Addon Panel ([Storysource Addon](https://www.npmjs.com/package/@storybook/addon-storysource))
   - Source of all stories in [packages/html/stories](https://github.com/maxGraph/maxGraph/tree/main/packages/html/stories/)
   - Global maxGraph configuration in [packages/html/.storybook/preview.ts](https://github.com/maxGraph/maxGraph/tree/main/packages/html/.storybook/preview.ts)
+    - It is applied before each story, and sets for instance the base path of the images with `Client.setImageBasePath('./images')`. The stories don't repeat it, so set it in your application when reusing their code.
 - Some stories may still be under active development
 
 ## 🤝 Support

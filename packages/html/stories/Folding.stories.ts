@@ -25,7 +25,6 @@ import {
 import { globalTypes, globalValues } from './shared/args.js';
 import {
   configureExpandedAndCollapsedImages,
-  configureImagesBasePath,
   createGraphContainer,
 } from './shared/configure.js';
 
@@ -40,7 +39,6 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  configureImagesBasePath();
   const container = createGraphContainer(args);
 
   // Override default values

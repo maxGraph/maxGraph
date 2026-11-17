@@ -41,11 +41,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import {
-  configureImagesBasePath,
-  createGraphContainer,
-  createMainDiv,
-} from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -131,7 +127,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
-  configureImagesBasePath();
   const div =
     createMainDiv(`This example demonstrates referencing connection points by ID. The main difference to the
   implementation where the connection point is stored in the connecting edge is that changes to the original port will

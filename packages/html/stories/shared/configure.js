@@ -16,10 +16,6 @@ limitations under the License.
 
 import { Client, ImageBox as Image } from '@maxgraph/core';
 
-export const configureImagesBasePath = () => {
-  Client.setImageBasePath('./images');
-};
-
 /**
  * @param args {Record<string, string>}
  * @param [options] {{captureKeystrokes?: boolean}} `captureKeystrokes`: make the container focusable and focus it on click.

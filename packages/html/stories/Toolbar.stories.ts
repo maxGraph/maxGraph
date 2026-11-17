@@ -43,7 +43,6 @@ import {
 } from './shared/args.js';
 import {
   configureExpandedAndCollapsedImages,
-  configureImagesBasePath,
   createGraphContainer,
 } from './shared/configure.js';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
@@ -61,7 +60,6 @@ export default {
 };
 
 const Template = ({ label, ...args }: { [p: string]: any }) => {
-  configureImagesBasePath();
   const div = document.createElement('div');
   div.style.display = 'flex';
   div.style.flexDirection = 'column-reverse';

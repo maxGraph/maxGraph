@@ -64,6 +64,8 @@ const resetMaxGraphConfigs = (): void => {
   resetGlobalConfig();
   GlobalConfig.i18n = i18nProvider;
   GlobalConfig.logger = defaultLogger;
+  // The images are served by Storybook from the 'images' folder, relative to the page
+  Client.setImageBasePath('./images');
 
   resetEdgeHandlerConfig();
   resetEntityRelationConnectorConfig();

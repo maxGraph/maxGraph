@@ -31,7 +31,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import { createGraphContainer } from './shared/configure.js';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
@@ -47,7 +47,6 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  configureImagesBasePath();
   const container = createGraphContainer(args);
 
   // Defines a new class for all icons
