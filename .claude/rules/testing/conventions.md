@@ -12,7 +12,7 @@ paths:
 - Use `test.each` (or `it.each`) when multiple tests share the same structure and only differ by input/expected data
 
 ```typescript
-// Good — data-driven
+// Good: data-driven
 test.each([
   ['case 1', input1, expected1],
   ['case 2', input2, expected2],

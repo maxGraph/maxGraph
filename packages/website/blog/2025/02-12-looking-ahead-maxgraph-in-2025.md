@@ -36,7 +36,7 @@ This is a large topic that will be gradually implemented throughout 2025.
 
 While documentation improvements have enhanced usability, optimizing tree-shaking has been equally important. 
 
-maxGraph, as a fork of mxGraph, inherited some limitations—one being inefficient tree-shaking. Regardless of which parts of mxGraph were used, it contributed about 811KB (minified) to application sizes.
+maxGraph, as a fork of mxGraph, inherited some limitations, one being inefficient tree-shaking. Regardless of which parts of mxGraph were used, it contributed about 811KB (minified) to application sizes.
 
 From the start, one of maxGraph’s goals has been to provide better tree-shaking support. Here’s how improvements have been made so far:
 
@@ -56,7 +56,7 @@ Ongoing discussions and opportunities are described in [Issue #665: Strategies f
 
 To achieve more efficient tree-shaking, new methods of graph instantiation will be explored while maintaining the current mechanism for those who prefer the default setup, even if it results in a larger bundle size. This balance is necessary to ensure the library remains accessible for newcomers. ✨
 
-While there may be breaking changes, efforts will be made to minimize their impact. These changes will primarily target extension points rather than core functionalities, which will be preserved. The approach will be progressive and incremental across releases—no big bangs here!
+While there may be breaking changes, efforts will be made to minimize their impact. These changes will primarily target extension points rather than core functionalities, which will be preserved. The approach will be progressive and incremental across releases: no big bangs here!
 
 
 ## Other Topics for 2025

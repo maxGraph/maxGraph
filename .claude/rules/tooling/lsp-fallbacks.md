@@ -10,9 +10,9 @@ Read this BEFORE any LSP operation. Update this file when new failures are disco
 
 ## Fallback strategy
 
-1. **LSP** — Try `mcp__ide__getDiagnostics` first (~50 tokens vs ~2000 for Read)
-2. **Grep** — Search for usages, callers, patterns
-3. **Read** — Confirm in full context
+1. **LSP**: try `mcp__ide__getDiagnostics` first (~50 tokens vs ~2000 for Read)
+2. **Grep**: search for usages, callers, patterns
+3. **Read**: confirm in full context
 
 ## Known issues
 

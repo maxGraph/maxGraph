@@ -88,7 +88,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   <p>
   Four cells reference short keys (<code>cat-face</code>, <code>cat-sitting</code>, <code>cat-curled</code>, <code>cat-standing</code>)
   resolved to inline SVG data URIs by a registered <code>ImageBundle</code>. A fifth cell references a PNG
-  directly by URL to show that <code>style.image</code> also accepts raw paths — bundle keys are optional.
+  directly by URL to show that <code>style.image</code> also accepts raw paths, bundle keys are optional.
   <br>
   <code>BaseGraph</code> loads nothing by default: the <code>image</code> shape, <code>ImageBundlePlugin</code>,
   and the handlers for selection and label editing are all opted in explicitly. Click to select, drag to move,
@@ -172,7 +172,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     });
 
     // Fifth cell: direct URL to a PNG served by Storybook from packages/html/public/images/.
-    // Demonstrates that style.image also accepts plain paths — it is NOT required to
+    // Demonstrates that style.image also accepts plain paths: it is NOT required to
     // be a bundle key.
     graph.insertVertex({
       parent,

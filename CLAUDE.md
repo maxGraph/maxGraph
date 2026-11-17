@@ -38,13 +38,13 @@ CI runs on ubuntu-24.04, macos-15, windows-2022.
 ## Architecture
 
 Three-tier Graph class hierarchy:
-- **AbstractGraph** — base abstract class with mixins, no default built-ins
-- **BaseGraph** — minimal, production-optimized, requires explicit config (recommended for production)
-- **Graph** — full-featured with all defaults registered (good for prototyping, not production)
+- **AbstractGraph**: base abstract class with mixins, no default built-ins
+- **BaseGraph**: minimal, production-optimized, requires explicit config (recommended for production)
+- **Graph**: full-featured with all defaults registered (good for prototyping, not production)
 
 Key patterns:
-- **Mixins** in `packages/core/src/view/mixin/` — each has `.ts` + `.type.ts` files
-- **Plugins** in `packages/core/src/view/plugin/` — loaded by `Graph` via `getDefaultPlugins()`. New plugins follow the `*Plugin.ts` naming; some legacy files still use `*Handler.ts` and will be renamed later
+- **Mixins** in `packages/core/src/view/mixin/`, each has `.ts` + `.type.ts` files
+- **Plugins** in `packages/core/src/view/plugin/`, loaded by `Graph` via `getDefaultPlugins()`. New plugins follow the `*Plugin.ts` naming; some legacy files still use `*Handler.ts` and will be renamed later
 - **Registries** for edge styles, markers, perimeters in `packages/core/src/view/style/`; shape registry in `packages/core/src/view/shape/`
 - **XML serialization** in `packages/core/src/serialization/` (mxGraph-compatible)
 - Always wrap multiple model changes in `batchUpdate()`
