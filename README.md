@@ -18,6 +18,7 @@ Active development ensures continuous bug fixes and new capabilities.
 <!-- END OF 'copied into packages/core/README.md and packages/website/docs/intro.md' -->
 
 
+<!-- copied into packages/core/README.md -->
 ## Features
 
 - 🎨 **Rich visual library**: Built-in shapes, custom stencils, and various edge routing algorithms (orthogonal, Manhattan, elbow, etc.)
@@ -45,7 +46,8 @@ In the meantime, new features are also being added to enrich the library.
 
 Please try it in your application and [submit an issue](https://github.com/maxGraph/maxGraph/issues) if you think that something is not working.
 
-You can also test `maxGraph` by running the [Storybook examples](#development).
+You can also try `maxGraph` right away in the [online demo](https://maxgraph.github.io/maxGraph/demo/), no installation needed.
+<!-- END OF 'copied into packages/core/README.md' -->
 
 ## Install
 <!-- copied into packages/website/docs/getting-started.mdx -->
