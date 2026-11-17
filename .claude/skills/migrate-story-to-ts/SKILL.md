@@ -80,7 +80,7 @@ Each of these was found in a migrated story. Check for all of them.
 |---|---|---|
 | `fn.apply(this, arguments)` after reassigning a parameter | Reassigning a parameter only updates `arguments` in sloppy mode, not in a strict class method. Pass the parameters explicitly | HtmlLabel (#1277) |
 | A cache cleared in `setValue` only | Undo and redo bypass `setValue` and call `valueForCellChanged`. Clear the cache there | HtmlLabel (#1277) |
-| An override of an mxGraph method that no longer exists | Lint does not flag it, the feature silently does nothing. Check that the overridden member exists in `packages/core/src` | SecondLabel (`isCellVisible`), OrgChart (`Graph.traverse`) |
+| A call to, or an override of, an mxGraph method that no longer exists | Lint does not flag it, the feature silently does nothing or throws once used. Check that the member exists in `packages/core/src` | SecondLabel (`isCellVisible`), OrgChart (`Graph.traverse`) |
 | A global prototype mutation (`Shape.prototype.getPorts = ...`) or a global registry change (`CodecRegistry.getCodec(Cell).exclude.push(...)`) | It leaks into every story displayed afterwards in the same page. Use a subclass, a style key, or state local to the story (a `WeakMap`) | PortRefs (#1129), HtmlLabel |
 | Data bolted onto an object through `as any` | The class often has a typed field for it already (`ConnectionConstraint.name`) | PortRefs (#1129) |
 | Dead branches behind a hardcoded flag (`const cached = true`) | Unreachable code to maintain and type. Drop the flag | HtmlLabel |
@@ -105,7 +105,7 @@ told the user nothing about the checkbox of HtmlLabel.
 ## 4. Verify
 
 ```bash
-cd packages/html && npx tsc --noEmit        # the whole stories folder
+(cd packages/html && npx tsc --noEmit)      # the whole stories folder
 npx eslint packages/html/stories/<Name>.stories.ts
 npx prettier --check packages/html/stories/<Name>.stories.ts
 ```

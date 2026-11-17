@@ -22,6 +22,7 @@ import {
   type EventObject,
   Graph,
   GraphDataModel,
+  getDefaultPlugins,
   InternalEvent,
   RubberBandHandler,
   UndoManager,
@@ -135,14 +136,15 @@ Both changes go through the undo/redo manager (<code>UndoManager</code>): use th
         : super.getEditingValue(cell, evt);
   }
 
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  plugins.push(RubberBandHandler);
+
   // Creates the graph inside the given container
-  const graph = new HtmlLabelGraph(container);
+  const graph = new HtmlLabelGraph(container, undefined, plugins);
 
   // Enables HTML labels
   graph.setHtmlLabels(true);
-
-  // Enables rubberband selection
-  new RubberBandHandler(graph);
 
   graph.insertVertex({ value: userObject, position: [20, 20], size: [80, 60] });
 
