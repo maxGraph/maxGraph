@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Client, ImageBox as Image } from '@maxgraph/core';
-
 /**
  * @param args {Record<string, string>}
  * @param [options] {{captureKeystrokes?: boolean}} `captureKeystrokes`: make the container focusable and focus it on click.
@@ -44,14 +42,6 @@ export const createGraphContainer = (args, options = {}) => {
   }
   return container;
 };
-
-// TODO update the maxGraph behavior to prevent to have to call this function
-// The graph options seem to be set at maxGraph import, prior we set the Client.imageBasePath so it is using the former imageBasePath value.
-// Redefine here to ensure that the updated Client.imageBasePath value is used
-export function configureExpandedAndCollapsedImages(graph) {
-  graph.options.collapsedImage = new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9);
-  graph.options.expandedImage = new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9);
-}
 
 /**
  * Create a main div including a div with the description.

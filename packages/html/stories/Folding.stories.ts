@@ -23,10 +23,7 @@ import {
   StackLayout,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import {
-  configureExpandedAndCollapsedImages,
-  createGraphContainer,
-} from './shared/configure.js';
+import { createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Layouts/Folding',
@@ -50,7 +47,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Disables global features
   graph.options.collapseToPreferredSize = false;
-  configureExpandedAndCollapsedImages(graph);
 
   graph.constrainChildren = false;
   graph.cellsSelectable = false;

@@ -41,10 +41,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import {
-  configureExpandedAndCollapsedImages,
-  createGraphContainer,
-} from './shared/configure.js';
+import { createGraphContainer } from './shared/configure.js';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
@@ -92,7 +89,6 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
   // Creates the graph inside the given container
   const model = new GraphDataModel();
   const graph = new Graph(container, model, plugins);
-  configureExpandedAndCollapsedImages(graph);
   graph.dropEnabled = true;
 
   // Defines an icon for creating new connections in the connection handler.
