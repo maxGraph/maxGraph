@@ -14,7 +14,9 @@ Run the script from the repository root, passing the arguments unchanged (none m
 .claude/skills/storybook-check/scripts/check-storybook.bash [dev|prod|all] [--skip-build]
 ```
 
-- Mode defaults to `all`. Set the Bash timeout to 600000: a full run takes several minutes.
+- Mode defaults to `all`. Set the Bash timeout to 600000: a full run takes several minutes. Each story rendering no
+  SVG waits 5 seconds, so when most stories fail, a run of both modes exceeds that timeout and gets killed before its
+  result: run `dev` and `prod` as separate calls then.
 - Without `--skip-build`, it builds `packages/core` and, for the prod mode, `packages/html`. Pass `--skip-build` only
   when these builds are already fresh for the current checkout.
 - `npm ci` must have been run for the current checkout, also after checking out a branch that changes
