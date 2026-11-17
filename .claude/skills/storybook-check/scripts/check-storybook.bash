@@ -99,7 +99,7 @@ run_mode() {
     stop_server
     return
   fi
-  node "$work_dir/check-stories.mjs" "http://localhost:$port"
+  node "$work_dir/check-stories.mjs" "http://localhost:$port" "$playwright_version"
   local check_status=$?
   # The check could not run, for instance without a browser: the other mode would fail the same way
   [[ $check_status -eq 2 ]] && exit 2
