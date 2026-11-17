@@ -46,7 +46,7 @@ class SelectionChange implements UndoableChange {
    * {@link InternalEvent.CHANGE} on the selection model.
    *
    * **WARN**: because of the swap, the `added` and `removed` properties of the fired event refer to the
-   * post-swap arrays — the event's `added` contains the cells just removed from the selection, and
+   * post-swap arrays: the event's `added` contains the cells just removed from the selection, and
    * vice-versa. This naming is preserved for historical reasons.
    */
   execute(): void {

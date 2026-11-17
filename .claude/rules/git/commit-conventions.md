@@ -1,6 +1,6 @@
 # Commit Message Conventions
 
-Format: `type(scope): subject` — imperative mood, <72 chars, lowercase, no period.
+Format: `type(scope): subject`, imperative mood, <72 chars, lowercase, no period.
 
 ## Types
 

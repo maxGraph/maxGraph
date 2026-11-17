@@ -13,7 +13,7 @@ and it is **going to be formally deprecated**, see
 [issue #856](https://github.com/maxGraph/maxGraph/issues/856). It is not scheduled for removal, so that users
 migrating from `mxGraph` are not broken.
 
-Omit `parent` when the cell belongs to the default parent — both `VertexParameters.parent` and `EdgeParameters.parent`
+Omit `parent` when the cell belongs to the default parent: both `VertexParameters.parent` and `EdgeParameters.parent`
 already fall back to it. Do not call `graph.getDefaultParent()` just to pass the result straight back in.
 
 ```typescript
@@ -25,7 +25,7 @@ const vertex = graph.insertVertex({
 });
 const edge = graph.insertEdge({ value: 'an edge', source, target });
 
-// Bad — positional form, and parent passed explicitly for nothing
+// Bad: positional form, and parent passed explicitly for nothing
 const parent = graph.getDefaultParent();
 const vertex = graph.insertVertex(parent, null, 'a vertex', 10, 20, 80, 40);
 const edge = graph.insertEdge(parent, null, 'an edge', source, target);
