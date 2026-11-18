@@ -35,3 +35,11 @@ Roughly half the existing call sites still use the positional form. Converting t
 tracked in [issue #856](https://github.com/maxGraph/maxGraph/issues/856), the Storybook stories in particular. Apply
 this rule to the code you write or modify; leave unrelated call sites to that dedicated effort rather than growing
 the diff of the change at hand.
+
+### Exception: tests of the positional signature
+
+A test whose subject is the positional form itself must call it. That form stays supported for users migrating from
+`mxGraph`, and both `insertVertex` and `insertEdge` parse it in a branch of their own, so a test using the object form
+would leave that branch uncovered. Group such tests in a `describe` naming the legacy signature, as
+`packages/core/__tests__/view/mixin/VertexMixin.test.ts` does with `Legacy method (with several parameters)`, so the
+intent shows. Every other test uses the object form.
