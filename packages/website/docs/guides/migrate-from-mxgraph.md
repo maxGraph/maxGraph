@@ -484,10 +484,31 @@ Some methods were removed:
 Several methods from the `mxGraphModel` class have been moved to the `Cell` class. These methods no longer need the `cell` parameter:
 
 - `filterDescendants()`
+- `getChildAt(cell, index)`, use `Cell.getChildAt(index)` instead
+- `getChildCells(parent, vertices, edges)`, use `Cell.getChildCells(vertices, edges)` instead
+- `getChildCount()`
+- `getChildEdges()`
+- `getChildren()`
+- `getChildVertices()`
+- `getConnections()`
+- `getDescendants()`
+- `getDirectedEdgeCount(cell, outgoing, ignoredEdge)`, use `Cell.getDirectedEdgeCount(outgoing, ignoredEdge)` instead
+- `getEdgeAt(cell, index)`, use `Cell.getEdgeAt(index)` instead
+- `getEdgeCount()`
+- `getEdges(cell, incoming, outgoing, includeLoops)`, use `Cell.getEdges(incoming, outgoing, includeLoops)` instead
 - `getGeometry()`
+- `getIncomingEdges()`
+- `getOrigin()`
+- `getOutgoingEdges()`
 - `getParent(cell)`, use `Cell.getParent()` instead
+- `getStyle()`, which returns a `CellStyle` object instead of a string, see the [`mxCell`](#mxcell) section
+- `getTerminal(edge, isSource)`, use `Cell.getTerminal(source)` instead
+- `getValue()`
 - `isAncestor(parent, child)`, use `Cell.isAncestor(child)` instead
+- `isCollapsed()`
+- `isConnectable()`
 - `isEdge()`
+- `isVertex()`
 
 Some methods in `mxGraphModel` that were general manipulation of cells and independent of the model have been moved to the `cellArrayUtils` namespace and are now available as individual functions.
 - `cloneCell()` (from version 0.11.0)
@@ -497,7 +518,8 @@ Some methods in `mxGraphModel` that were general manipulation of cells and indep
 - `getTopmostCells()`
 
 Others were removed:
-- `cloneImpl()`
+- `cellCloned(cell)`, the hook called to clone a cell: `cloneCells()` of `cellArrayUtils` calls `Cell.clone()` directly, so override that method instead
+- `cloneCellImpl()`
 - `isVisible(cell)` see [discussion #179](https://github.com/maxGraph/maxGraph/discussions/179#discussioncomment-5389942) for rationale
 - `restoreClone()` (from version 0.11.0)
 
