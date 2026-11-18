@@ -41,7 +41,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -58,7 +58,6 @@ export default {
 };
 
 const Template = ({ ...args }: Record<string, any>) => {
-  configureImagesBasePath();
   const container = createGraphContainer(args);
 
   class MyCustomConstraintHandler extends ConstraintHandler {

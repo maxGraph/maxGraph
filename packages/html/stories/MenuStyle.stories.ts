@@ -45,7 +45,7 @@ import {
   HandleConfig,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand and MaxPopupMenu
 import '@maxgraph/core/css/common.css';
 // custom style for Popup Menu
@@ -62,8 +62,6 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  configureImagesBasePath();
-
   const container = createGraphContainer(args);
 
   // Disables built-in context menu

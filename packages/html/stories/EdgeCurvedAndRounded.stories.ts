@@ -30,11 +30,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import {
-  configureImagesBasePath,
-  createGraphContainer,
-  createMainDiv,
-} from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -65,8 +61,6 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  configureImagesBasePath();
-
   const div = createMainDiv(`Show usage of curved and rounded edges.
   <br>
   Use the Storybook controls to change the style of the edges.

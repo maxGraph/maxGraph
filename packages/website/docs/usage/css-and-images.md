@@ -71,6 +71,7 @@ Currently, you must copy the images provided by `maxGraph` or provide your own i
 This is what is done in the [Storybook demo](https://github.com/maxGraph/maxGraph/tree/main/packages/html/public/images).
 
 The path to the images must be configured using `Client.setImageBasePath` if the default settings do not work with your application.
+The Storybook demo calls `Client.setImageBasePath('./images')` once for all stories, in `packages/html/.storybook/preview.ts`, so the stories do not repeat it: set it in your application when reusing their code.
 
 :::note
 This configuration is inherited from `mxGraph` and may be simplified in the future. 

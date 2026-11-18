@@ -17,11 +17,7 @@ limitations under the License.
 
 import { type Cell, Graph } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import {
-  configureImagesBasePath,
-  createGraphContainer,
-  createMainDiv,
-} from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 
 export default {
   title: 'Misc/Thread',
@@ -34,7 +30,6 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  configureImagesBasePath();
   const div = createMainDiv(`
 This example shows how to dynamically set overlays on graph cells using a timed function.
 <br>

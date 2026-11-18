@@ -29,7 +29,7 @@ import {
   xmlUtils,
 } from '@maxgraph/core';
 import { globalTypes } from './shared/args.js';
-import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import { createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Misc/Monitor',
@@ -43,8 +43,6 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  configureImagesBasePath();
-
   const div = document.createElement('div');
   const container = createGraphContainer(args);
   container.style.background = ''; // no grid

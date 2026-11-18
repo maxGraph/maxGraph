@@ -31,7 +31,7 @@ import {
   ShapeRegistry,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import { createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Layouts/Tree',
@@ -44,7 +44,6 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  configureImagesBasePath();
   const container = createGraphContainer(args, { captureKeystrokes: true });
 
   /*

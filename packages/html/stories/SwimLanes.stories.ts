@@ -34,11 +34,7 @@ import {
   Client,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import {
-  configureExpandedAndCollapsedImages,
-  configureImagesBasePath,
-  createGraphContainer,
-} from './shared/configure.js';
+import { createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Layouts/SwimLanes',
@@ -51,7 +47,6 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  configureImagesBasePath();
   const container = createGraphContainer(args);
   container.style.background = ''; // no grid
 
@@ -79,7 +74,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.border = 80;
   graph.getView().translate = new Point(graph.border / 2, graph.border / 2);
   graph.setResizeContainer(true);
-  configureExpandedAndCollapsedImages(graph);
 
   const selectionHandler = graph.getPlugin<SelectionHandler>('SelectionHandler')!;
   selectionHandler.setRemoveCellsFromParent(false);

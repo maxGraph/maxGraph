@@ -67,11 +67,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import {
-  configureImagesBasePath,
-  createGraphContainer,
-  createMainDiv,
-} from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
@@ -107,8 +103,6 @@ export default {
 const backgroundImageWiresGrid = 'url("./images/wires-grid.gif")';
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  configureImagesBasePath();
-
   const parentContainer = createMainDiv(`<h3>Wires</h3>
     Drawing electrical and digital circuits with devices and wires.
     Demonstrate usage of custom Shapes, Edge Handlers and dark mode (use storybook controls).
