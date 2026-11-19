@@ -87,7 +87,7 @@ const HTML_TEMPLATE = `
 
   <!-- Creates a container for the graph with a grid wallpaper. Width, height and cursor in the style are for IE only -->
   <div id="graphContainer"
-    style="cursor:default;position:absolute;top:30px;left:0px;bottom:0px;right:0px;background:url(getImagePath('grid.gif'))">
+    style="cursor:default;position:absolute;top:30px;left:0px;bottom:0px;right:0px;background:url('./images/grid.gif')">
   </div>
 </body>
 `;
