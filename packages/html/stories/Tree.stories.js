@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import {
-  Client,
   Graph,
   CylinderShape,
   CellRenderer,
@@ -32,6 +31,7 @@ import {
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 
 export default {
   title: 'Layouts/Tree',
@@ -123,9 +123,9 @@ const Template = ({ label, ...args }) => {
   class MyCustomGraph extends Graph {
     // Sets the collapse and expand icons. The values below are the default
     // values, but this is how to replace them if you need to.
-    collapsedImage = new ImageBox(`${Client.imageBasePath}/collapsed.gif`, 9, 9);
+    collapsedImage = new ImageBox(getImagePath('collapsed.gif'), 9, 9);
 
-    expandedImage = new ImageBox(`${Client.imageBasePath}/expanded.gif`, 9, 9);
+    expandedImage = new ImageBox(getImagePath('expanded.gif'), 9, 9);
 
     isCellFoldable(cell) {
       // Defines the condition for showing the folding icon

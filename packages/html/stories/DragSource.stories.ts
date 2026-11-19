@@ -42,6 +42,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer, createMainDiv } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -175,7 +176,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   };
 
   // Creates a DOM node that acts as the drag source
-  const img = domUtils.createImage('images/icons48/gear.png');
+  const img = domUtils.createImage(getImagePath('icons48/gear.png'));
   img.style.width = '48px';
   img.style.height = '48px';
   container.appendChild(img);

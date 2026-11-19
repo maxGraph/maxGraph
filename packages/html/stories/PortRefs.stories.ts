@@ -42,6 +42,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer, createMainDiv } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -140,7 +141,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     constructor(graph: AbstractGraph) {
       super(graph);
       // Replaces the port image
-      this.pointImage = new ImageBox('./images/dot.gif', 10, 10);
+      this.pointImage = new ImageBox(getImagePath('dot.gif'), 10, 10);
     }
   }
 

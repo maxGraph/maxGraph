@@ -19,6 +19,7 @@ import { type Cell, type CellStyle, Graph, Rectangle } from '@maxgraph/core';
 
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 
 export default {
   title: 'Layouts/Collapse',
@@ -46,7 +47,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       // Otherwise, when expanding the cell, the style will be incorrect
       ...this.style,
       shape: 'image',
-      image: './images/package.png',
+      image: getImagePath('package.png'),
       noLabel: true,
       imageBackground: '#e7e9ef',
       imageBorder: '#6482B9',

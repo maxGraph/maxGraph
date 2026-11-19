@@ -38,6 +38,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -70,7 +71,7 @@ const Template = ({ ...args }: Record<string, any>) => {
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Specifies the URL and size of the new control
-  const deleteImage = new ImageBox('images/overlays/forbidden.png', 16, 16);
+  const deleteImage = new ImageBox(getImagePath('overlays/forbidden.png'), 16, 16);
 
   class MyCustomCellRenderer extends CellRenderer {
     override createControl(state: CustomCellState) {

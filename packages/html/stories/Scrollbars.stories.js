@@ -44,6 +44,7 @@ import {
   globalTypes,
 } from './shared/args.js';
 import { createGraphContainer, createMainDiv } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -86,7 +87,7 @@ const HTML_TEMPLATE = `
 
   <!-- Creates a container for the graph with a grid wallpaper. Width, height and cursor in the style are for IE only -->
   <div id="graphContainer"
-    style="cursor:default;position:absolute;top:30px;left:0px;bottom:0px;right:0px;background:url('./images/grid.gif')">
+    style="cursor:default;position:absolute;top:30px;left:0px;bottom:0px;right:0px;background:url(getImagePath('grid.gif'))">
   </div>
 </body>
 `;
@@ -150,7 +151,7 @@ const Template = ({ label, ...args }) => {
 
     // Defines an icon for creating new connections in the connection handler.
     // This will automatically disable the highlighting of the source vertex.
-    connectImage = new ImageBox('images/connector.gif', 16, 16);
+    connectImage = new ImageBox(getImagePath('connector.gif'), 16, 16);
 
     // Overrides target perimeter point for connection previews
     getTargetPerimeterPoint(state, me) {
@@ -450,8 +451,8 @@ const Template = ({ label, ...args }) => {
             '<div style="overflow:auto;cursor:default;top:26px;bottom:0px;position:absolute;width:100%;">' +
             '<table width="100%" height="100%" border="1" cellpadding="4" class="erd">' +
             '<tr><td>' +
-            '<img align="center" src="images/key.png"/>' +
-            '<img align="center" src="images/plus.png"/>' +
+            `<img align="center" src="${getImagePath('key.png')}"/>` +
+            `<img align="center" src="${getImagePath('plus.png')}"/>` +
             '</td><td>' +
             '<u>customerId</u></td></tr><tr><td></td><td>number</td></tr>' +
             '<tr><td></td><td>firstName</td></tr><tr><td></td><td>lastName</td></tr>' +

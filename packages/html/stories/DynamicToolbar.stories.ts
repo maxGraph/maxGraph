@@ -20,7 +20,6 @@ import {
   Cell,
   cellArrayUtils,
   type CellStyle,
-  Client,
   type ConnectionHandler,
   Geometry,
   gestureUtils,
@@ -42,6 +41,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
@@ -89,11 +89,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Defines an icon for creating new connections in the connection handler.
   // This will automatically disable the highlighting of the source vertex.
   const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
-  connectionHandler.connectImage = new ImageBox(
-    `${Client.imageBasePath}/connector.gif`,
-    16,
-    16
-  );
+  connectionHandler.connectImage = new ImageBox(getImagePath('connector.gif'), 16, 16);
 
   // Enables new connections in the graph
   graph.setConnectable(true);
@@ -103,22 +99,22 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // which cancels a move, a resize, a connection or a bend in progress. Escape during label editing is handled by the cell editor, without it.
   new KeyHandler(graph); // NOSONAR: instantiated for its side effect, see the comment above
 
-  addVertex('images/rectangle.gif', 100, 40, {});
-  addVertex('images/rounded.gif', 100, 40, { rounded: true });
-  addVertex('images/ellipse.gif', 40, 40, {
+  addVertex(getImagePath('rectangle.gif'), 100, 40, {});
+  addVertex(getImagePath('rounded.gif'), 100, 40, { rounded: true });
+  addVertex(getImagePath('ellipse.gif'), 40, 40, {
     shape: 'ellipse',
     perimeter: 'ellipsePerimeter',
   });
-  addVertex('images/rhombus.gif', 40, 40, {
+  addVertex(getImagePath('rhombus.gif'), 40, 40, {
     shape: 'rhombus',
     perimeter: 'rhombusPerimeter',
   });
-  addVertex('images/triangle.gif', 40, 40, {
+  addVertex(getImagePath('triangle.gif'), 40, 40, {
     shape: 'triangle',
     perimeter: 'trianglePerimeter',
   });
-  addVertex('images/cylinder.gif', 40, 40, { shape: 'cylinder' });
-  addVertex('images/actor.gif', 30, 40, { shape: 'actor' });
+  addVertex(getImagePath('cylinder.gif'), 40, 40, { shape: 'cylinder' });
+  addVertex(getImagePath('actor.gif'), 30, 40, { shape: 'actor' });
 
   function addVertex(icon: string, w: number, h: number, style: CellStyle) {
     const vertex = new Cell(null, new Geometry(0, 0, w, h), style);
