@@ -46,6 +46,7 @@ import {
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 // style required by RubberBand and MaxPopupMenu
 import '@maxgraph/core/css/common.css';
 // custom style for Popup Menu
@@ -179,7 +180,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Creates a new overlay with an image and a tooltip and makes it "transparent" to events
   // and sets the overlay for the cell in the graph
   const overlay = new CellOverlay(
-    new ImageBox('images/overlays/check.png', 16, 16),
+    new ImageBox(getImagePath('overlays/check.png'), 16, 16),
     'Overlay tooltip'
   );
   graph.addCellOverlay(v1!, overlay);

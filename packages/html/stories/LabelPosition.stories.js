@@ -18,6 +18,7 @@ limitations under the License.
 import { Graph } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 
 export default {
   title: 'Labels/LabelPosition',
@@ -40,7 +41,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Defines the common part of all cell styles as a string-prefix
-  const prefix = { shape: 'image', image: 'images/icons48/keys.png' };
+  const prefix = { shape: 'image', image: getImagePath('icons48/keys.png') };
 
   // Adds cells to the model in a single step and set the vertex
   // label positions using the label position styles. Vertical

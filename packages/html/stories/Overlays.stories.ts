@@ -33,6 +33,7 @@ import {
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer, createMainDiv } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 // required by the custom code (see CustomCellRenderer)
 import './css/overlays.css';
 
@@ -125,7 +126,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       if (overlays.length === 0) {
         // Creates a new overlay with an image and a tooltip
         const overlay = new CellOverlay(
-          new ImageBox('images/check.png', 16, 16),
+          new ImageBox(getImagePath('check.png'), 16, 16),
           `Overlay tooltip for cell #${cell.getId()}`,
           pickAlignValueRandomly(),
           pickVerticalAlignValueRandomly()
