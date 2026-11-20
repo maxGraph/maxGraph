@@ -19,6 +19,7 @@ limitations under the License.
 import type { AbstractGraph } from '../AbstractGraph.js';
 import InternalEvent from '../event/InternalEvent.js';
 import { isAncestorNode } from '../../util/domUtils.js';
+import { KeyCodes } from '../../util/KeyCodes.js';
 import {
   getSource,
   isAltDown,
@@ -35,13 +36,20 @@ import type CellEditorHandler from '../plugin/CellEditorHandler.js';
  * This handler installs a key event listener in the topmost DOM node and processes all events that originate from descendants of {@link AbstractGraph.container} or from the topmost DOM node.
  * The latter means that all unhandled keystrokes are handled by this object regardless of the focused state of the {@link graph}.
  *
+ * ### Escape keystroke
+ *
+ * An instance handles the Escape keystroke even when no key is bound to it: it calls {@link escape}, which cancels the gesture in progress,
+ * such as moving cells, creating a connection or resizing a cell.
+ * Nothing else in maxGraph calls {@link AbstractGraph.escape}, so without an instance, the Escape keystroke cancels none of these gestures.
+ * The in-place editing of a label is not concerned: the {@link CellEditorHandler} plugin cancels it, whether an instance exists or not.
+ *
  * ### Example
  *
- * The following example creates a key handler that listens to the delete key (46) and deletes the selection cells if the graph is enabled.
+ * The following example creates a key handler that listens to the delete key and deletes the selection cells if the graph is enabled.
  *
  * ```javascript
  * const keyHandler = new KeyHandler(graph);
- * keyHandler.bindKey(46, () => {
+ * keyHandler.bindKey(KeyCodes.Delete, () => {
  *   if (graph.isEnabled()) {
  *     graph.removeCells();
  *   }
@@ -50,6 +58,7 @@ import type CellEditorHandler from '../plugin/CellEditorHandler.js';
  *
  * ### Keycodes
  *
+ * {@link KeyCodes} provides named constants for the most common keys.
  * See http://tinyurl.com/yp8jgl or http://tinyurl.com/229yqw for a list of keycodes
  * or install a key event listener into the document element and print the key codes of the respective events to the console.
  *
@@ -254,8 +263,8 @@ class KeyHandler {
    */
   keyDown(evt: KeyboardEvent) {
     if (this.isEnabledForEvent(evt)) {
-      // Cancels the editing if escape is pressed
-      if (evt.keyCode === 27 /* Escape */) {
+      // Cancels the gesture in progress if escape is pressed, see escape()
+      if (evt.keyCode === KeyCodes.Escape) {
         this.escape(evt);
       }
 
@@ -301,11 +310,17 @@ class KeyHandler {
   }
 
   /**
-   * Hook to process ESCAPE keystrokes. This implementation invokes
-   * {@link AbstractGraph.stopEditing} to cancel the current editing, connecting
-   * and/or other ongoing modifications.
+   * Hook to process Escape keystrokes.
    *
-   * @param evt Key event that represents the keystroke. Possible keycode in this case is 27 (ESCAPE).
+   * This implementation invokes {@link AbstractGraph.escape} if {@link AbstractGraph.escapeEnabled} is `true`.
+   * It fires an {@link InternalEvent.ESCAPE} event, to which the handlers cancel the ongoing gesture: moving cells,
+   * creating a connection, resizing, rotating or reconnecting.
+   *
+   * This method does not cancel the in-place editing of a label. That is done by the {@link CellEditorHandler} plugin,
+   * which listens to the keystrokes of its own editor and consumes the Escape keystroke, so that this handler ignores it.
+   * See {@link CellEditorHandler.escapeCancelsEditing} to control whether the new value is kept.
+   *
+   * @param evt Key event that represents the keystroke. Its keycode is {@link KeyCodes.Escape}.
    */
   escape(evt: KeyboardEvent) {
     if (this.graph?.isEscapeEnabled()) {

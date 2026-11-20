@@ -21,6 +21,7 @@ import {
   xmlUtils,
   Multiplicity,
   KeyHandler,
+  KeyCodes,
   InternalEvent,
   getDefaultPlugins,
 } from '@maxgraph/core';
@@ -119,7 +120,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Removes cells when [DELETE] is pressed
   const keyHandler = new KeyHandler(graph);
-  keyHandler.bindKey(46, function () {
+  keyHandler.bindKey(KeyCodes.Delete, function () {
     if (graph.isEnabled()) {
       graph.removeCells();
     }

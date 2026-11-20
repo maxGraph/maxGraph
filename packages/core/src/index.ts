@@ -192,6 +192,7 @@ export * as xmlUtils from './util/xmlUtils.js';
 export * as xmlViewUtils from './util/xmlViewUtils.js';
 
 export * from './util/config.js';
+export * from './util/KeyCodes.js';
 export * from './util/logger.js';
 
 export { default as Animation } from './view/animate/Animation.js';

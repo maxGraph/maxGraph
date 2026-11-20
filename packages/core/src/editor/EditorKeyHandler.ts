@@ -33,7 +33,7 @@ import Editor from './Editor.js';
  * Bind the delete key to the delete action in an existing editor.
  * ```javascript
  * const keyHandler = new EditorKeyHandler(editor);
- * keyHandler.bindAction(46, 'delete');
+ * keyHandler.bindAction(KeyCodes.Delete, 'delete');
  * ```
  *
  * ### Codec

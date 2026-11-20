@@ -20,6 +20,7 @@ import {
   Rectangle,
   DomHelpers,
   KeyHandler,
+  KeyCodes,
   eventUtils,
   InternalEvent,
   xmlUtils,
@@ -303,10 +304,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       'keypress',
       function (evt: MouseEvent | KeyboardEvent) {
         // Needs to take shift into account for textareas
-        // TODO should probably use code instead of keyCode, see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
         if (
           'keyCode' in evt &&
-          evt.keyCode == /* enter */ 13 &&
+          evt.keyCode == KeyCodes.Enter &&
           !eventUtils.isShiftDown(evt)
         ) {
           input.blur();
