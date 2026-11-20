@@ -29,6 +29,73 @@ import type CellState from '../cell/CellState.js';
 declare module '../AbstractGraph' {
   interface AbstractGraph {
     /**
+     * Value returned by {@link getOverlap} if {@link isAllowOverlapParent} returns
+     * `true` for the given cell. {@link getOverlap} is used in {@link constrainChild} if
+     * {@link isConstrainChild} returns `true`. The value specifies the
+     * portion of the child which is allowed to overlap the parent.
+     * @default 0.5
+     */
+    defaultOverlap: number;
+
+    /**
+     * Specifies the return value for {@link canExportCell}.
+     * @default true
+     */
+    exportEnabled: boolean;
+
+    /**
+     * Specifies the return value for {@link canImportCell}.
+     * @default true
+     */
+    importEnabled: boolean;
+
+    /**
+     * Specifies the return value for {@link isRecursiveResize}.
+     * @default false (for backwards compatibility)
+     */
+    recursiveResize: boolean;
+
+    /**
+     * Returns a decimal number representing the amount of the width and height
+     * of the given cell that is allowed to overlap its parent. A value of 0
+     * means all children must stay inside the parent, 1 means the child is
+     * allowed to be placed outside of the parent such that it touches one of
+     * the parents sides. If {@link isAllowOverlapParent} returns false for the given
+     * cell, then this method returns 0.
+     *
+     * @param cell {@link Cell} for which the overlap ratio should be returned.
+     */
+    getOverlap: (cell: Cell) => number;
+
+    /**
+     * Returns true if the given cell is allowed to be placed outside the
+     * parents area.
+     *
+     * @param cell {@link Cell} that represents the child to be checked.
+     */
+    isAllowOverlapParent: (cell: Cell) => boolean;
+
+    /** Returns {@link exportEnabled}. */
+    isExportEnabled: () => boolean;
+
+    /** Returns {@link importEnabled}. */
+    isImportEnabled: () => boolean;
+
+    /**
+     * Returns {@link recursiveResize}.
+     *
+     * @param state {@link CellState} that is being resized.
+     */
+    isRecursiveResize: (state?: CellState | null) => boolean;
+
+    /**
+     * Sets {@link recursiveResize}.
+     *
+     * @param value New boolean value for {@link recursiveResize}.
+     */
+    setRecursiveResize: (value: boolean) => void;
+
+    /**
      * Specifies the return value for {@link isCellsResizable}.
      * @default true
      */
