@@ -151,12 +151,16 @@ class ImageExport {
   }
 
   /**
-   * Draws the overlays for the given state. This is called if <includeOverlays>
-   * is true.
+   * Draws the overlays for the given state. This is called if {@link includeOverlays} is true.
+   *
+   * Each overlay is painted between {@link AbstractCanvas2D.save} and {@link AbstractCanvas2D.restore},
+   * since painting a shape scales the canvas state.
    */
   drawOverlays(state: CellState, canvas: AbstractCanvas2D): void {
     state.overlays?.forEach((shape) => {
+      canvas.save();
       shape.paint(canvas);
+      canvas.restore();
     });
   }
 }

@@ -89,12 +89,18 @@ test.each([false, true])(
     const templateData: string = !includeOverlays
       ? ''
       : `
+  <save />
   <scale scale="1" />
   <fillcolor color="#FFFFFF" />
   <strokecolor color="#000000" />
   <image x="132" y="92" w="16" h="16" src="http://localhost/warning.png" aspect="0" flipH="0" flipV="0" />
+  <restore />
+  <save />
   <scale scale="1" />
-  <image x="172" y="122" w="16" h="16" src="http://localhost/element.png" aspect="0" flipH="0" flipV="0" />`;
+  <fillcolor color="#FFFFFF" />
+  <strokecolor color="#000000" />
+  <image x="172" y="122" w="16" h="16" src="http://localhost/element.png" aspect="0" flipH="0" flipV="0" />
+  <restore />`;
 
     const expectedData = `<data>
   <fontfamily family="Arial,Helvetica,sans-serif" />
@@ -298,6 +304,28 @@ describe('export with SvgCanvas2D at the scale 1, whatever the view scale', () =
     ).toEqual([
       [40, 19.5],
       [140, 119.5],
+    ]);
+  });
+
+  test.each([1, 2, 0.5])('overlays of several cells, view scale: %s', (viewScale) => {
+    const graph = createGraphWithoutContainer();
+    graph.batchUpdate(() => {
+      for (const x of [20, 200, 380]) {
+        const vertex = graph.insertVertex({ position: [x, 20], size: [80, 40] });
+        graph.addCellOverlay(
+          vertex,
+          new CellOverlay(new ImageBox('overlay.png', 16, 16))
+        );
+      }
+    });
+
+    const root = exportWithSvgCanvas(graph, viewScale);
+
+    // the overlays are at the bottom-right corner of each vertex
+    expect(getBounds(root, 'image')).toEqual([
+      [92, 52, 16, 16],
+      [272, 52, 16, 16],
+      [452, 52, 16, 16],
     ]);
   });
 
