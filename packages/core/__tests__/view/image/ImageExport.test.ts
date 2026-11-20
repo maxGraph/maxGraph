@@ -330,6 +330,36 @@ describe('export with SvgCanvas2D at the scale 1, whatever the view scale', () =
     ]);
   });
 
+  test.each([1, 2, 0.5])(
+    'several overlays of the same vertex, view scale: %s',
+    (viewScale) => {
+      const graph = createGraphWithoutContainer();
+      graph.batchUpdate(() => {
+        const vertex = graph.insertVertex({ position: [20, 20], size: [80, 40] });
+        for (const offsetX of [-20, 0]) {
+          graph.addCellOverlay(
+            vertex,
+            new CellOverlay(
+              new ImageBox('overlay.png', 16, 16),
+              null,
+              'right',
+              'bottom',
+              new Point(offsetX, 0)
+            )
+          );
+        }
+      });
+
+      const root = exportWithSvgCanvas(graph, viewScale);
+
+      // the offset of each overlay shifts it from the bottom-right corner of the vertex
+      expect(getBounds(root, 'image')).toEqual([
+        [72, 52, 16, 16],
+        [92, 52, 16, 16],
+      ]);
+    }
+  );
+
   const createGraphWithEdges = (): { graph: Graph; edges: Cell[] } => {
     const graph = createGraphWithoutContainer();
     const edges: Cell[] = [];
