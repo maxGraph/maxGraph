@@ -22,25 +22,106 @@ import type Shape from '../shape/Shape.js';
 
 type PartialGraph = Pick<
   AbstractGraph,
-  | 'getView'
-  | 'getGraphBounds'
+  'getView' | 'getGraphBounds' | 'getDialect' | 'pageFormat'
+>;
+type PartialPage = Pick<
+  AbstractGraph,
+  | 'horizontalPageBreaks'
+  | 'verticalPageBreaks'
+  | 'pageVisible'
+  | 'pageBreaksVisible'
+  | 'pageBreakColor'
+  | 'pageBreakDashed'
+  | 'minPageBreakDist'
+  | 'preferPageSize'
+  | 'pageScale'
+  | 'isPageVisible'
+  | 'isPageBreaksVisible'
+  | 'getPageBreakColor'
+  | 'isPageBreakDashed'
+  | 'getMinPageBreakDist'
+  | 'isPreferPageSize'
   | 'getPageFormat'
   | 'getPageScale'
-  | 'getMinPageBreakDist'
-  | 'getPageBreakColor'
-  | 'getDialect'
-  | 'isPageBreakDashed'
+  | 'getPreferredPageSize'
+  | 'updatePageBreaks'
 >;
-type PartialPageBreaks = Pick<
-  AbstractGraph,
-  'horizontalPageBreaks' | 'verticalPageBreaks' | 'updatePageBreaks'
->;
-type PartialType = PartialGraph & PartialPageBreaks;
+type PartialType = PartialGraph & PartialPage;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-export const PageBreaksMixin: PartialType = {
+export const PageMixin: PartialType = {
   horizontalPageBreaks: null,
   verticalPageBreaks: null,
+
+  pageVisible: false,
+
+  isPageVisible() {
+    return this.pageVisible;
+  },
+
+  pageBreaksVisible: false,
+
+  isPageBreaksVisible() {
+    return this.pageBreaksVisible;
+  },
+
+  pageBreakColor: 'gray',
+
+  getPageBreakColor() {
+    return this.pageBreakColor;
+  },
+
+  pageBreakDashed: true,
+
+  isPageBreakDashed() {
+    return this.pageBreakDashed;
+  },
+
+  minPageBreakDist: 20,
+
+  getMinPageBreakDist() {
+    return this.minPageBreakDist;
+  },
+
+  preferPageSize: false,
+
+  isPreferPageSize() {
+    return this.preferPageSize;
+  },
+
+  // `pageFormat` itself stays in AbstractGraph: its default is a mutable Rectangle, which `mixInto` would install on
+  // the prototype and therefore share across every graph instance. Only the getter lives here.
+  getPageFormat() {
+    return this.pageFormat;
+  },
+
+  pageScale: 1.5,
+
+  getPageScale() {
+    return this.pageScale;
+  },
+
+  getPreferredPageSize(_bounds, width, height) {
+    const tr = this.getView().translate;
+    const fmt = this.getPageFormat();
+    const ps = this.getPageScale();
+    const page = new Rectangle(
+      0,
+      0,
+      Math.ceil(fmt.width * ps),
+      Math.ceil(fmt.height * ps)
+    );
+
+    const hCount = this.isPageBreaksVisible() ? Math.ceil(width / page.width) : 1;
+    const vCount = this.isPageBreaksVisible() ? Math.ceil(height / page.height) : 1;
+
+    return new Rectangle(
+      0,
+      0,
+      hCount * page.width + 2 + tr.x,
+      vCount * page.height + 2 + tr.y
+    );
+  },
 
   updatePageBreaks(visible, _width, _height) {
     const { scale, translate: tr } = this.getView();

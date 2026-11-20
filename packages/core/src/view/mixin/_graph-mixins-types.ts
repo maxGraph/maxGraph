@@ -27,7 +27,7 @@ import './GroupingMixin.type.js';
 import './LabelMixin.type.js';
 import './OverlaysMixin.type.js';
 import './OrderMixin.type.js';
-import './PageBreaksMixin.type.js';
+import './PageMixin.type.js';
 import './PanningMixin.type.js';
 import './PortsMixin.type.js';
 import './SelectionMixin.type.js';

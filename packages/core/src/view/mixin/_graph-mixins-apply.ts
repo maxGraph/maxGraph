@@ -27,7 +27,7 @@ import { GroupingMixin } from './GroupingMixin.js';
 import { LabelMixin } from './LabelMixin.js';
 import { OrderMixin } from './OrderMixin.js';
 import { OverlaysMixin } from './OverlaysMixin.js';
-import { PageBreaksMixin } from './PageBreaksMixin.js';
+import { PageMixin } from './PageMixin.js';
 import { PanningMixin } from './PanningMixin.js';
 import { PortsMixin } from './PortsMixin.js';
 import { SelectionMixin } from './SelectionMixin.js';
@@ -54,7 +54,7 @@ export const applyGraphMixins = (target: typeof AbstractGraph) => {
     GroupingMixin,
     LabelMixin,
     OrderMixin,
-    PageBreaksMixin,
+    PageMixin,
     OverlaysMixin,
     PanningMixin,
     PortsMixin,
