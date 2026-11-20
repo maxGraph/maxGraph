@@ -263,12 +263,12 @@ describe('export with SvgCanvas2D at the scale 1, whatever the view scale', () =
     const svgDoc = createXmlDocument();
     const root = svgDoc.createElementNS(NS_SVG, 'svg');
     svgDoc.appendChild(root);
-    const svgCanvas = new SvgCanvas2D(root);
+    const svgCanvas = new SvgCanvas2D(root, false);
     svgCanvas.scale(1 / viewScale);
 
     const imageExport = new ImageExport();
     imageExport.includeOverlays = true;
-    imageExport.drawState(graph.getView().getState(graph.model.root!)!, svgCanvas);
+    imageExport.drawState(graph.view.getState(graph.model.root!)!, svgCanvas);
     return root;
   };
 
@@ -279,7 +279,7 @@ describe('export with SvgCanvas2D at the scale 1, whatever the view scale', () =
 
   test.each([1, 2, 0.5])('shapes and labels, view scale: %s', (viewScale) => {
     const graph = createGraphWithVerticesAndOverlays();
-    graph.removeCellOverlays(graph.model.getCell('v2'));
+    graph.removeCellOverlays(graph.model.getCell('v2')!);
 
     const root = exportWithSvgCanvas(graph, viewScale);
 
