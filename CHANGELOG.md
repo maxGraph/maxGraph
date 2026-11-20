@@ -9,6 +9,16 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes and behavior changes appear here._
 
+## 0.25.2
+
+Release date: `2026-11-20`
+
+For more details, see the [0.25.2 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.25.2) on the GitHub release page.
+
+This new version fixes several edge style behaviors that diverged from mxGraph, improving the rendering of diagrams imported from mxGraph and draw.io.
+
+**Breaking Changes**: none.
+
 **Behavior Changes**:
 - `setCellStyles` (from `styleUtils`), and the `AbstractGraph.setCellStyles` method relying on it, now remove the key from the cell style when the value is `null` or `undefined`, as documented and as mxGraph did. Previously, the key was kept in the style with a `null` value. This fixes the orthogonal routing of an edge after reconnecting one of its terminals, see [issue #1087](https://github.com/maxGraph/maxGraph/issues/1087).
   As a consequence, setting a style property to `null` with this method now makes the cell fall back to the value of the stylesheet, as in mxGraph, whereas the `null` value previously overrode it.
