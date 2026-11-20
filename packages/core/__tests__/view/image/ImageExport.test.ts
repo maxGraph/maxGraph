@@ -16,6 +16,7 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import {
+  type Cell,
   CellOverlay,
   type Graph,
   ImageBox,
@@ -307,7 +308,7 @@ describe('export with SvgCanvas2D at the scale 1, whatever the view scale', () =
     ]);
   });
 
-  test.each([1, 2, 0.5])('overlays of several cells, view scale: %s', (viewScale) => {
+  test.each([1, 2, 0.5])('overlays of several vertices, view scale: %s', (viewScale) => {
     const graph = createGraphWithoutContainer();
     graph.batchUpdate(() => {
       for (const x of [20, 200, 380]) {
@@ -328,6 +329,62 @@ describe('export with SvgCanvas2D at the scale 1, whatever the view scale', () =
       [452, 52, 16, 16],
     ]);
   });
+
+  const createGraphWithEdges = (): { graph: Graph; edges: Cell[] } => {
+    const graph = createGraphWithoutContainer();
+    const edges: Cell[] = [];
+    graph.batchUpdate(() => {
+      const source = graph.insertVertex({ position: [20, 20], size: [80, 40] });
+      for (const y of [20, 140]) {
+        const target = graph.insertVertex({ position: [300, y], size: [80, 40] });
+        edges.push(graph.insertEdge({ source, target }));
+      }
+    });
+    return { graph, edges };
+  };
+
+  test.each([1, 2, 0.5])('overlays of several edges, view scale: %s', (viewScale) => {
+    const { graph, edges } = createGraphWithEdges();
+    for (const edge of edges) {
+      graph.addCellOverlay(edge, new CellOverlay(new ImageBox('overlay.png', 16, 16)));
+    }
+
+    const root = exportWithSvgCanvas(graph, viewScale);
+
+    // the overlays are centered on the middle of each edge
+    expect(getBounds(root, 'image')).toEqual([
+      [192, 32, 16, 16],
+      [192, 92, 16, 16],
+    ]);
+  });
+
+  test.each([1, 2, 0.5])(
+    'several overlays of the same edge, view scale: %s',
+    (viewScale) => {
+      const { graph, edges } = createGraphWithEdges();
+      for (const offsetX of [-20, 0, 20]) {
+        graph.addCellOverlay(
+          edges[0],
+          new CellOverlay(
+            new ImageBox('overlay.png', 16, 16),
+            null,
+            'right',
+            'bottom',
+            new Point(offsetX, 0)
+          )
+        );
+      }
+
+      const root = exportWithSvgCanvas(graph, viewScale);
+
+      // the offset of each overlay shifts it from the middle of the edge
+      expect(getBounds(root, 'image')).toEqual([
+        [172, 32, 16, 16],
+        [192, 32, 16, 16],
+        [212, 32, 16, 16],
+      ]);
+    }
+  );
 
   test.each([1, 2, 0.5])('overlay of a nested cell, view scale: %s', (viewScale) => {
     const graph = createGraphWithoutContainer();
