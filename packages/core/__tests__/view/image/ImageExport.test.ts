@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { expect, test } from '@jest/globals';
+import { describe, expect, test } from '@jest/globals';
 import {
   CellOverlay,
+  type Graph,
   ImageBox,
   ImageExport,
   Point,
@@ -247,3 +248,74 @@ test.each([false, true])(
     expect(xml).toBe(expectedData);
   }
 );
+
+describe('export with SvgCanvas2D at the scale 1, whatever the view scale', () => {
+  const exportWithSvgCanvas = (graph: Graph, viewScale: number): Element => {
+    graph.view.setScale(viewScale);
+
+    const svgDoc = createXmlDocument();
+    const root = svgDoc.createElementNS(NS_SVG, 'svg');
+    svgDoc.appendChild(root);
+    const svgCanvas = new SvgCanvas2D(root);
+    svgCanvas.scale(1 / viewScale);
+
+    const imageExport = new ImageExport();
+    imageExport.includeOverlays = true;
+    imageExport.drawState(graph.getView().getState(graph.model.root!)!, svgCanvas);
+    return root;
+  };
+
+  const getBounds = (root: Element, selector: string): number[][] =>
+    [...root.querySelectorAll(selector)].map((element) =>
+      ['x', 'y', 'width', 'height'].map((name) => Number(element.getAttribute(name)))
+    );
+
+  test.each([1, 2, 0.5])('shapes and labels, view scale: %s', (viewScale) => {
+    const graph = createGraphWithVerticesAndOverlays();
+    graph.removeCellOverlays(graph.model.getCell('v2'));
+
+    const root = exportWithSvgCanvas(graph, viewScale);
+
+    expect(getBounds(root, 'rect[stroke="#6482b9"]')).toEqual([
+      [0, 0, 80, 30],
+      [100, 100, 80, 30],
+    ]);
+    expect(
+      [...root.querySelectorAll('path')].map((path) => path.getAttribute('d'))
+    ).toEqual([
+      'M 55 30 L 120.5 95.5',
+      'M 124.21 99.21 L 116.78 96.73 L 120.5 95.5 L 121.73 91.78 Z',
+      'M 44.29 30 L 50 50 L 114.07 96.27',
+      'M 118.32 99.35 L 110.6 98.08 L 114.07 96.27 L 114.7 92.41 Z',
+    ]);
+    // The edge label is left out: the view rounds its position, so it moves a bit with the view scale
+    const vertexLabels = [...root.querySelectorAll('text')].slice(0, 2);
+    expect(
+      vertexLabels.map((text) => [
+        Number(text.getAttribute('x')),
+        Number(text.getAttribute('y')),
+      ])
+    ).toEqual([
+      [40, 19.5],
+      [140, 119.5],
+    ]);
+  });
+
+  test.each([1, 2, 0.5])('overlay of a nested cell, view scale: %s', (viewScale) => {
+    const graph = createGraphWithoutContainer();
+    graph.batchUpdate(() => {
+      const container = graph.insertVertex({ position: [20, 20], size: [200, 100] });
+      const child = graph.insertVertex({
+        parent: container,
+        position: [10, 10],
+        size: [80, 40],
+      });
+      graph.addCellOverlay(child, new CellOverlay(new ImageBox('overlay.png', 16, 16)));
+    });
+
+    const root = exportWithSvgCanvas(graph, viewScale);
+
+    // the overlay is at the bottom-right corner of the child, positioned relatively to its container
+    expect(getBounds(root, 'image')).toEqual([[102, 62, 16, 16]]);
+  });
+});
