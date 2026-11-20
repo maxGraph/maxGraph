@@ -9,6 +9,10 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes and behavior changes appear here._
 
+**Other Changes**:
+- `ImageExport` now paints each overlay between `canvas.save()` and `canvas.restore()`, as it already did for shapes and labels. This fixes the size and position of the overlays painted after the first one when `includeOverlays` is `true` and the view scale is not 1, see [issue #1339](https://github.com/maxGraph/maxGraph/issues/1339).
+  The output of the export changes accordingly, which matters only to tests comparing it as text. With `XmlCanvas2D`, every overlay is now surrounded by `<save />` and `<restore />`, and writes its own fill and stroke colors instead of inheriting those left by the previous overlay.
+
 ## 0.25.2
 
 Release date: `2026-11-20`
