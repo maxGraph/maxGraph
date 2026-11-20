@@ -35,6 +35,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -180,7 +181,7 @@ const Template = ({ label, ...args }) => {
       GlobalConfig.logger.show();
       GlobalConfig.logger.debug('Using background image');
 
-      container.style.backgroundImage = "url('./images/grid.gif')";
+      container.style.backgroundImage = `url(${getImagePath('grid.gif')})`;
     }
 
     const mxGraphViewValidateBackground = GraphView.prototype.validateBackground;

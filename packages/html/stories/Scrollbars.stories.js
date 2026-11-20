@@ -81,13 +81,14 @@ table.erd td {
 `;
 
 // TODO apply this settings to the container used by the Graph
-const HTML_TEMPLATE = `
+// A function, so that the image URL is built from the image base path configured when it is called
+const getHtmlTemplate = () => `
 <!-- Page passes the container for the graph to the program -->
 <body onload="main(document.getElementById('graphContainer'))">
 
   <!-- Creates a container for the graph with a grid wallpaper. Width, height and cursor in the style are for IE only -->
   <div id="graphContainer"
-    style="cursor:default;position:absolute;top:30px;left:0px;bottom:0px;right:0px;background:url('./images/grid.gif')">
+    style="cursor:default;position:absolute;top:30px;left:0px;bottom:0px;right:0px;background:url(${getImagePath('grid.gif')})">
   </div>
 </body>
 `;

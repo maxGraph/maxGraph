@@ -17,6 +17,7 @@ limitations under the License.
 import { type Cell, DomHelpers, Graph, InternalEvent, Point } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createMainDiv } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 
 export default {
   title: 'Connections/SegmentConnectorZoom',
@@ -156,7 +157,7 @@ const createCaseViewport = (
   viewport.style.width = `${width}px`;
   viewport.style.height = `${height}px`;
   viewport.style.border = '1px solid lightgray';
-  viewport.style.background = 'url(./images/grid.gif)';
+  viewport.style.background = `url(${getImagePath('grid.gif')})`;
 
   const graphContainer = document.createElement('div');
   graphContainer.style.position = 'absolute';

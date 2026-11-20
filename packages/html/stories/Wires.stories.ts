@@ -101,8 +101,6 @@ export default {
   },
 };
 
-const backgroundImageWiresGrid = 'url("./images/wires-grid.gif")';
-
 const Template = ({ label, ...args }: Record<string, string>) => {
   const parentContainer = createMainDiv(`<h3>Wires</h3>
     Drawing electrical and digital circuits with devices and wires.
@@ -116,6 +114,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     </ul>
   `);
 
+  // Built when the story renders, once the image base path is configured
+  const backgroundImageWiresGrid = `url(${getImagePath('wires-grid.gif')})`;
   const container = createGraphContainer(args);
   parentContainer.appendChild(container);
   InternalEvent.disableContextMenu(container);
