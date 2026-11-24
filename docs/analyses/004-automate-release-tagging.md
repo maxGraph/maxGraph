@@ -3,7 +3,7 @@
 - **Date**: 2026-11-24
 - **Written with**: Claude Code (Claude Opus 5.5)
 - **Analysis basis**: commit `032365667d5670ceb31728aa2800c4e9134aa706` on `main`, after version 0.25.2. File
-  references point to that commit. The repository settings (rulesets, environments, installed GitHub Apps) were read
+  references point to that commit. The repository settings (rulesets, environments) were read
   through the GitHub API on the same day, with an account having the admin role on the repository
 - **Question**: how can the manual part of a release (version update, commit, tag) be automated, so that it no longer
   needs a repository administrator, while keeping the release commit signed and the tag triggering the existing release
@@ -25,8 +25,9 @@
 
 Recommendation: **option B**, with the version bump done in the preparation pull request rather than by the workflow,
 so that the workflow only creates a tag and never writes to `main`. The launch is restricted to the Maintain and Admin
-roles by a `release` environment holding the App private key, plus a role check in the workflow. The one loss compared
-with today is the signature of the tag itself, see [What is lost: the tag signature](#what-is-lost-the-tag-signature).
+roles by a workflow execution protection of the repository. The App ID and private key are an organization variable
+and secret, shared with the playground repository used to test the setup. The one loss compared with today is the
+signature of the tag itself, see [What is lost: the tag signature](#what-is-lost-the-tag-signature).
 
 ## Current process
 
@@ -90,10 +91,8 @@ issue #664.
 
 - The default permission of the `GITHUB_TOKEN` is `read`, so every workflow declares its own permissions, as the
   existing ones already do.
-- Two environments exist: `github-pages`, used by `generate-website.yml`, and `npm-publish`, created on 2025-04-02,
-  with no protection rule, no branch policy and no secret, and used by no workflow.
-- A GitHub App `maxgraph-release` is installed on the organization, with `contents: write`. Its bot user is
-  `maxgraph-release[bot]`.
+- The `github-pages` environment is used by `generate-website.yml`.
+- No GitHub App is dedicated to the release. It has to be created.
 
 ## Where the version bump goes
 
@@ -173,8 +172,8 @@ gh api "repos/${GITHUB_REPOSITORY}/git/refs" -f ref="refs/tags/v${VERSION}" -f s
 - The tag push starts the two existing workflows unchanged, and the GitHub release is still created by
   `create-github-release.yml` from the tag. No `gh release create` is involved.
 - The App needs `contents: write` and a place in the bypass list of the `tags` ruleset only.
-- The tagger is `maxgraph-release[bot]`. There is nothing to configure: a GitHub App has no author or committer
-  setting, its identity is `<app-slug>[bot]`.
+- The tag is created by the bot user of the App, `<app-slug>[bot]`. There is nothing to configure: a GitHub App has no
+  author or committer setting, its identity derives from its name.
 
 #### Does a tag created through the API start the tag workflows?
 
@@ -239,52 +238,92 @@ back, accepted because only option D avoids it, at a cost out of proportion with
 
 ## Restricting the launch to the Maintain role
 
-GitHub has no setting restricting who may run a `workflow_dispatch` workflow: any user with write access can. Two
-mechanisms help, and they are complementary.
+By default any user with write access can run a `workflow_dispatch` workflow. Two problems have to be solved: who may
+launch the release, and who may get the App private key.
 
-**A `release` environment**, targeted by the job that creates the tag:
+### Who may launch: a workflow execution protection
 
-- **Environment secret**: the App private key is stored in the environment rather than in the repository. A repository
-  secret is readable by any user with write access, who can push a branch with a modified workflow and run it. An
-  environment secret is given only to jobs targeting the environment, and the deployment branch policy restricts that
-  to `main`.
-- **Required reviewers**: the job waits for the approval of one of up to six listed users or teams, here
-  `repo-maintainers` and `repo-admins`. This is an approval gate rather than a launch restriction: a committer can start
-  a run, which does nothing until a maintainer approves it. With the "Prevent self-review" option, the person who
-  launched the run cannot approve it, so a maintainer releasing alone needs it off and approves their own run.
+GitHub added **workflow execution protections** to Actions, announced in public preview on
+[2026-06-18](https://github.blog/changelog/2026-06-18-control-who-and-what-triggers-github-actions-workflows/) and
+[generally available since 2026-09-17](https://github.blog/changelog/2026-09-17-workflow-execution-protections-in-github-actions-generally-available)
+for GitHub Enterprise, organizations and repositories. They
+are allowlists built on the rulesets framework, configured under Settings, Actions, Policies, at the enterprise,
+organization or repository level, see
+[About Actions policies](https://docs.github.com/en/actions/concepts/about-actions-policies) and
+[Control workflow execution](https://docs.github.com/en/actions/how-tos/administer/control-workflow-execution):
 
-**A role check** as the first step of the workflow:
+- an **actor rule** lists who may trigger workflows: individual users, repository roles (`Read`, `Maintain`, `Admin`),
+  GitHub Apps, Copilot, Dependabot;
+- an **event rule** lists the events allowed to start them, such as `workflow_dispatch`;
+- a policy can target **specific workflow paths**, so it can cover the release workflow alone;
+- a disallowed run fails with an error such as `Event 'workflow_dispatch' is not allowed to trigger Actions
+  workflows`, and an **Evaluate** mode reports what would be blocked without enforcing it.
 
-```bash
-gh api "repos/${GITHUB_REPOSITORY}/collaborators/${GITHUB_TRIGGERING_ACTOR}/permission" --jq .role_name
-```
+The Policies section is available on `maxGraph/maxGraph`, checked in the repository settings on 2026-11-24. Repository
+administrators can set a policy there.
 
-The run fails unless the result is `maintain` or `admin`. It reads `triggering_actor` rather than `actor`, so a re-run
-is checked against the user who re-ran it. The `GITHUB_TOKEN` is enough, the endpoint needs metadata read only. On its
-own the check does not protect the secret, since a committer can remove it from a modified workflow on a branch, hence
-the environment.
+A policy targeting the release workflow, allowing `workflow_dispatch` to the `Maintain` and `Admin` roles, is the launch
+restriction. It is enforced by GitHub before the workflow runs, so it cannot be removed by editing the workflow on a
+branch, unlike a check written in the workflow.
 
-### The `npm-publish` environment
+The documentation does not say whether a re-run is checked against the user who re-runs it.
 
-It is not used today. The npm trusted publisher configuration has an optional environment name for GitHub Actions,
-"for use when GitHub environments provide deployment protection", see
-[trusted publishers](https://docs.npmjs.com/trusted-publishers). The `npm trust` command sets it with `--environment`
-(alias `--env`), see [npm trust](https://docs.npmjs.com/cli/v11/commands/npm-trust). When it is set, npm accepts a
-publication only from a job running in a GitHub environment of that name. Community reports describe an `E404` on
-publish when the two names do not match, which disappears once the field is cleared.
+### Where the App credentials live: organization secret and variable
 
-Kept for that purpose, `npm-publish` would be targeted by the job of `publish-npm-package.yml`, restrict deployment to
-the `v*` tags, and carry no reviewer, since the approval already happened in phase 2. npm would then refuse a
-publication from any other workflow or job, even one in this repository. Without that binding the environment has no
-purpose and can be deleted. Setting the name on npm and adding `environment: npm-publish` to the job must be done
-together, otherwise the next publication fails.
+The App ID and the App private key are needed by this repository and by a playground repository of the organization,
+where the tag creation is tested first. To keep a single copy of each, they are an **organization variable** and an
+**organization secret**, whose access policy lists these two repositories only, see
+[Using secrets in GitHub Actions](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets).
+
+A `release` environment would have been the usual place for the key, since an environment secret is given only to the
+jobs targeting the environment, and a deployment branch policy can restrict that to `main`. But environments exist only
+per repository, so sharing the key that way means one copy per repository. No organization-level environment was found
+in the GitHub documentation.
+
+The price is the branch restriction. An organization secret cannot be limited to a branch or an environment: it is
+given to every workflow run of the selected repositories, except those of pull requests from forks. Any user able to
+push a branch to one of these repositories can add a workflow that reads the key, under a file name no execution
+protection targets. With the key, they can mint an App token, create a `v*` tag on any commit, including one of their
+branch, and so publish that commit to npm through `publish-npm-package.yml`.
+
+This is acceptable as long as the users who can push to these repositories are the users trusted to release:
+
+- on 2026-11-24, `maxGraph/maxGraph` has 3 collaborators with the Admin role and 3 with the Maintain role, and none
+  with the Write role alone. Granting the Write role to someone gives them the key, so it reopens this decision;
+- the playground repository must keep the same restriction, since its writers get the same key, and the App installed
+  on both repositories can tag either of them.
+
+The "scoped secrets" announced on 2026-03-26 in the
+[GitHub Actions 2026 security roadmap](https://github.blog/news-insights/product-news/whats-coming-to-our-github-actions-2026-security-roadmap/)
+would remove the trade-off: they bind a secret to repositories, branches or environments, and workflow paths. The
+roadmap targeted a public preview within 3 to 6 months and general availability within 6 months, so by September 2026.
+No release of the feature was found on 2026-11-24; once available, the organization secret should be bound to `main`
+and to the release workflow.
+
+The environment brings no role restriction of its own anyway: its secrets, variables and protection rules apply to the
+jobs targeting it, whoever launched them.
+
+### Alternatives rejected for the launch restriction
+
+- **Required reviewers on the environment.** Up to six users or teams, here `repo-maintainers` and `repo-admins`, one
+  of whom approves the job before it runs. This is an approval gate, not a launch restriction: a committer can start a
+  run, which waits until a maintainer approves it. With the "Prevent self-review" option the person who launched the run
+  cannot approve it, so a maintainer releasing alone needs it off and approves their own run, a click that brings
+  nothing once the policy restricts the launch.
+- **A role check in the workflow**, reading `role_name` from
+  `GET /repos/{owner}/{repo}/collaborators/{username}/permission` for `github.triggering_actor`, and failing unless it
+  is `maintain` or `admin`. It works with the `GITHUB_TOKEN`, but lives in the workflow, so a committer can remove it
+  from a copy on a branch. `gh` has no command for it. Marketplace actions exist, but the one checked,
+  `prince-chrismc/check-actor-permissions-action`, compares the legacy `permission` field (`none`, `read`, `write`,
+  `admin`), in which the Maintain role reads as `write`, so it cannot tell a maintainer from a committer.
 
 ## Workflow outline
 
 Trigger `workflow_dispatch`, input `version` (for instance `0.26.0`, without the `v` prefix).
 
-1. **Role check** with the `GITHUB_TOKEN`, see above.
-2. **Job in the `release` environment** (approval, App private key):
+Before it starts, the workflow execution protection rejects a launch by a user without the Maintain or Admin role.
+
+1. **One job**, reading the App ID and private key from the organization variable and secret:
    1. check out `main`,
    2. validate the input format,
    3. check that the head of `main` is the preparation commit: its subject starts with
@@ -313,18 +352,23 @@ commit, for the case where something was merged after the preparation pull reque
   publication.
 - **The `tags` ruleset blocks every tag creation.** The App must be in its bypass list, otherwise the API call is
   rejected.
+- **The execution protection is new to the repository.** Use its Evaluate mode first to see what it would block.
 - **The App key is the sensitive asset.** It grants `contents: write` on the repositories where the App is installed,
-  and bypasses the `tags` ruleset. Keep the installation limited to the repositories that need it, and the key in the
-  `release` environment only.
+  and bypasses the `tags` ruleset. As an organization secret it is readable from any branch of the selected
+  repositories, see
+  [Where the App credentials live](#where-the-app-credentials-live-organization-secret-and-variable). Keep the App
+  installation and the secret access policy limited to this repository and the playground, and the Write role on both
+  limited to the users trusted to release.
 - **Partial failure.** If the npm publication fails after the tag is created, the fallback of the release how-to still
   applies (manual `npm publish` from the tag). A tag created on the wrong commit cannot be deleted without a bypass of
   the `tags` ruleset, which is why the workflow validates the commit before creating it.
 
 ## Recommendation
 
-Implement option B, with the version bump in the preparation pull request, the App key in a `release` environment
-restricted to `main` with maintainers and admins as reviewers, and a role check as the first step of the workflow.
-Accept the loss of the tag signature, the trust being carried by the "Verified" release commit.
+Implement option B, with the version bump in the preparation pull request, a workflow execution protection allowing
+only the Maintain and Admin roles to launch the release workflow, and the App ID and key as an organization variable
+and secret restricted to this repository and the playground. Accept the loss of the tag signature, the trust being
+carried by the "Verified" release commit.
 
 ## Proposed action plan
 
@@ -333,26 +377,33 @@ Each step is useful on its own.
 1. Record the decision in an ADR that links to this analysis.
 2. Confirm, in a playground repository of the `maxGraph` organization, that a tag created with `POST /git/refs` and an
    App token starts `on: push: tags` workflows.
-3. Configure the repository: App installed on the repository, App added to the bypass list of the `tags` ruleset,
-   `release` environment with the App ID, the private key, the branch policy and the reviewers.
-4. Add the workflow.
-5. Update the release how-to: run `update-versions.mjs` in the preparation pull request, replace the manual commit,
+3. Create the GitHub App with the `contents: write` permission only, install it on this repository and the playground
+   only, store its ID and private key as an organization variable and secret restricted to these two repositories, and
+   add it to the bypass list of the `tags` ruleset.
+4. Add a workflow execution protection allowing `workflow_dispatch` on the release workflow to the `Maintain` and
+   `Admin` roles only, first in Evaluate mode.
+5. Add the workflow, then enforce the protection.
+6. Update the release how-to: run `update-versions.mjs` in the preparation pull request, replace the manual commit,
    tag and ruleset edits by the workflow launch. Fix on the way the link of the npm publication workflow, which points
    to the `maxgraph-integration-examples` repository.
-6. Update the `prepare-release` skill, which leaves its changes uncommitted on `main` for the manual release commit, so
+7. Update the `prepare-release` skill, which leaves its changes uncommitted on `main` for the manual release commit, so
    that it prepares a pull request including the version bump instead.
-7. Decide whether to keep `npm-publish` bound to the npm trusted publisher, or delete it.
+8. Delete the `npm-publish` environment, which no workflow uses and none will.
+9. When GitHub ships scoped secrets, bind the organization secret to `main` and to the release workflow.
 
 ## Method and limits
 
-- The repository settings were read through the GitHub REST API: rulesets with their bypass lists, environments,
-  installed Apps, the verification of the latest tags and release commits. The state of the organization (organization
+- The repository settings were read through the GitHub REST API: rulesets with their bypass lists, environments, the
+  verification of the latest tags and release commits. The state of the organization (organization
   rulesets, organization secrets) was not read, it needs the `admin:org` scope.
 - The behaviour of GitHub (commits signed when created through the API, no signature for tag objects created through
   the API, events not created by the `GITHUB_TOKEN`) comes from the GitHub documentation and changelogs linked above.
 - Whether an API-created tag starts the tag workflows was established from the workflow runs of public repositories,
   read through the GitHub API on 2026-11-24, not by a test on this repository.
-- The refusal of the GitHub Actions integration as a ruleset bypass actor, and the `E404` on an environment mismatch
-  in npm, are reported by third parties and were not reproduced.
+- The refusal of the GitHub Actions integration as a ruleset bypass actor is reported by a third party and was not
+  reproduced.
+- The repository roles were read through the collaborators endpoint on 2026-11-24.
+- The workflow execution protections are described from the GitHub changelog and documentation; only the presence of
+  the Policies section in the settings of the repository was checked, no policy was created.
 - Statements marked "as far as could be found" or "not verified" were not tested.
 - Nothing was implemented or tested on the repository for this analysis.

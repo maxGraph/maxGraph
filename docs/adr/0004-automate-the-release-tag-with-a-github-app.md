@@ -2,7 +2,8 @@
 
 - **Status**: Proposed
 - **Date**: 2026-11-24
-- **Scope**: the release process, `.github/workflows/`, the `tags` ruleset and the environments of the repository,
+- **Scope**: the release process, `.github/workflows/`, the `tags` ruleset and the Actions policies of the repository,
+  the organization secrets and variables,
   `scripts/update-versions.mjs`, the [release how-to](../../packages/website/docs/development/release.md) and the
   `prepare-release` skill
 - **Analysis basis**: commit `032365667d5670ceb31728aa2800c4e9134aa706`, after version 0.25.2
@@ -29,8 +30,10 @@ Four constraints shape the solution:
   workflow with `git push` is not.
 - **A GitHub App cannot get a "Verified" signature on a tag.** GitHub signs commits created through its API, not tag
   objects, and a key of the bot cannot be registered on an account.
-- **Nothing restricts who can run a `workflow_dispatch` workflow.** Any user with write access can, and can read a
-  repository secret by running a modified workflow from a branch.
+- **By default, any user with write access can run a `workflow_dispatch` workflow**, and can read a repository secret
+  by running a modified workflow from a branch. GitHub environments restrict which branch gets a secret, not who
+  launches a run, and exist only per repository. The workflow execution protections of Actions, generally available
+  since September 2026, restrict the launch by repository role.
 
 ## Decision
 
@@ -49,12 +52,13 @@ Four constraints shape the solution:
 **The App is a bypass actor of the `tags` ruleset only**, never of the rulesets of `main`: the workflow writes nothing
 to the branch.
 
-**The launch is restricted to the Maintain and Admin roles** by two complementary means:
+**The launch is restricted to the Maintain and Admin roles** by a workflow execution protection of the repository
+(Settings, Actions, Policies), allowing `workflow_dispatch` on the release workflow to these two roles only. GitHub
+enforces it before the run starts, so editing the workflow on a branch does not bypass it.
 
-- a `release` environment, restricted to `main`, with `repo-maintainers` and `repo-admins` as required reviewers. It
-  holds the App private key, so that the key is given to no other workflow or branch;
-- a first step that reads the role of `github.triggering_actor` through the collaborator permission endpoint, and fails
-  unless it is `maintain` or `admin`.
+**The App ID and private key are an organization variable and secret**, whose access policy lists this repository and
+the playground repository where the setup is tested first. A single copy serves both, and the App is installed on these
+two repositories only.
 
 ## Alternatives considered
 
@@ -71,6 +75,14 @@ to the branch.
 - **A machine user with a personal access token and a GPG key.** The only way to keep a "Verified" tag, at the cost of
   an extra account to secure, a token to rotate and a key to manage. The `bot` team in the bypass lists is meant for
   such accounts, should this be reconsidered.
+- **The App key as a secret of a `release` environment restricted to `main`.** It would keep the key away from
+  workflows run on other branches, but environments are per repository, so the key would be copied into each
+  repository using the App, the playground included.
+- **Required reviewers on an environment, to restrict the launch.** An approval gate rather than a restriction: a
+  committer can start a run that waits for a maintainer, and a maintainer releasing alone approves their own run, a
+  click that brings nothing once the launch is restricted.
+- **A role check written in the workflow**, reading `role_name` through the collaborator permission endpoint. It lives
+  in the workflow, so a copy on a branch can drop it.
 - **A tool handling the whole release.** Out of scope: only the part that is still manual is automated, as stated in
   issue #664.
 
@@ -92,6 +104,11 @@ to the branch.
   window short.
 - **The release date of the changelog is set in the pull request**, so it is wrong if phase 2 slips to another day.
 - **The App private key becomes a secret to protect and rotate.**
+- **The App key is readable from any branch of the selected repositories.** An organization secret cannot be bound to
+  a branch, so any user able to push a branch there can read the key, tag any commit and get it published to npm. It
+  holds because, on 2026-11-24, every collaborator of the repository has the Maintain or Admin role. Granting the
+  Write role to someone, here or on the playground, reopens this decision. The "scoped secrets" announced by GitHub on
+  2026-03-26, not released yet, would bind the secret to `main` and to the release workflow.
 - **The workflow refuses to tag if another pull request was merged after the preparation one**, to avoid tagging the
   wrong commit. The maintainer then has to tag a given commit, through an optional input of the workflow or by hand.
 
@@ -102,6 +119,3 @@ workflows. This was observed in a public repository for a tag created through th
 not for `POST /git/refs` itself, see the analysis. It will be tested in a playground repository of the `maxGraph`
 organization before this ADR is accepted. Should it fail, the workflow pushes the lightweight tag with `git push` and
 the App token instead, which is known to start workflows, and the decision stands otherwise.
-
-The optional binding of npm trusted publishing to the `npm-publish` environment is left to a separate decision, see the
-analysis.
