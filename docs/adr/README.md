@@ -22,6 +22,7 @@ lives, why an obvious refactoring was set aside, which constraint blocks a move.
 | [0001](0001-use-mixins-to-split-the-graph-class.md) | Use mixins to split the Graph class | Accepted |
 | [0002](0002-use-plugins-for-optional-and-new-features.md) | Use plugins for optional behaviour and new features | Accepted |
 | [0003](0003-move-members-out-of-abstract-graph.md) | Move members out of `AbstractGraph` | Accepted |
+| [0004](0004-automate-the-release-tag-with-a-github-app.md) | Automate the release tag with a GitHub App | Proposed |
 
 0001 and 0002 record the two structural approaches and why the second replaces the first. 0003 applies them to the
 members still sitting in `AbstractGraph`.
