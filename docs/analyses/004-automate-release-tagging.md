@@ -19,9 +19,9 @@
 | Option for creating the tag | Triggers the tag workflows | Tag signature | Ruleset bypass needed | Secrets |
 |---|---|---|---|---|
 | A. `GITHUB_TOKEN`, then explicit `workflow_dispatch` | no, both workflows must be dispatched | none | reported impossible, see [Option A](#option-a-github_token-and-explicit-dispatch) | none |
-| **B. GitHub App token, lightweight tag through the REST API** | yes | none, the target commit is "Verified" | App on the `tags` ruleset | App private key |
-| C. GitHub App token, tag signed with a key of the bot | yes | signed, shown "Unverified" | App on the `tags` ruleset | App private key, GPG or SSH key |
-| D. Machine user with a PAT and a GPG key | yes | signed, "Verified" | user on the `tags` ruleset | PAT to rotate, GPG key, an extra account |
+| **B. GitHub App token, lightweight tag through the REST API** | yes | none, the target commit is "Verified" | App on the `tags - creation` ruleset | App private key |
+| C. GitHub App token, tag signed with a key of the bot | yes | signed, shown "Unverified" | App on the `tags - creation` ruleset | App private key, GPG or SSH key |
+| D. Machine user with a PAT and a GPG key | yes | signed, "Verified" | user on the `tags - creation` ruleset | PAT to rotate, GPG key, an extra account |
 
 Recommendation: **option B**, with the version bump done in the preparation pull request rather than by the workflow,
 so that the workflow only creates a tag and never writes to `main`. The launch is restricted to the Maintain and Admin
@@ -38,7 +38,7 @@ bundle size history and size budgets, done with the `prepare-release` skill), a 
    `packages/core` in `package-lock.json`, and the `VERSION` constant of `packages/core/src/util/Constants.ts`,
 2. makes a single commit `chore(release): prepare version <version>` with all the changes above,
 3. adds a bypass for their account to the `default branch - require PR` ruleset, pushes to `main`, removes the bypass,
-4. creates an annotated tag `v<version>`, adds a bypass to the `tags` ruleset, pushes the tag, removes the bypass.
+4. creates an annotated tag `v<version>`, adds a bypass to the tag ruleset, pushes the tag, removes the bypass.
 
 Editing a ruleset needs the admin role, which is what limits the number of people able to release.
 
@@ -77,9 +77,14 @@ issue #664.
 |---|---|---|---|
 | `default branch - general` | `main` | no deletion, no force push | none |
 | `default branch - require PR` | `main` | pull request required, squash merge only | team `bot`, always |
-| `tags` | every tag (`~ALL`) | no creation, no update, no deletion, no force push | team `bot`, always |
+| `tags - creation` | every tag (`~ALL`) | no creation | team `bot`, always |
+| `tags - general` | every tag (`~ALL`) | no update, no deletion, no force push | none |
 | `Code Quality Copilot review for default branch` | `main` | disabled | none |
 
+- The two tag rulesets come from a split made on 2026-11-24, during this analysis. A single `tags` ruleset held the
+  four rules with the `bot` team as bypass, so whoever could create a tag could also delete or move one. A bypass
+  applies to a whole ruleset, so granting the creation alone needs a ruleset of its own, the same pattern as the two
+  rulesets of `main`. Since the split, nobody can delete or move a tag, short of an admin editing `tags - general`.
 - No ruleset requires signed commits. The signature of the release commit is a project policy stated in issue #664,
   not something GitHub enforces.
 - The `bot` team is meant for machine accounts. A GitHub App cannot be a team member, so an App has to be added to a
@@ -151,14 +156,14 @@ The workflow creates the tag with the `GITHUB_TOKEN`, then runs `gh workflow run
 need a `workflow_dispatch` trigger and must read the version from an input instead of `GITHUB_REF_NAME`.
 
 - It needs no secret, but changes both release workflows.
-- The `tags` ruleset blocks tag creation for everybody outside its bypass list, and the GitHub Actions integration
-  cannot be added to that list: GitHub answers `Actor GitHub Actions integration must be part of the ruleset source or
-  owner organization`, as reported in
+- The `tags - creation` ruleset blocks tag creation for everybody outside its bypass list, and the GitHub Actions
+  integration cannot be added to that list: GitHub answers
+  `Actor GitHub Actions integration must be part of the ruleset source or owner organization`, as reported in
   [artifact-keeper/artifact-keeper#4071](https://github.com/artifact-keeper/artifact-keeper/issues/4071), not tested
   here. Even if it could, the bypass would cover every workflow of the repository holding `contents: write`, including
   one modified on a branch by any committer.
 
-Rejected: the `GITHUB_TOKEN` cannot create the tag under the current `tags` ruleset, and the release workflows would no
+Rejected: the `GITHUB_TOKEN` cannot create the tag under the current tag rulesets, and the release workflows would no
 longer react to a tag pushed by hand, which is the fallback when the automation fails.
 
 ### Option B: GitHub App token, lightweight tag
@@ -171,7 +176,8 @@ gh api "repos/${GITHUB_REPOSITORY}/git/refs" -f ref="refs/tags/v${VERSION}" -f s
 
 - The tag push starts the two existing workflows unchanged, and the GitHub release is still created by
   `create-github-release.yml` from the tag. No `gh release create` is involved.
-- The App needs `contents: write` and a place in the bypass list of the `tags` ruleset only.
+- The App needs `contents: write` and a place in the bypass list of the `tags - creation` ruleset only. It can create
+  a tag, not delete or move one.
 - The tag is created by the bot user of the App, `<app-slug>[bot]`. There is nothing to configure: a GitHub App has no
   author or committer setting, its identity derives from its name.
 
@@ -208,7 +214,9 @@ Conclusion: a tag created through the REST API with an App token starts the tag 
 endpoint and expected for `POST /git/refs`, which creates the same ref through the same token. The residual doubt on
 that exact endpoint does not threaten the option: if it ever failed, the workflow can push the lightweight tag with
 `git push` and the App token instead, the pattern observed in `camunda/connectors`. Nothing else in the option changes,
-since a lightweight tag carries no signature either way.
+since a lightweight tag carries no signature either way. That has to be settled in the playground repository before
+the first release, since a tag that started nothing cannot be deleted and pushed again, see
+[Risks and points to verify](#risks-and-points-to-verify).
 
 #### Annotated tag
 
@@ -345,23 +353,23 @@ commit, for the case where something was merged after the preparation pull reque
 - **The tag created through the API triggers `on: push: tags`.** Observed in another repository for a tag created
   server side with an App token, not observed for `POST /git/refs` itself, see
   [Does a tag created through the API start the tag workflows?](#does-a-tag-created-through-the-api-start-the-tag-workflows).
-  The first real release shows it: if no publication starts within a minute, the tag has to be deleted and pushed again
-  with `git push` and the App token, since pushing a tag that already exists creates no event. The bypass of the App
-  covers the deletion rule of the `tags` ruleset too. The workflow then switches to that method. A test beforehand is
-  done in a playground repository of the organization: on this repository, a `v*` tag would start a real npm
-  publication.
-- **The `tags` ruleset blocks every tag creation.** The App must be in its bypass list, otherwise the API call is
-  rejected.
+  It must be tested in a playground repository of the organization before the first release, for two reasons: on this
+  repository a `v*` tag starts a real npm publication, and a tag that started nothing cannot be recovered. Pushing a tag
+  that already exists creates no event, and `tags - general` forbids deleting it to push it again. The release would
+  then go through a new version, or an admin would edit `tags - general` for the time of the fix.
+- **The `tags - creation` ruleset blocks every tag creation.** The App must be in its bypass list, otherwise the API
+  call is rejected.
 - **The execution protection is new to the repository.** Use its Evaluate mode first to see what it would block.
 - **The App key is the sensitive asset.** It grants `contents: write` on the repositories where the App is installed,
-  and bypasses the `tags` ruleset. As an organization secret it is readable from any branch of the selected
+  and bypasses the `tags - creation` ruleset, so whoever holds it can tag any commit and get it published to npm,
+  although not delete or move an existing tag. As an organization secret it is readable from any branch of the selected
   repositories, see
   [Where the App credentials live](#where-the-app-credentials-live-organization-secret-and-variable). Keep the App
   installation and the secret access policy limited to this repository and the playground, and the Write role on both
   limited to the users trusted to release.
 - **Partial failure.** If the npm publication fails after the tag is created, the fallback of the release how-to still
-  applies (manual `npm publish` from the tag). A tag created on the wrong commit cannot be deleted without a bypass of
-  the `tags` ruleset, which is why the workflow validates the commit before creating it.
+  applies (manual `npm publish` from the tag). A tag created on the wrong commit cannot be deleted, `tags - general`
+  having no bypass, which is why the workflow validates the commit before creating it.
 
 ## Recommendation
 
@@ -379,7 +387,7 @@ Each step is useful on its own.
    App token starts `on: push: tags` workflows.
 3. Create the GitHub App with the `contents: write` permission only, install it on this repository and the playground
    only, store its ID and private key as an organization variable and secret restricted to these two repositories, and
-   add it to the bypass list of the `tags` ruleset.
+   add it to the bypass list of the `tags - creation` ruleset.
 4. Add a workflow execution protection allowing `workflow_dispatch` on the release workflow to the `Maintain` and
    `Admin` roles only, first in Evaluate mode.
 5. Add the workflow, then enforce the protection.

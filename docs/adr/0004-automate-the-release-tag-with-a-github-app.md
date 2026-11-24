@@ -2,7 +2,7 @@
 
 - **Status**: Proposed
 - **Date**: 2026-11-24
-- **Scope**: the release process, `.github/workflows/`, the `tags` ruleset and the Actions policies of the repository,
+- **Scope**: the release process, `.github/workflows/`, the tag rulesets and the Actions policies of the repository,
   the organization secrets and variables,
   `scripts/update-versions.mjs`, the [release how-to](../../packages/website/docs/development/release.md) and the
   `prepare-release` skill
@@ -24,8 +24,8 @@ The tag push starts the rest: `publish-npm-package.yml` publishes the package wi
 Four constraints shape the solution:
 
 - **A tag created with the `GITHUB_TOKEN` starts no workflow.** The two release workflows would not run. The
-  `GITHUB_TOKEN` cannot create the tag anyway: the `tags` ruleset blocks every tag creation, and GitHub refuses the
-  GitHub Actions integration as a bypass actor (reported by a third party, not tested here).
+  `GITHUB_TOKEN` cannot create the tag anyway: the `tags - creation` ruleset blocks every tag creation, and GitHub
+  refuses the GitHub Actions integration as a bypass actor (reported by a third party, not tested here).
 - **The release commit must be signed.** Squash merges of pull requests are signed by GitHub. A commit pushed by a
   workflow with `git push` is not.
 - **A GitHub App cannot get a "Verified" signature on a tag.** GitHub signs commits created through its API, not tag
@@ -49,8 +49,9 @@ Four constraints shape the solution:
    unchanged.
 3. **Finalization**: the GitHub release notes are completed as today.
 
-**The App is a bypass actor of the `tags` ruleset only**, never of the rulesets of `main`: the workflow writes nothing
-to the branch.
+**The App is a bypass actor of the `tags - creation` ruleset only**, never of the rulesets of `main`: the workflow
+writes nothing to the branch. The rules forbidding to delete, move or force-push a tag live in a separate
+`tags - general` ruleset without any bypass, so the App can create a tag and nothing else.
 
 **The launch is restricted to the Maintain and Admin roles** by a workflow execution protection of the repository
 (Settings, Actions, Policies), allowing `workflow_dispatch` on the release workflow to these two roles only. GitHub
@@ -69,7 +70,7 @@ two repositories only.
   bypass of the pull request rule of `main`, letting whoever holds its key push anything there; and keeping that commit
   signed would require the GraphQL `createCommitOnBranch` mutation and its limits.
 - **`GITHUB_TOKEN` plus an explicit `workflow_dispatch` of the release workflows.** No secret to manage, but the token
-  cannot create the tag under the `tags` ruleset, and the release workflows would stop reacting to a tag pushed by
+  cannot create the tag under the tag rulesets, and the release workflows would stop reacting to a tag pushed by
   hand, the fallback when the automation fails.
 - **A tag signed with a key of the App.** Signed, but displayed "Unverified", for one more secret.
 - **A machine user with a personal access token and a GPG key.** The only way to keep a "Verified" tag, at the cost of
@@ -92,7 +93,7 @@ two repositories only.
 
 - Any maintainer can release, without the admin role and without editing a ruleset.
 - The release commit is reviewed, built by the CI with its final version, and signed by GitHub.
-- The App holds a narrow permission: create, and if needed delete, tags. It cannot write to `main`.
+- The App holds a narrow permission: create tags. It can neither delete nor move one, nor write to `main`.
 - The tag workflows do not change, and a tag pushed by hand still starts them.
 
 ### Negative
@@ -109,6 +110,9 @@ two repositories only.
   holds because, on 2026-11-24, every collaborator of the repository has the Maintain or Admin role. Granting the
   Write role to someone, here or on the playground, reopens this decision. The "scoped secrets" announced by GitHub on
   2026-03-26, not released yet, would bind the secret to `main` and to the release workflow.
+- **A tag cannot be undone.** A tag created on the wrong commit, or one whose push started no workflow, stays: nobody
+  can delete it, short of an admin editing `tags - general`. The workflow validates the commit before tagging, and the
+  tag creation is tested in the playground repository before the first release.
 - **The workflow refuses to tag if another pull request was merged after the preparation one**, to avoid tagging the
   wrong commit. The maintainer then has to tag a given commit, through an optional input of the workflow or by hand.
 
