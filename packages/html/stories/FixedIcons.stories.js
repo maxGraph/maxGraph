@@ -30,6 +30,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -81,7 +82,7 @@ const Template = ({ label, ...args }) => {
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Fixed icon', 20, 20, 80, 50, {
       shape: 'label',
-      image: 'images/plus.png',
+      image: getImagePath('plus.png'),
       imageWidth: 16,
       imageHeight: 16,
       spacingBottom: 10,

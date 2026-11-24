@@ -23,7 +23,6 @@ import {
   Rectangle,
   mathUtils,
   domUtils,
-  Client,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -32,6 +31,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
@@ -56,7 +56,7 @@ const Template = ({ label, ...args }) => {
       const { graph } = state.view;
 
       // Icon1
-      let img = domUtils.createImage('images/copy.png');
+      let img = domUtils.createImage(getImagePath('copy.png'));
       img.setAttribute('title', 'Duplicate');
       Object.assign(img.style, {
         cursor: 'pointer',
@@ -78,7 +78,7 @@ const Template = ({ label, ...args }) => {
       this.images.push(img);
 
       // Delete
-      img = domUtils.createImage('images/delete2.png');
+      img = domUtils.createImage(getImagePath('delete2.png'));
       img.setAttribute('title', 'Delete');
       Object.assign(img.style, {
         cursor: 'pointer',
@@ -121,11 +121,7 @@ const Template = ({ label, ...args }) => {
   // Defines an icon for creating new connections in the connection handler.
   // This will automatically disable the highlighting of the source vertex.
   const connectionHandler = graph.getPlugin('ConnectionHandler');
-  connectionHandler.connectImage = new ImageBox(
-    `${Client.imageBasePath}/connector.gif`,
-    16,
-    16
-  );
+  connectionHandler.connectImage = new ImageBox(getImagePath('connector.gif'), 16, 16);
 
   // Enables rubberband selection
   if (args.rubberBand) new RubberBandHandler(graph);

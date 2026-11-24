@@ -68,6 +68,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer, createMainDiv } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
@@ -100,8 +101,6 @@ export default {
   },
 };
 
-const backgroundImageWiresGrid = 'url("./images/wires-grid.gif")';
-
 const Template = ({ label, ...args }: Record<string, string>) => {
   const parentContainer = createMainDiv(`<h3>Wires</h3>
     Drawing electrical and digital circuits with devices and wires.
@@ -115,6 +114,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     </ul>
   `);
 
+  // Built when the story renders, once the image base path is configured
+  const backgroundImageWiresGrid = `url(${getImagePath('wires-grid.gif')})`;
   const container = createGraphContainer(args);
   parentContainer.appendChild(container);
   InternalEvent.disableContextMenu(container);
@@ -179,7 +180,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     constructor(graph: AbstractGraph) {
       super(graph);
       // Replaces the port image
-      this.pointImage = new ImageBox('./images/dot.gif', 10, 10);
+      this.pointImage = new ImageBox(getImagePath('dot.gif'), 10, 10);
     }
   }
 

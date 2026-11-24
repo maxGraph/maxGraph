@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { getImagePath } from './utils.ts';
+
 /**
  * @param args {Record<string, string>}
  * @param [options] {{captureKeystrokes?: boolean}} `captureKeystrokes`: make the container focusable and focus it on click.
@@ -28,7 +30,7 @@ export const createGraphContainer = (args, options = {}) => {
   style.overflow = 'hidden';
   style.width = `${args.width}px`;
   style.height = `${args.height}px`;
-  style.background = 'url(./images/grid.gif)';
+  style.background = `url(${getImagePath('grid.gif')})`;
   style.cursor = 'default';
 
   if (options.captureKeystrokes) {

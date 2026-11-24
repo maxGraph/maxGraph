@@ -50,6 +50,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -176,7 +177,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const addOverlay = (cell: Cell) => {
     // Creates a new overlay with an image and a tooltip
     const overlay = new CellOverlay(
-      new ImageBox('images/add.png', 24, 24),
+      new ImageBox(getImagePath('add.png'), 24, 24),
       'Add outgoing'
     );
     overlay.cursor = 'hand';

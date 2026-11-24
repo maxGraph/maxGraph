@@ -26,6 +26,7 @@ import {
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer, createMainDiv } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 
 export default {
   title: 'Icon_Images/ImageBundle',
@@ -179,7 +180,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'server-served PNG',
       position: [170, 130],
       size: [64, 64],
-      style: { ...labelBelowImage, image: 'images/icons48/keys.png' },
+      style: { ...labelBelowImage, image: getImagePath('icons48/keys.png') },
     });
   });
 

@@ -17,7 +17,6 @@ limitations under the License.
 
 import {
   type CellState,
-  Client,
   type ConnectionHandler,
   domUtils,
   eventUtils,
@@ -38,6 +37,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -58,7 +58,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
   // convenient function to create an image element available when the demo is not deployed in the root context
   const createImage = (fileName: string) => {
-    return domUtils.createImage(`${Client.imageBasePath}/${fileName}`);
+    return domUtils.createImage(getImagePath(fileName));
   };
 
   // Defines a subclass for VertexHandler that adds a set of clickable icons to every selected vertex.

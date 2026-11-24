@@ -19,7 +19,6 @@ import {
   type AbstractGraph,
   Cell,
   type CellStyle,
-  Client,
   type ConnectionHandler,
   DomHelpers,
   DragSource,
@@ -42,6 +41,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
@@ -94,11 +94,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
   // Defines an icon for creating new connections in the connection handler.
   // This will automatically disable the highlighting of the source vertex.
   const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
-  connectionHandler.connectImage = new ImageBox(
-    `${Client.imageBasePath}/connector.gif`,
-    16,
-    16
-  );
+  connectionHandler.connectImage = new ImageBox(getImagePath('connector.gif'), 16, 16);
 
   // Matches DnD inside the graph
   DragSource.prototype.getDropTarget = function (
@@ -149,20 +145,20 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
     tbContainer.appendChild(hr);
   }
 
-  addVertex('images/swimlane.gif', 120, 160, { shape: 'swimlane', startSize: 20 });
-  addVertex('images/rectangle.gif', 100, 40, {});
-  addVertex('images/rounded.gif', 100, 40, { rounded: true });
-  addVertex('images/ellipse.gif', 40, 40, { shape: 'ellipse' });
-  addVertex('images/rhombus.gif', 40, 40, { shape: 'rhombus' });
-  addVertex('images/triangle.gif', 40, 40, { shape: 'triangle' });
-  addVertex('images/cylinder.gif', 40, 40, { shape: 'cylinder' });
-  addVertex('images/actor.gif', 30, 40, { shape: 'actor' });
+  addVertex(getImagePath('swimlane.gif'), 120, 160, { shape: 'swimlane', startSize: 20 });
+  addVertex(getImagePath('rectangle.gif'), 100, 40, {});
+  addVertex(getImagePath('rounded.gif'), 100, 40, { rounded: true });
+  addVertex(getImagePath('ellipse.gif'), 40, 40, { shape: 'ellipse' });
+  addVertex(getImagePath('rhombus.gif'), 40, 40, { shape: 'rhombus' });
+  addVertex(getImagePath('triangle.gif'), 40, 40, { shape: 'triangle' });
+  addVertex(getImagePath('cylinder.gif'), 40, 40, { shape: 'cylinder' });
+  addVertex(getImagePath('actor.gif'), 30, 40, { shape: 'actor' });
   addToolbarLine();
 
   function addEdge(icon: string, w: number, h: number, style: CellStyle) {
     addCell(false, icon, w, h, style);
   }
-  addEdge('images/entity.gif', 50, 50, {});
+  addEdge(getImagePath('entity.gif'), 50, 50, {});
   addToolbarLine();
 
   const button = DomHelpers.button('Create toolbar entry from selection', (evt) => {
@@ -185,7 +181,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
       };
 
       // Creates the image which is used as the drag icon (preview)
-      const img = toolbar.addMode(null, 'images/outline.gif', funct, '');
+      const img = toolbar.addMode(null, getImagePath('outline.gif'), funct, '');
       gestureUtils.makeDraggable(img, graph, funct);
     }
   });

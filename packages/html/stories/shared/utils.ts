@@ -14,7 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { constants } from '@maxgraph/core';
+import { Client, constants } from '@maxgraph/core';
 
 export const isElement = (node: ChildNode): node is Element =>
   node.nodeType === constants.NODE_TYPE.ELEMENT;
+
+/**
+ * Build the URL of an image of the stories from the image base path configured in {@link Client.imageBasePath}.
+ *
+ * @param path the path of the image relative to the images folder, for example `icons48/keys.png`
+ */
+export const getImagePath = (path: string): string => `${Client.imageBasePath}/${path}`;

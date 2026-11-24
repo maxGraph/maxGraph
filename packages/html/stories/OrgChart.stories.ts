@@ -41,6 +41,7 @@ import {
 } from '@maxgraph/core';
 import { contextMenuTypes, contextMenuValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 
 export default {
   title: 'Layouts/OrgChart',
@@ -71,20 +72,20 @@ function createPopupMenu(
 ) {
   if (cell != null) {
     if (cell.isVertex()) {
-      menu.addItem('Add child', 'images/overlays/check.png', function () {
+      menu.addItem('Add child', getImagePath('overlays/check.png'), function () {
         addChild(graph, cell);
       });
     }
 
     // startEditingAtCell does not check if the cell is editable when the cell is passed
     if (graph.isCellEditable(cell)) {
-      menu.addItem('Edit label', 'images/text.gif', function () {
+      menu.addItem('Edit label', getImagePath('text.gif'), function () {
         graph.startEditingAtCell(cell);
       });
     }
 
     if (cell.id !== 'treeRoot' && cell.isVertex()) {
-      menu.addItem('Delete', 'images/delete.gif', function () {
+      menu.addItem('Delete', getImagePath('delete.gif'), function () {
         deleteSubtree(graph, cell);
       });
     }
@@ -92,22 +93,22 @@ function createPopupMenu(
     menu.addSeparator();
   }
 
-  menu.addItem('Fit', 'images/zoom.gif', function () {
+  menu.addItem('Fit', getImagePath('zoom.gif'), function () {
     graph.getPlugin<FitPlugin>('fit')?.fit();
   });
 
-  menu.addItem('Actual', 'images/zoomactual.gif', function () {
+  menu.addItem('Actual', getImagePath('zoomactual.gif'), function () {
     graph.zoomActual();
   });
 
   menu.addSeparator();
 
-  menu.addItem('Print', 'images/print.gif', function () {
+  menu.addItem('Print', getImagePath('print.gif'), function () {
     const preview = new PrintPreview(graph, 1);
     preview.open();
   });
 
-  menu.addItem('Poster Print', 'images/print.gif', function () {
+  menu.addItem('Poster Print', getImagePath('print.gif'), function () {
     const pageCount = promptForPageCount();
 
     if (pageCount != null) {
@@ -119,7 +120,10 @@ function createPopupMenu(
 }
 
 function addOverlays(graph: AbstractGraph, cell: Cell, addDeleteIcon: boolean) {
-  let overlay = new CellOverlay(new ImageBox('images/add.png', 24, 24), 'Add child');
+  let overlay = new CellOverlay(
+    new ImageBox(getImagePath('add.png'), 24, 24),
+    'Add child'
+  );
   overlay.cursor = 'hand';
   overlay.align = 'center';
   overlay.addListener(InternalEvent.CLICK, () => {
@@ -129,7 +133,7 @@ function addOverlays(graph: AbstractGraph, cell: Cell, addDeleteIcon: boolean) {
   graph.addCellOverlay(cell, overlay);
 
   if (addDeleteIcon) {
-    overlay = new CellOverlay(new ImageBox('images/close.png', 30, 30), 'Delete');
+    overlay = new CellOverlay(new ImageBox(getImagePath('close.png'), 30, 30), 'Delete');
     overlay.cursor = 'hand';
     overlay.offset = new Point(-4, 8);
     overlay.align = 'right';
@@ -280,7 +284,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   style.rounded = true;
   style.glass = true;
 
-  style.image = 'images/dude3.png';
+  style.image = getImagePath('dude3.png');
   style.imageWidth = 48;
   style.imageHeight = 48;
   style.spacing = 8;
@@ -374,7 +378,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         position: [0, 20],
         size: [140, 60],
         // The root can neither be resized nor have its label changed
-        style: { image: 'images/house.png', editable: false, resizable: false },
+        style: { image: getImagePath('house.png'), editable: false, resizable: false },
       });
       graph.updateCellSize(v1);
       // The width is only known once the size is updated, so center the vertex afterwards
@@ -387,35 +391,35 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const tb = new MaxToolbar(tbContainer);
 
-  tb.addItem('Zoom In', 'images/zoom_in32.png', () => {
+  tb.addItem('Zoom In', getImagePath('zoom_in32.png'), () => {
     graph.zoomIn();
   });
 
-  tb.addItem('Zoom Out', 'images/zoom_out32.png', () => {
+  tb.addItem('Zoom Out', getImagePath('zoom_out32.png'), () => {
     graph.zoomOut();
   });
 
-  tb.addItem('Actual Size', 'images/view_1_132.png', () => {
+  tb.addItem('Actual Size', getImagePath('view_1_132.png'), () => {
     graph.zoomActual();
   });
 
   // The icon is "view-fullscreen" from the Tango Desktop Project (http://tango.freedesktop.org/Tango_Desktop_Project),
   // released into the public domain, rendered at 28x28 and centered in a 32x32 image. Original SVG and license:
   // https://commons.wikimedia.org/wiki/File:View-fullscreen.svg
-  const fitCenterItem = tb.addItem('Fit Center', 'images/zoom_fit32.png', () => {
+  const fitCenterItem = tb.addItem('Fit Center', getImagePath('zoom_fit32.png'), () => {
     graph.getPlugin<FitPlugin>('fit')?.fitCenter({ margin: 50 });
   });
   // The icon fills its whole image, unlike the magnifiers of the zoom items, so it needs some space to not touch them
   fitCenterItem.style.marginLeft = '6px';
 
-  const printItem = tb.addItem('Print', 'images/print32.png', () => {
+  const printItem = tb.addItem('Print', getImagePath('print32.png'), () => {
     const preview = new PrintPreview(graph, 1);
     preview.open();
   });
   // Separates the print items from the zoom items
   printItem.style.marginLeft = '16px';
 
-  tb.addItem('Poster Print', 'images/press32.png', () => {
+  tb.addItem('Poster Print', getImagePath('press32.png'), () => {
     const pageCount = promptForPageCount();
 
     if (pageCount != null) {

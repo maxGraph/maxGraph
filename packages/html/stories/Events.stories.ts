@@ -17,7 +17,6 @@ limitations under the License.
 
 import {
   type Cell,
-  Client,
   ConnectionHandler,
   EdgeStyle,
   Graph,
@@ -42,6 +41,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer, createMainDiv } from './shared/configure.js';
+import { getImagePath } from './shared/utils.ts';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -89,11 +89,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Sets the image to be used for creating new connections
   const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
-  connectionHandler.connectImage = new ImageBox(
-    `${Client.imageBasePath}/green-dot.gif`,
-    14,
-    14
-  );
+  connectionHandler.connectImage = new ImageBox(getImagePath('green-dot.gif'), 14, 14);
 
   // Enables tooltips, new connections and panning
   graph.setPanning(true);
@@ -154,16 +150,16 @@ function createPopupMenu(
 ) {
   // Function to create the entries in the popupmenu
   if (cell != null) {
-    menu.addItem('Cell Item', `${Client.imageBasePath}/image.gif`, () => {
+    menu.addItem('Cell Item', getImagePath('image.gif'), () => {
       alert('MenuItem1');
     });
   } else {
-    menu.addItem('No-Cell Item', `${Client.imageBasePath}/image.gif`, () => {
+    menu.addItem('No-Cell Item', getImagePath('image.gif'), () => {
       alert('MenuItem2');
     });
   }
   menu.addSeparator();
-  menu.addItem('MenuItem3', `${Client.imageBasePath}/warning.gif`, () => {
+  menu.addItem('MenuItem3', getImagePath('warning.gif'), () => {
     alert(`MenuItem3: ${graph.getSelectionCount()} selected`);
   });
 }
