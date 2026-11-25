@@ -1,4 +1,4 @@
-# Analysis 004: Automate the creation of the release tag
+# Analysis 005: Automate the creation of the release tag
 
 - **Date**: 2026-11-24
 - **Written with**: Claude Code (Claude Opus 5.5)
@@ -8,7 +8,7 @@
 - **Question**: how can the manual part of a release (version update, commit, tag) be automated, so that it no longer
   needs a repository administrator, while keeping the release commit signed and the tag triggering the existing release
   workflows?
-- **Related**: [ADR 0004](../adr/0004-automate-the-release-tag-with-a-github-app.md),
+- **Related**: [ADR 0005](../adr/0005-automate-the-release-tag-with-a-github-app.md),
   [issue #664](https://github.com/maxGraph/maxGraph/issues/664), the
   [objective stated for the first release](https://github.com/maxGraph/maxGraph/issues/141#issuecomment-1323392317),
   [PR #650](https://github.com/maxGraph/maxGraph/pull/650) (`scripts/update-versions.mjs`), the

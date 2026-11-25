@@ -1,4 +1,4 @@
-# Analysis 005: Identify the development versions of the library
+# Analysis 004: Identify the development versions of the library
 
 > [!NOTE]
 > Draft. The problem, the practices of other projects and a first proposal are documented. The impact on the release
@@ -10,8 +10,8 @@
   references point to that commit
 - **Question**: how can a build of `@maxgraph/core` made from the development branch be told apart from the release it
   follows, by people, by the examples and by the CI?
-- **Related**: [analysis 004](004-automate-release-tagging.md) and
-  [ADR 0004](../adr/0004-automate-the-release-tag-with-a-github-app.md) on the automation of the release,
+- **Related**: [analysis 005](005-automate-release-tagging.md) and
+  [ADR 0005](../adr/0005-automate-the-release-tag-with-a-github-app.md) on the automation of the release,
   [maxgraph-integration-examples#317](https://github.com/maxGraph/maxgraph-integration-examples/issues/317), created on
   2026-10-05, `scripts/update-versions.mjs`
 
@@ -216,13 +216,13 @@ To be analysed once the scheme is chosen. What is known already:
 
 - with a stored development version, setting it needs a commit after each release, pushed along with the tag. This is
   what Maven, Node.js and TypeScript do, and it means the release automation writes to `main`, which
-  [ADR 0004](../adr/0004-automate-the-release-tag-with-a-github-app.md) rules out today;
+  [ADR 0005](../adr/0005-automate-the-release-tag-with-a-github-app.md) rules out today;
 - the preparation pull request replaces `0.26.0-dev` by the released version, `0.26.0`, or by `0.25.1` for a patch;
 - after a patch, `main` goes back to the previous development version, as Prettier does.
 
 ## Open points
 
-- The impact on the release process and on ADR 0004, see above.
+- The impact on the release process and on ADR 0005, see above.
 - Whether development builds are ever published to npm. If they are, `-dev` alone is not enough: two builds would carry
   the same version, and a counter or a date is needed, as in `7.1.0-dev.20261125.1` for TypeScript.
 - What to do when the next release turns out to be a major one, not checked in Prettier.

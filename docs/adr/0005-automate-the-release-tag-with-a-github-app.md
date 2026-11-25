@@ -1,4 +1,4 @@
-# ADR 0004: Automate the release tag with a GitHub App
+# ADR 0005: Automate the release tag with a GitHub App
 
 - **Status**: Proposed
 - **Date**: 2026-11-24
@@ -7,7 +7,7 @@
   `scripts/update-versions.mjs`, the [release how-to](../../packages/website/docs/development/release.md) and the
   `prepare-release` skill
 - **Analysis basis**: commit `032365667d5670ceb31728aa2800c4e9134aa706`, after version 0.25.2
-- **Related**: [analysis 004](../analyses/004-automate-release-tagging.md), which holds the evidence and the details
+- **Related**: [analysis 005](../analyses/005-automate-release-tagging.md), which holds the evidence and the details
   of every option, [issue #664](https://github.com/maxGraph/maxGraph/issues/664)
 
 ## Context

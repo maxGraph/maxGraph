@@ -26,5 +26,5 @@ An analysis is not a decision. When it leads to one, the decision is recorded in
 | [001](001-extract-SelectionMixin-to-plugin.md) | Extract `SelectionMixin` into a plugin | 2026-10-03 | Not as a standalone project, only as part of the mixin to plugin conversion |
 | [002](002-extract-PanningMixin-to-plugin.md) | Extract `PanningMixin` into a plugin | 2026-10-26 | Not as a standalone project; keep the pan offset and `setPanning` on the graph, extract only the programmatic scroll family |
 | [003](003-claude-code-project-agents.md) | Claude Code subagents for the repository | 2026-10-27 | Keep `build-runner`, the review lenses and the mixin analyst; add the other candidates one at a time |
-| [004](004-automate-release-tagging.md) | Automate the creation of the release tag | 2026-11-24 | GitHub App creating a lightweight tag, version bump in the preparation pull request, launch restricted to maintainers |
-| [005](005-identify-development-versions.md) | Identify the development versions of the library | 2026-11-25 | Draft, exploration pending |
+| [004](004-identify-development-versions.md) | Identify the development versions of the library | 2026-11-25 | Draft; the impact on the release and the recommendation are pending |
+| [005](005-automate-release-tagging.md) | Automate the creation of the release tag | 2026-11-24 | GitHub App creating a lightweight tag, version bump in the preparation pull request, launch restricted to maintainers |
