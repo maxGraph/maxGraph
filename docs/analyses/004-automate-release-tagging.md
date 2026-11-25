@@ -121,9 +121,18 @@ version.
 - The workflow never writes to `main`, so the App needs no bypass of `default branch - require PR`. A permanent bypass
   would let whoever obtains the App key push anything to `main` without a pull request, a much wider permission than
   creating a tag.
-- The release commit is the squash merge, already signed by GitHub. Creating a signed commit from the workflow would
-  need the GraphQL `createCommitOnBranch` mutation (a commit pushed with `git push` and an App token is unsigned), with
-  its limits: no file mode change, no symlink, and a failure when `main` moved since the checkout.
+- The release commit is the squash merge, already signed by GitHub. A commit pushed by the workflow with `git push` and
+  an App token would be unsigned, so it would have to be created through the GitHub API, which GitHub signs. Two ways
+  to do it, should a workflow ever need to commit:
+  - the GraphQL `createCommitOnBranch` mutation, called directly, with the content of each file encoded in base64;
+  - the [`planetscale/ghcommit-action`](https://github.com/planetscale/ghcommit-action) action, which detects the
+    files modified during the workflow run and commits them with that same mutation. It reads better than a
+    hand-written GraphQL call, and is the one to use.
+
+  Both share the limits of the mutation: no file mode change, no symlink, and a failure when `main` moved since the
+  checkout. `stefanzweifel/git-auto-commit-action`, the best known action of this kind, does not fit: it commits with
+  `git push`, so the commit is unsigned unless a GPG key is configured, and a key of an App bot shows as "Unverified"
+  anyway.
 
 Consequences to handle:
 

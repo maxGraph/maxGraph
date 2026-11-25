@@ -68,7 +68,9 @@ two repositories only.
   Rejected: the pull request already declares the release through its changelog heading, so `main` would contradict
   itself between the merge and the workflow run; the version change would skip review; the App would need a permanent
   bypass of the pull request rule of `main`, letting whoever holds its key push anything there; and keeping that commit
-  signed would require the GraphQL `createCommitOnBranch` mutation and its limits.
+  signed would require creating it through the GitHub API, either with the GraphQL `createCommitOnBranch` mutation or
+  with the `planetscale/ghcommit-action` action wrapping it, the more readable of the two, both with the limits of
+  that mutation.
 - **`GITHUB_TOKEN` plus an explicit `workflow_dispatch` of the release workflows.** No secret to manage, but the token
   cannot create the tag under the tag rulesets, and the release workflows would stop reacting to a tag pushed by
   hand, the fallback when the automation fails.
