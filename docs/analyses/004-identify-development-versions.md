@@ -1,7 +1,7 @@
 # Analysis 004: Identify the development versions of the library
 
 > [!NOTE]
-> Draft. The problem, the practices of other projects and a first proposal are documented. The impact on the release
+> Draft. The problem, the practices of other projects and a proposal are documented. The impact on the release
 > process and the recommendation are still to come, see [Open points](#open-points).
 
 - **Date**: 2026-11-25
@@ -64,8 +64,8 @@ read.
 
 ### TypeScript
 
-TypeScript uses exactly the scheme of the first proposal below: next minor plus `-dev` on the default branch, set by a
-commit after the release.
+TypeScript stores a development version on its default branch, the next minor plus `-dev`, set by a commit after the
+release.
 
 - The root [`package.json`](https://github.com/microsoft/TypeScript/blob/502a981024b79219b447ed5f376a529df50118e3/package.json#L2-L4)
   says `0.0.0`, but it is a private workspace root named `@typescript/repo`, never published. Since the Go port of
@@ -139,7 +139,7 @@ Six patterns come out of this sample:
 
 Two families exist outside npm.
 
-**Version stored in the project and bumped by a commit after the release**, the family of the first proposal:
+**Version stored in the project and bumped by a commit after the release**, the family of the proposal:
 
 - **Maven**: `X.Y-SNAPSHOT` is "the latest code along a development branch", older than its release
   ([getting started](https://maven.apache.org/guides/getting-started/index.html)). The
@@ -184,48 +184,96 @@ Two families exist outside npm.
 | Ordering against the releases | correct with the next version plus a suffix | correct by construction |
 | Support in npm | native, `package.json` is read by every tool | none built in, the version must be injected into `package.json` and `Constants.ts` before packing, and the build needs the Git history |
 
-## First proposal
+## Proposal
 
-At each release, once the tag is created, set the version of the development branch to the **next minor version with
-a `-dev` suffix**. Most releases are minor ones, so the next minor is the most likely next version. A patch release
-does not invalidate it:
+At each release, once the tag is created, set the version of the development branch to the **next patch version with
+a `-dev` suffix**, whatever the kind of the release:
 
 | Event | Version on `main` afterwards |
 |---|---|
-| release of `0.25.0` | `0.26.0-dev` |
-| release of `0.25.1`, a patch | `0.26.0-dev` again |
-| release of `0.26.0` | `0.27.0-dev` |
+| release of `0.25.0` | `0.25.1-dev` |
+| release of `0.25.1`, a patch | `0.25.2-dev` |
+| release of `0.26.0`, a minor | `0.26.1-dev` |
 
-The suffix sorts after every `0.25.x` and before `0.26.0`, which is the order expected. This is the scheme of
-TypeScript and Prettier, and the script of Prettier handles the patch case the same way.
+This is the scheme of Node.js, whose "Working on vX.Y.Z" commit increments the patch and adds `-pre`, see
+[Other ecosystems](#other-ecosystems).
+
+- **The rule never depends on the next release.** Every release, minor or patch, moves `main` to a new version, so the
+  development version is always above the latest release and the script has no case to handle.
+- **The ordering stays right.** `0.25.1-dev` sorts after `0.25.0` and before both `0.25.1` and `0.26.0`, so whatever
+  the next release is, it sorts above the development builds that preceded it.
+- **The development version may never be released.** When the next release is a minor one, `0.25.1-dev` is followed by
+  `0.26.0`, and no `0.25.1` ever exists. This is accepted: the development version identifies a build of `main`, it
+  does not announce the next release.
+
+### The suffix: `-dev` or `-pre`
+
+The examples use `-dev`. `-pre`, the suffix of Node.js, would work the same way. The choice is left to the
+implementation. Both sort the same way against the releases, and both sort between the pre-release labels a future
+beta or release candidate would use, since identifiers compare in ASCII order:
+`0.25.1-beta.1 < 0.25.1-dev < 0.25.1-pre < 0.25.1-rc.1`.
+
+- `-dev` says what the build is, a build of the development branch, and is the suffix of TypeScript and Prettier.
+- `-pre` follows Node.js, but reads as "pre-release", the generic name Semantic Versioning gives to every suffix, which
+  is less specific.
+
+### Next minor plus `-dev`, considered and set aside
+
+The first version of this proposal used the next minor, `0.26.0-dev` after `0.25.0`, the scheme of TypeScript and
+Prettier. Most maxGraph releases are minor ones, so it guesses the next release more often. It was set aside because a
+patch released from `main` does not fit it: after `0.25.1`, `main` would have to go back to `0.26.0-dev`, which is
+already the version it carried before, so the development version does not change across that release. Prettier needs
+a dedicated branch in its release script for this case, restoring the previous `-dev` value.
+
+### Finding the previous release
+
+The development version tells which release it follows: `0.25.1-dev` follows `0.25.0`. Two sources can give the
+previous release, and they must agree:
+
+- the version of `packages/core/package.json` on `main`, without the `-dev` suffix and with the patch decremented;
+- the latest tag reachable from `main`, `git describe --tags --abbrev=0`, which the `prepare-release` skill already
+  uses.
+
+A mismatch means that the development version was not set after a release, or was set by hand to something else, and
+the preparation of the release stops until it is understood.
 
 ### Script
 
-- A script computes the development version from the current version of `packages/core/package.json`: next minor,
-  plus the `-dev` suffix.
-- When the version already carries the `-dev` suffix, the script does nothing.
-- A detection function, "is this a development version", is called before the function setting the version in the
-  existing `scripts/update-versions.mjs`, which then updates `package.json`, `package-lock.json` and `Constants.ts` as
-  today.
+- A script computes the development version from the released version: next patch, plus the `-dev` suffix.
+- A detection function, "is this a development version", and the inverse computation, "which release does this
+  development version follow", come with it. The latter serves the check of
+  [Finding the previous release](#finding-the-previous-release).
+- The script reuses `scripts/update-versions.mjs`, which updates `package.json`, `package-lock.json` and `Constants.ts`
+  as today.
 - The functions are tested with the test runner of Node.js, in a test file of their own, without adding a dependency.
   `update-versions.mjs` runs in a workflow that does not install the dependencies of the project, see its header.
 
+### Impact on the `prepare-release` skill
+
+- **Previous version**: today the latest tag reachable from `origin/main`. It also has to be deduced from the
+  development version of `package.json`, and the two compared, see above.
+- **Version bump in the preparation**: the skill leaves its changes uncommitted on `main` for the manual release
+  commit. The preparation pull request now also replaces the development version, `0.25.1-dev`, by the version chosen
+  for the release, `0.26.0` or `0.25.1`, with `update-versions.mjs`.
+- **After the tag**: setting the next development version is a new step, wherever it ends up, see below.
+
 ### Interaction with the release
 
-To be analysed once the scheme is chosen. What is known already:
+To be analysed. What is known already:
 
-- with a stored development version, setting it needs a commit after each release, pushed along with the tag. This is
-  what Maven, Node.js and TypeScript do, and it means the release automation writes to `main`, which
+- setting the development version needs a commit after each release, pushed along with the tag. This is what Maven,
+  Node.js and TypeScript do, and it means the release automation writes to `main`, which
   [ADR 0005](../adr/0005-automate-the-release-tag-with-a-github-app.md) rules out today;
-- the preparation pull request replaces `0.26.0-dev` by the released version, `0.26.0`, or by `0.25.1` for a patch;
-- after a patch, `main` goes back to the previous development version, as Prettier does.
+- the preparation pull request replaces the development version by the released one, so between its merge and the
+  tag, `main` carries the released version, as it does today.
 
 ## Open points
 
 - The impact on the release process and on ADR 0005, see above.
+- The suffix, `-dev` or `-pre`, chosen when implementing, see
+  [The suffix](#the-suffix--dev-or--pre).
 - Whether development builds are ever published to npm. If they are, `-dev` alone is not enough: two builds would carry
   the same version, and a counter or a date is needed, as in `7.1.0-dev.20261125.1` for TypeScript.
-- What to do when the next release turns out to be a major one, not checked in Prettier.
 - How TypeScript packs `packages/typescript/package.json`, which says `7.1.0` without suffix, not checked.
 
 ## Next steps
@@ -237,7 +285,7 @@ To be analysed once the scheme is chosen. What is known already:
 
 ## Method and limits
 
-- The problem and the first proposal come from notes of the maintainer.
+- The problem and the proposal come from notes of the maintainer.
 - The practices of other projects were collected on 2026-11-25 by three research subagents, one on TypeScript, one on
   JavaScript projects, one on other ecosystems. The main session checked directly the versions of TypeScript, Prettier
   and Angular, the bump commit and the dist-tags of TypeScript, the bump function of Prettier, and the `-pre` mechanism
