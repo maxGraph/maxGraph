@@ -27,6 +27,12 @@ This is the classic problem of a version written in the project descriptor. In p
   in its page, read from the `VERSION` constant (`packages/js-example/src/index.js`, `packages/ts-example/src/main.ts`
   and the other examples). A page built with the latest release and a page built with the development code display the
   same version.
+- **The integration examples have the same problem.** On their pull requests, the projects of
+  [maxgraph-integration-examples](https://github.com/maxGraph/maxgraph-integration-examples) are built twice, with the
+  latest release of maxGraph and with the development version. Their pages display the version of maxGraph in the
+  footer, as the examples of this repository do, so the two builds of a page show the same version. Looking at a page,
+  nobody can tell which build it comes from. A behaviour observed on a page, a bug or a fix, is then easily attributed
+  to the wrong version: the page names a version, and that version is not the one running.
 - **The CI of the integration examples cannot check what it built.** In `maxgraph-integration-examples`, the
   development job runs `npm pack` on the `main` branch of maxGraph and installs the tarball. Issue
   [#317](https://github.com/maxGraph/maxgraph-integration-examples/issues/317) notes that nothing checks that the
